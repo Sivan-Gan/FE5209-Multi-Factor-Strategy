@@ -65,15 +65,11 @@ Exact Gross Profit, primary FCF inputs with a negative-CapEx exception,
 conditional US-GAAP 20-F treatment, and ambiguity/open-provenance missingness
 are documented in `docs/CANONICAL_PIT_FUNDAMENTALS_DEV.md`.
 
-The DEV estimated historical-market-cap construction is `PASS WITH WARNINGS`.
-Its canonical complete-grid object is
-`data/canonical/us_weekly_estimated_market_cap_dev.sqlite`; it is labelled
-`SEC_YAHOO_ESTIMATE_DEV` / `DEV_CURRENT_UNIVERSE` and must never be described
-as Formal PIT market cap. It preserves price, SEC-share, and split-chain
-provenance and contains no factor, IC, portfolio, FMOM, or strategy output.
-The subsequent narrow extreme-shares audit classifies the 20 source facts
-behind those 274 ticker-weeks, but its overall closure decision is `FAIL`:
-after simulation, VTRS and additional securities still exhibit million-level
-shares-update jumps. The candidate relative rejection rule is not ready for
-formal sign-off, and no patch/rebuild is recommended. The input remains
-uncleared for downstream Fundamental Factor Construction.
+The historical Yahoo-price × SEC-shares estimated-market-cap repair route is
+retired from the active codebase: its formal decision is
+`STOP_DEV_MARKET_CAP_REPAIR`. `raw_package/` remains immutable DEV audit
+evidence, and Yahoo/SEC inputs remain available for DEV audits and a possible
+2026 recent market-data extension. The formal data pipeline will instead move
+to WRDS. The legacy local market-cap object and its audit trail are retained
+only as historical DEV evidence; no active pipeline may consume them or
+describe them as Formal PIT market cap.
