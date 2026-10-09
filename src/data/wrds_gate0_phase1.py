@@ -456,12 +456,13 @@ def inspect_tar(path: Path, relative_path: str) -> tuple[list[dict[str, Any]], l
                 finally:
                     member_stream.close()
                 schema_rows.append(schema)
-                total_rows += int(schema["row_count"])
-                identifiers.update(schema["primary_identifier_values"])
-                member_min = _parse_date(schema["observed_min_date"])
-                member_max = _parse_date(schema["observed_max_date"])
-                overall_min = member_min if overall_min is None or (member_min and member_min < overall_min) else overall_min
-                overall_max = member_max if overall_max is None or (member_max and member_max > overall_max) else overall_max
+                if member.name.endswith(".csv.gz"):
+                    total_rows += int(schema["row_count"])
+                    identifiers.update(schema["primary_identifier_values"])
+                    member_min = _parse_date(schema["observed_min_date"])
+                    member_max = _parse_date(schema["observed_max_date"])
+                    overall_min = member_min if overall_min is None or (member_min and member_min < overall_min) else overall_min
+                    overall_max = member_max if overall_max is None or (member_max and member_max > overall_max) else overall_max
                 tar_member_rows.append(
                     {
                         "member_name": member.name,

@@ -29,7 +29,7 @@ This report covers physical raw-source integrity, compressed-container readabili
 
 ## Key Raw Coverage
 
-- CRSP daily stock TAR: rows **3930464**; primary identifiers **959**; dates **2004-01-02** to **2025-12-31**; unambiguous-key duplicates **0**.
+- CRSP daily stock TAR: rows **3930454**; primary identifiers **959**; dates **2004-01-02** to **2025-12-31**; unambiguous-key duplicates **0**.
 - CRSP S&P 500 constituents: rows **2527140**; primary identifiers **959**; dates **2006-01-03** to **2025-12-31**; unambiguous-key duplicates **0**.
 - CRSP market / S&P 500 indexes: rows **16605**; primary identifiers **3**; dates **2004-01-02** to **2025-12-31**; unambiguous-key duplicates **0**.
 - Historical PERMNO query input: rows **959**; primary identifiers **959**; dates **** to ****; unambiguous-key duplicates **0**.

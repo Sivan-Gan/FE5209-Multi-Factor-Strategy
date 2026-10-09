@@ -1,0 +1,18 @@
+check_id,check_name,severity,status,evidence,notes
+daily_stock_parsed_rowcount,Daily-stock data rows are reconciled against physical lines and headers,CRITICAL,PASS,physical=3930464; headers=10; data=3930454,
+daily_stock_batch_schema,All ten daily-stock gzip batch schemas are identical,CRITICAL,PASS,batch_count=10,
+ccm_linkenddt_enumerated,Raw CCM LINKENDDT values are fully enumerated,CRITICAL,PASS,raw_nonordinary_token=E; count=652,
+ccm_linkenddt_semantics,CCM LINKENDDT open end has provider evidence,CRITICAL,PASS,RESOLVED_WITH_EVIDENCE,WRDS CIZ macro uses LINKENDDT=.E as open-ended; raw E retained
+ccm_linktype_baseline,All accepted LINKTYPE values are present,CRITICAL,PASS,"[""LC"",""LS"",""LU""]",
+ccm_linkprim_baseline,All accepted LINKPRIM values are present,CRITICAL,PASS,"[""C"",""J"",""N"",""P""]",
+ccm_interval_integrity,Accepted CCM interval validity is checked,CRITICAL,PASS,invalid_accepted_intervals=0,
+ccm_coverage,Historical S&P500 to strict CCM coverage is measured,CRITICAL,PASS,matched=2527111; total=2527140; unmatched=29,
+ccm_different_gvkey_ambiguity,Same-date different-GVKEY ambiguity is measured,CRITICAL,PASS,observation_count=0,
+ccm_unmatched_classification,Every unmatched CCM observation has a deterministic classification,CRITICAL,PASS,unlinked=1; boundary_gap=28; other=0,
+gics_interval_integrity,Historical-GICS interval validity and inclusive boundaries are checked,CRITICAL,PASS,invalid_intervals=0; overlap_pairs=0,
+gics_coverage,Historical-GICS coverage over strict CCM-linked constituent dates is measured,CRITICAL,WARN,one_match=2524204; uncovered=2907; ambiguous=0,
+gics_open_end_encoding,Raw blank Historical-GICS INDTHRU encoding is retained and disclosed,WARN,WARN,raw_blank_indthru_count=12118,No raw sentinel substituted; formal data-contract sign-off remains required before canonical use
+multi_share_class,Relevant multi-share-class / issuer structures are identified,CRITICAL,PASS,identified_groups=37,Identification only; no issuer-market-cap aggregation
+no_link_fill,No CCM forward/backward filling is performed,CRITICAL,PASS,strict inclusive raw intervals only,
+raw_immutability,All raw physical hashes remain stable pre/post audit,CRITICAL,PASS,pre_count=16; post_count=16,
+phase_boundary,Later semantic policies remain deferred,INFO,PASS,DEFERRED_TO_GATE0_PHASE2B; DEFERRED_TO_GATE0_PHASE3,

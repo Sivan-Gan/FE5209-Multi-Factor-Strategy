@@ -1,0 +1,13 @@
+scope,metric,count,denominator,percentage,notes
+historical_sp500,historical_permno_count,959,,,Raw constituent observations
+historical_sp500,constituent_permno_date_observations,2527140,,,"Raw (PERMNO, DlyCalDt) observations"
+ccm,matched_permno_date_observations,2527111,2527140,99.998852,Strict accepted CCM baseline; inclusive interval; no fill
+ccm,unmatched_permno_date_observations,29,2527140,0.001148,Classified in ccm exceptions
+ccm,different_gvkey_simultaneous_ambiguity,0,2527140,0.000000,No selection policy applied
+gics,unique_linked_gvkey_count,935,,,GVKEYs observed in strict unique CCM matches
+gics,linked_gvkeys_with_at_least_one_historical_gics_record,935,935,100.000000,Presence of any indtype=GICS raw record; date coverage is reported separately
+gics,linked_constituent_dates_with_one_gics_match,2524204,2527111,99.884967,Only time-valid indtype=GICS intervals
+gics,uncovered_constituent_link_dates,2907,2527111,0.115033,No current/header GICS backfill
+gics,uncovered_no_gvkey_record,0,2527111,0.000000,No historical-GICS raw record for linked GVKEY
+gics,uncovered_interval_boundary_gap,2907,2527111,0.115033,"GVKEY has GICS record(s), but none time-valid on constituent date"
+gics,ambiguous_multiple_gics_matches,0,2527111,0.000000,No arbitrary tie-break applied

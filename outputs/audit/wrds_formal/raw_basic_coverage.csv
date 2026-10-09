@@ -1,5 +1,5 @@
 source_object,row_count,unique_primary_identifier_count,min_date,max_date,basic_duplicate_count_if_unambiguous,missing_key_count_if_unambiguous,notes
 CRSP_Daily_Market_and_SP500_Indexes_2004-01-01_2025-12-31.csv.gz,16605,3,2004-01-02,2025-12-31,0,0,"natural_key=[""indno"",""dlycaldt""]"
-CRSP_Daily_Stock_CIZ_2004-01-01_2025-12-31.tar::all_daily_stock_batches,3930464,959,2004-01-02,2025-12-31,0,0,"natural_key=[""permno"",""dlycaldt""]; gzip_batch_count=10"
+CRSP_Daily_Stock_CIZ_2004-01-01_2025-12-31.tar::all_daily_stock_batches,3930454,959,2004-01-02,2025-12-31,0,0,"natural_key=[""permno"",""dlycaldt""]; gzip_batch_count=10"
 CRSP_SP500_Constituents_Daily_CIZ_2006-01-01_2025-12-31.csv.gz,2527140,959,2006-01-03,2025-12-31,0,0,"natural_key=[""permno"",""dlycaldt""]"
 sp500_historical_permnos_2006_2025.txt,959,959,,,0,0,"natural_key=[""permno""]; blank_line_count=0; non_numeric_identifier_count=0"

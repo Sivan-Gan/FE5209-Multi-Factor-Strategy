@@ -1,0 +1,13 @@
+record_type,linkenddt_raw,count,ccm_row_count,null_count,non_null_count,ordinary_date_count,nonordinary_count,linktype,linkprim,gvkey,lpermno,tic,linkdt,linkenddt,semantic_status,source_evidence,notes
+SUMMARY,,,1154,0,1154,502,652,,,,,,,,RESOLVED_WITH_EVIDENCE,WRDS CIZ macros test LINKENDDT=.E as open-ended; raw CSV token E retained,No raw token was normalized or overwritten
+NONORDINARY_VALUE,E,652,,,,,,,,,,,,,OPEN_ENDED_E,https://wrds-www.wharton.upenn.edu/pages/wrds-research/macros/wrds-macro-indratios-ciz/,Only observed nonordinary nonblank raw LINKENDDT token
+REPRESENTATIVE_ROW,E,,,,,,,LC,P,001045,21020,AAL,2013-12-09,E,OPEN_ENDED_E,Raw delivered CCM CSV,Representative open-ended raw record
+REPRESENTATIVE_ROW,E,,,,,,,LU,P,001075,27991,PNW,1962-01-31,E,OPEN_ENDED_E,Raw delivered CCM CSV,Representative open-ended raw record
+REPRESENTATIVE_ROW,E,,,,,,,LC,P,001078,20482,ABT,1962-01-31,E,OPEN_ENDED_E,Raw delivered CCM CSV,Representative open-ended raw record
+REPRESENTATIVE_ROW,E,,,,,,,LU,P,001161,61241,AMD,1972-12-14,E,OPEN_ENDED_E,Raw delivered CCM CSV,Representative open-ended raw record
+REPRESENTATIVE_ROW,E,,,,,,,LC,P,001209,28222,APD,1962-01-31,E,OPEN_ENDED_E,Raw delivered CCM CSV,Representative open-ended raw record
+REPRESENTATIVE_ROW,E,,,,,,,LU,P,001230,28804,ALK,1966-01-31,E,OPEN_ENDED_E,Raw delivered CCM CSV,Representative open-ended raw record
+REPRESENTATIVE_ROW,E,,,,,,,LC,P,001300,10145,HON,1962-01-31,E,OPEN_ENDED_E,Raw delivered CCM CSV,Representative open-ended raw record
+REPRESENTATIVE_ROW,E,,,,,,,LU,P,001327,45911,SWKS,1968-03-13,E,OPEN_ENDED_E,Raw delivered CCM CSV,Representative open-ended raw record
+REPRESENTATIVE_ROW,E,,,,,,,LC,P,001440,24109,AEP,1962-01-31,E,OPEN_ENDED_E,Raw delivered CCM CSV,Representative open-ended raw record
+REPRESENTATIVE_ROW,E,,,,,,,LU,C,001447,59176,AXP,1972-12-14,E,OPEN_ENDED_E,Raw delivered CCM CSV,Representative open-ended raw record

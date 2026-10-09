@@ -1,0 +1,44 @@
+exception_type,permno,date,gvkey,lpermno,linktype,linkprim,raw_linkdt,raw_linkenddt,ticker,evidence,notes
+CCM_BOUNDARY_GAP,10147,2016-09-07,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,12079,2009-06-02,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,13567,2016-05-02,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,15404,2016-07-01,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,17676,2018-05-01,,,,,,,NVT,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,23501,2016-03-24,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,24221,2012-03-13,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,46877,2017-12-29,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,48267,2014-05-07,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,53866,2015-07-07,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,54827,2013-12-09,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,59184,2008-11-18,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,59192,2016-01-15,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,65883,2007-01-03,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,68857,2016-06-22,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,70536,2015-11-18,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,75489,2017-09-13,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,75577,2015-12-28,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,76240,2010-04-29,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,77281,2017-08-28,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,79588,2016-03-03,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,81593,2008-09-29,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,82618,2016-05-12,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,83596,2008-08-26,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,84020,2010-02-26,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,87070,2015-11-02,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,89954,2015-07-27,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_BOUNDARY_GAP,92890,2017-06-15,,,,,,,,No strict time-valid accepted CCM mapping; no fill applied,
+CCM_UNLINKED,16267,2016-09-07,,,,,,,DVMT,No strict time-valid accepted CCM mapping; no fill applied,
+LINKPRIM_J_SECONDARY_ISSUE,13964,,018043,13964,LC,J,2013-07-01,E,NWSA,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,14542,,160329,14542,LC,J,2014-04-03,E,GOOGL,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,15980,,165052,15980,LC,J,2016-04-08,E,UAA,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,18421,,034636,18421,LC,J,2019-03-19,E,FOXA,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,66325,,010121,66325,LC,J,1992-07-01,1992-07-23,NAVI,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,66325,,010121,66325,LC,J,1983-10-01,1983-10-30,NAVI,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,69796,,002710,69796,LC,J,1986-07-14,1993-08-31,STZ,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,76226,,013714,76226,LC,J,1990-06-14,1994-09-30,SKYD,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,83443,,002176,83443,LC,J,1996-05-09,2010-01-31,BRK.B,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,85913,,028930,85913,LC,J,1998-03-30,1998-04-30,MAR,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,89565,,003226,89565,LC,J,2002-11-19,2016-01-29,CMCSA,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,90441,,012886,90441,LC,J,2004-11-12,2004-11-30,TFCFA,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,90442,,012886,90442,LC,J,2004-12-01,E,TFCFA,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
+LINKPRIM_J_SECONDARY_ISSUE,92778,,164296,92778,LC,J,2008-09-18,2022-04-08,WBD,Accepted baseline link; secondary_issue=True diagnostic,Retained; not silently removed
