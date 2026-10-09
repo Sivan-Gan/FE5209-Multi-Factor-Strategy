@@ -1,0 +1,348 @@
+{
+  "daily_price_coverage": {
+    "benchmark_present": true,
+    "equity_ticker_count_excluding_spy": 503,
+    "max_date": "2026-09-18",
+    "min_date": "2006-01-03",
+    "row_count": 2392900,
+    "ticker_count": 504
+  },
+  "evidence_stage": "DEV_CURRENT_UNIVERSE",
+  "generated_at_utc": "2026-10-08T10:05:54+00:00",
+  "identity_coverage": {
+    "cross_layer_cik_coverage": {
+      "sec_map_ciks_not_in_sec_status": [],
+      "sec_map_ciks_not_in_security_master": [],
+      "sec_status_ciks_not_in_sec_map": [],
+      "security_master_ciks_not_in_sec_map_count": 3
+    },
+    "price_quality": {
+      "duplicate_dates_total": 0,
+      "fields": [
+        "ticker",
+        "valid_price_rows",
+        "first_price_date",
+        "last_price_date",
+        "coverage_vs_spy_full_window",
+        "internal_missing_trading_dates",
+        "missing_core_cells",
+        "zero_volume_rows",
+        "duplicate_dates",
+        "invalid_ohlc_rows",
+        "absolute_returns_over_20pct",
+        "absolute_returns_over_50pct",
+        "eligible_one_year_by_2026_08_01",
+        "quality_status",
+        "quality_issues"
+      ],
+      "grain": "ticker-level delivered quality summary",
+      "internal_missing_trading_dates_total": 1,
+      "invalid_ohlc_rows_total": 1,
+      "missing_core_cells_total": 0,
+      "path": "yahoo_download_stage/sp500_data_quality.csv",
+      "price_tickers_not_in_quality": [
+        "SPY"
+      ],
+      "quality_status_counts": {
+        "ok": 474,
+        "review": 29
+      },
+      "quality_tickers_not_in_price": [],
+      "review_examples": [
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "AMCR"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "AMD"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "BIIB"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "BKR"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "CCI"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "CHD"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "CHTR"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "CNC"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "DOC"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "DXCM"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "ERIE"
+        },
+        {
+          "issues": "less_than_one_year_history_by_cutoff",
+          "ticker": "FDXF"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "FERG"
+        },
+        {
+          "issues": "internal_date_gaps",
+          "ticker": "FISV"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "GDDY"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "GEN"
+        },
+        {
+          "issues": "less_than_one_year_history_by_cutoff",
+          "ticker": "HONA"
+        },
+        {
+          "issues": "invalid_ohlc;zero_volume_rows",
+          "ticker": "HUBB"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "HWM"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "IBKR"
+        }
+      ],
+      "review_ticker_count": 29,
+      "row_count": 503,
+      "ticker_count": 503,
+      "zero_volume_rows_total": 3540
+    },
+    "price_to_master_coverage": {
+      "canonical_to_yahoo_ticker_translation": {
+        "BF.B": "BF-B",
+        "BRK.B": "BRK-B"
+      },
+      "intersection_count": 503,
+      "master_canonical_ticker_count": 503,
+      "master_yahoo_ticker_count": 503,
+      "master_yahoo_tickers_without_price_rows": [],
+      "price_ticker_count": 504,
+      "price_tickers_not_in_master_yahoo_mapping": [
+        "SPY"
+      ],
+      "price_tickers_not_in_master_yahoo_mapping_are_expected_benchmark_only": true
+    },
+    "sec_download_status": {
+      "cik_count": 497,
+      "fields": [
+        "cik",
+        "primary_ticker",
+        "status",
+        "from_cache",
+        "normalized_rows",
+        "error"
+      ],
+      "grain": "issuer download status",
+      "path": "sec_api_json/download_status.csv",
+      "row_count": 497,
+      "status_counts": {
+        "ok": 497
+      }
+    },
+    "security_cik_map": {
+      "candidate_primary_key": [
+        "ticker",
+        "cik"
+      ],
+      "cik_count": 497,
+      "duplicate_ticker_cik_pairs": [],
+      "fields": [
+        "cik",
+        "ticker",
+        "yahoo_ticker",
+        "security_name",
+        "gics_sector",
+        "gics_sub_industry"
+      ],
+      "grain": "eligible current security-to-issuer mapping",
+      "master_pairs_not_in_sec_map_count": 3,
+      "missing_required_columns": [],
+      "pairs_absent_from_security_master": [],
+      "path": "sec_api_json/security_cik_map.csv",
+      "row_count": 500,
+      "ticker_count": 500
+    },
+    "security_master": {
+      "candidate_primary_key": [
+        "security_id"
+      ],
+      "cik_count": 500,
+      "cik_to_multiple_tickers": {
+        "1564708": [
+          "NWS",
+          "NWSA"
+        ],
+        "1652044": [
+          "GOOG",
+          "GOOGL"
+        ],
+        "1754301": [
+          "FOX",
+          "FOXA"
+        ]
+      },
+      "duplicate_security_ids": [],
+      "duplicate_ticker_cik_pairs": [],
+      "fields": [
+        "security_id",
+        "ticker",
+        "security_name",
+        "gics_sector",
+        "gics_sub_industry",
+        "headquarters_location",
+        "sp500_date_added",
+        "cik",
+        "founded",
+        "yahoo_ticker",
+        "security_type",
+        "currency",
+        "country",
+        "universe_definition",
+        "sec_name",
+        "exchange",
+        "first_price_date",
+        "last_price_date",
+        "eligible_one_year_by_2026_08_01",
+        "quality_status",
+        "quality_issues"
+      ],
+      "grain": "download-date current S&P 500 constituent security",
+      "missing_exchange_rows": 0,
+      "missing_gics_sector_rows": 0,
+      "missing_gics_sub_industry_rows": 0,
+      "missing_required_columns": [],
+      "path": "yahoo_download_stage/sp500_security_master.csv",
+      "row_count": 503,
+      "security_type_values": {
+        "Common stock": 503
+      },
+      "share_class_field_present": false,
+      "ticker_count": 503,
+      "ticker_to_multiple_ciks": {}
+    }
+  },
+  "report_schema": "fe5209.gate0.dev.source_audit.v1",
+  "sec_companyfacts_coverage": {
+    "archive_cik_count": 497,
+    "archive_ciks_not_in_sec_map": [],
+    "archive_file_count": 497,
+    "form_counts": {
+      "10-K": 4546612,
+      "10-K/A": 50207,
+      "10-KT": 5800,
+      "10-Q": 7795432,
+      "10-Q/A": 62291,
+      "10-QT": 183,
+      "2.01 SD": 16,
+      "20-F": 7141,
+      "20-F/A": 945,
+      "424B2": 21902,
+      "424B3": 60,
+      "424B4": 1,
+      "424B5": 489,
+      "424B7": 48,
+      "424B8": 93,
+      "8-K": 209386,
+      "8-K/A": 1247,
+      "DEF 14A": 6173,
+      "DEFC14A": 30,
+      "DEFR14A": 40,
+      "POSASR": 10,
+      "PRE 14A": 505,
+      "PREC14A": 30,
+      "PREM14A": 10,
+      "PRER14A": 60,
+      "S-3": 18,
+      "S-3/A": 10,
+      "S-3ASR": 254,
+      "S-4": 75,
+      "S-8": 422,
+      "SC TO-I": 10,
+      "SC TO-T": 10
+    },
+    "invalid_observation_dates": {},
+    "observation_fields": {
+      "accn": 12709510,
+      "end": 12709510,
+      "filed": 12709510,
+      "form": 12709510,
+      "fp": 12709510,
+      "frame": 5170602,
+      "fy": 12709510,
+      "start": 7888671,
+      "val": 12709510
+    },
+    "observed_date_ranges": {
+      "end": {
+        "max": "2199-12-31",
+        "min": "1989-12-31"
+      },
+      "filed": {
+        "max": "2026-09-18",
+        "min": "2009-04-15"
+      },
+      "start": {
+        "max": "2027-01-01",
+        "min": "1900-01-01"
+      }
+    },
+    "readable_archive_count": 497,
+    "sec_map_ciks_without_archive": [],
+    "tag_count_by_taxonomy": {
+      "dei": 1005,
+      "ecd": 1098,
+      "ffd": 1343,
+      "ifrs-full": 284,
+      "invest": 182,
+      "rxp": 16,
+      "srt": 590,
+      "us-gaap": 286773
+    },
+    "tag_metadata_fields": {
+      "description": 291291,
+      "label": 291291,
+      "units": 291291
+    },
+    "taxonomy_archive_counts": {
+      "dei": 497,
+      "ecd": 178,
+      "ffd": 257,
+      "ifrs-full": 1,
+      "invest": 169,
+      "rxp": 4,
+      "srt": 236,
+      "us-gaap": 497
+    },
+    "total_observations": 12709510,
+    "total_tags": 291291,
+    "total_units": 294226
+  }
+}

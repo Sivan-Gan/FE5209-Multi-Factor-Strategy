@@ -1,0 +1,11 @@
+evidence_stage,proposed_rule,recommendation,reason
+DEV_CURRENT_UNIVERSE,NetIncomeLoss -> Net Income primary,RECOMMEND_SIGNOFF,"494/497 issuer source coverage in prior audit; exact US-GAAP net-income tag remains subject to USD, duration, PIT, and ambiguity controls."
+DEV_CURRENT_UNIVERSE,StockholdersEquity -> Common Equity primary,RECOMMEND_SIGNOFF,490/497 issuer source coverage; exact stockholders-equity tag is an instant fact and avoids automatic NCI/partner/member substitutions.
+DEV_CURRENT_UNIVERSE,Assets -> Total Assets primary,RECOMMEND_SIGNOFF,497/497 issuer source coverage; exact Assets tag has the clearest source definition and is instant-only.
+DEV_CURRENT_UNIVERSE,NetCashProvidedByUsedInOperatingActivities -> OCF primary,RECOMMEND_SIGNOFF,496/497 issuer source coverage; exact duration cash-flow tag is auditable without a continuing-operations fallback.
+DEV_CURRENT_UNIVERSE,PaymentsToAcquirePropertyPlantAndEquipment -> CapEx primary,RECOMMEND_SIGNOFF,"394/497 issuer source coverage; exact cash-payment tag is retained without acquisition/intangible fallbacks and negative-sign observations remain exceptions, not inversions."
+DEV_CURRENT_UNIVERSE,filed_date <= signal_date,RECOMMEND_SIGNOFF,Conservative DEV availability boundary supported by the source filed field; RDQ/intraday timing remains unavailable.
+DEV_CURRENT_UNIVERSE,Amendment effective only from its own filing date,RECOMMEND_SIGNOFF,Prevents future amendment information from backfilling an earlier signal date; it does not resolve same-date ambiguity.
+DEV_CURRENT_UNIVERSE,No silent unit conversion,RECOMMEND_SIGNOFF,The raw facts contain non-USD units; a conversion source/rule has not been approved.
+DEV_CURRENT_UNIVERSE,Instant/duration separation,RECOMMEND_SIGNOFF,Balance-sheet and flow facts have different source date structures; mixing them would be a category error.
+DEV_CURRENT_UNIVERSE,"Period classification uses dates + form + FY/FP, not FP alone",RECOMMEND_SIGNOFF,The source exhibits irregular and comparative durations; multi-field classification is required to avoid treating FP labels as sufficient evidence.

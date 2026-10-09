@@ -1,0 +1,57 @@
+{
+  "canonical_summary": {
+    "benchmark_first_date": "2006-01-03",
+    "benchmark_last_date": "2026-09-18",
+    "benchmark_trading_day_count": 5210,
+    "calendar_rows": 1081,
+    "canonical_version": "fe5209.us_market_dev.v1",
+    "daily": {
+      "benchmark_row_count": 5210,
+      "duplicate_canonical_ticker_date_rows": 0,
+      "path": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/data/canonical/us_daily_market_dev.csv.gz",
+      "row_count": 2392900,
+      "stock_row_count": 2387690,
+      "unmapped_price_tickers": []
+    },
+    "evidence_stage": "DEV_CURRENT_UNIVERSE",
+    "master_rows": 503,
+    "paths": {
+      "calendar": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/data/canonical/us_weekly_signal_calendar_dev.csv",
+      "daily": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/data/canonical/us_daily_market_dev.csv.gz",
+      "master": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/data/canonical/us_security_master_dev.csv"
+    }
+  },
+  "evidence_stage": "DEV_CURRENT_UNIVERSE",
+  "post_build_raw_manifest": {
+    "actual_payload_files": 508,
+    "byte_size_failures": [],
+    "declared_payload_files": 508,
+    "hash_failures": [],
+    "manifest_path": "PACKAGE_SHA256.csv",
+    "manifest_sha256": "b1cc92f9dc97ad1a5e963136f0b0867c092c4b44bfcbc2e1092abfeedc4cde72",
+    "missing_files": [],
+    "passed": true,
+    "unexpected_files": [],
+    "verified_payload_files": 508
+  },
+  "prohibited_work_not_performed": [
+    "SEC fundamental factor construction",
+    "IVOL regression",
+    "forward IC",
+    "single-factor portfolios",
+    "FMOM",
+    "strategy or backtest returns",
+    "neutralized price-factor outputs"
+  ],
+  "raw_metric_row_count": 1631229,
+  "report_row_counts": {
+    "anomaly": 29,
+    "availability": 3,
+    "missing": 49,
+    "preprocessing": 3243,
+    "weekly_coverage": 3243
+  },
+  "schema": "fe5209.price_factor_pipeline.dev.v1",
+  "stock_ticker_count": 503,
+  "weekly_signal_count": 1081
+}

@@ -1,0 +1,4 @@
+metric,stock_signal_metric_rows,raw_metric_available_rows,base_price_eligible_rows,factor_input_eligible_rows,preprocessed_available_rows,factor_input_eligible_rate,evidence_stage
+MOM12_1,543743,469332,442605,442560,442560,0.813913926248,DEV_CURRENT_UNIVERSE
+MOM6_1,543743,482385,442605,442578,442578,0.813947030123,DEV_CURRENT_UNIVERSE
+VOL252,543743,470525,442605,442605,442605,0.813996685934,DEV_CURRENT_UNIVERSE

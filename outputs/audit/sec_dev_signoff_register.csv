@@ -1,0 +1,6 @@
+evidence_stage,decision_id,decision,status,scope_and_constraint
+DEV_CURRENT_UNIVERSE,gross_profit_baseline,Gross Profit baseline uses exact GrossProfit only,APPROVED_DEV,No universal fallback is permitted; SalesRevenueNet - CostOfGoodsAndServicesSold does not enter the baseline.
+DEV_CURRENT_UNIVERSE,fcf_primary_inputs,FCF uses OCF - CapEx primary inputs,APPROVED_DEV,OCF=NetCashProvidedByUsedInOperatingActivities; CapEx=PaymentsToAcquirePropertyPlantAndEquipment; no weak-semantic fallback.
+DEV_CURRENT_UNIVERSE,negative_capex,Negative primary CapEx is SIGN_EXCEPTION / unavailable,APPROVED_DEV,Never apply absolute value or sign inversion.
+DEV_CURRENT_UNIVERSE,same_latest_filed_conflict,Conflicting values at the same latest eligible filing date are AMBIGUOUS / missing,APPROVED_DEV,"No arbitrary tie-break based on value, order, or final record."
+DEV_CURRENT_UNIVERSE,foreign_forms,20-F conditional inclusion; 40-F has no observations,APPROVED_DEV,US-GAAP facts may follow the same controls. IFRS facts require separately approved mapping and currency policy before use.

@@ -1,0 +1,941 @@
+{
+  "acceptance_checks": [
+    {
+      "disposition": "FAIL blocks DEV intake until the supplied package is restored exactly.",
+      "evidence": "Verified 508/508 declared payload files; hash failures=0, missing=0, unexpected=0.",
+      "name": "Raw package manifest/hash integrity",
+      "status": "PASS"
+    },
+    {
+      "disposition": "Raw Company Facts is intentionally unfiltered. Later PIT parsing must freeze included forms, tag/unit/period rules, and treatment of non-economic/outlying period observations.",
+      "evidence": "raw forms=32; start range=1900-01-01 to 2027-01-01; end range=1989-12-31 to 2199-12-31; invalid parsed dates={}.",
+      "name": "SEC raw form and period-date scope",
+      "status": "WARN"
+    },
+    {
+      "disposition": "FAIL blocks DEV intake.",
+      "evidence": "All expected delivered tables and metadata files are present.",
+      "name": "Expected source files readable",
+      "status": "PASS"
+    },
+    {
+      "disposition": "FAIL blocks DEV price intake until keys/dates are repaired or excluded by a documented rule.",
+      "evidence": "rows=2392900, strict_key_order=True, invalid_dates=0, blank_tickers=0.",
+      "name": "Yahoo daily `(ticker, date)` primary-key and date validity",
+      "status": "PASS"
+    },
+    {
+      "disposition": "WARN requires documented ticker/row treatment before a downstream object relies on affected observations; it does not invalidate the full DEV package.",
+      "evidence": "stream_invalid_ohlc=1, negative_values=0, zero_volume_rows=3540, quality_review_tickers=29.",
+      "name": "Yahoo OHLC/action plausibility and delivered quality flags",
+      "status": "WARN"
+    },
+    {
+      "disposition": "FAIL blocks DEV identity-dependent intake until reconciled.",
+      "evidence": "price/master-yahoo intersection=503; price-only=['SPY']; map CIK without status=0; SEC-map CIK outside master=0.",
+      "name": "Security identity and CIK mapping consistency",
+      "status": "PASS"
+    },
+    {
+      "disposition": "FAIL blocks DEV PIT-fundamental intake until the delivered source/mapping is reconciled.",
+      "evidence": "readable_archives=497/497, archive/map gaps=0, missing root metadata={}.",
+      "name": "SEC Company Facts readability and issuer coverage",
+      "status": "PASS"
+    },
+    {
+      "disposition": "Expected source complexity. A later data contract must freeze tag/unit/period/amendment precedence; no priority is chosen by this audit.",
+      "evidence": "tags_with_multiple_units=2427, duplicate_period_groups=202372, amendment_observations=114700.",
+      "name": "SEC multi-unit, duplicate-period, and amendment facts",
+      "status": "WARN"
+    },
+    {
+      "disposition": "Permitted for `DEV_CURRENT_UNIVERSE`; historical constituents are required before formal Gate A evidence.",
+      "evidence": "The supplied universe is current-constituent based.",
+      "name": "Current S&P 500 survivorship bias",
+      "status": "WARN"
+    },
+    {
+      "disposition": "Permitted for DEV pipeline testing only; historical GICS is required for formal PIT sector-neutralization evidence.",
+      "evidence": "Security master GICS is download-date reference data.",
+      "name": "Current GICS is not historical PIT GICS",
+      "status": "WARN"
+    },
+    {
+      "disposition": "Use conservative `filed_date <= signal_date` for DEV; RDQ is a timing limitation/future enhancement.",
+      "evidence": "SEC facts retain `filed_date`; actual RDQ/timestamp is not supplied.",
+      "name": "RDQ/earnings-announcement availability unavailable",
+      "status": "WARN"
+    },
+    {
+      "disposition": "Do not infer historical market cap by directly multiplying price and SEC shares; formal data contract work remains required.",
+      "evidence": "Delivered `close`, `adj_close`, dividend, and split fields need a frozen future corporate-action basis.",
+      "name": "Yahoo historical adjustment limitation",
+      "status": "WARN"
+    },
+    {
+      "disposition": "Required for `FORMAL_PIT_UNIVERSE`, not a blocker for DEV intake.",
+      "evidence": "The delivered package is not a historical index-membership or delisting reconstruction.",
+      "name": "Historical member and delisting coverage pending",
+      "status": "WARN"
+    }
+  ],
+  "evidence_stage": "DEV_CURRENT_UNIVERSE",
+  "generated_at_utc": "2026-10-08T10:05:54+00:00",
+  "identity_exceptions": {
+    "cross_layer_cik_coverage": {
+      "sec_map_ciks_not_in_sec_status": [],
+      "sec_map_ciks_not_in_security_master": [],
+      "sec_status_ciks_not_in_sec_map": [],
+      "security_master_ciks_not_in_sec_map_count": 3
+    },
+    "price_quality": {
+      "duplicate_dates_total": 0,
+      "fields": [
+        "ticker",
+        "valid_price_rows",
+        "first_price_date",
+        "last_price_date",
+        "coverage_vs_spy_full_window",
+        "internal_missing_trading_dates",
+        "missing_core_cells",
+        "zero_volume_rows",
+        "duplicate_dates",
+        "invalid_ohlc_rows",
+        "absolute_returns_over_20pct",
+        "absolute_returns_over_50pct",
+        "eligible_one_year_by_2026_08_01",
+        "quality_status",
+        "quality_issues"
+      ],
+      "grain": "ticker-level delivered quality summary",
+      "internal_missing_trading_dates_total": 1,
+      "invalid_ohlc_rows_total": 1,
+      "missing_core_cells_total": 0,
+      "path": "yahoo_download_stage/sp500_data_quality.csv",
+      "price_tickers_not_in_quality": [
+        "SPY"
+      ],
+      "quality_status_counts": {
+        "ok": 474,
+        "review": 29
+      },
+      "quality_tickers_not_in_price": [],
+      "review_examples": [
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "AMCR"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "AMD"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "BIIB"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "BKR"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "CCI"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "CHD"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "CHTR"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "CNC"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "DOC"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "DXCM"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "ERIE"
+        },
+        {
+          "issues": "less_than_one_year_history_by_cutoff",
+          "ticker": "FDXF"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "FERG"
+        },
+        {
+          "issues": "internal_date_gaps",
+          "ticker": "FISV"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "GDDY"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "GEN"
+        },
+        {
+          "issues": "less_than_one_year_history_by_cutoff",
+          "ticker": "HONA"
+        },
+        {
+          "issues": "invalid_ohlc;zero_volume_rows",
+          "ticker": "HUBB"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "HWM"
+        },
+        {
+          "issues": "zero_volume_rows",
+          "ticker": "IBKR"
+        }
+      ],
+      "review_ticker_count": 29,
+      "row_count": 503,
+      "ticker_count": 503,
+      "zero_volume_rows_total": 3540
+    },
+    "price_to_master_coverage": {
+      "canonical_to_yahoo_ticker_translation": {
+        "BF.B": "BF-B",
+        "BRK.B": "BRK-B"
+      },
+      "intersection_count": 503,
+      "master_canonical_ticker_count": 503,
+      "master_yahoo_ticker_count": 503,
+      "master_yahoo_tickers_without_price_rows": [],
+      "price_ticker_count": 504,
+      "price_tickers_not_in_master_yahoo_mapping": [
+        "SPY"
+      ],
+      "price_tickers_not_in_master_yahoo_mapping_are_expected_benchmark_only": true
+    },
+    "sec_download_status": {
+      "cik_count": 497,
+      "fields": [
+        "cik",
+        "primary_ticker",
+        "status",
+        "from_cache",
+        "normalized_rows",
+        "error"
+      ],
+      "grain": "issuer download status",
+      "path": "sec_api_json/download_status.csv",
+      "row_count": 497,
+      "status_counts": {
+        "ok": 497
+      }
+    },
+    "security_cik_map": {
+      "candidate_primary_key": [
+        "ticker",
+        "cik"
+      ],
+      "cik_count": 497,
+      "duplicate_ticker_cik_pairs": [],
+      "fields": [
+        "cik",
+        "ticker",
+        "yahoo_ticker",
+        "security_name",
+        "gics_sector",
+        "gics_sub_industry"
+      ],
+      "grain": "eligible current security-to-issuer mapping",
+      "master_pairs_not_in_sec_map_count": 3,
+      "missing_required_columns": [],
+      "pairs_absent_from_security_master": [],
+      "path": "sec_api_json/security_cik_map.csv",
+      "row_count": 500,
+      "ticker_count": 500
+    },
+    "security_master": {
+      "candidate_primary_key": [
+        "security_id"
+      ],
+      "cik_count": 500,
+      "cik_to_multiple_tickers": {
+        "1564708": [
+          "NWS",
+          "NWSA"
+        ],
+        "1652044": [
+          "GOOG",
+          "GOOGL"
+        ],
+        "1754301": [
+          "FOX",
+          "FOXA"
+        ]
+      },
+      "duplicate_security_ids": [],
+      "duplicate_ticker_cik_pairs": [],
+      "fields": [
+        "security_id",
+        "ticker",
+        "security_name",
+        "gics_sector",
+        "gics_sub_industry",
+        "headquarters_location",
+        "sp500_date_added",
+        "cik",
+        "founded",
+        "yahoo_ticker",
+        "security_type",
+        "currency",
+        "country",
+        "universe_definition",
+        "sec_name",
+        "exchange",
+        "first_price_date",
+        "last_price_date",
+        "eligible_one_year_by_2026_08_01",
+        "quality_status",
+        "quality_issues"
+      ],
+      "grain": "download-date current S&P 500 constituent security",
+      "missing_exchange_rows": 0,
+      "missing_gics_sector_rows": 0,
+      "missing_gics_sub_industry_rows": 0,
+      "missing_required_columns": [],
+      "path": "yahoo_download_stage/sp500_security_master.csv",
+      "row_count": 503,
+      "security_type_values": {
+        "Common stock": 503
+      },
+      "share_class_field_present": false,
+      "ticker_count": 503,
+      "ticker_to_multiple_ciks": {}
+    }
+  },
+  "manifest_exceptions": {
+    "byte_size_failures": [],
+    "hash_failures": [],
+    "missing_files": [],
+    "unexpected_files": []
+  },
+  "price_exceptions": {
+    "blank_ticker_rows": 0,
+    "invalid_date_examples": [],
+    "invalid_date_rows": 0,
+    "invalid_ohlc_examples": [
+      {
+        "close": "198.1300049",
+        "date": "2021-05-05",
+        "high": "198.6399994",
+        "low": "196.2100067",
+        "open": "195.9799957",
+        "row": "1105608",
+        "ticker": "HUBB"
+      }
+    ],
+    "invalid_ohlc_rows": 1,
+    "key_violation_examples": [],
+    "missing_core_cells": {},
+    "missing_required_columns": [],
+    "negative_value_rows": {},
+    "nonnumeric_cells": {},
+    "sort_or_key_violations": 0,
+    "zero_volume_rows": 3540
+  },
+  "report_schema": "fe5209.gate0.dev.source_audit.v1",
+  "sec_companyfacts_exceptions": {
+    "amendment_examples": [
+      {
+        "accn": "0000002488-26-000021",
+        "cik": 2488,
+        "end": "2026-01-30",
+        "filed": "2026-02-04",
+        "form": "10-K/A",
+        "tag": "EntityCommonStockSharesOutstanding",
+        "taxonomy": "dei",
+        "unit": "shares"
+      },
+      {
+        "accn": "0000002488-26-000021",
+        "cik": 2488,
+        "end": "2024-06-28",
+        "filed": "2026-02-04",
+        "form": "10-K/A",
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "accn": "0000004127-20-000009",
+        "cik": 4127,
+        "end": "2020-01-20",
+        "filed": "2020-01-27",
+        "form": "10-K/A",
+        "tag": "EntityCommonStockSharesOutstanding",
+        "taxonomy": "dei",
+        "unit": "shares"
+      },
+      {
+        "accn": "0000004127-21-000015",
+        "cik": 4127,
+        "end": "2021-01-22",
+        "filed": "2021-01-29",
+        "form": "10-K/A",
+        "tag": "EntityCommonStockSharesOutstanding",
+        "taxonomy": "dei",
+        "unit": "shares"
+      },
+      {
+        "accn": "0000004127-22-000002",
+        "cik": 4127,
+        "end": "2021-01-22",
+        "filed": "2022-01-28",
+        "form": "10-K/A",
+        "tag": "EntityCommonStockSharesOutstanding",
+        "taxonomy": "dei",
+        "unit": "shares"
+      },
+      {
+        "accn": "0000004127-23-000005",
+        "cik": 4127,
+        "end": "2023-01-20",
+        "filed": "2023-01-27",
+        "form": "10-K/A",
+        "tag": "EntityCommonStockSharesOutstanding",
+        "taxonomy": "dei",
+        "unit": "shares"
+      },
+      {
+        "accn": "0000004127-24-000002",
+        "cik": 4127,
+        "end": "2024-01-18",
+        "filed": "2024-01-26",
+        "form": "10-K/A",
+        "tag": "EntityCommonStockSharesOutstanding",
+        "taxonomy": "dei",
+        "unit": "shares"
+      },
+      {
+        "accn": "0000004127-25-000006",
+        "cik": 4127,
+        "end": "2025-01-17",
+        "filed": "2025-01-24",
+        "form": "10-K/A",
+        "tag": "EntityCommonStockSharesOutstanding",
+        "taxonomy": "dei",
+        "unit": "shares"
+      },
+      {
+        "accn": "0000004127-26-000003",
+        "cik": 4127,
+        "end": "2026-01-26",
+        "filed": "2026-01-30",
+        "form": "10-K/A",
+        "tag": "EntityCommonStockSharesOutstanding",
+        "taxonomy": "dei",
+        "unit": "shares"
+      },
+      {
+        "accn": "0000004127-25-000006",
+        "cik": 4127,
+        "end": "2024-09-27",
+        "filed": "2025-01-24",
+        "form": "10-K/A",
+        "tag": "EntityListingParValuePerShare",
+        "taxonomy": "dei",
+        "unit": "USD/shares"
+      },
+      {
+        "accn": "0000004127-26-000003",
+        "cik": 4127,
+        "end": "2025-10-03",
+        "filed": "2026-01-30",
+        "form": "10-K/A",
+        "tag": "EntityListingParValuePerShare",
+        "taxonomy": "dei",
+        "unit": "USD/shares"
+      },
+      {
+        "accn": "0000004127-20-000009",
+        "cik": 4127,
+        "end": "2017-03-31",
+        "filed": "2020-01-27",
+        "form": "10-K/A",
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "accn": "0000004127-20-000009",
+        "cik": 4127,
+        "end": "2019-09-27",
+        "filed": "2020-01-27",
+        "form": "10-K/A",
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "accn": "0000004127-21-000015",
+        "cik": 4127,
+        "end": "2020-03-27",
+        "filed": "2021-01-29",
+        "form": "10-K/A",
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "accn": "0000004127-22-000002",
+        "cik": 4127,
+        "end": "2020-03-27",
+        "filed": "2022-01-28",
+        "form": "10-K/A",
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "accn": "0000004127-23-000005",
+        "cik": 4127,
+        "end": "2022-04-01",
+        "filed": "2023-01-27",
+        "form": "10-K/A",
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "accn": "0000004127-24-000002",
+        "cik": 4127,
+        "end": "2023-03-31",
+        "filed": "2024-01-26",
+        "form": "10-K/A",
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "accn": "0000004127-25-000006",
+        "cik": 4127,
+        "end": "2024-03-29",
+        "filed": "2025-01-24",
+        "form": "10-K/A",
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "accn": "0000004127-26-000003",
+        "cik": 4127,
+        "end": "2025-03-28",
+        "filed": "2026-01-30",
+        "form": "10-K/A",
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "accn": "0001193125-10-195058",
+        "cik": 4281,
+        "end": "2010-07-19",
+        "filed": "2010-08-23",
+        "form": "10-Q/A",
+        "tag": "EntityCommonStockSharesOutstanding",
+        "taxonomy": "dei",
+        "unit": "shares"
+      }
+    ],
+    "amendment_observations": 114700,
+    "archive_ciks_not_in_sec_map": [],
+    "duplicate_period_examples": [
+      {
+        "cik": 2488,
+        "end": "2026-01-30",
+        "filed_dates": [
+          "2026-02-04"
+        ],
+        "forms": [
+          "10-K",
+          "10-K/A"
+        ],
+        "fp": "FY",
+        "fy": 2025,
+        "records": 2,
+        "start": null,
+        "tag": "EntityCommonStockSharesOutstanding",
+        "taxonomy": "dei",
+        "unit": "shares"
+      },
+      {
+        "cik": 2488,
+        "end": "2024-06-28",
+        "filed_dates": [
+          "2026-02-04"
+        ],
+        "forms": [
+          "10-K",
+          "10-K/A"
+        ],
+        "fp": "FY",
+        "fy": 2025,
+        "records": 2,
+        "start": null,
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2024-09-27",
+        "filed_dates": [
+          "2024-11-15",
+          "2025-01-24"
+        ],
+        "forms": [
+          "10-K",
+          "10-K/A"
+        ],
+        "fp": "FY",
+        "fy": 2024,
+        "records": 2,
+        "start": "2023-09-30",
+        "tag": "EntityListingParValuePerShare",
+        "taxonomy": "dei",
+        "unit": "USD/shares"
+      },
+      {
+        "cik": 4127,
+        "end": "2025-10-03",
+        "filed_dates": [
+          "2025-11-07",
+          "2026-01-30"
+        ],
+        "forms": [
+          "10-K",
+          "10-K/A"
+        ],
+        "fp": "FY",
+        "fy": 2025,
+        "records": 2,
+        "start": "2024-09-28",
+        "tag": "EntityListingParValuePerShare",
+        "taxonomy": "dei",
+        "unit": "USD/shares"
+      },
+      {
+        "cik": 4127,
+        "end": "2017-03-31",
+        "filed_dates": [
+          "2019-11-14",
+          "2020-01-27"
+        ],
+        "forms": [
+          "10-K",
+          "10-K/A"
+        ],
+        "fp": "FY",
+        "fy": 2019,
+        "records": 2,
+        "start": null,
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2019-09-27",
+        "filed_dates": [
+          "2019-11-14",
+          "2020-01-27"
+        ],
+        "forms": [
+          "10-K",
+          "10-K/A"
+        ],
+        "fp": "FY",
+        "fy": 2019,
+        "records": 2,
+        "start": null,
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2020-03-27",
+        "filed_dates": [
+          "2020-11-17",
+          "2021-01-29"
+        ],
+        "forms": [
+          "10-K",
+          "10-K/A"
+        ],
+        "fp": "FY",
+        "fy": 2020,
+        "records": 2,
+        "start": null,
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2022-04-01",
+        "filed_dates": [
+          "2022-11-23",
+          "2023-01-27"
+        ],
+        "forms": [
+          "10-K",
+          "10-K/A"
+        ],
+        "fp": "FY",
+        "fy": 2022,
+        "records": 2,
+        "start": null,
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2023-03-31",
+        "filed_dates": [
+          "2023-11-17",
+          "2024-01-26"
+        ],
+        "forms": [
+          "10-K",
+          "10-K/A"
+        ],
+        "fp": "FY",
+        "fy": 2023,
+        "records": 2,
+        "start": null,
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2024-03-29",
+        "filed_dates": [
+          "2024-11-15",
+          "2025-01-24"
+        ],
+        "forms": [
+          "10-K",
+          "10-K/A"
+        ],
+        "fp": "FY",
+        "fy": 2024,
+        "records": 2,
+        "start": null,
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2025-03-28",
+        "filed_dates": [
+          "2025-11-07",
+          "2026-01-30"
+        ],
+        "forms": [
+          "10-K",
+          "10-K/A"
+        ],
+        "fp": "FY",
+        "fy": 2025,
+        "records": 2,
+        "start": null,
+        "tag": "EntityPublicFloat",
+        "taxonomy": "dei",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2019-09-27",
+        "filed_dates": [
+          "2020-01-24",
+          "2020-05-05"
+        ],
+        "forms": [
+          "10-Q"
+        ],
+        "fp": "Q1",
+        "fy": 2020,
+        "records": 2,
+        "start": null,
+        "tag": "AccountsPayableCurrent",
+        "taxonomy": "us-gaap",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2019-09-27",
+        "filed_dates": [
+          "2020-01-24",
+          "2020-05-05"
+        ],
+        "forms": [
+          "10-Q"
+        ],
+        "fp": "Q1",
+        "fy": 2020,
+        "records": 2,
+        "start": null,
+        "tag": "AccruedIncomeTaxesCurrent",
+        "taxonomy": "us-gaap",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2019-09-27",
+        "filed_dates": [
+          "2020-01-24",
+          "2020-05-05"
+        ],
+        "forms": [
+          "10-Q"
+        ],
+        "fp": "Q1",
+        "fy": 2020,
+        "records": 2,
+        "start": null,
+        "tag": "AccumulatedDepreciationDepletionAndAmortizationPropertyPlantAndEquipment",
+        "taxonomy": "us-gaap",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2019-09-27",
+        "filed_dates": [
+          "2020-01-24",
+          "2020-05-05"
+        ],
+        "forms": [
+          "10-Q"
+        ],
+        "fp": "Q1",
+        "fy": 2020,
+        "records": 2,
+        "start": null,
+        "tag": "AccumulatedOtherComprehensiveIncomeLossNetOfTax",
+        "taxonomy": "us-gaap",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2019-09-27",
+        "filed_dates": [
+          "2020-01-24",
+          "2020-05-05"
+        ],
+        "forms": [
+          "10-Q"
+        ],
+        "fp": "Q1",
+        "fy": 2020,
+        "records": 2,
+        "start": null,
+        "tag": "AdditionalPaidInCapitalCommonStock",
+        "taxonomy": "us-gaap",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2018-12-28",
+        "filed_dates": [
+          "2020-01-24",
+          "2020-05-05"
+        ],
+        "forms": [
+          "10-Q"
+        ],
+        "fp": "Q1",
+        "fy": 2020,
+        "records": 2,
+        "start": "2018-09-29",
+        "tag": "AdjustmentsToAdditionalPaidInCapitalSharebasedCompensationRequisiteServicePeriodRecognitionValue",
+        "taxonomy": "us-gaap",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2019-12-27",
+        "filed_dates": [
+          "2020-01-24",
+          "2020-05-05"
+        ],
+        "forms": [
+          "10-Q"
+        ],
+        "fp": "Q1",
+        "fy": 2020,
+        "records": 2,
+        "start": "2019-09-28",
+        "tag": "AdjustmentsToAdditionalPaidInCapitalSharebasedCompensationRequisiteServicePeriodRecognitionValue",
+        "taxonomy": "us-gaap",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2021-01-01",
+        "filed_dates": [
+          "2021-07-30",
+          "2022-02-04"
+        ],
+        "forms": [
+          "10-Q"
+        ],
+        "fp": "Q3",
+        "fy": 2021,
+        "records": 2,
+        "start": "2020-10-03",
+        "tag": "AdjustmentsToAdditionalPaidInCapitalSharebasedCompensationRequisiteServicePeriodRecognitionValue",
+        "taxonomy": "us-gaap",
+        "unit": "USD"
+      },
+      {
+        "cik": 4127,
+        "end": "2019-09-27",
+        "filed_dates": [
+          "2020-01-24",
+          "2020-05-05"
+        ],
+        "forms": [
+          "10-Q"
+        ],
+        "fp": "Q1",
+        "fy": 2020,
+        "records": 2,
+        "start": null,
+        "tag": "AllowanceForDoubtfulAccountsReceivableCurrent",
+        "taxonomy": "us-gaap",
+        "unit": "USD"
+      }
+    ],
+    "duplicate_period_groups": 202372,
+    "duplicate_period_observations": 230723,
+    "filename_cik_mismatches": [],
+    "missing_observation_fields": {},
+    "missing_root_metadata": {},
+    "multi_filed_period_groups": 195088,
+    "sec_map_ciks_without_archive": [],
+    "tags_with_multiple_units": 2427,
+    "unreadable_archives": []
+  }
+}

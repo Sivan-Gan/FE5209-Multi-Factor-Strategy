@@ -1,0 +1,60 @@
+{
+  "archive_cik_count": 497,
+  "audit_row_counts": {
+    "ambiguity_rows": 5,
+    "amendment_summary": 4,
+    "coverage_rows": 7567,
+    "coverage_windows": 21,
+    "period_rows": 19,
+    "staleness_rows": 19
+  },
+  "evidence_stage": "DEV_CURRENT_UNIVERSE",
+  "fact_counts": {
+    "ambiguous_fact_rows": 14,
+    "ambiguous_source_groups": 7,
+    "available_fact_rows": 462059,
+    "fact_rows": 469705
+  },
+  "fact_source_status_counts": {
+    "AMBIGUOUS_SAME_FILED_CONFLICT": 14,
+    "AVAILABLE_SOURCE": 462059,
+    "FORM_REJECTED": 7491,
+    "OPEN_IMPLEMENTATION_ISSUE_FUTURE_PERIOD_END": 2,
+    "PERIOD_CLASS_MISMATCH": 6,
+    "SIGN_EXCEPTION_NEGATIVE_CAPEX": 89,
+    "UNSUPPORTED_TAXONOMY": 44
+  },
+  "mapped_cik_count": 497,
+  "prohibited_outputs_not_created": [
+    "ROE, ROA, GP/A, Leverage, Asset Growth, or FCF",
+    "valuation yields or historical market capitalization",
+    "fundamental factor scores, preprocessing, IC, portfolios, FMOM, backtests, or strategy outputs"
+  ],
+  "raw_manifest": {
+    "actual_payload_files": 508,
+    "byte_size_failures": [],
+    "declared_payload_files": 508,
+    "hash_failures": [],
+    "manifest_path": "PACKAGE_SHA256.csv",
+    "manifest_sha256": "b1cc92f9dc97ad1a5e963136f0b0867c092c4b44bfcbc2e1092abfeedc4cde72",
+    "missing_files": [],
+    "passed": true,
+    "unexpected_files": [],
+    "verified_payload_files": 508
+  },
+  "schema": "fe5209.us_pit_fundamentals.dev.v1",
+  "signal_date_count": 1081,
+  "unmapped_master_security_count": 3,
+  "weekly_counts": {
+    "ambiguous_unavailability_rows": 34,
+    "open_implementation_issue_unavailability_rows": 2475,
+    "pit_violations": 0,
+    "provenance_nonunique": 0,
+    "sign_exception_unavailability_rows": 1518,
+    "snapshot_rows": 5088161,
+    "snapshot_signal_date_count": 910,
+    "snapshot_ticker_count": 500,
+    "unavailability_rows": 4027,
+    "weekly_universe_rows": 543743
+  }
+}

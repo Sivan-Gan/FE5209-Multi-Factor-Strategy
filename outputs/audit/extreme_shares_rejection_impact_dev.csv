@@ -1,0 +1,7 @@
+evidence_stage,measure,window,signal_week_count,denominator,before_mean_weekly_share,after_mean_weekly_share,change_percentage_points,affected_available_ticker_week_count,mean_weekly_affected_count,scope
+DEV_CURRENT_UNIVERSE,market_cap_input,factor_selection_2011_2015,261,500,0.6973869731800766,0.6962452107279693,-0.11417624521072867,149,0.5708812260536399,simulation only; no factor or canonical object is modified
+DEV_CURRENT_UNIVERSE,market_cap_input,configuration_selection_2016_2020,261,500,0.8027509578544061,0.8024904214559386,-0.026053639846745913,34,0.13026819923371646,simulation only; no factor or canonical object is modified
+DEV_CURRENT_UNIVERSE,market_cap_input,historical_oos_2021_2026_09,298,500,0.8859530201342283,0.8859530201342283,0.0,0,0.0,simulation only; no factor or canonical object is modified
+DEV_CURRENT_UNIVERSE,value_two_of_three_input,factor_selection_2011_2015,261,500,0.6361072796934866,0.6349655172413793,-0.11417624521072867,149,0.5708812260536399,simulation only; no factor or canonical object is modified
+DEV_CURRENT_UNIVERSE,value_two_of_three_input,configuration_selection_2016_2020,261,500,0.7783218390804597,0.7780613026819924,-0.02605363984673481,34,0.13026819923371646,simulation only; no factor or canonical object is modified
+DEV_CURRENT_UNIVERSE,value_two_of_three_input,historical_oos_2021_2026_09,298,500,0.8681006711409397,0.8681006711409397,0.0,0,0.0,simulation only; no factor or canonical object is modified

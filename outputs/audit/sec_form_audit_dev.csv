@@ -1,0 +1,33 @@
+evidence_stage,form,observation_count_all_raw,issuer_count_all_raw,observation_count_candidate_concepts,issuer_count_candidate_concepts,proposal_status,proposal_reason
+DEV_CURRENT_UNIVERSE,10-K,4546612,496,711029,496,conditional_proposal,Candidate for annual duration and instant facts after period/unit checks.
+DEV_CURRENT_UNIVERSE,10-K/A,50207,117,7745,81,OPEN_DECISION,Amended filing is PIT-usable only after its own filed date; selection/tie policy requires sign-off.
+DEV_CURRENT_UNIVERSE,10-KT,5800,7,807,7,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,10-Q,7795432,497,1468498,497,conditional_proposal,Candidate for quarterly/YTD duration and instant facts after period/unit checks.
+DEV_CURRENT_UNIVERSE,10-Q/A,62291,141,12266,131,OPEN_DECISION,Amended filing is PIT-usable only after its own filed date; selection/tie policy requires sign-off.
+DEV_CURRENT_UNIVERSE,10-QT,183,1,24,1,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,2.01 SD,16,4,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,20-F,7141,2,994,2,conditional_proposal,Annual-report analogue requires issuer-specific and period review.
+DEV_CURRENT_UNIVERSE,20-F/A,945,1,151,1,OPEN_DECISION,Amended filing is PIT-usable only after its own filed date; selection/tie policy requires sign-off.
+DEV_CURRENT_UNIVERSE,424B2,21902,81,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,424B3,60,4,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,424B4,1,1,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,424B5,489,63,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,424B7,48,6,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,424B8,93,2,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,8-K,209386,172,33447,172,OPEN_DECISION,"Current source contains XBRL facts, but use in canonical financial inputs is not frozen."
+DEV_CURRENT_UNIVERSE,8-K/A,1247,3,180,2,OPEN_DECISION,"Current source contains XBRL facts, but use in canonical financial inputs is not frozen."
+DEV_CURRENT_UNIVERSE,DEF 14A,6173,171,853,171,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,DEFC14A,30,1,5,1,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,DEFR14A,40,1,5,1,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,POSASR,10,2,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,PRE 14A,505,13,65,13,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,PREC14A,30,1,5,1,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,PREM14A,10,2,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,PRER14A,60,2,10,2,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,S-3,18,4,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,S-3/A,10,2,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,S-3ASR,254,51,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,S-4,75,13,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,S-8,422,89,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,SC TO-I,10,2,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.
+DEV_CURRENT_UNIVERSE,SC TO-T,10,2,0,0,excluded_proposal_pending_signoff,Not proposed for initial canonical inputs without form-specific review.

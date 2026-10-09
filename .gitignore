@@ -1,0 +1,32 @@
+# Operating-system and editor metadata
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ipynb_checkpoints/
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+*.temp
+
+# Local agent/session working ledgers; not research deliverables
+.planning/
+
+# Old Yahoo + SEC raw source package (kept locally, never versioned)
+/raw_package/
+
+# New formal WRDS raw source package (kept locally, never versioned)
+/wrds_raw/
+
+# Large generated/intermediate DEV data panels; small canonical metadata CSVs remain trackable
+/data/canonical/*.sqlite
+/data/canonical/*.sqlite-wal
+/data/canonical/*.sqlite-shm
+/data/canonical/*.csv.gz
+/data/interim/
+
+# Large compressed factor outputs; audit summaries and small reports remain trackable
+/outputs/factor_research/**/*.csv.gz

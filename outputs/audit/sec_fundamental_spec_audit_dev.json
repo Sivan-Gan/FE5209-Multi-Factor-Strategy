@@ -1,0 +1,34 @@
+{
+  "archive_cik_count": 497,
+  "candidate_tag_rows": 1346,
+  "evidence_stage": "DEV_CURRENT_UNIVERSE",
+  "post_scan_raw_manifest": {
+    "actual_payload_files": 508,
+    "byte_size_failures": [],
+    "declared_payload_files": 508,
+    "hash_failures": [],
+    "manifest_path": "PACKAGE_SHA256.csv",
+    "manifest_sha256": "b1cc92f9dc97ad1a5e963136f0b0867c092c4b44bfcbc2e1092abfeedc4cde72",
+    "missing_files": [],
+    "passed": true,
+    "unexpected_files": [],
+    "verified_payload_files": 508
+  },
+  "prohibited_outputs_not_created": [
+    "canonical fundamental values",
+    "fundamental factors or ratios",
+    "market capitalization",
+    "factor preprocessing scores",
+    "IC, portfolios, FMOM, strategy, or backtests"
+  ],
+  "raw_observation_count": 12709510,
+  "reports": {
+    "branch_coverage": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/sec_financial_re_coverage_dev.csv",
+    "duplicate_audit": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/sec_duplicate_amendment_audit_dev.csv",
+    "form_audit": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/sec_form_audit_dev.csv",
+    "period_audit": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/sec_period_audit_dev.csv",
+    "tag_coverage": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/sec_tag_coverage_dev.csv",
+    "unit_audit": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/sec_unit_audit_dev.csv"
+  },
+  "schema": "fe5209.sec_fundamental_input_spec.dev.v1"
+}

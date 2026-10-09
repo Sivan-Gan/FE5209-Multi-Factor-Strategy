@@ -1,0 +1,6 @@
+evidence_stage,classification,economic_concept,filed_year,issuer_count,source_group_count,canonical_fact_row_count,weekly_unavailable_security_count_same_year,handling
+DEV_CURRENT_UNIVERSE,AMBIGUOUS_SAME_FILED_CONFLICT,common_equity,2013,1,1,2,0,"Unavailable/missing; no tie-break by value, order, or accession is used."
+DEV_CURRENT_UNIVERSE,AMBIGUOUS_SAME_FILED_CONFLICT,gross_profit,2015,1,2,4,0,"Unavailable/missing; no tie-break by value, order, or accession is used."
+DEV_CURRENT_UNIVERSE,AMBIGUOUS_SAME_FILED_CONFLICT,net_income,2015,1,2,4,0,"Unavailable/missing; no tie-break by value, order, or accession is used."
+DEV_CURRENT_UNIVERSE,AMBIGUOUS_SAME_FILED_CONFLICT,net_income,2016,1,1,2,0,"Unavailable/missing; no tie-break by value, order, or accession is used."
+DEV_CURRENT_UNIVERSE,AMBIGUOUS_SAME_FILED_CONFLICT,net_income,2018,1,1,2,0,"Unavailable/missing; no tie-break by value, order, or accession is used."

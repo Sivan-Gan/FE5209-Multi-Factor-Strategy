@@ -1,0 +1,9 @@
+evidence_stage,economic_concept,issuer_count_any_candidate,issuer_count_financials_current_gics,issuer_count_real_estate_current_gics,financials_re_note
+DEV_CURRENT_UNIVERSE,capital_expenditure,491,74,28,Current GICS branch inspection only; not historical PIT GICS and no branch formula is produced.
+DEV_CURRENT_UNIVERSE,common_equity,497,76,30,Current GICS branch inspection only; not historical PIT GICS and no branch formula is produced.
+DEV_CURRENT_UNIVERSE,gross_profit,267,12,11,Current GICS branch inspection only; not historical PIT GICS and no branch formula is produced.
+DEV_CURRENT_UNIVERSE,net_income,497,76,30,Current GICS branch inspection only; not historical PIT GICS and no branch formula is produced.
+DEV_CURRENT_UNIVERSE,operating_cash_flow,497,76,30,Current GICS branch inspection only; not historical PIT GICS and no branch formula is produced.
+DEV_CURRENT_UNIVERSE,revenue,497,76,30,Current GICS branch inspection only; not historical PIT GICS and no branch formula is produced.
+DEV_CURRENT_UNIVERSE,total_assets,497,76,30,Current GICS branch inspection only; not historical PIT GICS and no branch formula is produced.
+DEV_CURRENT_UNIVERSE,total_debt_support,497,76,30,Current GICS branch inspection only; not historical PIT GICS and no branch formula is produced.

@@ -1,0 +1,5 @@
+evidence_stage,switch_type,weekly_switch_count,ticker_count,concept_count,first_signal_date,last_signal_date,interpretation
+DEV_CURRENT_UNIVERSE,LATER_PERIOD_AMENDMENT,551,90,7,2009-10-30,2026-02-20,A switch records a selected /A source on or after its own filing date; it does not backfill earlier signals.
+DEV_CURRENT_UNIVERSE,NO_PRIOR_AVAILABLE_VALUE,427,82,7,2009-05-01,2018-06-29,A switch records a selected /A source on or after its own filing date; it does not backfill earlier signals.
+DEV_CURRENT_UNIVERSE,OTHER_PERIOD_AMENDMENT,3,1,3,2012-11-02,2012-11-02,A switch records a selected /A source on or after its own filing date; it does not backfill earlier signals.
+DEV_CURRENT_UNIVERSE,SAME_PERIOD_AMENDMENT,512,79,7,2009-12-18,2026-05-08,A switch records a selected /A source on or after its own filing date; it does not backfill earlier signals.
