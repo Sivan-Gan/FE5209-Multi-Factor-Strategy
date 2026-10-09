@@ -886,9 +886,9 @@ $$
 
 ### 时间切分的冻结含义
 
-核心策略必须在 **2020 年末**完成 Gate B 与 Gate C 的冻结。2021–2025.12 是主要 formal US OOS，因此 CAGR、Sharpe、drawdown、alpha、benchmark-relative performance、turnover / cost 与正式 robustness conclusion 必须主要基于这个窗口。
+Gate B / Gate C 的配置决策只能使用截至 2020 年的数据；对本 historical research design，核心策略按 **2020 sample cutoff** 视为冻结。这是研究设计的 freeze boundary，不是团队在现实日历 2020 年末已经完成项目的声明。2021–2025.12 是主要 formal US OOS，因此 CAGR、Sharpe、drawdown、alpha、benchmark-relative performance、turnover / cost 与正式 robustness conclusion 必须主要基于这个窗口；OOS contamination / prior-exposure register 仍决定该窗口能否诚实地称为 completely untouched。
 
-2026.01–2026.09 不是 Formal Historical OOS。它可作为策略已经冻结后的 Recent / Operational Extension，但不得与 2021–2025.12 合并计算或展示 formal OOS headline CAGR、Sharpe、alpha 或其他主结论。观察 2026 extension 后，不允许重新选择 Factor、参数或重构策略。
+2026.01–2026.09 不是 Formal Historical OOS。它可作为按上述历史 sample-cutoff freeze 处理的策略的 Recent / Operational Extension，但不得与 2021–2025.12 合并计算或展示 formal OOS headline CAGR、Sharpe、alpha 或其他主结论。观察 2026 extension 后，不允许重新选择 Factor、参数或重构策略。
 
 2026.10+ 只有在实际 Strategy Freeze 后的第一个可执行 signal date 起，才可称为 `LIVE_OPS`；此前的回填或 shadow run 不能追溯成为 Live evidence。
 
@@ -1842,7 +1842,7 @@ $$
 
 ### 2026 Recent / Operational Extension 与 CRSP–Yahoo Bridge
 
-2026.01–2026.09 的 `RECENT_EXTENSION` 必须使用 2020 年末冻结的策略。旧 Yahoo daily market data 约覆盖至 2026-09-18，但其 current-S&P500 universe 以 2026 extraction date 为基础，可能含 survivorship / reconstitution bias。因此该 extension 不得声称为无偏 formal historical OOS，也不得并入 2021–2025.12 的 formal headline statistics。
+2026.01–2026.09 的 `RECENT_EXTENSION` 必须使用在 historical research design 中按 2020 sample cutoff 冻结的策略。旧 Yahoo daily market data 约覆盖至 2026-09-18，但其 current-S&P500 universe 以 2026 extraction date 为基础，可能含 survivorship / reconstitution bias。因此该 extension 不得声称为无偏 formal historical OOS，也不得并入 2021–2025.12 的 formal headline statistics。
 
 在 CRSP annual data 不可用的 2026 bridge 中，优先继续使用可用的 Compustat fundamentals、Historical GICS 与 Fama–French / RF；Yahoo 仅作为 market-price / return bridge，SEC Company Facts 可在适当时作为 supplementary 2026 source，而不是 formal 2006–2025 baseline。
 
@@ -2305,13 +2305,15 @@ $$
 
 - Long Leg Gross Return；
 - Long Leg 相对当期 Eligible-Universe Equal-Weight 的 Gross Excess Return；
-- Long Leg 按最终 long-only cost convention 计算的 Net Excess Return / Net Excess Sharpe；
+- Illustrative Long-Leg Net Excess Return / Net Excess Sharpe：仅在 pre-specified research-cost scenario 下（如使用）；transaction-cost freeze 前均为 provisional；
 - Short Leg Gross Return；
 - Long–Short Gross Return；
 - Gross Volatility / Gross Sharpe；
 - Max Drawdown；
 - Turnover；
 - Subperiod Stability。
+
+Gate A 的 required evidence 仍是 gross evidence、turnover、break-even cost 与 cost sensitivity。未在 Gate A 前冻结相关成本假设时，上述 illustrative Long-Leg net result 不得作为 hard Keep / Drop criterion。
 
 若未来要报告 Long–Short Net Sharpe，必须先单独冻结 short borrow cost、financing 与 short-side execution cost；在此之前不进入 Gate A 的正式 Decision Card。
 
@@ -3899,14 +3901,12 @@ $$
 逐期：
 
 $$
-R^{net}_t
+1+R^{net}_t
 =
-R^{gross}_t
--
-TC_t
+(1-TC_t)(1+R_t^{hold})
 $$
 
-分别使用 US / SG 成本假设。
+其中 $TC_t$ 相对于 pre-cost NAV 计量；若报告 $R_t^{gross}-TC_t$，只能作为明确标注为 interpretive / first-order 的近似。分别使用 US / SG 成本假设。
 
 分析：
 
@@ -3957,7 +3957,7 @@ w^{US}_{i,t}R^{US}_{i,t}
 w^{US,cash}_tR^{US,cash}_t
 $$
 
-SG 先在 SGD 本币口径闭合：
+SG 先在 SGD 本币口径构造 gross holdings return：
 
 $$
 R^{SGD,gross}_{SG,t}
@@ -3980,15 +3980,15 @@ $$
 \sum_iw_{i,t}+w^{cash}_t=1
 $$
 
-Net Return：
+随后以本币 pre-cost NAV 为基数应用 transaction cost，并在 SGD 完成 net NAV closure：
 
 $$
-1+R^{net}_t
+1+R^{SGD,net}_{SG,t}
 =
-(1-TC_t)(1+R_t^{hold})
+(1-TC_{SG,t})(1+R^{SGD,gross}_{SG,t})
 $$
 
-SG 美元收益在本币净 NAV closure 之后计算：
+Gross translation 可保留用于 gross attribution / diagnostics：
 
 $$
 1+R^{USD,gross}_{SG,t}
@@ -3997,10 +3997,22 @@ $$
 (1+R^{FX}_t)
 $$
 
+本币净 NAV closure 完成后，才用于最终 portfolio-level reconciliation 的 net translation 为：
+
+$$
+1+R^{USD,net}_{SG,t}
+=
+(1+R^{SGD,net}_{SG,t})
+(1+R^{FX}_t)
+$$
+
+不得 double count FX 或 transaction cost。
+
 最终要求：
 
 - Holdings 可以精确重构 Gross Return；
-- Transaction Cost 可以重构 Net Return；
+- Transaction Cost 可以重构 SGD Net Return；
+- final portfolio-level reconciliation 使用 SGD net → USD net translation identity；
 - FX Contribution 可以单独解释；
 - Attribution 使用的 holdings 与真实策略 holdings 一致；
 - Reconciliation Residual 接近 0。
