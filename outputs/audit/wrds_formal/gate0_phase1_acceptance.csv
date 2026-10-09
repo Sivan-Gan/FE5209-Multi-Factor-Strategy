@@ -1,0 +1,18 @@
+check_id,check_name,severity,status,evidence,notes
+required_files_present,All expected required raw files are present,CRITICAL,PASS,present=16; expected=16,
+unexpected_raw_files,No unexpected physical raw files,CRITICAL,PASS,unexpected_count=0,
+optional_metadata,Optional CRSP index metadata status,INFO,PASS,absent_allowed,Known optional file; absence is not a failure
+sha256_pre_post_stability,Every physical raw file has stable size and SHA256 pre/post audit,CRITICAL,PASS,pre_count=16; post_count=16,
+raw_file_readability,Every physical raw file is readable by its supported container inspector,CRITICAL,PASS,readable_count=16; total=16,
+tar_integrity,Daily-stock TAR and all readable members pass inspection,CRITICAL,PASS,PASS,
+tar_expected_batch_count,Daily-stock TAR has ten gzip batch members,CRITICAL,PASS,observed_batch_count=10,
+schema_inventory,Schema inspection completed for CSV/text raw objects,CRITICAL,PASS,schema_object_count=26,
+raw_date_format_exceptions,Raw date-format exceptions are recorded without coercion,WARN,WARN,nonblank_unparsed_date_cells=652; object_count=1,No coercion or semantic interpretation applied; deferred to a later Gate 0 phase
+query_input_permno,Query input has 959 unique numeric PERMNO values,CRITICAL,PASS,row_count=959; unique_permno_count=959,
+constituent_historical_permno_count,Constituent raw file exposes 959 distinct PERMNO values,CRITICAL,PASS,observed=959,Raw coverage fact only; membership-policy validation is deferred
+daily_stock_raw_key,"Daily-stock TAR raw (PERMNO, DlyCalDt) duplicate check",CRITICAL,PASS,duplicates=0; missing_keys=0,
+index_indno_set,CRSP index extraction contains expected INDNO values,CRITICAL,PASS,"[""1000080"",""1000500"",""1000502""]",Raw field presence only; index semantics deferred
+ccm_linktype_raw_values,CCM raw file contains expected LC/LU/LS link-type extraction,CRITICAL,PASS,"[""LC"",""LS"",""LU""]",Raw field values only; full CCM policy verification is deferred
+historical_gics_schema,Historical-GICS raw schema records effective-date boundary fields,CRITICAL,PASS,"[""indfrom"",""indthru""]",Effective-date merge validation is deferred
+fama_french_schema,Fama–French daily/monthly raw headers and date coverage are recorded,CRITICAL,PASS,schema_rows=2,Return-unit and frequency semantics are deferred
+phase_boundary,Phase-2/3 semantic matters remain unresolved,INFO,PASS,DEFERRED_TO_GATE0_PHASE2; DEFERRED_TO_GATE0_PHASE3,No semantic policy was frozen by this audit
