@@ -20,12 +20,12 @@ Run `PYTHONDONTWRITEBYTECODE=1 python -m src.data.run_price_factor_pipeline --ro
 
 | Object | Path | Grain |
 | --- | --- | --- |
-| Canonical master | `data/canonical/us_security_master_dev.csv` | Current security / canonical ticker |
-| Canonical daily data | `data/canonical/us_daily_market_dev.csv.gz` | Canonical `(ticker, date)` |
-| Weekly calendar | `data/canonical/us_weekly_signal_calendar_dev.csv` | US ISO natural week |
-| Reproducible preprocessing staging data | `data/interim/us_price_factor_preprocess_dev.sqlite` | Stock × signal date × metric |
-| Raw metrics | `outputs/factor_research/price_factors/us_price_metrics_raw_dev.csv.gz` | Stock × signal date × metric |
-| Final input scores | `outputs/factor_research/price_factors/us_price_factor_scores_dev.csv.gz` | Stock × signal date × metric |
+| Canonical master | `data/dev_legacy/canonical/us_security_master_dev.csv` | Current security / canonical ticker |
+| Canonical daily data | `data/dev_legacy/canonical/us_daily_market_dev.csv.gz` | Canonical `(ticker, date)` |
+| Weekly calendar | `data/dev_legacy/canonical/us_weekly_signal_calendar_dev.csv` | US ISO natural week |
+| Reproducible preprocessing staging data | `data/dev_legacy/interim/us_price_factor_preprocess_dev.sqlite` | Stock × signal date × metric |
+| Raw metrics | `outputs/factor_research/dev_legacy/price_factors/us_price_metrics_raw_dev.csv.gz` | Stock × signal date × metric |
+| Final input scores | `outputs/factor_research/dev_legacy/price_factors/us_price_factor_scores_dev.csv.gz` | Stock × signal date × metric |
 
 The canonical master is the sole downstream identity source. It retains both canonical `ticker` and vendor `yahoo_ticker`, including `BF.B → BF-B` and `BRK.B → BRK-B`. SPY remains in daily data only as a benchmark/calendar record with `is_stock_cross_section=false`; it is never a stock-factor row.
 

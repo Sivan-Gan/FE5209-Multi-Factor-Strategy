@@ -8,7 +8,7 @@
     "daily": {
       "benchmark_row_count": 5210,
       "duplicate_canonical_ticker_date_rows": 0,
-      "path": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/data/canonical/us_daily_market_dev.csv.gz",
+      "path": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/data/dev_legacy/canonical/us_daily_market_dev.csv.gz",
       "row_count": 2392900,
       "stock_row_count": 2387690,
       "unmapped_price_tickers": []
@@ -16,9 +16,9 @@
     "evidence_stage": "DEV_CURRENT_UNIVERSE",
     "master_rows": 503,
     "paths": {
-      "calendar": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/data/canonical/us_weekly_signal_calendar_dev.csv",
-      "daily": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/data/canonical/us_daily_market_dev.csv.gz",
-      "master": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/data/canonical/us_security_master_dev.csv"
+      "calendar": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/data/dev_legacy/canonical/us_weekly_signal_calendar_dev.csv",
+      "daily": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/data/dev_legacy/canonical/us_daily_market_dev.csv.gz",
+      "master": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/data/dev_legacy/canonical/us_security_master_dev.csv"
     }
   },
   "evidence_stage": "DEV_CURRENT_UNIVERSE",

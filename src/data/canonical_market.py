@@ -131,7 +131,7 @@ def project_root() -> Path:
 
 
 def canonical_dir(root: Path | None = None) -> Path:
-    return (root or project_root()) / "data" / "canonical"
+    return (root or project_root()) / "data" / "dev_legacy" / "canonical"
 
 
 def canonical_paths(root: Path | None = None) -> dict[str, Path]:

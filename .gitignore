@@ -26,7 +26,13 @@ __pycache__/
 /data/canonical/*.sqlite-wal
 /data/canonical/*.sqlite-shm
 /data/canonical/*.csv.gz
-/data/interim/
+/data/interim/*
+!/data/interim/README.md
+/data/dev_legacy/canonical/*.sqlite
+/data/dev_legacy/canonical/*.sqlite-wal
+/data/dev_legacy/canonical/*.sqlite-shm
+/data/dev_legacy/canonical/*.csv.gz
+/data/dev_legacy/interim/
 
 # Large compressed factor outputs; audit summaries and small reports remain trackable
 /outputs/factor_research/**/*.csv.gz

@@ -79,7 +79,7 @@ distinct source fields and must never be treated as interchangeable.
 The current price layer is suitable for `DEV_CURRENT_UNIVERSE` intake but is not
 a vendor HTTP-response archive and may be retrospectively adjusted after later
 corporate actions. The later [historical-market-cap DEV specification]
-(/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/docs/HISTORICAL_MARKET_CAP_SPEC_DEV.md)
+(/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/docs/dev_legacy/HISTORICAL_MARKET_CAP_SPEC_DEV.md)
 audits a candidate split/share-class/action basis, but it remains pending
 human sign-off and has not constructed a market-cap panel. Direct Yahoo-price ×
 SEC-share multiplication remains prohibited.
@@ -164,16 +164,16 @@ current PIT-fundamental source or a DEV coding blocker.
 | SEC multi-unit, duplicate, amendment, form, and period complexity | WARN | The signed-tag canonical PIT parser records form/taxonomy/period controls, provenance, and explicit missingness; do not add an unapproved tag, unit, or restatement rule. |
 
 The completed canonical PIT source-input extension is defined in
-`docs/CANONICAL_PIT_FUNDAMENTALS_DEV.md`. This Gate 0 contract does **not**
+`docs/dev_legacy/CANONICAL_PIT_FUNDAMENTALS_DEV.md`. This Gate 0 contract does **not**
 authorize a claim of Formal PIT evidence, a formal Gate A factor-set freeze, or
 any modification to the raw package.
 
 ## DEV canonical market extension
 
 The accepted downstream price-input objects are
-`data/canonical/us_security_master_dev.csv`,
-`data/canonical/us_daily_market_dev.csv.gz`, and
-`data/canonical/us_weekly_signal_calendar_dev.csv`. They are derived products,
+`data/dev_legacy/canonical/us_security_master_dev.csv`,
+`data/dev_legacy/canonical/us_daily_market_dev.csv.gz`, and
+`data/dev_legacy/canonical/us_weekly_signal_calendar_dev.csv`. They are derived products,
 not raw evidence, and all carry `DEV_CURRENT_UNIVERSE`.
 
 - The master is the sole canonical identity map, retaining canonical `ticker`
@@ -187,14 +187,14 @@ not raw evidence, and all carry `DEV_CURRENT_UNIVERSE`.
   week intentionally has no inferred next trading date because it ends on
   2026-09-18.
 
-`docs/PRICE_FACTOR_ENGINEERING_DEV.md` records the 252/21 and 126/21 momentum
+`docs/dev_legacy/PRICE_FACTOR_ENGINEERING_DEV.md` records the 252/21 and 126/21 momentum
 indexes, 252-return volatility, metric-specific availability, preprocessing,
 and the explicit non-implementation of IVOL and neutralization. These DEV
 objects do not change any source limitation or create Formal PIT evidence.
 
 ## DEV SEC fundamental-input specification extension
 
-`docs/SEC_FUNDAMENTAL_INPUT_SPEC_DEV.md` and the accompanying `outputs/audit`
+`docs/dev_legacy/SEC_FUNDAMENTAL_INPUT_SPEC_DEV.md` and the accompanying `outputs/audit`
 SEC reports profile all 497 Company Facts archives without selecting or writing
 canonical fundamental values. They retain the frozen conservative rule
 `filed_date <= signal_date`, audit tags/units/forms/periods/amendments, and

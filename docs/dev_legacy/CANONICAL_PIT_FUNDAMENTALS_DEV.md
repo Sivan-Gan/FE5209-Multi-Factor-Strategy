@@ -42,8 +42,8 @@ before a separately authorized factor-engineering stage.
 
 | Object | Grain / key | Rows | Purpose |
 | --- | --- | ---: | --- |
-| `data/canonical/us_pit_fundamental_facts_dev.sqlite` → `canonical_fundamental_facts` | `(ticker, source_observation_id)` | 469,705 | Normalized signed-tag SEC observations, including unavailable/excluded observations and their reason. |
-| `data/canonical/us_weekly_pit_fundamentals_dev.sqlite` → `weekly_security_universe` | `(ticker, signal_date)` | 543,743 = 503 × 1,081 | Complete DEV ticker/week universe and SEC-map status. |
+| `data/dev_legacy/canonical/us_pit_fundamental_facts_dev.sqlite` → `canonical_fundamental_facts` | `(ticker, source_observation_id)` | 469,705 | Normalized signed-tag SEC observations, including unavailable/excluded observations and their reason. |
+| `data/dev_legacy/canonical/us_weekly_pit_fundamentals_dev.sqlite` → `weekly_security_universe` | `(ticker, signal_date)` | 543,743 = 503 × 1,081 | Complete DEV ticker/week universe and SEC-map status. |
 | Same weekly database → `weekly_pit_fundamental_snapshot` | `(ticker, signal_date, economic_concept, period_class)` | 5,088,161 | Sparse available PIT facts with full source provenance and age fields. |
 | Same weekly database → `weekly_pit_fundamental_unavailability` | Same as snapshot key | 4,027 | Explicit `AMBIGUOUS`, `SIGN_EXCEPTION`, or `OPEN_IMPLEMENTATION_ISSUE` slots. |
 

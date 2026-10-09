@@ -166,7 +166,7 @@ def project_root() -> Path:
 
 
 def canonical_dir(root: Path | None = None) -> Path:
-    return (root or project_root()) / "data" / "canonical"
+    return (root or project_root()) / "data" / "dev_legacy" / "canonical"
 
 
 def audit_dir(root: Path | None = None) -> Path:
@@ -257,7 +257,7 @@ def _classify_source_observation(
 
 
 def _read_security_mapping(root: Path) -> tuple[list[dict[str, str]], dict[int, list[dict[str, str]]], list[dict[str, str]]]:
-    master_path = root / "data" / "canonical" / "us_security_master_dev.csv"
+    master_path = canonical_dir(root) / "us_security_master_dev.csv"
     _, master_rows = source_audit._read_csv_rows(master_path)
     package = source_audit.package_root(root)
     _, source_map_rows = source_audit._read_csv_rows(package / source_audit.SEC_CIK_MAP_FILE)
@@ -282,7 +282,7 @@ def _read_security_mapping(root: Path) -> tuple[list[dict[str, str]], dict[int, 
 
 
 def _read_signal_dates(root: Path) -> list[date]:
-    path = root / "data" / "canonical" / "us_weekly_signal_calendar_dev.csv"
+    path = canonical_dir(root) / "us_weekly_signal_calendar_dev.csv"
     _, rows = source_audit._read_csv_rows(path)
     dates = [date.fromisoformat(row["signal_date"]) for row in rows]
     if any(right <= left for left, right in zip(dates, dates[1:])):

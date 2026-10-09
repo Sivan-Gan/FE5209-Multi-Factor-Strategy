@@ -145,7 +145,7 @@ daily market rows (including 5,210 benchmark SPY rows), and 1,081 weekly signal
 dates. It constructs only `MOM12-1`, `MOM6-1`, and 252-day realised volatility,
 each with raw availability, base-entry eligibility, reason-code, winsorized,
 z-score, and direction-normalized fields. The full contract is
-`docs/PRICE_FACTOR_ENGINEERING_DEV.md`.
+`docs/dev_legacy/PRICE_FACTOR_ENGINEERING_DEV.md`.
 
 This remains `DEV_CURRENT_UNIVERSE` input engineering. It is not Forward IC,
 single-factor portfolio, FMOM, neutralization, strategy, or backtest evidence;
@@ -163,7 +163,7 @@ classed weekly PIT availability/provenance layer. The selector enforces
 classes separate, applies amendment availability only from its own filing date,
 and preserves unresolved conflicts as missing. Details, coverage, age, foreign
 form, sign-exception, and open-provenance evidence are in
-`docs/CANONICAL_PIT_FUNDAMENTALS_DEV.md`.
+`docs/dev_legacy/CANONICAL_PIT_FUNDAMENTALS_DEV.md`.
 
 This is an input/provenance layer, not a Value, Quality, Investment, FCF, or
 market-cap calculation. A future factor-definition step still must determine

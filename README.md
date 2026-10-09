@@ -23,18 +23,18 @@ a timing limitation, not a DEV coding blocker.
   panel.
 - `docs/PROJECT_UNDERSTANDING.md` records the current evidence-supported
   project state, boundaries, and pending inputs.
-- `docs/DATA_CONTRACT_DEV.md` defines the immutable source-layer contract.
-- `docs/PRICE_FACTOR_ENGINEERING_DEV.md` defines the DEV canonical market and
+- `docs/dev_legacy/DATA_CONTRACT_DEV.md` defines the immutable source-layer contract.
+- `docs/dev_legacy/PRICE_FACTOR_ENGINEERING_DEV.md` defines the DEV canonical market and
   price-factor-input contract.
-- `docs/SEC_FUNDAMENTAL_INPUT_SPEC_DEV.md` records the DEV SEC raw-fact
+- `docs/dev_legacy/SEC_FUNDAMENTAL_INPUT_SPEC_DEV.md` records the DEV SEC raw-fact
   selection proposal, recorded DEV input controls, and remaining canonical-input
   decisions.
-- `docs/CANONICAL_PIT_FUNDAMENTALS_DEV.md` defines the constructed signed-tag
+- `docs/dev_legacy/CANONICAL_PIT_FUNDAMENTALS_DEV.md` defines the constructed signed-tag
   SEC fact layer and weekly PIT availability/provenance contract.
-- `docs/HISTORICAL_MARKET_CAP_SPEC_DEV.md` records the DEV-only SEC-share,
+- `docs/dev_legacy/HISTORICAL_MARKET_CAP_SPEC_DEV.md` records the DEV-only SEC-share,
   Yahoo-price/split, and multi-class specification audit. It authorizes no
   historical market-cap construction.
-- `docs/LEVERAGE_DEFINITION_TARGETED_AUDIT_DEV.md` records the approved DEV
+- `docs/dev_legacy/LEVERAGE_DEFINITION_TARGETED_AUDIT_DEV.md` records the approved DEV
   governance decisions and the evidence-backed, non-construction recommendation
   for the ordinary non-Financial/non-RE Quality Leverage input.
 
@@ -43,8 +43,10 @@ a timing limitation, not a DEV coding blocker.
 | Location | Purpose |
 | --- | --- |
 | `raw_package/` | Immutable supplied evidence. Never edit, overwrite, or write derived data here. |
-| `data/interim/` | Reproducible intermediate datasets. |
-| `data/canonical/` | Accepted downstream research inputs only. |
+| `data/dev_legacy/interim/` | Retained intermediate datasets produced by old DEV pipelines. |
+| `data/dev_legacy/canonical/` | Retained canonical datasets produced by old DEV pipelines. |
+| `data/interim/` | Reserved for future Formal WRDS intermediate datasets. |
+| `data/canonical/` | Reserved for future Formal WRDS canonical datasets. |
 | `data/external/` | Reserved for future external sources, including potential CRSP, Compustat, historical constituent, and historical GICS data. |
 | `config/` | Frozen research parameters once they are formally determined; currently empty. |
 | `src/` | Reusable calculation logic only. |
@@ -52,9 +54,9 @@ a timing limitation, not a DEV coding blocker.
 | `outputs/` | Generated audit, research, strategy, cross-market, and report artifacts only. |
 
 `src/data/source_audit.py` provides read-only Gate 0 auditing. Canonical data
-in `data/canonical/`, reproducible staging data in `data/interim/`, and the
+in `data/dev_legacy/canonical/`, reproducible staging data in `data/dev_legacy/interim/`, and the
 three approved raw/preprocessed price metrics under
-`outputs/factor_research/price_factors/` are all labelled
+`outputs/factor_research/dev_legacy/price_factors/` are all labelled
 `DEV_CURRENT_UNIVERSE`. No fundamental factor, IVOL, neutralized factor, IC,
 portfolio, FMOM, strategy, or backtest result has been generated.
 
@@ -63,7 +65,7 @@ availability/provenance layer under the signed exact-tag rules. It contains no
 financial ratio, yield, market capitalization, or fundamental-factor value.
 Exact Gross Profit, primary FCF inputs with a negative-CapEx exception,
 conditional US-GAAP 20-F treatment, and ambiguity/open-provenance missingness
-are documented in `docs/CANONICAL_PIT_FUNDAMENTALS_DEV.md`.
+are documented in `docs/dev_legacy/CANONICAL_PIT_FUNDAMENTALS_DEV.md`.
 
 The historical Yahoo-price × SEC-shares estimated-market-cap repair route is
 retired from the active codebase: its formal decision is

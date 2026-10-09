@@ -122,7 +122,7 @@ The machine-readable equivalent is [sec_design_signoff_table_dev.csv](/Users/gan
 
 ## Historical pre-sign-off questions and their current status
 
-1. Leverage economic scope was the remaining core definition. It is now assessed in [the targeted audit](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/docs/LEVERAGE_DEFINITION_TARGETED_AUDIT_DEV.md), which makes a recommendation but does not claim a construction authorization.
+1. Leverage economic scope was the remaining core definition. It is now assessed in [the targeted audit](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/docs/dev_legacy/LEVERAGE_DEFINITION_TARGETED_AUDIT_DEV.md), which makes a recommendation but does not claim a construction authorization.
 2. **Resolved — DEV sign-off:** exact `GrossProfit` is the baseline; no universal fallback, including `SalesRevenueNet - CostOfGoodsAndServicesSold`, enters the baseline.
 3. **Resolved — DEV sign-off:** primary FCF is OCF minus primary CapEx; negative CapEx is `SIGN_EXCEPTION`/unavailable, without absolute-value or sign inversion.
 4. **Resolved — DEV sign-off:** 20-F is conditionally included. US-GAAP facts use the same controls; IFRS facts require separately approved mapping and currency policy. There are no 40-F observations.

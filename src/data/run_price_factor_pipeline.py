@@ -74,7 +74,7 @@ def project_root() -> Path:
 
 
 def output_dir(root: Path | None = None) -> Path:
-    return (root or project_root()) / "outputs" / "factor_research" / "price_factors"
+    return (root or project_root()) / "outputs" / "factor_research" / "dev_legacy" / "price_factors"
 
 
 def audit_dir(root: Path | None = None) -> Path:
@@ -82,7 +82,7 @@ def audit_dir(root: Path | None = None) -> Path:
 
 
 def interim_db_path(root: Path | None = None) -> Path:
-    return (root or project_root()) / "data" / "interim" / "us_price_factor_preprocess_dev.sqlite"
+    return (root or project_root()) / "data" / "dev_legacy" / "interim" / "us_price_factor_preprocess_dev.sqlite"
 
 
 def output_paths(root: Path | None = None) -> dict[str, Path]:
@@ -249,7 +249,7 @@ def _make_raw_metric_rows(
                 "valid_observation_count": result["valid_observation_count"],
                 "expected_observation_count": result["expected_observation_count"],
                 "zero_return_count": result["zero_return_count"],
-                "raw_source_daily_path": "data/canonical/us_daily_market_dev.csv.gz",
+                "raw_source_daily_path": "data/dev_legacy/canonical/us_daily_market_dev.csv.gz",
             }
 
 
