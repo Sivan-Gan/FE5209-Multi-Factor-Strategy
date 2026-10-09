@@ -64,17 +64,24 @@ The framework specifies the following US research schedule:
 | Development / warm-up | 2006–2010 | Validate pipeline and signals; not final performance selection. |
 | Factor selection | 2011–2015 | Evaluate candidate factors and freeze the final factor set at Gate A. |
 | Configuration selection | 2016–2020 | Select permitted FMOM/configuration choices; Gates B/C freeze the US Base strategy. |
-| Formal Historical OOS | 2021–2025.12 | `HIST_OOS_BASE`; primary formal US evidence after Gate C. |
+| Formal Historical OOS | 2021–2025.12 | `HIST_OOS_BASE`; formal US evidence after Gate C, with prior exposure governed and disclosed through the contamination register. |
 | Recent / operational extension | 2026.01–2026.09 | `RECENT_EXTENSION`; separate from formal OOS headline statistics. |
 | Live / forward test | 2026.10+ | `LIVE_OPS` only after an actual strategy freeze. |
 
 Formal Gate 0 — WRDS Data Ready must precede formal canonical construction and
 factor construction. It requires raw integrity, coverage, PERMNO/GVKEY and
-time-valid CCM verification, Historical-GICS timing, Compustat PIT rules, CRSP
-DlyCap/CIZ/index semantics, Fama–French unit checks, and reproducible timing
-controls. The remaining gates are A (final factor set), B (FMOM and portfolio
+time-valid CCM verification, Historical-GICS timing, Compustat availability
+and vintage/restatement claim-boundary rules, security-/issuer-level market-cap
+design, CRSP DlyCap/CIZ/index semantics, Fama–French unit checks, and
+reproducible timing controls. The remaining gates are A (final factor set), B (FMOM and portfolio
 configuration), C (US Base), D (SG Strict and Feasible transfer specifications),
 E (validated adaptation), and F (final untouched test).
+
+`HIST_OOS_BASE` remains the pre-specified 2021–2025.12 formal split; it is not
+automatically a never-viewed sample. Before Gate A/B/C decisions are treated as
+fully frozen, the project must maintain the SSOT-required prior-exposure /
+contamination register and disclose any material design influence rather than
+claiming a fabricated untouched OOS.
 
 The retained Yahoo price stage ends on 2026-09-18. It does not itself provide
 a complete October 2026 operational-test feed.
@@ -108,13 +115,22 @@ PERMNO is the security key and GVKEY is the company key; ticker/CUSIP are only
 diagnostic identifiers. The formal CCM baseline is `LINKTYPE ∈ {LC, LU, LS}`
 and `LINKPRIM ∈ {P, C, J}`, subject to `LINKDT <= t <= LINKENDDT`; valid J
 links are retained as secondary issues. Historical GICS is effective-date
-based (`INDFROM <= t <= INDTHRU`). Formal market cap is CRSP `DlyCap`; the
-formal IVOL market proxy is `INDNO 1000080` `DlyTotRet`, and the formal US
+based (`INDFROM <= t <= INDTHRU`). CRSP `DlyCap` is the formal security-level
+market-cap raw source; a Value ratio with a company/GVKEY accounting numerator
+requires a Gate-0-validated issuer-level denominator that covers relevant share
+classes. The formal IVOL market proxy is `INDNO 1000080` `DlyTotRet`, and the formal US
 benchmark is `INDNO 1000500` `DlyTotRet`. `INDNO 1000502` is a price-return
 cross-check only. Fama–French/RF fields are decimal returns.
 
 These are formal data-contract rules, not a claim that their canonical
-implementation or Gate 0 validation has been completed.
+implementation or Gate 0 validation has been completed. Publication-date
+alignment is not, by itself, proof of vintage-perfect historical Compustat
+values; any residual revision/restatement limitation must be disclosed.
+
+For formal factor research, baseline Forward IC pairs a score known at signal
+cutoff $S_t$ with the executable local return from execution $E_t$ to
+$E_{t+1}$. Signal-close-to-signal-close IC, if reported, is a separate
+non-executable predictive diagnostic.
 
 ## Retained DEV Yahoo + SEC source-package inventory
 
@@ -198,10 +214,11 @@ DEV freeze history and are documented by the active retirement manifest; they
 are not active canonical inputs and must not be revived as Formal PIT market
 cap.
 
-The formal market-cap baseline is CRSP `DlyCap`, subject to Formal Gate 0
-verification of its unit and semantic contract. Retained Yahoo price / SEC PIT
-infrastructure remains available only for explicitly labelled DEV audit work or
-possible 2026 `RECENT_EXTENSION` support.
+The formal security-level market-cap raw source is CRSP `DlyCap`, subject to
+Formal Gate 0 verification of its unit and semantic contract; factor uses with
+company-level numerators require the SSOT's issuer-level design. Retained Yahoo
+price / SEC PIT infrastructure remains available only for explicitly labelled
+DEV audit work or possible 2026 `RECENT_EXTENSION` support.
 
 ## Known limitations
 
@@ -216,7 +233,7 @@ possible 2026 `RECENT_EXTENSION` support.
 - **Retired Yahoo × SEC market-cap route:** retrospective Yahoo action handling
   and periodic SEC shares remain limitations of the legacy evidence. They are
   not an unresolved active formal market-cap task; the formal baseline is CRSP
-  `DlyCap` after Gate 0.
+  `DlyCap` as a validated security-level raw source after Gate 0.
 - **Price-quality review remains open:** zero-volume and anomalous OHLC rows
   remain in the download stage, and AMCR, FERG, and VRT require identity/listing
   history review. A `review` status is not an automatic exclusion rule.
@@ -236,11 +253,12 @@ possible 2026 `RECENT_EXTENSION` support.
 The WRDS source layer is available; the pending work is its formal data-contract
 validation, not source acquisition. Formal Gate 0 must verify raw hashes and
 schemas; historical universe coverage; duplicate keys; PERMNO/GVKEY and CCM
-coverage; Historical-GICS timing; Compustat quarterly/annual PIT rules; CRSP
-`DlyCap`, CIZ return/delisting, and index semantics; Fama–French/RF units; and
-the `2025-12-31` formal cutoff. It must also document the annual PIT-availability
-rule and validate any 2025 CRSP–Yahoo bridge before using Yahoo market data for
-the 2026 extension.
+coverage; Historical-GICS timing; Compustat quarterly/annual availability and
+revision/restatement semantics; security-/issuer-level market-cap design and
+issuer concentration diagnostics; CRSP `DlyCap`, CIZ return/delisting, and
+index semantics; Fama–French/RF units; and the `2025-12-31` formal cutoff. It
+must also document the annual PIT-availability rule and validate any 2025
+CRSP–Yahoo bridge before using Yahoo market data for the 2026 extension.
 
 No raw source, including WRDS, silently settles methodology. Versions, field
 definitions, coverage, timing, merge rules, and formal exception handling remain
@@ -252,7 +270,7 @@ subject to the SSOT and Gate 0 acceptance evidence.
 | --- | --- |
 | Preserve and audit `DEV_CURRENT_UNIVERSE` evidence, explicitly retaining current-universe/current-GICS limitations. It may support legacy audits and a clearly labelled 2026 bridge. | Build reproducible interim and canonical datasets from the historical universe; label formal inputs `FORMAL_PIT_UNIVERSE`. |
 | Do not describe DEV outputs as unbiased historical investable performance, formal PIT sector-neutralization evidence, Final OOS, or evidence eligible to close formal Gate A. | Run formal factor-selection evidence and, only under the formal stack, support the Gate A decision. |
-| Keep the legacy package immutable; do not revive the retired Yahoo × SEC market-cap route. | Use CRSP `DlyCap` as the formal market-cap baseline once its contract is verified. |
+| Keep the legacy package immutable; do not revive the retired Yahoo × SEC market-cap route. | Use Gate-0-validated CRSP `DlyCap` as the security-level raw source, with issuer aggregation where the factor economics require it. |
 
 ## Immediate next steps
 
@@ -265,5 +283,5 @@ subject to the SSOT and Gate 0 acceptance evidence.
 4. Preserve retained Yahoo price / SEC PIT infrastructure for DEV audit work or
    possible `RECENT_EXTENSION` support, with the required evidence labels and
    2025 bridge validation.
-5. Do not restart `STOP_DEV_MARKET_CAP_REPAIR`; use the SSOT's CRSP `DlyCap`
-   baseline for formal work after Gate 0.
+5. Do not restart `STOP_DEV_MARKET_CAP_REPAIR`; use the SSOT's Gate-0-validated
+   CRSP `DlyCap` security-level raw source and issuer-level design where needed.

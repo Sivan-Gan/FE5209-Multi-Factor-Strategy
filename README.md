@@ -28,7 +28,7 @@ are not a frozen final factor set.
 | Development / warm-up | 2006–2010 | Validate pipeline and signals. |
 | Factor selection | 2011–2015 | Gate A freezes the Final Factor Set. |
 | Configuration selection | 2016–2020 | Gates B/C freeze FMOM and the US Base strategy. |
-| Formal Historical OOS | 2021–2025.12 | `HIST_OOS_BASE`; primary formal US evidence. |
+| Formal Historical OOS | 2021–2025.12 | `HIST_OOS_BASE`; formal US evidence, subject to the prior-exposure / contamination register. |
 | Recent / operational extension | 2026.01–2026.09 | `RECENT_EXTENSION`; never combine with formal OOS headline statistics. |
 | Live / forward test | 2026.10+ | `LIVE_OPS` after an actual strategy freeze. |
 
@@ -38,7 +38,13 @@ Formal historical research uses the WRDS stack after Formal Gate 0. Its
 security key is PERMNO, its company key is GVKEY, and the formal mapping is
 historical S&P 500 membership → CRSP PERMNO → time-valid CCM → Compustat GVKEY.
 Historical GICS, CRSP `DlyCap`, and the formal CRSP total-return index series
-are subject to the Gate 0 data contract.
+are subject to the Gate 0 data contract. Compustat timing targets
+publication-date information availability, while its historical
+vintage/restatement semantics remain a Gate 0 claim-boundary check. `DlyCap`
+is security-level; any company-level accounting numerator requires an
+economically consistent issuer-level market-cap design. `HIST_OOS_BASE` remains
+the formal split, but prior exposure must be recorded rather than represented
+as an invented untouched sample.
 
 `raw_package/US_source_data_2026-10-08/` remains immutable Yahoo + SEC
 **DEV historical evidence** and a possible 2026 Recent Extension support

@@ -188,6 +188,7 @@ $$
 | `adaptation_validation.csv` | M6 | M5 / Relevant Owner | Base vs Adapted、Primary Mechanism Metric、Secondary Metrics、Decision |
 | `reconciliation_ledger.csv` | M1 | M4/M5 | Holdings → Gross → Costs / FX → Net 的逐期闭合 |
 | `run_manifest.csv` | M1 | 全体 | Data / Config / Code / Environment / Sample 的可复现记录 |
+| `oos_contamination_register.csv` | M6 | 全体 | 后期样本的 prior exposure、潜在设计影响与 claim classification |
 | `acceptance_test_report.csv` | M1 | 各模块 Owner | Gate 自动化 invariant tests 与 PASS / FAIL 状态 |
 
 这些文件构成 **handoff contract**。下游成员不得绕过标准输出重新从更早阶段自行构造另一套口径。
@@ -203,7 +204,7 @@ Primary Owner 完成后，Reviewer 至少检查：
 - 输入日期范围；
 - 参数读取是否来自统一配置；
 - 是否存在 forward-looking 信息；
-- 输出行数 / 日期 / ticker 是否合理；
+- 输出行数 / 日期 / security ID 是否合理；
 - 关键恒等式是否成立；
 - 与上一阶段 Handoff 是否一致。
 
@@ -320,7 +321,8 @@ $$
 
 ### Data / PIT Tests
 
-- `(date, ticker, market)` 唯一；
+- canonical uniqueness key 为 `(date, market, security_id)`；US formal pipeline 中 `security_id = PERMNO`，SG 中为其 data contract 冻结的 security identifier；ticker 只作 descriptive / diagnostic field；
+- US formal `(date, PERMNO)` 重复记录数 = 0；
 - 不允许 `NaN / inf` 静默进入关键回报、权重与价格字段；
 - `information_date <= signal_cutoff`；
 - 若只有财报公布日期、没有具体公布时间戳，则保守规定：**从公布日后的下一个本地交易日开始可用**；
@@ -338,6 +340,7 @@ $$
 
 - `factor_return_t` 必须来自上一期 formation 的 factor portfolio；
 - `FMOM_t` 不得读取 `factor_return_{t+1}`；
+- baseline Forward IC 的 score 必须在 $S_t$ 已知，且被评价的 return 必须从 $E_t$ 开始；任何 $S_t\rightarrow S_{t+1}$ IC 必须单独标记为 non-executable predictive diagnostic；
 - Dynamic / Static 两条策略除 Factor Weighting 外其他 inputs 完全一致；
 - factor weights 每期和为 1。
 
@@ -367,7 +370,7 @@ $$
 | Evidence Label | 含义 | 可以声称什么 |
 |---|---|---|
 | `DEV_CURRENT_UNIVERSE` | 旧 Yahoo + SEC、现今成分股 / current-GICS DEV 数据层 | DEV historical evidence；不能作 Formal PIT 或无偏历史 universe claim |
-| `FORMAL_PIT_UNIVERSE` | CRSP + Compustat + CCM + Historical GICS 的正式历史数据层 | 仅在 Formal Gate 0 通过后，作为正式 US 历史研究的输入基础 |
+| `FORMAL_PIT_UNIVERSE` | CRSP + Compustat + CCM + Historical GICS 的正式历史数据层 | 仅在 Formal Gate 0 通过后，作为正式 US 历史研究的输入基础；该标签本身不自动声称 vintage-perfect accounting snapshot |
 | `DEV` | Development / Factor Selection 证据 | 仅用于设计与筛选 |
 | `CONFIG` | Configuration Selection | 仅用于参数冻结 |
 | `HIST_OOS_BASE` | 使用 Formal WRDS stack 的 2021–2025.12 Frozen Base 历史样本外 | Base Strategy 的主正式历史 OOS 证据 |
@@ -382,12 +385,22 @@ $$
 
 正式 US 历史研究的目标输入是 CRSP 历史 S&P 500 membership、CRSP market data、time-valid CCM 与 Compustat Historical GICS，统一标记为 `FORMAL_PIT_UNIVERSE`。在 Formal Gate 0 未通过前，不得把已放置的 raw WRDS files 直接视为正式研究结果。
 
+`FORMAL_PIT_UNIVERSE` 首先要求 point-in-time **information availability**：例如 quarterly `RDQ` 与 signal date 的对齐。它不自动证明历史 Compustat accounting values 是 vintage-perfect snapshot；若 WRDS source semantics 未证实 historical revisions / restatements 已按当时 vintage 固定，正式方法必须将其表述为 **publication-date-aligned historical fundamentals**，并披露 residual revision / restatement bias。
+
 旧 Yahoo + SEC package 的“现今 S&P 500 成分股向历史回推”仍存在 survivorship / reconstitution bias，并且 current GICS 不是 historical PIT classification。因此该 package 只能标记为 `DEV_CURRENT_UNIVERSE` 或在 2026 bridge 中作为 `RECENT_EXTENSION` 的有限来源：
 
 - DEV / recent-extension 历史收益不得表述为“无偏的真实可投资历史收益”；
 - 任何仍使用 DEV universe 的 Cross-Market 结论必须表述为 **conditional on the research universes used**；
 - 不得用后处理消除 survivorship bias；
 - Formal historical claims 必须使用经 Gate 0 验证的正式 WRDS pipeline，而不是旧 current-universe package。
+
+### OOS Contamination / Prior-Exposure Register
+
+`HIST_OOS_BASE` 保留为 2021–2025.12 的预先规定 formal research split；它不自动表示该时期从未被任何研究成员看到。由于 formal WRDS rebuild 前的 DEV work 可能已暴露部分后期信息，在 Gate A / B / C 被视为 fully frozen 前，必须建立并审核 `oos_contamination_register.csv`。
+
+每条记录至少包含：已查看的 evidence / result、已知时的查看日期、是否影响 Factor Selection、是否影响 Configuration、是否影响 Portfolio Rule，以及 contamination classification。应登记的 prior exposure 至少包括 2021–2025 factor performance、strategy performance、parameter comparisons、market-cap diagnostics 及其他可能影响设计的 evidence。
+
+若 later-period information 被实质用于 strategy design，相关 evidence 不得宣称为 completely untouched OOS。不得因此追溯发明 untouched sample，也不得仅因 register 改变既定 sample split；最终报告必须如实披露 prior exposure 与相应 claim limitation。
 
 ### Final OOS 不足时的处理
 
@@ -909,8 +922,10 @@ $$
 - Formal identifier flow 固定为 `Historical S&P 500 Membership → PERMNO → time-valid CCM → GVKEY`；ticker / CUSIP 只可作 audit / diagnostic identity；
 - CCM baseline 为 `LINKTYPE ∈ {LC, LU, LS}`、`LINKPRIM ∈ {P, C, J}`，并严格满足 `LINKDT <= t <= LINKENDDT`，不允许 link forward-fill / backward-fill；`J` link 保留且标记 `secondary_issue = True`，`N` 不自动进入 baseline；
 - Historical GICS 使用 `comp_na_daily_all.co_hgic` 的 `gvkey, indtype, gsector, ggroup, gind, gsubind, indfrom, indthru`，只接受 `indtype = GICS` 且 `INDFROM <= t <= INDTHRU` 的 assignment；
-- Compustat PIT availability、quarterly / annual period semantics、fundamental coverage 与 duplicate / conflict resolution 通过抽样审计；
-- CRSP `DlyCap` 的单位和语义已验证并固定为 formal historical market-cap baseline；`ShrOut` 可用于 audit / related use，但不得复活 Yahoo × SEC market-cap route；
+- Compustat PIT availability、quarterly / annual period semantics、fundamental coverage 与 duplicate / conflict resolution 通过抽样审计，并明确审查 historical revision / restatement semantics：下载值是否可能是 later-restated historical values，以及相应 claim limitation；
+- CRSP `DlyCap` 的单位和 **security-level** 语义已验证；`ShrOut` 可用于 audit / related use，但不得复活 Yahoo × SEC market-cap route；
+- issuer/company-level market-cap canonical design 已定义：Value 的 company-level accounting numerator 必须配对经济一致的 issuer-level denominator，且在 aggregation rule 冻结前验证所有 relevant equity share classes 的 coverage，不能假设仅汇总 959 个 S&P500-member PERMNOs 已充分；
+- 同一 GVKEY / PERMCO 的 multi-share-class securities 已显式识别；issuer-level duplicate / concentration diagnostics 能覆盖 investable universe 与 portfolio；
 - CRSP CIZ daily-return、corporate-action 与 delisting semantics 已验证，避免将 legacy return formula 重复套用而 double count delisting effects；
 - CRSP index identities、`DlyTotRet` / price-return field use、currency、ADV 与单位固定；
 - Fama–French / RF fields 的 decimal-return convention 已验证；
@@ -921,7 +936,7 @@ $$
 - raw manifest / SHA256 / schema / coverage audit；
 - `data_coverage_report.csv` 与 formal universe summary；
 - PERMNO–GVKEY CCM exception table、Historical-GICS timing spot-check table；
-- PIT spot-check table、Data Dictionary、CRSP market-cap / return / index semantics note；
+- PIT spot-check table、Data Dictionary、Compustat vintage / restatement claim note、CRSP security-/issuer-level market-cap / return / index semantics note；
 - Formal Data Ready Checklist 与 acceptance report。
 
 未通过 Gate 0，不进入 formal Factor Construction，也不得以 raw-file presence 宣称 `FORMAL_PIT_UNIVERSE` pipeline 已可用于 Gate A。
@@ -1142,11 +1157,41 @@ $$
 
 ### Net Return
 
+Canonical backtest and reconciliation accounting use NAV order, not an additive approximation. For a rebalance executed at $E_t$, let $V_t^-$ be NAV immediately before transaction costs, and let the cost ratio $TC_t$ be measured relative to that pre-cost NAV:
+
 $$
-R_t^{net}=R_t^{gross}-TC_t
+C_t=V_t^-\times TC_t
 $$
 
-Baseline transaction-cost 参数应明确由 commission / exchange fee、spread / slippage proxy 与其他可观测显性成本构成。Market Impact 在未校准前单独作为 stress / capacity scenario，不与 baseline cost 重复计算。
+$$
+V_t^+=V_t^- - C_t
+=
+V_t^-(1-TC_t)
+$$
+
+If $R_t^{hold}$ is the post-trade gross holding-period return, then:
+
+$$
+V_{t+1}^-=V_t^+(1+R_t^{hold})
+$$
+
+and the exact net period return relative to $V_t^-$ is:
+
+$$
+1+R_t^{net}=(1-TC_t)(1+R_t^{hold})
+$$
+
+$$
+R_t^{net}=(1-TC_t)(1+R_t^{hold})-1
+$$
+
+The shorthand $R_t^{net}\approx R_t^{gross}-TC_t$ is permitted only when explicitly labeled as a first-order approximation. The canonical NAV, trade ledger, attribution reconciliation, and return-closure tests must use the exact identity. For SG, first close this accounting in SGD, then translate the resulting local return to USD using the separate FX identity in Section 19; costs and FX must not be double counted.
+
+Baseline transaction-cost parameters should explicitly comprise commission / exchange fee, spread / slippage proxy, and other observable explicit costs. Market impact remains a separate stress / capacity scenario until calibrated, without double counting baseline cost.
+
+### Cost-Parameter Status
+
+Gate A may evaluate turnover, break-even cost, and cost sensitivity, but must not use a net performance result based on an unfrozen transaction-cost assumption as a hard Keep / Drop criterion. An illustrative net result is allowed only under an explicitly pre-specified research-cost scenario and must be labeled provisional. A cost assumption becomes a formal decision criterion only if frozen before the relevant decision.
 
 ### Max Drawdown：统一正负号约定
 
@@ -1292,9 +1337,10 @@ Gate A 前，每一个 Candidate Factor 必须生成同样的 Decision Card，�
 | Single-Factor Gross Return | 数值 |
 | Top-Leg Excess vs Eligible-Universe EW | 数值 |
 | Single-Factor Gross Sharpe | 数值 |
-| Top-Leg Net Excess Sharpe vs Eligible-Universe EW | 数值 |
 | Max Drawdown | 数值 |
 | Turnover | 数值 |
+| Break-Even Cost / Cost Sensitivity | 数值 / 情景 |
+| Illustrative Net Result | 仅在 pre-specified research-cost scenario 下；未冻结成本前不得作为硬性 Decision criterion |
 | Subperiod Stability | Stable / Mixed / Weak |
 | Highest Correlation with Other Factor | 数值 + Factor Name |
 | Decision | Keep / Watch / Drop |
@@ -1313,7 +1359,7 @@ Factor Selection 不设置单一机械阈值（例如 “IC > x 即保留”）�
 3. Forward IC / ICIR / stability 有方向一致证据；
 4. Single-Factor Portfolio 具有可交易性；
 5. 与已保留 Factor 具有互补性；
-6. 交易成本 / turnover 不使信息价值完全消失。
+6. Turnover、break-even cost 与预先规定的 cost sensitivity 不显示信息价值在合理成本情景下完全不可实施；若成本尚未在 Gate A 前冻结，illustrative net result 不是硬性 Keep / Drop criterion。
 
 统计显著性不是唯一筛选标准，但因为存在多个 Candidate Factors、多个 horizon 与多个 robustness checks，Factor Selection 阶段至少报告：
 
@@ -1524,7 +1570,7 @@ Robustness Grid 不用于重新选赢家。若同时报告大量参数 / factor 
 
 ## 4.10 Attribution Taxonomy：不同解释层不能横向相加
 
-项目统一使用四个彼此不同的 attribution view：
+项目统一使用五个彼此不同的 attribution view：
 
 ### View A — Strategy-Rule Increment
 
@@ -1574,11 +1620,13 @@ $$
 
 ### View D — Cost Accounting
 
+Canonical cost attribution uses the NAV identity:
+
 $$
-R_t^{Net}
-=
-R_t^{Gross}-TC_t
+1+R_t^{Net}=(1-TC_t)(1+R_t^{hold})
 $$
+
+The cost view may report the first-order cost drag separately for interpretation, but it must not replace the exact NAV / reconciliation identity.
 
 ### View E — Factor Regression
 
@@ -1720,7 +1768,22 @@ $$
 
 ### Formal Market Data、Market Cap、Index 与 RF Sources
 
-正式 historical market-cap baseline 是 **CRSP `DlyCap`**；`ShrOut` 仍可用于 audit / related use。旧的 Yahoo price × SEC shares route 已永久退休，正式决定为 `STOP_DEV_MARKET_CAP_REPAIR`，不得作为 formal market-cap baseline 重启。`DlyCap` 与 `ShrOut` 的确切 units / semantics 必须在 Formal Gate 0 和 WRDS data contract 中验证，之后才可进入 canonical construction。
+CRSP `DlyCap` 是正式 historical market-cap 的 **security-level** raw source；`ShrOut` 仍可用于 audit / related use。旧的 Yahoo price × SEC shares route 已永久退休，正式决定为 `STOP_DEV_MARKET_CAP_REPAIR`，不得作为 formal market-cap baseline 重启。`DlyCap` 与 `ShrOut` 的确切 units / semantics 必须在 Formal Gate 0 和 WRDS data contract 中验证，之后才可进入 canonical construction。
+
+正式 canonical design 必须区分以下经济对象：
+
+- **Security-Level Market Cap**：单一 `PERMNO` 的 `DlyCap`；
+- **Issuer / Company-Level Market Cap**：与公司 $g$ 对应的所有 relevant equity share classes 在 $t$ 的市值合计：
+
+$$
+IssuerMarketCap_{g,t}
+=
+\sum_{j\in RelevantEquityClasses(g,t)}DlyCap_{j,t}
+$$
+
+若 issuer 只有一个 relevant equity class，两者可以重合；但不得因此把这种偶然情形一般化。对 E/P、B/P、FCF Yield 等以 company / `GVKEY` accounting numerator 为分子的 Value ratio，必须使用经济一致的 issuer-level denominator，不得机械地除以其中一个 share class 的 `DlyCap`。Gate 0 必须先验证 all relevant equity share classes 的 coverage；不得预设只汇总 959 个 S&P 500-member PERMNOs 已经充分。
+
+Size factor 与 size neutralization 的 market-cap economic level 必须在其正式定义中分别冻结并记录；portfolio holdings、ADV / liquidity 与交易成本仍以实际可交易的 security-level holding 为对象。多 share classes 不自动禁止进入 universe，但必须显式识别、以一致的 accounting treatment 处理，并在 investable universe 与 portfolio 报告 security-level 和 issuer-level duplicate / concentration diagnostics（包括同一 `GVKEY` / `PERMCO`）。
 
 对 IVOL / US market regression，正式 proxy 为 `INDNO = 1000080` 的 CRSP NYSE / NYSEMKT / Nasdaq Value-Weighted Market Index，使用 `DlyTotRet`：
 
@@ -1803,6 +1866,8 @@ $t+1$ 周的持仓只能使用：
 - 下载 schema 中没有 quarterly `gpq`，不得静默把 `Revenue - COGS` 作为 universal quarterly gross-profit baseline；任何后续 derived measure 必须另有明确经济定义与批准；
 - annual `datadate` 不是 publication date，`datadate <= signal_date` 不足以构成 PIT availability。Formal Gate 0 / canonical PIT design 必须在 corresponding Q4 / earnings-release timing 或保守 lag rule 中定义可辩护的 annual availability rule；在此之前不得假装该 annual timing 已冻结；
 - 财务数据只在新报告满足相应 availability rule 后更新。旧 DEV 资料中没有 RDQ 时的处理不得静默移植为 formal WRDS annual-PIT rule。
+
+上述规则处理的是 **publication-date / information-availability alignment**，不自动等同于 historical-vintage / restatement integrity。当前 Compustat extraction 为 ordinary historical data；除非 Gate 0 证实 WRDS source semantics 能按当时 vintage 固定历史 accounting values，否则不得称其为 vintage-perfect PIT snapshot。Gate 0 必须审查 later-restated historical values、revision / restatement semantics 及相应 claim limitation；若不能建立 vintage-perfect property，正式方法应称为 **publication-date-aligned historical fundamentals**，并披露 residual revision / restatement bias。
 
 ### 收益与价格
 
@@ -2023,7 +2088,7 @@ $$
 
 - Market Cap / log Market Cap。
 
-Formal US baseline 的 Market Cap / log Market Cap 以经 Gate 0 验证单位与语义的 CRSP `DlyCap` 为来源；不得使用已退休的 Yahoo × SEC estimated market cap。
+Formal US Size candidate 的 market-cap economic level 必须在 Gate 0 后随正式 Size definition 冻结：`DlyCap` 可作为 security-level raw source，而公司-level Size 需要已验证的 issuer aggregation。不得使用已退休的 Yahoo × SEC estimated market cap。
 
 当前状态：
 
@@ -2105,14 +2170,14 @@ Value 和 Quality 若按行业分支计算，分支合成后重新进行本市�
 $$
 F^{raw}_{i,t}
 =
-\alpha
+\beta_t\log(MCap^{neutralization}_{i,t})
 +
-\beta\log(MCap_{i,t})
-+
-\sum_s\gamma_s D_{i,s}
+\sum_{s=1}^{S_t}\gamma_{s,t}D_{i,s,t}
 +
 \epsilon_{i,t}
 $$
+
+此 canonical regression **不含独立 intercept**，并纳入全部 mutually exclusive industry dummies；不得依赖 library default 的 dummy dropping / collinearity handling。它在 fitted-space 上等价于 intercept 加 $S-1$ 个 dummy，但避免由软件任意省略行业。
 
 最终：
 
@@ -2122,7 +2187,7 @@ F^{final}_{i,t}
 Z(\epsilon_{i,t})
 $$
 
-正式 US 的 $MCap_{i,t}$ 与 industry dummy 必须分别来自通过 Gate 0 的 CRSP `DlyCap` 与 signal-date-valid Historical GICS；不得以旧 Yahoo/SEC market cap 或 current-GICS history backfill 替代。
+正式 US 的 market-cap control 必须从通过 Gate 0 的 CRSP `DlyCap` 及已冻结的 security- / issuer-level mapping 取得；industry dummy 必须来自 signal-date-valid Historical GICS。Value denominator、Size factor 和 size neutralization 不得静默假定为同一 market-cap economic level；各自定义必须记录。不得以旧 Yahoo/SEC market cap 或 current-GICS history backfill 替代。
 
 ### Momentum
 
@@ -2166,18 +2231,23 @@ $$
 IC_{k,t}
 =
 Spearman
-(
-F_{k,i,t},
-R_{i,t+1}
-)
+\left(
+F_{k,i,S_t},
+R^{local}_{i,E_t\rightarrow E_{t+1}}
+\right)
 $$
 
-$R_{i,t+1}$ 为下一周本币收益。
+Baseline Forward IC 的 factor score 必须在 Signal Cutoff $S_t$ 已知；被评价的本币 return 只从 next-trading-day execution close $E_t$ 开始。Future 4-Week IC 使用同一 executable 起点：
 
-同时计算：
+$$
+Spearman
+\left(
+F_{k,i,S_t},
+R^{local}_{i,E_t\rightarrow E_{t+4}}
+\right)
+$$
 
-- 下一周 IC；
-- Future 4-Week IC，作为中期参考。
+若另行报告 $S_t\rightarrow S_{t+1}$ signal-close-to-signal-close predictive IC，必须明确标记为 **non-executable predictive diagnostic**，与上述 baseline executable IC 分开，不得混合。
 
 由于 Future 4-Week Return 存在重叠，正式 inference 必须使用能够处理 serial correlation 的 HAC / block-bootstrap；若按周构造 4-week overlapping return，HAC 至少覆盖由重叠产生的前三个周滞后，最终 maxlag rule 在正式 OOS inference 前统一冻结。
 
@@ -2781,11 +2851,13 @@ $$
 
 #### C. Cost Accounting
 
+US cost accounting uses the exact NAV identity in Section 4.4:
+
 $$
-R_t^{Net}
-=
-R_t^{Gross}-TC_t
+1+R_t^{Net}=(1-TC_t)(1+R_t^{hold})
 $$
+
+The cost view may show a clearly labeled first-order cost drag for interpretation, but that shorthand is not the reconciliation identity.
 
 #### D. Factor Regression
 
@@ -2819,10 +2891,10 @@ $$
 TC_t=\sum_i c^{oneway}_{i,t}|w^{target}_{i,t}-w^{pretrade}_{i,t}|
 $$
 
-Net Return：
+Net Return uses the Section 4.4 exact NAV identity, with $TC_t$ measured against pre-cost NAV:
 
 $$
-R_t^{net}=R_t^{gross}-TC_t
+1+R_t^{net}=(1-TC_t)(1+R_t^{hold})
 $$
 
 分析：
@@ -3246,8 +3318,10 @@ $$
 4. **Cost Accounting**：
 
 $$
-R_t^{Net}=R_t^{Gross}-TC_t
+1+R_t^{Net}=(1-TC_t)(1+R_t^{hold})
 $$
+
+For SG, this NAV closure is first completed in SGD; only then is the local net return translated to USD using the FX identity. A first-order cost drag, if shown, is interpretive only.
 
 5. **Factor Regression**：单独作为 exposure explanation，不进入 holdings contribution identity。
 
@@ -3909,14 +3983,12 @@ $$
 Net Return：
 
 $$
-R^{net}_t
+1+R^{net}_t
 =
-R^{gross}_t
--
-TC_t
+(1-TC_t)(1+R_t^{hold})
 $$
 
-SG 美元收益：
+SG 美元收益在本币净 NAV closure 之后计算：
 
 $$
 1+R^{USD,gross}_{SG,t}
@@ -4156,7 +4228,10 @@ $$
 
 ## Formal Data-Contract Level
 
-- CRSP `DlyCap` / `ShrOut` exact unit and semantic documentation；
+- Compustat historical revision / restatement / vintage semantics：ordinary historical extract 是否包含 later-restated historical values，以及相应 PIT claim boundary；
+- CRSP `DlyCap` / `ShrOut` exact unit and **security-level** semantic documentation；
+- issuer-level vs security-level market-cap construction：Value denominator 的 relevant equity share-class coverage、multi-share-class accounting consistency，以及 Size / neutralization 的 economic-level rule；
+- 同一 `GVKEY` / `PERMCO` 的 issuer-level holdings duplicate / concentration audit；
 - CRSP CIZ return、corporate-action 与 delisting treatment，确保不 double count；
 - Compustat annual PIT availability rule：`datadate` 不可直接作为 publication date，必须在 Q4 / earnings timing 或 conservative lag approach 中形成可辩护规则；
 - quarterly flow differencing、field precedence 与 conflict handling；
@@ -4363,9 +4438,7 @@ $$
 完成标准：
 
 - 所有 Candidate Factors 使用完全相同的 Forward IC 规则；
-- Single-Factor Backtest 严格使用 $S_t 
-ightarrow E_t 
-ightarrow E_{t+1}$ execution timing，无错位；
+- Single-Factor Backtest 严格使用 $S_t \rightarrow E_t \rightarrow E_{t+1}$ execution timing，无错位；
 - Long / Short / Long–Short 均保存；
 - HAC t-stat、Stability、Redundancy 完成；
 - 每个 Factor 有 Decision Card；
