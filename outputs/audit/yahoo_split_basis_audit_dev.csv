@@ -1,9 +1,0 @@
-evidence_stage,audit_area,metric,value,interpretation
-DEV_CURRENT_UNIVERSE,close_vs_adj_close,daily_rows,2392900,Canonical daily source rows audited.
-DEV_CURRENT_UNIVERSE,close_vs_adj_close,close_adj_close_different_rows,1998160,Fields are empirically distinct; adj_close cannot be substituted for price-level market cap.
-DEV_CURRENT_UNIVERSE,corporate_actions,positive_dividend_rows,28556,Dividend events support the documented rule that adj_close has additional total-return adjustments.
-DEV_CURRENT_UNIVERSE,corporate_actions,nonzero_vendor_split_rows,331,"Vendor action factors are split-basis audit evidence, not an automatically approved share-conversion chain."
-DEV_CURRENT_UNIVERSE,exact_signal_date_price,missing_signal_date_bar,45090,Exact signal-date only; no next-day or forward-filled replacement is used.
-DEV_CURRENT_UNIVERSE,exact_signal_date_price,positive_exact_signal_close,495410,Exact signal-date only; no next-day or forward-filled replacement is used.
-DEV_CURRENT_UNIVERSE,exact_signal_date_price,review_security_signal_close,25023,Exact signal-date only; no next-day or forward-filled replacement is used.
-DEV_CURRENT_UNIVERSE,exact_signal_date_price,zero_volume_signal_close,756,Exact signal-date only; no next-day or forward-filled replacement is used.
