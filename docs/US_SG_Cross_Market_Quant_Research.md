@@ -230,12 +230,13 @@ Primary Owner 完成后，Reviewer 至少检查：
 
 ## 0.7 Decision Rights：不同样本允许做什么
 
-| Sample | 可以做什么 | 不允许做什么 |
+| Sample / Evidence Stage | 可以做什么 | 不允许做什么 |
 |---|---|---|
 | Warm-up | 累积历史、初始化窗口 | 用绩效选策略 |
 | Factor Selection | 选 Factor、方向、Neutralization | 选择最终 FMOM 配置 |
 | Configuration Selection | 选 $J$、Risk Adjustment、$\lambda$、Buffer 等 | 回头根据 OOS 重选 Factor |
-| Historical OOS | 评价 US Base、做预先规定的诊断 | 看完结果再修改 Base Strategy |
+| Formal Historical OOS (`HIST_OOS_BASE`) | 评价冻结的 US Base、做预先规定的诊断 | 看完结果再修改 Base Strategy；与 2026 extension 混合统计 |
+| Recent / Operational Extension (`RECENT_EXTENSION`) | 用冻结策略进行近期/运行延伸与 bridge diagnostics | 用结果重新选择 Factor、参数或将其并入 formal OOS headline statistics |
 | Adaptation Validation | 验证已登记的针对性改进 | 无限制参数搜索 |
 | Final Untouched Test | 最终验证与报告 | 任何策略修改 |
 
@@ -365,23 +366,28 @@ $$
 
 | Evidence Label | 含义 | 可以声称什么 |
 |---|---|---|
-| `DEV` | Development / Factor Selection | 仅用于设计与筛选 |
+| `DEV_CURRENT_UNIVERSE` | 旧 Yahoo + SEC、现今成分股 / current-GICS DEV 数据层 | DEV historical evidence；不能作 Formal PIT 或无偏历史 universe claim |
+| `FORMAL_PIT_UNIVERSE` | CRSP + Compustat + CCM + Historical GICS 的正式历史数据层 | 仅在 Formal Gate 0 通过后，作为正式 US 历史研究的输入基础 |
+| `DEV` | Development / Factor Selection 证据 | 仅用于设计与筛选 |
 | `CONFIG` | Configuration Selection | 仅用于参数冻结 |
-| `HIST_OOS_BASE` | Frozen Base 的历史样本外 | Base Strategy 的历史 OOS 证据 |
+| `HIST_OOS_BASE` | 使用 Formal WRDS stack 的 2021–2025.12 Frozen Base 历史样本外 | Base Strategy 的主正式历史 OOS 证据 |
+| `RECENT_EXTENSION` | 2026.01–2026.09 冻结策略的 mixed-source 近期 / operational extension | 单独的近期 OOS / operational evidence；不是 Formal Historical OOS，也不并入其 headline statistics |
 | `EXT_TRANSFER_STRICT` | SG Strict Transfer | 最严格的 **Out-of-Market** 跨市场外部迁移证据；除非样本时间也完全未被研究过程使用，否则不称 Out-of-Time OOS |
 | `FEASIBILITY_TEST` | SG Strict vs Feasible | 预注册市场可实施性调整的效果 |
 | `ADAPT_VALIDATION` | Adaptation Validation | 针对性改进的验证证据，不自动等于 Final OOS |
 | `FINAL_OOS` | 真正未使用的 Final Test | 最强的冻结后确认性证据 |
-| `LIVE_OPS` | 冻结后的实时运行 | Operational evidence，不等于短期统计显著性 |
+| `LIVE_OPS` | 2026.10+ 且在真实策略 freeze 后开始的实时运行 | Operational evidence，不等于短期统计显著性 |
 
 ### US Universe Claim Boundary
 
-当前美国研究版使用“现今 S&P 500 成分股向历史回推”，因此存在 survivorship bias。只要这一限制仍然存在：
+正式 US 历史研究的目标输入是 CRSP 历史 S&P 500 membership、CRSP market data、time-valid CCM 与 Compustat Historical GICS，统一标记为 `FORMAL_PIT_UNIVERSE`。在 Formal Gate 0 未通过前，不得把已放置的 raw WRDS files 直接视为正式研究结果。
 
-- US 历史收益不得表述为“无偏的真实可投资历史收益”；
-- Cross-Market Portability 结论必须表述为 **conditional on the research universes used**；
-- 若后续获得 Point-in-Time Historical Constituents，应优先替换并重新执行 Data Ready → Base Backtest；
-- Survivorship Bias 属于 **Evidence Scope Limitation**，不能通过后处理消除。
+旧 Yahoo + SEC package 的“现今 S&P 500 成分股向历史回推”仍存在 survivorship / reconstitution bias，并且 current GICS 不是 historical PIT classification。因此该 package 只能标记为 `DEV_CURRENT_UNIVERSE` 或在 2026 bridge 中作为 `RECENT_EXTENSION` 的有限来源：
+
+- DEV / recent-extension 历史收益不得表述为“无偏的真实可投资历史收益”；
+- 任何仍使用 DEV universe 的 Cross-Market 结论必须表述为 **conditional on the research universes used**；
+- 不得用后处理消除 survivorship bias；
+- Formal historical claims 必须使用经 Gate 0 验证的正式 WRDS pipeline，而不是旧 current-universe package。
 
 ### Final OOS 不足时的处理
 
@@ -851,23 +857,29 @@ $$
 
 # 4. 时间切分与 Research Gates
 
-当前美国研究版的初步时间切分为：
+当前正式 US 时间切分为：
 
-| 阶段 | 当前区间 | 主要用途 |
+| 阶段 | 区间 | 主要用途 / 权限 |
 |---|---|---|
-| Price / Factor Warm-up | 2006–2010 | 积累价格、Momentum、Volatility、Factor Return 历史 |
-| Factor Selection | 2011–2015 | Candidate Factor 验证、Factor Direction、Neutralization、Final Factor Set |
-| Configuration Selection | 2016–2020 | $J$、Risk Adjustment、$\lambda$、选股比例、换手缓冲等 |
-| Historical OOS | 2021–2026.09 | 冻结 US Base Strategy 后进行历史样本外评价 |
-| Live / Operational Test | 2026-10 | 课程规定的实际运行与数据更新测试 |
+| Initialization / Pre-sample Buffer | 2004–2005 | 初始化 252-day 与其他长 lookback 的 Momentum、Volatility、IVOL 及相关 rolling metrics；不作正式绩效评价 |
+| Development / Warm-up | 2006–2010 | 管线与 signal-construction 验证、implementation debugging、基本经济 sanity check；不得使用后续证据反向优化 |
+| Factor Selection | 2011–2015 | Candidate Factor、Forward IC、single-factor Top/Bottom portfolio、稳定性、经济逻辑、互补性；期末 Gate A 冻结 Final Factor Set |
+| Configuration Selection | 2016–2020 | FMOM、$\lambda$、组合构造、调仓 / execution rules 等允许的配置选择；期末 Gate B 和 Gate C 冻结 |
+| Formal Historical OOS | 2021–2025.12 | 使用 formal WRDS historical stack 的 Frozen US Base 主历史样本外，标签 `HIST_OOS_BASE` |
+| Recent / Operational Extension | 2026.01–2026.09 | 使用冻结策略的独立近期 / operational extension，标签 `RECENT_EXTENSION`；不并入 formal OOS headline statistics |
+| Live / Forward Test | 2026.10+ | 真实 freeze 后开始的前瞻运行，标签 `LIVE_OPS` |
 
 基本面因子的实际起点不强行设为 2006。若某一期合格股票的基本面覆盖率不足 70%，该因子在该期视为不可用。
 
-### 重要说明
+### 时间切分的冻结含义
 
-当前 2021–2026.09 可以作为 **US Base Strategy 的 Historical OOS**。
+核心策略必须在 **2020 年末**完成 Gate B 与 Gate C 的冻结。2021–2025.12 是主要 formal US OOS，因此 CAGR、Sharpe、drawdown、alpha、benchmark-relative performance、turnover / cost 与正式 robustness conclusion 必须主要基于这个窗口。
 
-但如果未来我们使用其中某段结果：
+2026.01–2026.09 不是 Formal Historical OOS。它可作为策略已经冻结后的 Recent / Operational Extension，但不得与 2021–2025.12 合并计算或展示 formal OOS headline CAGR、Sharpe、alpha 或其他主结论。观察 2026 extension 后，不允许重新选择 Factor、参数或重构策略。
+
+2026.10+ 只有在实际 Strategy Freeze 后的第一个可执行 signal date 起，才可称为 `LIVE_OPS`；此前的回填或 shadow run 不能追溯成为 Live evidence。
+
+但如果未来我们使用 Formal Historical OOS 中某段结果：
 
 - 诊断 SG / US 差异；
 - 设计 Market-Specific Adaptation；
@@ -885,33 +897,34 @@ $$
 ---
 
 
-## 4.1 Gate 0 — Data Ready
+## 4.1 Formal Gate 0 — WRDS Data Ready
 
-在 Step 03 Candidate Factor 计算开始之前，必须先通过 Data Ready Gate。
+在任何 formal canonical dataset construction 或 Step 03 Candidate Factor 计算开始之前，必须先通过 Formal Gate 0。仅有 `wrds_raw/US_WRDS_2026-10-09/` 的 raw files 不构成 Gate 0 pass。
 
 ### 必查项目
 
-- `(date, ticker, market)` 唯一，重复记录数 = 0；
-- 每个 market 的 trading calendar 已固定；
-- Signal Date、Information Date、Execution Date 可追踪；
-- 财务数据 PIT 对齐规则通过抽样检查；
-- Adjusted Price / Return 定义固定；
-- Market Cap、ADV、Currency 单位固定；
-- Sector / GICS Coverage 已统计；
-- Fundamental Coverage 已按期输出；
-- Universe Entry / Exit 原因可追踪；
-- Delisting / Suspension 处理已定义；
-- 原始数据不可被后续步骤覆盖。
+- Raw-file manifest、SHA256、archive / decompression integrity、schema 与 row/date coverage 完整；
+- Formal historical cutoff 固定为 **2025-12-31**，不得以其他 market-data source 静默延长 formal sample；
+- CRSP historical S&P 500 membership 的 `(date, PERMNO)` universe key、duplicate keys、entry / exit 与 959 historical-PERMNO coverage 可重建；
+- Formal identifier flow 固定为 `Historical S&P 500 Membership → PERMNO → time-valid CCM → GVKEY`；ticker / CUSIP 只可作 audit / diagnostic identity；
+- CCM baseline 为 `LINKTYPE ∈ {LC, LU, LS}`、`LINKPRIM ∈ {P, C, J}`，并严格满足 `LINKDT <= t <= LINKENDDT`，不允许 link forward-fill / backward-fill；`J` link 保留且标记 `secondary_issue = True`，`N` 不自动进入 baseline；
+- Historical GICS 使用 `comp_na_daily_all.co_hgic` 的 `gvkey, indtype, gsector, ggroup, gind, gsubind, indfrom, indthru`，只接受 `indtype = GICS` 且 `INDFROM <= t <= INDTHRU` 的 assignment；
+- Compustat PIT availability、quarterly / annual period semantics、fundamental coverage 与 duplicate / conflict resolution 通过抽样审计；
+- CRSP `DlyCap` 的单位和语义已验证并固定为 formal historical market-cap baseline；`ShrOut` 可用于 audit / related use，但不得复活 Yahoo × SEC market-cap route；
+- CRSP CIZ daily-return、corporate-action 与 delisting semantics 已验证，避免将 legacy return formula 重复套用而 double count delisting effects；
+- CRSP index identities、`DlyTotRet` / price-return field use、currency、ADV 与单位固定；
+- Fama–French / RF fields 的 decimal-return convention 已验证；
+- Signal Date、Information Date、Execution Date 可追踪，PIT spot checks 通过；原始数据不可被下游覆盖。
 
 ### Gate 0 主要输出
 
-- `data_coverage_report.csv`；
-- Universe Summary；
-- PIT Spot-Check Table；
-- Data Dictionary；
-- Data Ready Checklist。
+- raw manifest / SHA256 / schema / coverage audit；
+- `data_coverage_report.csv` 与 formal universe summary；
+- PERMNO–GVKEY CCM exception table、Historical-GICS timing spot-check table；
+- PIT spot-check table、Data Dictionary、CRSP market-cap / return / index semantics note；
+- Formal Data Ready Checklist 与 acceptance report。
 
-未通过 Gate 0，不进入 Factor Construction。
+未通过 Gate 0，不进入 formal Factor Construction，也不得以 raw-file presence 宣称 `FORMAL_PIT_UNIVERSE` pipeline 已可用于 Gate A。
 
 ---
 
@@ -1085,7 +1098,7 @@ Sharpe
 \sqrt{252}
 $$
 
-USD Reporting 下，Risk-Free Rate 基准使用 3-Month US Treasury。
+Formal US excess-return、Sharpe 与 regression 的 risk-free baseline 使用已验证单位的 Fama–French `rf` series；其 released convention、frequency alignment 与任何跨市场使用限制必须在 Formal Gate 0 / data contract 中记录，不得再以未核实的通用 3-Month US Treasury 表述替代。
 
 ### Turnover 与 Cost：必须区分 Reporting Turnover 和真实交易名义金额
 
@@ -1633,18 +1646,93 @@ Regime threshold、lookback 与 data source 写入 Master Parameter Registry / c
 
 ## Step 01 — US Universe 与 Data Contract
 
-### 当前 US 股票池
+### Formal US Historical Universe
 
-研究版暂时使用：
+正式 US historical universe 使用 **CRSP historical S&P 500 membership**，以 PERMNO 为 security-level key。当前正式 2006–2025 research window 的提取 universe 包含 **959 historical PERMNOs**。这取代了旧 Yahoo + SEC package 中“现今 S&P 500 成分股向历史回推”的 DEV universe，后者不得用于 formal historical claims。
 
-> **现今 S&P 500 成分股向历史回推。**
+正式历史数据层来自 `wrds_raw/US_WRDS_2026-10-09/`：
 
-这一口径存在明确 survivorship bias，因此：
+$$
+CRSP
++
+Compustat
++
+CCM
++
+Historical\ GICS
++
+CRSP\ Market/S\&P500\ Indexes
++
+Fama\text{-}French/RF
+$$
 
-- 可以用于课程研究、方法比较与策略开发；
-- 历史回测收益不能被解释为完全无偏的真实可投资历史收益；
-- 最终报告必须披露；
-- 若后续获得 Historical Point-in-Time S&P 500 Constituents，应优先替换。
+formal historical market-data cutoff 固定为 **2025-12-31**。不得以其他 market-data source 静默把 formal historical sample 延长至该日以后。
+
+`raw_package/US_source_data_2026-10-08/` 的 Yahoo + SEC data 继续保留为 immutable **DEV historical evidence**，以及可能的 2026 Recent Extension source；它不是 formal 2006–2025 research stack。
+
+### Formal Identifier Hierarchy 与 CCM Mapping
+
+正式 mapping flow 固定为：
+
+$$
+Historical\ S\&P500\ Membership
+\rightarrow
+CRSP\ PERMNO
+\rightarrow
+Time\text{-}Valid\ CCM
+\rightarrow
+Compustat\ GVKEY
+$$
+
+- `PERMNO` 是 security-level key；`GVKEY` 是 company-level key；
+- ticker / CUSIP 只可用于适当的 diagnostic 或 audit，不得作为 primary historical join key；
+- baseline 接受 `LINKTYPE ∈ {LC, LU, LS}` 与 `LINKPRIM ∈ {P, C, J}`；
+- `LINKPRIM=J` 的 genuine secondary / joiner share class 保留，并标记 `secondary_issue = True`；已识别实例包括 GOOG、NWS、UA、FOX、CMCSK 与 DISCK；
+- `LINKPRIM=N` 不自动进入 baseline；
+- 每一 mapping 必须严格满足：
+
+$$
+LINKDT\le t\le LINKENDDT
+$$
+
+不得跨 invalid date forward-fill 或 backward-fill CCM link。
+
+已记录的 formal CCM audit 为：959 个 historical S&P 500 PERMNO 中 958 个存在 acceptable CCM link；2,527,140 个 PERMNO-date observations 中 2,527,111 个 matched、29 个 unmatched、0 个 simultaneous different-GVKEY ambiguity，coverage 为 99.998852%。29 个 unmatched 由 1 个真正 unlinked DVMT observation（PERMNO 16267）及 28 个单日 CCM / corporate-action boundary gaps 构成。异常必须分别标记为 `CCM_UNLINKED` 或 `CCM_BOUNDARY_GAP`。
+
+缺少 CCM link 仅意味着该 security-date 没有可用 Compustat company fundamental；**不得因此删除有效的 CRSP market-return observation**。
+
+### Historical GICS
+
+正式 historical sector source 是 Compustat `comp_na_daily_all.co_hgic`，使用：
+
+- `gvkey`；
+- `indtype`；
+- `gsector, ggroup, gind, gsubind`；
+- `indfrom, indthru`。
+
+供本正式资料层使用的全部观测 `indtype` 均为 `GICS`。在 signal date $t$ 只可使用满足：
+
+$$
+INDFROM\le t\le INDTHRU
+$$
+
+的 historical assignment。该分类用于 sector neutralization、Financials / non-financial / RE branching、sector cap、sector attribution 与 US–SG sector-structure diagnostics。不得以 current / header GICS backfill 历史。
+
+### Formal Market Data、Market Cap、Index 与 RF Sources
+
+正式 historical market-cap baseline 是 **CRSP `DlyCap`**；`ShrOut` 仍可用于 audit / related use。旧的 Yahoo price × SEC shares route 已永久退休，正式决定为 `STOP_DEV_MARKET_CAP_REPAIR`，不得作为 formal market-cap baseline 重启。`DlyCap` 与 `ShrOut` 的确切 units / semantics 必须在 Formal Gate 0 和 WRDS data contract 中验证，之后才可进入 canonical construction。
+
+对 IVOL / US market regression，正式 proxy 为 `INDNO = 1000080` 的 CRSP NYSE / NYSEMKT / Nasdaq Value-Weighted Market Index，使用 `DlyTotRet`：
+
+$$
+R_{i,d}=\alpha_i+\beta_iR_{M,d}+\epsilon_{i,d},
+\qquad
+IVOL_i=Std(\epsilon_{i,d})
+$$
+
+对正式 US strategy benchmark，使用 `INDNO = 1000500` 的 CRSP Value-Weighted Index of the S&P 500 Universe，字段为 `DlyTotRet`。`INDNO = 1000502` S&P 500 Composite 仅保留为 price-return cross-check：提取数据有 `DlyPrcRet` 而无 `DlyTotRet`，因此不得作为主 total-return performance benchmark。
+
+Fama–French / RF external series 中 `mktrf, smb, hml, rmw, cma, rf, umd` 已是 **decimal returns**，例如 `0.0134 = +1.34%`，不得再除以 100。`RF` 用于 excess return、Sharpe 与 regression；其他 fields 用于 external style / factor regression 与 diagnostic interpretation，而不是本项目 stock-level candidate-factor 的 raw construction input。月度对齐优先使用 `dateff`（月末最后交易日）；原始 FF data 即使延伸至 2026-08，也不得改变 2025-12-31 formal historical cutoff。
 
 ### 基础进入条件
 
@@ -1653,25 +1741,25 @@ Regime threshold、lookback 与 data source 写入 Master Parameter Registry / c
 - 至少 24 个月价格历史；
 - 过去 60 个交易日中，有成交的天数不少于 80%；
 - 已公告退市股票不再进入未来股票池；
-- 回测中若数据提供 delisting return，应使用 delisting return；
+- CRSP CIZ 的 return / delisting semantics 完成 Gate 0 验证后，才按冻结的 canonical-return rule 处理 delisting；
 - 课程要求的必选资产按课程规则处理。
 
 ### 主要数据
 
 至少需要：
 
-- Security ID / ticker；
+- PERMNO、GVKEY，及仅供 diagnostics 的 ticker / CUSIP；
 - Date；
 - Market；
-- GICS Sector；
+- Historical PIT GICS Sector；
 - Currency；
 - Adjusted Price / Total Return；
-- Shares / Market Cap；
+- CRSP DlyCap / ShrOut audit fields；
 - Trading Volume / ADV；
 - Accounting Variables；
-- Actual Report Date / RDQ；
-- Benchmark；
-- Risk-Free Rate。
+- Quarterly RDQ 与 annual availability provenance；
+- formal CRSP benchmark / market proxies；
+- Fama–French Risk-Free Rate。
 
 ### 目的
 
@@ -1689,6 +1777,14 @@ Holding
 Return
 $$
 
+### 2026 Recent / Operational Extension 与 CRSP–Yahoo Bridge
+
+2026.01–2026.09 的 `RECENT_EXTENSION` 必须使用 2020 年末冻结的策略。旧 Yahoo daily market data 约覆盖至 2026-09-18，但其 current-S&P500 universe 以 2026 extraction date 为基础，可能含 survivorship / reconstitution bias。因此该 extension 不得声称为无偏 formal historical OOS，也不得并入 2021–2025.12 的 formal headline statistics。
+
+在 CRSP annual data 不可用的 2026 bridge 中，优先继续使用可用的 Compustat fundamentals、Historical GICS 与 Fama–French / RF；Yahoo 仅作为 market-price / return bridge，SEC Company Facts 可在适当时作为 supplementary 2026 source，而不是 formal 2006–2025 baseline。
+
+使用 Yahoo bridge 前，必须在 2025 overlap 对 matched securities 比较 CRSP returns 与 Yahoo adjusted returns，至少审计 correlation、mean / median absolute return difference、missing dates、split / corporate-action discrepancies、dividend-related differences、extreme mismatches 及 security-mapping coverage。可将 SPY 与 formal CRSP S&P 500 benchmark 作辅助 diagnostic，但二者不是相同产品。Bridge pass 只验证 bridge，不会把 2026 转化为 Formal Historical OOS。
+
 ---
 
 ## Step 02 — PIT Alignment 与数据清洗
@@ -1701,14 +1797,23 @@ $t+1$ 周的持仓只能使用：
 
 财务数据：
 
-- 优先使用实际公布日 RDQ；
-- 若只有公布日期而没有具体发布时间戳，则保守规定：从 **公布日后的下一个本地交易日** 起可用于 signal；
-- 没有公布日时，按财报期末后 4 个月使用，并同样从可确认的下一个本地交易日起生效；
-- 财务数据只在新报告公开以后更新。
+- 对适用的 Compustat quarterly fundamentals，`rdq` 是 primary public-information timing field；任何 `RDQ > signal_date` 的 observation 不得进入该 signal；
+- 若只有公布日而没有具体发布时间戳，仍保守地从 **公布日后的下一个本地交易日** 起可用于 signal；
+- `capxy` 与 `oancfy` 是 YTD-style quarterly cash-flow fields，构造 single-quarter flow 前必须按冻结规则正确 differencing；不得直接当作单季流量；
+- 下载 schema 中没有 quarterly `gpq`，不得静默把 `Revenue - COGS` 作为 universal quarterly gross-profit baseline；任何后续 derived measure 必须另有明确经济定义与批准；
+- annual `datadate` 不是 publication date，`datadate <= signal_date` 不足以构成 PIT availability。Formal Gate 0 / canonical PIT design 必须在 corresponding Q4 / earnings-release timing 或保守 lag rule 中定义可辩护的 annual availability rule；在此之前不得假装该 annual timing 已冻结；
+- 财务数据只在新报告满足相应 availability rule 后更新。旧 DEV 资料中没有 RDQ 时的处理不得静默移植为 formal WRDS annual-PIT rule。
 
 ### 收益与价格
 
-- 收益计算使用复权价 / Total Return 口径；
+- 正式 CRSP CIZ canonical return construction 必须在 Gate 0 先确认 return、corporate-action 与 delisting semantics；不得盲目套用 legacy：
+
+$$
+(1+RET)(1+DLRET)-1
+$$
+
+以免重复计入 delisting effects；
+- 通过验证后，收益计算使用同一冻结的 Total Return 口径；
 - 停牌或缺失日不通过简单前向填充制造虚假收益；
 - Signal Date 与 Execution Date 分离。
 
@@ -1847,6 +1952,7 @@ Volatility：
 IVOL：
 
 - 个股日收益对本市场指数日收益回归后的残差标准差。
+- Formal US baseline 使用 CRSP `INDNO = 1000080` NYSE / NYSEMKT / Nasdaq Value-Weighted Market Index 的 `DlyTotRet`；其 exact return semantics 仍须先通过 Formal Gate 0。
 
 方向：
 
@@ -1916,6 +2022,8 @@ $$
 候选指标：
 
 - Market Cap / log Market Cap。
+
+Formal US baseline 的 Market Cap / log Market Cap 以经 Gate 0 验证单位与语义的 CRSP `DlyCap` 为来源；不得使用已退休的 Yahoo × SEC estimated market cap。
 
 当前状态：
 
@@ -2013,6 +2121,8 @@ F^{final}_{i,t}
 =
 Z(\epsilon_{i,t})
 $$
+
+正式 US 的 $MCap_{i,t}$ 与 industry dummy 必须分别来自通过 Gate 0 的 CRSP `DlyCap` 与 signal-date-valid Historical GICS；不得以旧 Yahoo/SEC market cap 或 current-GICS history backfill 替代。
 
 ### Momentum
 
@@ -2450,7 +2560,8 @@ $$
 
 ### Market Benchmark
 
-- S&P 500 Total Return。
+- Formal US baseline 使用 CRSP `INDNO = 1000500` Value-Weighted Index of the S&P 500 Universe 的 `DlyTotRet`，经 Gate 0 验证后作为 S&P 500 total-return benchmark；
+- `INDNO = 1000502` 仅为 `DlyPrcRet` price-return cross-check，不替代主 total-return benchmark。
 
 ### Eligible-Universe Equal Weight
 
@@ -3947,6 +4058,10 @@ Primary Cross-Market Regression 使用 USD reporting currency 与 USD risk-free 
 
 # 20. 当前正式 Research Gates
 
+## Formal Gate 0 — WRDS Data Ready
+
+在 formal canonical construction 前完成 4.1 所列 WRDS integrity、PERMNO/GVKEY/CCM、Historical GICS、Compustat PIT、CRSP DlyCap / CIZ / index、Fama–French unit 与 cutoff 验证。raw files 已放置不等于 Gate 0 通过。
+
 ## Gate A — Final Factor Set Freeze
 
 在 US Factor Selection 完成后冻结：
@@ -3980,7 +4095,7 @@ S^{Base}_{US}
 }
 $$
 
-之后进入 US Historical OOS 与 Deep Validation。
+之后以 2021–2025.12 的 `HIST_OOS_BASE` 进入 formal US Historical OOS 与 Deep Validation；2026.01–2026.09 只能作为独立 `RECENT_EXTENSION`。
 
 ---
 
@@ -4038,6 +4153,14 @@ $$
 - Dividend / Size Neutralization；
 - 原始财务字段映射；
 - Profit 使用 TTM 还是 Single Quarter。
+
+## Formal Data-Contract Level
+
+- CRSP `DlyCap` / `ShrOut` exact unit and semantic documentation；
+- CRSP CIZ return、corporate-action 与 delisting treatment，确保不 double count；
+- Compustat annual PIT availability rule：`datadate` 不可直接作为 publication date，必须在 Q4 / earnings timing 或 conservative lag approach 中形成可辩护规则；
+- quarterly flow differencing、field precedence 与 conflict handling；
+- 2025 CRSP–Yahoo bridge validation 的 acceptance criteria，作为任何 2026 market-price / return bridge 的前置条件。
 
 ## Portfolio Level
 
