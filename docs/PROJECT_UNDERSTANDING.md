@@ -1,27 +1,24 @@
-# Project Understanding: Source-Data Foundation
+# Project Understanding: Formal WRDS Transition State
 
 ## Status and evidence boundary
 
-This document summarizes only the frozen research framework and the
-`US_source_data_2026-10-08` package. The project has completed its DEV source
-intake, canonical price-input, and signed SEC PIT fundamental-input stages:
-canonical market data, weekly signal dates, the three authorized price
-metrics/preprocessing fields, normalized signed SEC facts, and a weekly PIT
-availability/provenance panel exist. No financial ratio, fundamental-factor
-construction, factor-effectiveness research, strategy construction, backtest,
-configuration freeze, or research-performance result has been created from
-this package.
+This document summarizes the repository's current transition state against the
+frozen research SSOT. The formal US raw-data layer now exists at
+`wrds_raw/US_WRDS_2026-10-09/`: CRSP + Compustat + CCM + Historical GICS +
+CRSP market/S&P 500 indexes + Fama–French/RF. Its formal market-data cutoff is
+`2025-12-31`.
 
-The package is stored unchanged in `raw_package/US_source_data_2026-10-08/`.
-It is source-layer evidence, not a finished monthly PIT panel or a directly
-tradable factor dataset.
+Formal Gate 0 has **not** started or passed. Consequently, no formal canonical
+dataset, factor construction, factor-effectiveness research, portfolio, FMOM,
+strategy backtest, configuration freeze, or formal performance result exists.
+Raw WRDS placement alone does not establish `FORMAL_PIT_UNIVERSE` evidence.
 
-The project uses two evidence layers. Current work may proceed as
-`DEV_CURRENT_UNIVERSE`; it uses the supplied current S&P 500 universe, current
-GICS, Yahoo daily data, and SEC Company Facts. A later rerun based on
-historical constituents and historical GICS is `FORMAL_PIT_UNIVERSE`. Results
-from the current layer are preliminary evidence and cannot close the formal
-Gate A factor-set freeze.
+The project retains a separate legacy layer:
+`raw_package/US_source_data_2026-10-08/` remains unchanged Yahoo + SEC
+`DEV_CURRENT_UNIVERSE` evidence, with archived DEV processed data and audits.
+It is a retained historical research source and possible 2026 Recent Extension
+support, not the formal 2006–2025 historical research stack. DEV evidence
+cannot close the formal Gate A factor-set freeze.
 
 ## Research objective
 
@@ -63,24 +60,24 @@ The framework specifies the following US research schedule:
 
 | Stage | Period | Purpose |
 | --- | --- | --- |
-| Price/factor warm-up | 2006–2010 | Build required historical windows; not for selecting strategy performance. |
+| Initialization / pre-sample buffer | 2004–2005 | Initialize long-lookback signals; not performance evaluation. |
+| Development / warm-up | 2006–2010 | Validate pipeline and signals; not final performance selection. |
 | Factor selection | 2011–2015 | Evaluate candidate factors and freeze the final factor set at Gate A. |
-| Configuration selection | 2016–2020 | Select permitted FMOM/configuration choices and freeze them at Gate B. |
-| Historical OOS | 2021–2026.09 | Evaluate the frozen US Base strategy after Gate C. |
-| Live/operational test | 2026-10 | Operational update/execution testing only after an actual freeze. |
+| Configuration selection | 2016–2020 | Select permitted FMOM/configuration choices; Gates B/C freeze the US Base strategy. |
+| Formal Historical OOS | 2021–2025.12 | `HIST_OOS_BASE`; primary formal US evidence after Gate C. |
+| Recent / operational extension | 2026.01–2026.09 | `RECENT_EXTENSION`; separate from formal OOS headline statistics. |
+| Live / forward test | 2026.10+ | `LIVE_OPS` only after an actual strategy freeze. |
 
-Gate 0 (Data Ready) must precede factor construction for each evidence layer.
-It requires, among other things, immutable raw inputs, fixed calendars,
-traceable signal/information/execution dates, PIT checks, coverage, industry
-coverage, and reconstructible universe entry/exit. The current package supports
-building and testing the DEV version of this data contract; it does not make
-the historical-current-universe limitations disappear. The remaining gates are
-A (final factor set), B (FMOM and portfolio configuration), C (US Base), D
-(SG Strict and Feasible transfer specifications), E (validated adaptation),
-and F (final untouched test).
+Formal Gate 0 — WRDS Data Ready must precede formal canonical construction and
+factor construction. It requires raw integrity, coverage, PERMNO/GVKEY and
+time-valid CCM verification, Historical-GICS timing, Compustat PIT rules, CRSP
+DlyCap/CIZ/index semantics, Fama–French unit checks, and reproducible timing
+controls. The remaining gates are A (final factor set), B (FMOM and portfolio
+configuration), C (US Base), D (SG Strict and Feasible transfer specifications),
+E (validated adaptation), and F (final untouched test).
 
-The supplied price stage ends on 2026-09-18. It does not itself provide a
-complete October 2026 operational-test feed.
+The retained Yahoo price stage ends on 2026-09-18. It does not itself provide
+a complete October 2026 operational-test feed.
 
 ## Team and workstream architecture
 
@@ -99,7 +96,27 @@ independent reviewer:
 All gate freezes require group confirmation. A workstream owner may not
 unilaterally change frozen definitions.
 
-## Current source-data inventory
+## Formal WRDS raw-data layer
+
+The formal historical source layer is physically present at
+`wrds_raw/US_WRDS_2026-10-09/`. Formal US construction will use historical S&P
+500 membership with the identifier flow:
+
+`Historical S&P 500 membership → CRSP PERMNO → time-valid CCM → Compustat GVKEY`.
+
+PERMNO is the security key and GVKEY is the company key; ticker/CUSIP are only
+diagnostic identifiers. The formal CCM baseline is `LINKTYPE ∈ {LC, LU, LS}`
+and `LINKPRIM ∈ {P, C, J}`, subject to `LINKDT <= t <= LINKENDDT`; valid J
+links are retained as secondary issues. Historical GICS is effective-date
+based (`INDFROM <= t <= INDTHRU`). Formal market cap is CRSP `DlyCap`; the
+formal IVOL market proxy is `INDNO 1000080` `DlyTotRet`, and the formal US
+benchmark is `INDNO 1000500` `DlyTotRet`. `INDNO 1000502` is a price-return
+cross-check only. Fama–French/RF fields are decimal returns.
+
+These are formal data-contract rules, not a claim that their canonical
+implementation or Gate 0 validation has been completed.
+
+## Retained DEV Yahoo + SEC source-package inventory
 
 The immutable US package contains 508 files covered by its supplied checksum
 manifest, plus that manifest itself.
@@ -117,14 +134,15 @@ The package's own QA summary says it does **not** include processed US prices,
 the old monthly PIT valuation panel, five-factor signals, normalized selected
 SEC fundamentals, or SGX/Hong Kong data.
 
-## What this package can support now
+## What the retained DEV package can support
 
-For `DEV_CURRENT_UNIVERSE`, the package supports source-data intake, security
-mapping, a weekly signal calendar, PIT fundamental parsing, factor-metric
-construction, preprocessing, preliminary Forward IC, preliminary single-factor
-portfolios, preliminary stability/redundancy diagnostics, and reusable
-validation, strategy, and backtest infrastructure. Every resulting research
-artifact must carry the `DEV_CURRENT_UNIVERSE` evidence label.
+For `DEV_CURRENT_UNIVERSE`, the package continues to support source-data
+intake, legacy audit, security mapping, a weekly signal calendar, PIT
+fundamental parsing, factor-metric preprocessing, and reusable validation,
+strategy, and backtest infrastructure. It may also provide expressly labelled
+support for the 2026 `RECENT_EXTENSION` bridge. It is not the formal 2006–2025
+data stack, and any resulting DEV artifact must carry the appropriate
+`DEV_CURRENT_UNIVERSE` or `RECENT_EXTENSION` label.
 
 SEC Company Facts plus `filed_date` supports conservative PIT fundamental
 construction now: a fact is available when `filed_date <= signal_date`.
@@ -138,23 +156,24 @@ Their absence is a timing limitation and possible future enhancement: the
 conservative `filed_date` rule may be later than the first public availability
 of earnings information. It is not a blocker to DEV coding.
 
-## Current DEV canonical price-input stage
+## Archived DEV canonical price-input stage
 
-The current DEV layer has a 503-security canonical master, 2,392,900 canonical
+The retained DEV layer has a 503-security canonical master, 2,392,900 canonical
 daily market rows (including 5,210 benchmark SPY rows), and 1,081 weekly signal
 dates. It constructs only `MOM12-1`, `MOM6-1`, and 252-day realised volatility,
 each with raw availability, base-entry eligibility, reason-code, winsorized,
 z-score, and direction-normalized fields. The full contract is
 `docs/dev_legacy/PRICE_FACTOR_ENGINEERING_DEV.md`.
 
-This remains `DEV_CURRENT_UNIVERSE` input engineering. It is not Forward IC,
-single-factor portfolio, FMOM, neutralization, strategy, or backtest evidence;
-it does not select a final factor set or alter any factor's frozen economic
-direction. `SPY` is a benchmark/calendar row only, never a stock cross-section
-member. IVOL remains unimplemented because its regression specification is not
-uniquely frozen.
+This remains archived `DEV_CURRENT_UNIVERSE` input engineering under
+`data/dev_legacy/` and `outputs/factor_research/dev_legacy/`. It is not formal
+Forward IC, single-factor portfolio, FMOM, neutralization, strategy, or
+backtest evidence; it does not select a final factor set or alter any factor's
+frozen economic direction. `SPY` is a benchmark/calendar row only, never a
+stock cross-section member. Formal IVOL will use the SSOT's CRSP index rule
+after Gate 0.
 
-## Current DEV SEC canonical fundamental-input stage
+## Archived DEV SEC canonical fundamental-input stage
 
 All 497 SEC Company Facts archives have been profiled, and the signed exact-tag
 construction now produces 469,705 normalized source facts plus a separately
@@ -165,37 +184,24 @@ and preserves unresolved conflicts as missing. Details, coverage, age, foreign
 form, sign-exception, and open-provenance evidence are in
 `docs/dev_legacy/CANONICAL_PIT_FUNDAMENTALS_DEV.md`.
 
-This is an input/provenance layer, not a Value, Quality, Investment, FCF, or
-market-cap calculation. A future factor-definition step still must determine
-how permitted period classes are used, without retroactively changing the
-source layer.
+This is an archived DEV input/provenance layer, not a Value, Quality,
+Investment, FCF, or formal-market-cap calculation. It does not settle the
+formal Compustat PIT data contract or future factor definitions.
 
-## Current DEV estimated-historical-market-cap stage
+## Retired DEV historical-market-cap repair route
 
-The signed construction is complete and its acceptance is `PASS WITH
-WARNINGS`. `data/canonical/us_weekly_estimated_market_cap_dev.sqlite` retains
-the complete 503-security × 1,081-signal-date grid, not only usable values. It
-uses an exact signal-date Yahoo `close`, PIT-available primary DEI shares,
-standard/reverse-split delivery-basis alignment, and explicit price/shares/split
-provenance. The canonical field is `estimated_market_cap`; the source is
-`SEC_YAHOO_ESTIMATE_DEV`; the evidence stage is `DEV_CURRENT_UNIVERSE`.
+The old Yahoo price × SEC shares route, including its estimated historical
+market-cap, share-scale, extreme-jump, and sign-off artifacts, is retired from
+the active formal branch. The formal decision is
+`STOP_DEV_MARKET_CAP_REPAIR`. Retired artifacts remain recoverable from the
+DEV freeze history and are documented by the active retirement manifest; they
+are not active canonical inputs and must not be revived as Formal PIT market
+cap.
 
-Construction checks find zero available-value PIT filing-date violations, exact
-price-date violations, nonpositive/nonfinite values, unresolved multi-class
-uses, non-standard-action uses, or incomplete provenance records. The named
-AAPL 7:1 and 4:1, AMZN 20:1, and C 1:10 reverse cases pass the mechanical
-split-discontinuity audit. This is still only a DEV estimated market cap, never
-Formal PIT market cap.
-
-The object is not yet cleared for Fundamental Factor Construction. The
-subsequent extreme-share source audit identifies 20 source facts behind 274
-available ticker-weeks and supports a candidate relative transient-run rule;
-however, its market-cap semantic closure decision is `FAIL`. After simulated
-rejection, VTRS and other securities still show million-level shares-update
-jumps. No values were rescaled, clipped, or silently excluded, the candidate
-rule is not formally signed off, and no canonical patch/rebuild is recommended.
-No Value/Size factor, neutralization, IC, portfolio, FMOM, or strategy work
-has begun.
+The formal market-cap baseline is CRSP `DlyCap`, subject to Formal Gate 0
+verification of its unit and semantic contract. Retained Yahoo price / SEC PIT
+infrastructure remains available only for explicitly labelled DEV audit work or
+possible 2026 `RECENT_EXTENSION` support.
 
 ## Known limitations
 
@@ -207,12 +213,10 @@ has begun.
   not historical point-in-time classifications. They can be used to develop
   and test the neutralization pipeline under `DEV_CURRENT_UNIVERSE`, but cannot
   be final PIT sector-neutralization evidence.
-- **Historical-market-cap limitations remain material:** the signed DEV object
-  is built, but Yahoo delivery prices are retrospectively action-normalized and
-  reported SEC shares are periodic. Narrow validation of the `>1e12` source
-  set did not close the broader source-share semantic issue: million-level
-  update jumps remain after simulation. Current value is `estimated_market_cap`,
-  never Formal PIT market cap.
+- **Retired Yahoo × SEC market-cap route:** retrospective Yahoo action handling
+  and periodic SEC shares remain limitations of the legacy evidence. They are
+  not an unresolved active formal market-cap task; the formal baseline is CRSP
+  `DlyCap` after Gate 0.
 - **Price-quality review remains open:** zero-volume and anomalous OHLC rows
   remain in the download stage, and AMCR, FERG, and VRT require identity/listing
   history review. A `review` status is not an automatic exclusion rule.
@@ -227,59 +231,39 @@ has begun.
   download-stage table, not a Yahoo HTTP response. The original Yahoo,
   Wikipedia, and SEC identity-response payloads were not preserved.
 
-## Pending WRDS/CRSP/Compustat or equivalent inputs
+## Formal WRDS readiness remains pending Gate 0
 
-No WRDS, CRSP, or Compustat data is present in the package, and the framework
-does not select a vendor. These inputs are not blockers for
-`DEV_CURRENT_UNIVERSE`; they are required to replace the current-universe
-foundation and produce `FORMAL_PIT_UNIVERSE` evidence for the formal Gate A
-decision. The documented pending inputs from those sources or an approved
-equivalent are:
+The WRDS source layer is available; the pending work is its formal data-contract
+validation, not source acquisition. Formal Gate 0 must verify raw hashes and
+schemas; historical universe coverage; duplicate keys; PERMNO/GVKEY and CCM
+coverage; Historical-GICS timing; Compustat quarterly/annual PIT rules; CRSP
+`DlyCap`, CIZ return/delisting, and index semantics; Fama–French/RF units; and
+the `2025-12-31` formal cutoff. It must also document the annual PIT-availability
+rule and validate any 2025 CRSP–Yahoo bridge before using Yahoo market data for
+the 2026 extension.
 
-- historical point-in-time S&P 500 membership and security identity history;
-- historical point-in-time GICS/industry classifications;
-- PIT security/return history needed to handle delistings, ticker migrations,
-  corporate actions, shares, and market-cap construction under a single frozen
-  basis;
-- historical-member price and delisting coverage if CRSP is adopted, and
-  PERMNO/GVKEY linking if those identifiers are available;
-- any approved fundamental cross-check/enhancement data. SEC Company Facts plus
-  `filed_date` already supplies a conservative PIT-fundamental availability
-  rule; RDQ/announcement timing remains an enhancement rather than a missing
-  prerequisite;
-- any required benchmark, risk-free, transaction-cost, and Singapore data
-  inputs required by later gates.
+No raw source, including WRDS, silently settles methodology. Versions, field
+definitions, coverage, timing, merge rules, and formal exception handling remain
+subject to the SSOT and Gate 0 acceptance evidence.
 
-Acquiring a source does not silently settle methodology: its versions, field
-definitions, coverage, timing, and merge rules must enter a data contract and
-be evaluated at Gate 0.
+## Retained DEV evidence vs formal WRDS workflow
 
-## DEV work now vs Formal PIT work later
-
-| Current DEV work using the package | Future Formal PIT work after historical constituents/GICS are available |
+| Retained Yahoo + SEC DEV layer | Formal WRDS workflow after Gate 0 |
 | --- | --- |
-| Label every dataset, diagnostic, and result `DEV_CURRENT_UNIVERSE`. Preserve/audit the package; perform source intake, mapping, PIT parsing using `filed_date <= signal_date`, weekly calendars, metrics, preprocessing, and preliminary IC/single-factor/stability/redundancy research. | Build a historical universe with reconstructible PIT membership, security identity, and sector classification; label every rerun `FORMAL_PIT_UNIVERSE`. |
-| Develop reusable validation, strategy, and backtest infrastructure, while retaining current-universe and current-GICS limitations explicitly. | Rebuild the input layer using the formal universe and any approved CRSP/Compustat or equivalent inputs under frozen corporate-action, linking, and coverage rules. |
-| Do not describe outputs as unbiased historical investable performance, formal PIT sector-neutralization evidence, final OOS, or evidence eligible to close formal Gate A. | Re-run the data-ready checks and factor-selection evidence with formal inputs. Only this layer may support the formal Gate A factor-set freeze. |
-| Do not treat the package as a prebuilt factor panel or combine it directly into a tradeable monthly panel. | Version and document approved external sources in `data/external/`; create reproducible interim/canonical datasets outside `raw_package/`. |
+| Preserve and audit `DEV_CURRENT_UNIVERSE` evidence, explicitly retaining current-universe/current-GICS limitations. It may support legacy audits and a clearly labelled 2026 bridge. | Build reproducible interim and canonical datasets from the historical universe; label formal inputs `FORMAL_PIT_UNIVERSE`. |
+| Do not describe DEV outputs as unbiased historical investable performance, formal PIT sector-neutralization evidence, Final OOS, or evidence eligible to close formal Gate A. | Run formal factor-selection evidence and, only under the formal stack, support the Gate A decision. |
+| Keep the legacy package immutable; do not revive the retired Yahoo × SEC market-cap route. | Use CRSP `DlyCap` as the formal market-cap baseline once its contract is verified. |
 
 ## Immediate next steps
 
-1. Keep `raw_package/US_source_data_2026-10-08/` immutable and use its checksum
-   manifest for every future integrity check.
-2. Review the canonical market and price-factor input audits, including the
-   zero-volume/review-security carry-forward records and IVOL open issue.
-3. Any future DEV factor research must use these labelled inputs and retain the
-   documented current-universe/current-GICS limitations; it may not close
-   formal Gate A.
-4. Review the canonical PIT fundamental-input audit, including coverage,
-   staleness, amendments, explicit missingness, and the non-unique-provenance
-   open issue; do not treat it as factor construction.
-5. Review and explicitly sign (or revise) the historical-market-cap decisions:
-   share-value validity, standard/nonstandard action handling, multi-class
-   disposition, price-quality treatment, staleness, form scope, and economic
-   level. Do not construct a market-cap object until then.
-6. Review the documented price-quality, ticker/issuer-history, and split-basis
-   issues for the DEV data-ready contract.
-7. Obtain and version historical constituents/GICS and other approved PIT
-   inputs before the `FORMAL_PIT_UNIVERSE` rerun and formal Gate A decision.
+1. Keep both `raw_package/US_source_data_2026-10-08/` and
+   `wrds_raw/US_WRDS_2026-10-09/` immutable and retain their integrity evidence.
+2. Treat Formal Gate 0 — WRDS Data Ready as the next formal prerequisite; raw
+   placement is not a Gate 0 pass.
+3. Resolve only the Gate 0 data-contract items identified in the SSOT before
+   constructing formal interim/canonical data or factor inputs.
+4. Preserve retained Yahoo price / SEC PIT infrastructure for DEV audit work or
+   possible `RECENT_EXTENSION` support, with the required evidence labels and
+   2025 bridge validation.
+5. Do not restart `STOP_DEV_MARKET_CAP_REPAIR`; use the SSOT's CRSP `DlyCap`
+   baseline for formal work after Gate 0.
