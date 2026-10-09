@@ -78,7 +78,7 @@ def output_dir(root: Path | None = None) -> Path:
 
 
 def audit_dir(root: Path | None = None) -> Path:
-    return (root or project_root()) / "outputs" / "audit"
+    return (root or project_root()) / "outputs" / "audit" / "dev_legacy" / "yahoo_price"
 
 
 def interim_db_path(root: Path | None = None) -> Path:

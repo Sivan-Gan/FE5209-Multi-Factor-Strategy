@@ -9,9 +9,9 @@
 
 The frozen manual specifies the economic concepts—non-financial Quality includes GP/A and `-Leverage`, Financials Quality uses ROE/ROA, and ordinary-company Value includes FCF Yield—but does not freeze SEC Revenue/Cost tags, a Total Debt definition, lease treatment, or a tag-priority chain. This review provides evidence and recommendations; it does not silently fill those choices.
 
-The supporting machine-readable evidence is in [the SEC design-review audit report](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/sec_fundamental_design_review_acceptance_report.md), [tag inventory](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/sec_design_tag_inventory_dev.csv), [Gross Profit audit](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/sec_gross_profit_fallback_audit_dev.csv), [leverage audit](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/sec_leverage_definition_audit_dev.csv), [FCF input audit](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/sec_fcf_input_audit_dev.csv), [foreign-form audit](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/sec_foreign_form_audit_dev.csv), and [same-filed conflict audit](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/sec_same_filed_conflict_audit_dev.csv).
+The supporting machine-readable evidence is in [the SEC design-review audit report](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_fundamental_design_review_acceptance_report.md), [tag inventory](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_design_tag_inventory_dev.csv), [Gross Profit audit](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_gross_profit_fallback_audit_dev.csv), [leverage audit](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_leverage_definition_audit_dev.csv), [FCF input audit](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_fcf_input_audit_dev.csv), [foreign-form audit](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_foreign_form_audit_dev.csv), and [same-filed conflict audit](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_same_filed_conflict_audit_dev.csv).
 
-Five subsequent DEV decisions are now recorded in the [DEV sign-off register](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/sec_dev_signoff_register.csv). The targeted Leverage audit is separate evidence for the remaining Leverage-definition choice; it does not authorize canonical construction.
+Five subsequent DEV decisions are now recorded in the [DEV sign-off register](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_dev_signoff_register.csv). The targeted Leverage audit is separate evidence for the remaining Leverage-definition choice; it does not authorize canonical construction.
 
 ## Audit controls
 
@@ -118,7 +118,7 @@ The classifications other than the first and last are non-exclusive source attri
 | Instant/duration separation | `RECOMMEND_SIGNOFF` | Balance-sheet and flow facts use different economic-period structures. |
 | Classify periods using dates + form + FY/FP, not FP alone | `RECOMMEND_SIGNOFF` | The source contains irregular and comparative periods; FP alone is insufficient. |
 
-The machine-readable equivalent is [sec_design_signoff_table_dev.csv](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/sec_design_signoff_table_dev.csv).
+The machine-readable equivalent is [sec_design_signoff_table_dev.csv](/Users/ganjunhui/Desktop/课堂/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_design_signoff_table_dev.csv).
 
 ## Historical pre-sign-off questions and their current status
 

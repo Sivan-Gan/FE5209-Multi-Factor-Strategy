@@ -170,7 +170,7 @@ def canonical_dir(root: Path | None = None) -> Path:
 
 
 def audit_dir(root: Path | None = None) -> Path:
-    return (root or project_root()) / "outputs" / "audit"
+    return (root or project_root()) / "outputs" / "audit" / "dev_legacy" / "sec_pit"
 
 
 def output_paths(root: Path | None = None) -> dict[str, Path]:

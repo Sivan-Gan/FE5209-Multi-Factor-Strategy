@@ -13,13 +13,13 @@
   strategy logic.
 
 `raw_package/US_source_data_2026-10-08/` is immutable evidence. All audit
-outputs are reproducible products in `outputs/audit/`; no raw file, frozen
+outputs are reproducible products in `outputs/audit/dev_legacy/source_audit/`; no raw file, frozen
 manual, or canonical dataset is changed by this Gate 0 work.
 
 ## Audit evidence
 
 The full machine-readable inventory is
-`outputs/audit/source_file_inventory.csv`, with 509 rows: 508 delivered payload
+`outputs/audit/dev_legacy/source_audit/source_file_inventory.csv`, with 509 rows: 508 delivered payload
 files covered by `PACKAGE_SHA256.csv`, plus the checksum manifest itself.
 The payload manifest verified **508/508** files, with no missing, unexpected,
 byte-size, or SHA-256 failures. Its own SHA-256 is
@@ -27,12 +27,12 @@ byte-size, or SHA-256 failures. Its own SHA-256 is
 
 Supporting audit artifacts are:
 
-- `outputs/audit/source_inventory.json` — source-level schema and inventory;
-- `outputs/audit/source_coverage_report.json` — delivered coverage and mapping
+- `outputs/audit/dev_legacy/source_audit/source_inventory.json` — source-level schema and inventory;
+- `outputs/audit/dev_legacy/source_audit/source_coverage_report.json` — delivered coverage and mapping
   statistics;
-- `outputs/audit/source_exception_report.json` — observed exceptions and raw
+- `outputs/audit/dev_legacy/source_audit/source_exception_report.json` — observed exceptions and raw
   fact complexity;
-- `outputs/audit/acceptance_test_report.md` — PASS/WARN/FAIL Gate 0 decision.
+- `outputs/audit/dev_legacy/source_audit/acceptance_test_report.md` — PASS/WARN/FAIL Gate 0 decision.
 
 ## Source objects
 

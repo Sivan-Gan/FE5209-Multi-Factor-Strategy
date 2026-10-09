@@ -2,7 +2,8 @@
 
 This module deliberately audits source facts and method alternatives only.  It
 does not create a canonical PIT panel, choose a factor input, calculate a
-financial ratio/yield, or write any result outside ``outputs/audit``.
+financial ratio/yield, or write any result outside
+``outputs/audit/dev_legacy/sec_pit``.
 """
 
 from __future__ import annotations
@@ -291,7 +292,7 @@ def project_root() -> Path:
 
 
 def audit_dir(root: Path | None = None) -> Path:
-    return (root or project_root()) / "outputs" / "audit"
+    return (root or project_root()) / "outputs" / "audit" / "dev_legacy" / "sec_pit"
 
 
 def output_paths(root: Path | None = None) -> dict[str, Path]:

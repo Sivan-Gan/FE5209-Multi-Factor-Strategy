@@ -130,7 +130,7 @@ does not reduce coverage because another permitted class is available; negative
 CapEx accounts for 360 unavailable CapEx concept/date observations; open
 provenance issues account for 470 unavailable concept/date observations. The
 complete, aggregated exception record is
-`outputs/audit/sec_canonical_pit_open_implementation_issues_dev.csv`.
+`outputs/audit/dev_legacy/sec_pit/sec_canonical_pit_open_implementation_issues_dev.csv`.
 
 ## Weekly coverage in the formal US research windows
 
@@ -163,13 +163,13 @@ factor-usability decision.
 | OCF | 2021–2026.09 | 97.7% | 97.4% | 94.2% | 95.0% | +5.6 pp |
 
 The detailed weekly report, including reason counts, is
-`outputs/audit/sec_weekly_fundamental_coverage_dev.csv`; the window aggregation
-is `outputs/audit/sec_weekly_fundamental_coverage_by_window_dev.csv`.
+`outputs/audit/dev_legacy/sec_pit/sec_weekly_fundamental_coverage_dev.csv`; the window aggregation
+is `outputs/audit/dev_legacy/sec_pit/sec_weekly_fundamental_coverage_by_window_dev.csv`.
 
 ## Staleness evidence
 
 The full descriptive distributions are in
-`outputs/audit/sec_fundamental_staleness_dev.csv`. Instant facts have modest
+`outputs/audit/dev_legacy/sec_pit/sec_fundamental_staleness_dev.csv`. Instant facts have modest
 central ages but long tails because no cutoff has been applied:
 
 | Instant concept | Snapshot rows | Median period-end age | 95th pct period-end age | Median filing age | 95th pct filing age |
@@ -191,7 +191,7 @@ tickers and all seven concepts. The first-selection transition audit has 1,493
 events: 512 `SAME_PERIOD_AMENDMENT`, 551 `LATER_PERIOD_AMENDMENT`, 427 with no
 prior available selected fact, and 3 other-period changes. Every transition is
 on or after the amendment filing date. See
-`outputs/audit/sec_fundamental_amendment_switches_dev.csv` and its summary.
+`outputs/audit/dev_legacy/sec_pit/sec_fundamental_amendment_switches_dev.csv` and its summary.
 
 Conditional 20-F inclusion behaved as signed:
 

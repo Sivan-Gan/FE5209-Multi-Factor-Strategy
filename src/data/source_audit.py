@@ -3,7 +3,7 @@
 This module intentionally performs no factor construction, return calculation,
 portfolio construction, or strategy/backtest logic. It profiles the immutable
 source package and writes reproducible audit artifacts only under
-``outputs/audit``.
+``outputs/audit/dev_legacy/source_audit``.
 """
 
 from __future__ import annotations
@@ -1125,7 +1125,7 @@ def main() -> int:
     parser.add_argument("--output-dir", type=Path)
     args = parser.parse_args()
     root = args.project_root.resolve()
-    output = (args.output_dir or root / "outputs" / "audit").resolve()
+    output = (args.output_dir or root / "outputs" / "audit" / "dev_legacy" / "source_audit").resolve()
     audit = collect_audit(root)
     written = write_audit_outputs(audit, output)
     print(f"evidence_stage={EVIDENCE_STAGE}")

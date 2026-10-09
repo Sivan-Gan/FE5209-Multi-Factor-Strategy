@@ -23,12 +23,12 @@
   ],
   "raw_observation_count": 12709510,
   "reports": {
-    "branch_coverage": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/sec_financial_re_coverage_dev.csv",
-    "duplicate_audit": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/sec_duplicate_amendment_audit_dev.csv",
-    "form_audit": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/sec_form_audit_dev.csv",
-    "period_audit": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/sec_period_audit_dev.csv",
-    "tag_coverage": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/sec_tag_coverage_dev.csv",
-    "unit_audit": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/sec_unit_audit_dev.csv"
+    "branch_coverage": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_financial_re_coverage_dev.csv",
+    "duplicate_audit": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_duplicate_amendment_audit_dev.csv",
+    "form_audit": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_form_audit_dev.csv",
+    "period_audit": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_period_audit_dev.csv",
+    "tag_coverage": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_tag_coverage_dev.csv",
+    "unit_audit": "/Users/ganjunhui/Desktop/\u8bfe\u5802/FE5209/FE5209/outputs/audit/dev_legacy/sec_pit/sec_unit_audit_dev.csv"
   },
   "schema": "fe5209.sec_fundamental_input_spec.dev.v1"
 }
