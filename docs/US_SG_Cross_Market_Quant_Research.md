@@ -2219,6 +2219,86 @@ $$
 
 ---
 
+## Formal US Candidate-Factor Definition Freeze — 2026-10-11
+
+> **Historical record.** At commit `cd0151bd1df80b1834ce4cfe04b7e967adc6cbde`, Candidate Factor Construction was correctly marked **BLOCKED** because the definitions below had not yet been frozen.  This section records the subsequent user-approved research-design freeze.  No IC, return, Sharpe, alpha, portfolio, or backtest evidence was consulted to make these decisions.
+
+These rules apply to the Formal US candidate-factor construction only.  They do not select a Final Factor Set, do not determine whether a candidate survives Gate A, and do not alter the already frozen Momentum or Low Risk definitions.
+
+### 1. Size
+
+The Formal US Size candidate is issuer-level:
+
+$$
+SIZE_{raw}=-\log(IssuerMarketCap)
+$$
+
+`IssuerMarketCap` is the positive, explicitly available canonical CRSP issuer-level market capitalization in USD thousands.  Security-level `DlyCap`, a partial issuer denominator, and the retired Yahoo × SEC estimate are prohibited substitutions.  The score is winsorized at same-date 1/99, same-date z-scored, and is not size-neutralized.  Higher score means a smaller issuer.  Issuer market capitalization remains economically distinct from the derived Size score.
+
+### 2. Fundamental source precedence and provenance
+
+For every applicable metric, select information solely by PIT availability on or before the signal date and retain `source_frequency`, `source_datadate`, `source_availability_date`, and `fallback_used`.
+
+- **Flows:** use the latest valid quarterly-derived TTM first; otherwise use the latest valid annual measure.  A logical flow metric never mixes annual and quarterly components.
+- **Stocks:** use the latest valid quarterly point-in-time value first; otherwise use the latest valid annual point-in-time value.  A logical stock metric never uses future quarterly information.
+
+The precedence is definitional, not a coverage or performance optimisation.
+
+### 3. Value
+
+Historical GICS Sector 40 (Financials) and 60 (Real Estate) use E/P and B/P only.  Other sectors use E/P, B/P, and FCF Yield.  Missing historical GICS makes a branch-dependent Value score unavailable; current-GICS backfill is prohibited.
+
+- **E/P:** primary numerator is TTM NIQ from four consecutive PIT-valid quarterly observations; annual NI is the whole-metric fallback.  `EP_RAW = NI_USD_millions × 1000 / IssuerMarketCap_USD_thousands`.  Negative earnings are retained.
+- **B/P:** primary numerator is latest PIT-valid CEQQ; annual CEQ is the whole-metric fallback.  `BP_RAW = CEQ_USD_millions × 1000 / IssuerMarketCap_USD_thousands`.  Negative common equity is retained unless an existing canonical rule makes it invalid.
+- **FCF Yield:** primary numerator is quarterly-derived TTM OANCFY minus quarterly-derived TTM CAPXY, each requiring four valid consecutive canonical single-quarter flows; annual OANCF minus CAPX is the whole-metric fallback.  `FCFYIELD_RAW = FCF_USD_millions × 1000 / IssuerMarketCap_USD_thousands`.  Negative FCF is retained.
+
+Each component is same-date 1/99 winsorized and z-scored.  Nonfinancial firms require at least two of three components; Financials/Real Estate require at least one of two.  Average only available component z-scores, then re-zscore the valid branch composite before neutralization.
+
+### 4. Quality
+
+The historical-GICS branch is mandatory: sectors 40/60 use ROE and ROA; all other sectors use ROE, GP/A, and negative Leverage.  A missing historical sector makes Quality unavailable.
+
+- **ROE:** quarterly primary is TTM NIQ divided by the latest PIT-valid CEQQ at that TTM endpoint; annual fallback is NI / CEQ from the same accepted annual fiscal observation.  A zero denominator is unavailable; negative equity is not absolute-valued.
+- **ROA:** quarterly primary is TTM NIQ divided by latest PIT-valid ATQ; annual fallback is annual NI / annual AT from the same accepted annual fiscal observation.  A zero denominator is unavailable.
+- **GP/A:** Gross Profit is the exact approved canonical Sales/Revenue less COGS field construction.  Quarterly primary is TTM Gross Profit / latest PIT-valid ATQ; annual fallback is annual Gross Profit / annual AT.  Missing COGS is never filled with zero.
+- **Leverage:** the nonfinancial metric is `(Short-Term Debt + Long-Term Debt) / Total Assets`, using the exact approved canonical mappings (`DLCQ + DLTTQ`) / `ATQ` quarterly and (`DLC + DLTT`) / `AT` annually when those are the approved field names.  Required missing debt components make Leverage unavailable.  Quality uses `-Leverage`.
+
+No Quality metric mixes annual with quarterly numerator or denominator.  Components are same-date 1/99 winsorized and z-scored.  Nonfinancial firms require at least two of three components; Financials/Real Estate require at least one of two.  Average available components and re-zscore the valid branch composite before neutralization.
+
+### 5. Investment
+
+The Formal Investment candidate is negative asset growth.  Quarterly primary uses the latest PIT-valid ATQ and the same fiscal quarter in the immediately preceding fiscal year:
+
+$$
+AssetGrowth_Q=ATQ_{t}/ATQ_{same\ fiscal\ quarter,\ t-1}-1.
+$$
+
+If that exact same-fiscal-quarter pair is unavailable, annual fallback uses the latest PIT-valid AT and the immediately prior fiscal-year AT.  Nearest-calendar-date substitution and annual/quarterly mixing are prohibited.  `INVESTMENT_RAW = -AssetGrowth`, followed by same-date 1/99 winsorization, same-date z-score, and mandatory neutralization.
+
+### 6. Mandatory neutralization
+
+Only Value, Quality, and Investment are neutralized.  On each signal date, use valid observations only and fit:
+
+$$
+F^{pre}_{i,t}=\beta_t\log(IssuerMarketCap_{i,t})+\sum_s\gamma_{s,t}SectorDummy_{i,s,t}+\epsilon_{i,t}.
+$$
+
+The controls are canonical issuer-level `log(IssuerMarketCap)` and all mutually exclusive **historical GICS Sector** dummies valid on the signal date.  The regression has no separate intercept, drops no sector dummy, and cannot use security-level `DlyCap` or current GICS.  The final score is the same-date z-score of the residual.  Missing/nonpositive issuer market capitalization or missing historical sector makes the neutralized factor unavailable.  Momentum, Low Risk, Dividend, and Size have no baseline neutralization; Size must not be size-neutralized.
+
+### 7. Dividend
+
+The Dividend candidate is security-level trailing-12-month ordinary cash-dividend yield.  It uses only ordinary CRSP distribution events already accepted by Phase 2B; nonordinary distributions, return-of-capital events, stock distributions, split/share-adjustment events, and other non-cash claims are excluded.  The audited CRSP ex-date field is the economic event date, and an event is eligible only when `ex_date <= signal_date` and `ex_date > signal_date - 365 calendar days`.
+
+Historical cash dividends must first be deterministically adjusted to the signal-date share basis using audited CRSP split semantics.  If Stage B cannot support that exact adjustment, Dividend remains blocked as `DIVIDEND_SPLIT_ADJUSTMENT_SEMANTICS_UNRESOLVED`; historical per-share amounts must not be summed across split events without that evidence.  With a valid normalized numerator:
+
+$$
+DIVYIELD_{raw}=TTM\ Ordinary\ Cash\ Dividend\ Per\ Share / SignalDate\ SecurityPrice.
+$$
+
+The security-level canonical signal-date price must be positive and finite.  A zero is permitted only when the full trailing event window is demonstrably observable and contains no eligible ordinary cash-dividend event; otherwise the metric is unavailable.  Dividend is same-date 1/99 winsorized and z-scored, with no baseline neutralization.  Dividend events are factor inputs only and never alter total-return accounting.
+
+---
+
 # 8. Part IV — Single-Factor Validation 与 Final Factor Set
 
 ## Step 12 — Forward IC
