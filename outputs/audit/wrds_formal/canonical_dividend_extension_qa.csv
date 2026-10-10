@@ -1,0 +1,11 @@
+check,status,value,expected_or_rule,notes
+RAW_IMMUTABILITY,PASS,,see formal Stage-B frozen contract,No total-return field was modified.
+BASE_CANONICAL_IMMUTABILITY,PASS,,see formal Stage-B frozen contract,No total-return field was modified.
+NATURAL_KEY,PASS,"{""duplicate_keys"":0,""max_date"":""2025-12-31"",""min_date"":""2004-01-02"",""nonordinary_count"":18,""nonstandard_share_basis_count"":386,""ordinary_count"":43436,""ordinary_nonordinary_overlap"":0,""post_cutoff_count"":0,""row_count"":44618,""split_count"":1164,""standard_split_count"":552,""unique_permno"":894}",see formal Stage-B frozen contract,No total-return field was modified.
+ORDINARY_RECONCILIATION,PASS,43436,see formal Stage-B frozen contract,No total-return field was modified.
+SPLIT_RECONCILIATION,PASS,1164,see formal Stage-B frozen contract,No total-return field was modified.
+NONORDINARY_RECONCILIATION,PASS,18,see formal Stage-B frozen contract,No total-return field was modified.
+NO_2026_EVENTS,PASS,0,see formal Stage-B frozen contract,No total-return field was modified.
+ORDINARY_FILTER,PASS,,see formal Stage-B frozen contract,No total-return field was modified.
+PERMNO_SCOPE,PASS,,see formal Stage-B frozen contract,No total-return field was modified.
+LOGICAL_HASH,PASS,,see formal Stage-B frozen contract,No total-return field was modified.

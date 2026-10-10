@@ -1,0 +1,2 @@
+run_1_logical_hash,run_2_logical_hash,status,notes
+f5e1edcf58e28a96cdc4e1cb24ec2d38bc4917a71058fbeccd5d7e1a9228d82d,f5e1edcf58e28a96cdc4e1cb24ec2d38bc4917a71058fbeccd5d7e1a9228d82d,PASS,Two atomic rebuilds from the same immutable CRSP Distribution input and base canonical store.
