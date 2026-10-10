@@ -1,0 +1,7 @@
+check_id,severity,status,evidence,result
+phase2b_source_groups,CRITICAL,PASS,37 Phase-2B group-level insufficiency records deterministically coalesced by primary PERMCO.,QUERY_INPUT_DERIVED
+permco_query_universe,CRITICAL,PASS,unique_permcos=45; deterministic_batches=3; ticker is diagnostic only.,READY_FOR_USER_EXECUTION
+wrds_table_confirmation,CRITICAL,PASS,"Official WRDS/CRSP CIZ documentation confirms crsp.stksecurityinfohist, crsp.stkdlysecuritydata, and StkShares fields.",NO_UNVERIFIED_TABLE_NAME_USED
+eligible_security_definition,CRITICAL,PASS,Provider CIZ common-equity mapping supports EQTY/COM with ShareType NS/CE/SB and IssuerType ACOR/CORP/REIT; ADR/units/funds/derivatives excluded.,DOCUMENTED_FILTER_READY
+raw_acquisition,CRITICAL,NOT_EXECUTED,No authenticated WRDS session was opened and no supplemental raw output was created in this preparation stage.,USER_EXECUTION_REQUIRED
+issuer_coverage_closure,CRITICAL,PENDING,Coverage classification requires the future raw supplemental outputs and a separate issuer-class audit.,NO_ISSUER_MARKET_CAP_CONSTRUCTED
