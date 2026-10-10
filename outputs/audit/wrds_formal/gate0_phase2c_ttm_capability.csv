@@ -1,0 +1,7 @@
+field_name,scope,metric,count,denominator,percentage,notes
+capxy,CCM_LINKED_GVKEYS_ONLY,PIT_eligible_single_quarter_flows,63350,,,Only values whose availability date is on or before the formal cutoff.
+capxy,CCM_LINKED_GVKEYS_ONLY,four_consecutive_quarter_ttm_windows,60244,63350,95.097080,Capability only; no factor choice or TTM series is constructed.
+capxy,CCM_LINKED_GVKEYS_ONLY,valid_endpoint_without_four_consecutive_quarters,3106,63350,4.902920,"Failure reflects missing/non-PIT-eligible predecessor(s), not imputation."
+oancfy,CCM_LINKED_GVKEYS_ONLY,PIT_eligible_single_quarter_flows,63487,,,Only values whose availability date is on or before the formal cutoff.
+oancfy,CCM_LINKED_GVKEYS_ONLY,four_consecutive_quarter_ttm_windows,60452,63487,95.219494,Capability only; no factor choice or TTM series is constructed.
+oancfy,CCM_LINKED_GVKEYS_ONLY,valid_endpoint_without_four_consecutive_quarters,3035,63487,4.780506,"Failure reflects missing/non-PIT-eligible predecessor(s), not imputation."

@@ -1,0 +1,12 @@
+check_id,severity,status,evidence,result
+phase1_original_raw_immutability,CRITICAL,PASS,original_files=16; changed=0,PHASE1_MANIFEST_REMAINS_HISTORICAL_EVIDENCE
+compustat_pre_post_hash,CRITICAL,PASS,Annual and quarterly SHA256 match before and after Phase 2C read-only audit.,RAW_INPUTS_NOT_MODIFIED
+compustat_schema_inventory,CRITICAL,PASS,annual_columns=38; quarterly_columns=36; rdq_present=True,SCHEMA_AUDITED_FROM_DELIVERED_RAW
+quarterly_rdq_timing_rule,CRITICAL,PASS,RDQ date-only observations are usable only from the next local trading day; missing/invalid RDQ is not PIT eligible.,NO_SAME_DAY_OR_FUTURE_USE
+annual_availability_rule,CRITICAL,PASS,q4_rdq_resolved=201901; blocked=78824; no fallback lag used.,ANNUAL_DATADATE_NOT_USED_AS_PUBLICATION_DATE
+quarterly_ytd_semantics,CRITICAL,PASS,"{""capxy"":{""total"":69696,""valid"":63350},""oancfy"":{""total"":69696,""valid"":63487}}",SAME_FISCAL_YEAR_DIFFERENCING_ONLY
+ordinary_compustat_vintage_boundary,WARN,PASS_WITH_LIMITATION,Ordinary delivered extract is bounded as publication-date-aligned history; Snapshot-style vintage retention was not delivered.,NO_VINTAGE_PERFECT_CLAIM
+duplicate_conflict_policy,WARN,OPEN,conflicting_gvkey_datadate_groups=25888,NO_ORDER_BASED_DEDUPLICATION
+raw_field_units,WARN,OPEN,Raw CSV has no field-level unit metadata.,NO_SILENT_UNIT_MULTIPLIER
+phase_boundary,CRITICAL,PASS,PHASE_2C_AUDIT_ONLY,NO_CANONICAL_DATA_FACTORS_IC_PORTFOLIO_OR_BACKTEST
+phase2c_verdict,CRITICAL,PASS WITH WARNINGS,"See Phase 2C coverage, contract, and open-issue evidence.",FORMAL_GATE0_REMAINS_PENDING

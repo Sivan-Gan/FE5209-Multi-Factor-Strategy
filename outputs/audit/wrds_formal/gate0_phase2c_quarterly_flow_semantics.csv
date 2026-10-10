@@ -1,0 +1,32 @@
+field_name,scope,metric,status,count,denominator,percentage,notes
+ALL_YTD_FIELDS,CCM_LINKED_GVKEY_FISCAL_QUARTER,within_fiscal_year_consecutive_datadate_gap_days,DESCRIPTIVE_NO_INVENTED_PERIOD_LENGTH_THRESHOLD,50242,,,"{""max"":183,""median"":""92.000000"",""min"":89,""nonpositive_gap_count"":0,""p05"":""91.000000"",""p95"":""92.000000""}"
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,DUPLICATE_OR_CONFLICT,1,69696,0.001435,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,MISSING_PREDECESSOR,599,69696,0.859447,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,MISSING_QUARTER,2030,69696,2.912649,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,MISSING_YTD_FIELD,33,69696,0.047348,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,NO_NEXT_LOCAL_TRADING_DAY,1939,69696,2.782082,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,RDQ_BEFORE_DATADATE,53,69696,0.076045,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,RDQ_MISSING,1554,69696,2.229683,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,VALID,63487,69696,91.091311,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,derivation_method,NO_CROSS_YEAR_DIFFERENCE,599,63487,0.943500,Negative derived flows are retained as economically possible values.
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,derivation_method,NO_DERIVATION,3547,63487,5.586971,Negative derived flows are retained as economically possible values.
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,derivation_method,NO_FILL,2063,63487,3.249484,Negative derived flows are retained as economically possible values.
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,derivation_method,Q1_YTD,16127,63487,25.402051,Negative derived flows are retained as economically possible values.
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,derivation_method,Q4_YTD_MINUS_Q3,15418,63487,24.285287,Negative derived flows are retained as economically possible values.
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,derivation_method,YTD_MINUS_PRIOR_QUARTER,31942,63487,50.312662,Negative derived flows are retained as economically possible values.
+oancfy,CCM_LINKED_GVKEY_FISCAL_QUARTER,negative_valid_single_quarter_values,RETAINED_NOT_CLIPPED,7141,63487,11.247972,Diagnostic only; no winsorization or clipping.
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,DUPLICATE_OR_CONFLICT,1,69696,0.001435,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,MISSING_PREDECESSOR,621,69696,0.891012,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,MISSING_QUARTER,2030,69696,2.912649,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,MISSING_YTD_FIELD,148,69696,0.212351,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,NO_NEXT_LOCAL_TRADING_DAY,1939,69696,2.782082,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,RDQ_BEFORE_DATADATE,53,69696,0.076045,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,RDQ_MISSING,1554,69696,2.229683,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,single_quarter_derivation_status,VALID,63350,69696,90.894743,"No cross-year differencing, fill, or value selection from a conflicting raw key."
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,derivation_method,NO_CROSS_YEAR_DIFFERENCE,621,63350,0.980268,Negative derived flows are retained as economically possible values.
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,derivation_method,NO_DERIVATION,3547,63350,5.599053,Negative derived flows are retained as economically possible values.
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,derivation_method,NO_FILL,2178,63350,3.438043,Negative derived flows are retained as economically possible values.
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,derivation_method,Q1_YTD,16094,63350,25.404893,Negative derived flows are retained as economically possible values.
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,derivation_method,Q4_YTD_MINUS_Q3,15383,63350,24.282557,Negative derived flows are retained as economically possible values.
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,derivation_method,YTD_MINUS_PRIOR_QUARTER,31873,63350,50.312549,Negative derived flows are retained as economically possible values.
+capxy,CCM_LINKED_GVKEY_FISCAL_QUARTER,negative_valid_single_quarter_values,RETAINED_NOT_CLIPPED,165,63350,0.260458,Diagnostic only; no winsorization or clipping.

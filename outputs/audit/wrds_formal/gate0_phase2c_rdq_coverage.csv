@@ -1,0 +1,42 @@
+scope,calendar_datadate_year,metric,field_name,numerator,denominator,percentage,min,median,p95,p99,max,notes
+CCM_HISTORICAL_SP500_GVKEYS,ALL,linked_gvkeys_present_in_quarterly_raw,gvkey,948,957,99.059561,,,,,,"CCM baseline GVKEY scope from the historical S&P 500 raw linkage; this is a raw-presence audit, not a canonical join."
+CCM_HISTORICAL_SP500_GVKEYS,ALL,linked_gvkeys_with_at_least_one_nonmissing_rdq,rdq,948,957,99.059561,,,,,,"Presence of an RDQ is not alone PIT eligibility; date, conflict, and cutoff checks still apply."
+QUARTERLY_RAW,2004,rdq_nonmissing,rdq,37608,44073,85.331155,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2005,rdq_nonmissing,rdq,36950,44161,83.671113,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2006,rdq_nonmissing,rdq,36621,44051,83.133187,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2007,rdq_nonmissing,rdq,35785,44048,81.240919,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2008,rdq_nonmissing,rdq,34446,43642,78.928555,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2009,rdq_nonmissing,rdq,33251,43210,76.952094,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2010,rdq_nonmissing,rdq,32991,43727,75.447664,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2011,rdq_nonmissing,rdq,33092,44670,74.081039,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2012,rdq_nonmissing,rdq,34449,47223,72.949622,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2013,rdq_nonmissing,rdq,34598,47472,72.880856,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2014,rdq_nonmissing,rdq,34554,47018,73.491003,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2015,rdq_nonmissing,rdq,33564,46374,72.376763,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2016,rdq_nonmissing,rdq,32029,45906,69.770836,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2017,rdq_nonmissing,rdq,31051,45639,68.036109,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2018,rdq_nonmissing,rdq,30395,45747,66.441515,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2019,rdq_nonmissing,rdq,29723,46243,64.275674,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2020,rdq_nonmissing,rdq,29890,47007,63.586274,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2021,rdq_nonmissing,rdq,30989,48614,63.745012,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2022,rdq_nonmissing,rdq,30889,50099,61.655921,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2023,rdq_nonmissing,rdq,30099,50675,59.396152,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2024,rdq_nonmissing,rdq,29102,51219,56.818759,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2025,rdq_nonmissing,rdq,27878,52972,52.627803,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,2026,rdq_nonmissing,rdq,13477,35016,38.488120,,,,,,RDQ is date-only public-information evidence; usability begins next local trading day.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,atq,731679,740115,98.860177,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,capxy,707914,715197,98.981679,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,ceqq,728885,737302,98.858405,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,cogsq,726253,757201,95.912842,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,cshoq,719724,981659,73.317109,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,dlcq,692611,700570,98.863925,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,dlttq,725811,734043,98.878540,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,ltq,731042,739232,98.892093,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,niq,730018,762089,95.791699,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,oancfy,712185,719529,98.979332,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,pstkq,728034,736269,98.881523,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,revtq,672556,703794,95.561485,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_nonmissing_given_field_nonmissing,saleq,727413,760498,95.649561,,,,,,Field-level RDQ coverage; it does not override conflict or invalid-date checks.
+QUARTERLY_RAW,ALL,rdq_before_datadate,rdq,60,1058806,0.005667,0,40,105.000000,225.000000,3057,Lag statistics are computed only for nonnegative RDQ minus datadate observations.
+QUARTERLY_RAW,ALL,rdq_equal_datadate,rdq,34,1058806,0.003211,0,40,105.000000,225.000000,3057,Lag statistics are computed only for nonnegative RDQ minus datadate observations.
+QUARTERLY_RAW,ALL,rdq_nonmissing_all,rdq,733431,1058806,69.269630,0,40,105.000000,225.000000,3057,Lag statistics are computed only for nonnegative RDQ minus datadate observations.

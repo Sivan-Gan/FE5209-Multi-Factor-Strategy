@@ -1,0 +1,108 @@
+dataset,record_type,field_name,metric,category,value,denominator,percentage,notes
+COMPUSTAT_ANNUAL,DATASET_SUMMARY,,raw_row_count,ALL,281884,,,Raw delivered-file inventory
+COMPUSTAT_ANNUAL,DATASET_SUMMARY,,column_count,ALL,38,,,Raw delivered-file inventory
+COMPUSTAT_ANNUAL,DATASET_SUMMARY,,unique_gvkey_count,ALL,29294,,,Raw delivered-file inventory
+COMPUSTAT_ANNUAL,DATASET_SUMMARY,,missing_gvkey_count,ALL,0,,,Raw delivered-file inventory
+COMPUSTAT_ANNUAL,DATASET_SUMMARY,,missing_datadate_count,ALL,0,,,Raw delivered-file inventory
+COMPUSTAT_ANNUAL,DATASET_SUMMARY,,min_datadate,ALL,2004-01-31,,,Raw delivered-file inventory
+COMPUSTAT_ANNUAL,DATASET_SUMMARY,,max_datadate,ALL,2026-09-30,,,Raw delivered-file inventory
+COMPUSTAT_ANNUAL,DATASET_SUMMARY,,fiscal_year_values_json,ALL,"[""2003"",""2004"",""2005"",""2006"",""2007"",""2008"",""2009"",""2010"",""2011"",""2012"",""2013"",""2014"",""2015"",""2016"",""2017"",""2018"",""2019"",""2020"",""2021"",""2022"",""2023"",""2024"",""2025"",""2026""]",,,Raw delivered-file inventory
+COMPUSTAT_ANNUAL,DATASET_SUMMARY,,fiscal_quarter_values_json,ALL,[],,,Raw delivered-file inventory
+COMPUSTAT_ANNUAL,FIELD,costat,nonmissing,RAW,281884,281884,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,curcd,nonmissing,RAW,281884,281884,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,datafmt,nonmissing,RAW,281884,281884,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,indfmt,nonmissing,RAW,281884,281884,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,consol,nonmissing,RAW,281884,281884,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,tic,nonmissing,RAW,281712,281884,99.938982,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,datadate,nonmissing,RAW,281884,281884,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,gvkey,nonmissing,RAW,281884,281884,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,conm,nonmissing,RAW,281884,281884,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,cusip,nonmissing,RAW,281721,281884,99.942175,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,cik,nonmissing,RAW,211879,281884,75.165316,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,fyr,nonmissing,RAW,281884,281884,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,naics,nonmissing,RAW,271622,281884,96.359495,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,sic,nonmissing,RAW,281884,281884,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,curncd,nonmissing,RAW,281884,281884,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,fyear,nonmissing,RAW,281884,281884,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,at,nonmissing,RAW,216040,281884,76.641455,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,ceq,nonmissing,RAW,215545,281884,76.465851,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,dlc,nonmissing,RAW,214445,281884,76.075620,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,dltt,nonmissing,RAW,215545,281884,76.465851,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,lt,nonmissing,RAW,215737,281884,76.533964,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,mib,nonmissing,RAW,213238,281884,75.647429,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,pstk,nonmissing,RAW,215216,281884,76.349137,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,pstkl,nonmissing,RAW,188569,281884,66.895957,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,pstkrv,nonmissing,RAW,188678,281884,66.934626,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,seq,nonmissing,RAW,216021,281884,76.634715,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,txditc,nonmissing,RAW,170383,281884,60.444367,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,cogs,nonmissing,RAW,189704,281884,67.298605,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,dvc,nonmissing,RAW,212740,281884,75.470761,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,dvt,nonmissing,RAW,212725,281884,75.465440,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,gp,nonmissing,RAW,189686,281884,67.292219,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,ni,nonmissing,RAW,189700,281884,67.297186,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,revt,nonmissing,RAW,215013,281884,76.277121,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,sale,nonmissing,RAW,189703,281884,67.298250,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,capx,nonmissing,RAW,188276,281884,66.792014,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,oancf,nonmissing,RAW,188838,281884,66.991387,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,csho,nonmissing,RAW,247471,281884,87.791787,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FIELD,sich,nonmissing,RAW,186207,281884,66.058024,Raw-delivery field presence; no unit inference
+COMPUSTAT_ANNUAL,FORMAT_DISTRIBUTION,consol,frequency,C,281884,281884,100.000000,Observed delivered raw values
+COMPUSTAT_ANNUAL,FORMAT_DISTRIBUTION,costat,frequency,A,179793,281884,63.782620,Observed delivered raw values
+COMPUSTAT_ANNUAL,FORMAT_DISTRIBUTION,costat,frequency,I,102091,281884,36.217380,Observed delivered raw values
+COMPUSTAT_ANNUAL,FORMAT_DISTRIBUTION,curcd,frequency,CAD,44367,281884,15.739453,Observed delivered raw values
+COMPUSTAT_ANNUAL,FORMAT_DISTRIBUTION,curcd,frequency,USD,237517,281884,84.260547,Observed delivered raw values
+COMPUSTAT_ANNUAL,FORMAT_DISTRIBUTION,datafmt,frequency,STD,281884,281884,100.000000,Observed delivered raw values
+COMPUSTAT_ANNUAL,FORMAT_DISTRIBUTION,indfmt,frequency,FS,25455,281884,9.030310,Observed delivered raw values
+COMPUSTAT_ANNUAL,FORMAT_DISTRIBUTION,indfmt,frequency,INDL,256429,281884,90.969690,Observed delivered raw values
+COMPUSTAT_QUARTERLY,DATASET_SUMMARY,,raw_row_count,ALL,1058806,,,Raw delivered-file inventory
+COMPUSTAT_QUARTERLY,DATASET_SUMMARY,,column_count,ALL,36,,,Raw delivered-file inventory
+COMPUSTAT_QUARTERLY,DATASET_SUMMARY,,unique_gvkey_count,ALL,31460,,,Raw delivered-file inventory
+COMPUSTAT_QUARTERLY,DATASET_SUMMARY,,missing_gvkey_count,ALL,0,,,Raw delivered-file inventory
+COMPUSTAT_QUARTERLY,DATASET_SUMMARY,,missing_datadate_count,ALL,0,,,Raw delivered-file inventory
+COMPUSTAT_QUARTERLY,DATASET_SUMMARY,,min_datadate,ALL,2004-01-31,,,Raw delivered-file inventory
+COMPUSTAT_QUARTERLY,DATASET_SUMMARY,,max_datadate,ALL,2026-09-30,,,Raw delivered-file inventory
+COMPUSTAT_QUARTERLY,DATASET_SUMMARY,,fiscal_year_values_json,ALL,"[""2003"",""2004"",""2005"",""2006"",""2007"",""2008"",""2009"",""2010"",""2011"",""2012"",""2013"",""2014"",""2015"",""2016"",""2017"",""2018"",""2019"",""2020"",""2021"",""2022"",""2023"",""2024"",""2025"",""2026"",""2027""]",,,Raw delivered-file inventory
+COMPUSTAT_QUARTERLY,DATASET_SUMMARY,,fiscal_quarter_values_json,ALL,"[""1"",""2"",""3"",""4""]",,,Raw delivered-file inventory
+COMPUSTAT_QUARTERLY,FIELD,costat,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,curcdq,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,datafmt,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,indfmt,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,consol,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,tic,nonmissing,RAW,1058167,1058806,99.939649,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,datadate,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,gvkey,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,conm,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,cusip,nonmissing,RAW,1058202,1058806,99.942955,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,cik,nonmissing,RAW,769753,1058806,72.700098,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,exchg,nonmissing,RAW,1058190,1058806,99.941821,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,fyr,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,fic,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,naics,nonmissing,RAW,1017161,1058806,96.066796,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,sic,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,datacqtr,nonmissing,RAW,1057557,1058806,99.882037,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,datafqtr,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,fqtr,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,fyearq,nonmissing,RAW,1058806,1058806,100.000000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,rdq,nonmissing,RAW,733431,1058806,69.269630,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,atq,nonmissing,RAW,740115,1058806,69.900907,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,ceqq,nonmissing,RAW,737302,1058806,69.635231,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,cogsq,nonmissing,RAW,757201,1058806,71.514612,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,cshoq,nonmissing,RAW,981659,1058806,92.713774,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,dlcq,nonmissing,RAW,700570,1058806,66.166040,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,dlttq,nonmissing,RAW,734043,1058806,69.327431,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,ltq,nonmissing,RAW,739232,1058806,69.817511,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,niq,nonmissing,RAW,762089,1058806,71.976264,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,pstkq,nonmissing,RAW,736269,1058806,69.537668,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,revtq,nonmissing,RAW,703794,1058806,66.470534,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,saleq,nonmissing,RAW,760498,1058806,71.826000,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,seqq,nonmissing,RAW,738906,1058806,69.786722,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,txditcq,nonmissing,RAW,638832,1058806,60.335132,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,capxy,nonmissing,RAW,715197,1058806,67.547502,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FIELD,oancfy,nonmissing,RAW,719529,1058806,67.956642,Raw-delivery field presence; no unit inference
+COMPUSTAT_QUARTERLY,FORMAT_DISTRIBUTION,consol,frequency,C,1058806,1058806,100.000000,Observed delivered raw values
+COMPUSTAT_QUARTERLY,FORMAT_DISTRIBUTION,costat,frequency,A,677150,1058806,63.954114,Observed delivered raw values
+COMPUSTAT_QUARTERLY,FORMAT_DISTRIBUTION,costat,frequency,I,381656,1058806,36.045886,Observed delivered raw values
+COMPUSTAT_QUARTERLY,FORMAT_DISTRIBUTION,curcdq,frequency,CAD,178351,1058806,16.844540,Observed delivered raw values
+COMPUSTAT_QUARTERLY,FORMAT_DISTRIBUTION,curcdq,frequency,USD,880455,1058806,83.155460,Observed delivered raw values
+COMPUSTAT_QUARTERLY,FORMAT_DISTRIBUTION,datafmt,frequency,STD,1058806,1058806,100.000000,Observed delivered raw values
+COMPUSTAT_QUARTERLY,FORMAT_DISTRIBUTION,indfmt,frequency,INDL,1058806,1058806,100.000000,Observed delivered raw values
