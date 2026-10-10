@@ -1,4 +1,5 @@
 issue_id,source_phase,status,severity,evidence,required_resolution
 GICS_BOUNDARY_GAP,PHASE_2A,OPEN,WARN,"2,907 GICS_BOUNDARY_GAP observations",Freeze canonical missing-sector policy without current-GICS backfill.
 GICS_RAW_INDTHRU_BLANK_ENCODING,PHASE_2A,OPEN,WARN,"12,118 blank raw INDTHRU values",Confirm provider encoding before final data-contract sign-off.
-ISSUER_MARKET_CAP_SUPPLEMENTAL_EXTRACTION,PHASE_2B,OPEN,WARN,Current 959-PERMNO historical-S&P500 extraction cannot prove complete relevant equity-class coverage.,Obtain and audit the documented supplemental CRSP security-history/daily-cap extraction before issuer-level Value denominator construction.
+ISSUER_MARKET_CAP_SUPPLEMENTAL_EXTRACTION,PHASE_2B2,CLOSED_WITH_WARNINGS,WARN,Manual official WRDS supplemental coverage audit: unresolved_issuers=0; issuers_with_limitations=23; share_history=FULL_HISTORY_LABEL_CONFIRMED.,Coverage evidence is complete for this Phase-2B.2 scope; future issuer aggregation remains separately governed.
+SUPPLEMENTAL_DAILY_EXACT_DUPLICATES,PHASE_2B2,OPEN,WARN,"Supplemental daily raw file has 34 extra rows across exact duplicate (PERMNO,DlyCalDt) provider records; no conflicting duplicate key was found.",Retain the immutable raw evidence; establish a later canonical duplicate-row policy before any downstream canonical market panel is built.

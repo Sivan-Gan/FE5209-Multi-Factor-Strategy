@@ -1,0 +1,12 @@
+check_id,severity,status,evidence,result
+content_based_raw_identification,CRITICAL,PASS,semantic_files=3,CONTENT_NOT_FILENAME
+supplemental_raw_integrity,CRITICAL,PASS,DAILY_SECURITY_DATA:true;SECURITY_INFORMATION_HISTORY:true;SHARE_OUTSTANDING_HISTORY:true,PRE_POST_SHA256_CHECKED
+original_phase1_raw_immutability,CRITICAL,PASS,original_files=16;missing=0;changed=0,PHASE1_MANIFEST_PRESERVED
+physical_raw_layer,CRITICAL,PASS,vendor_raw_files=19;nonvendor_os_metadata=1,16_ORIGINAL_PLUS_3_SUPPLEMENTAL_EXPECTED
+phase2b_query_reconciliation,CRITICAL,PASS,37 source groups -> 45 approved PERMCOs -> 55 traceable mappings.,NO_UNEXPLAINED_PERMCO
+daily_natural_key,WARN,WARN_EXACT_RAW_DUPLICATES,daily_exact_duplicate_extra_rows=34; conflicting_duplicate_keys=0,RAW_UNMODIFIED_AUDIT_VIEW_DEDUPLICATES_ONLY_EXACT_DUPLICATES
+share_history_sample_start,CRITICAL,PASS,FULL_HISTORY_LABEL_CONFIRMED,NO_FABRICATED_PRE_2004_INTERVALS
+issuer_coverage_sufficiency,CRITICAL,PASS,"{""ISSUER_COVERAGE_COMPLETE"":22,""ISSUER_COVERAGE_COMPLETE_WITH_LIMITATION"":23}",NO_ISSUER_MARKET_CAP_CONSTRUCTED
+phase2a_gics_boundary_gap,WARN,OPEN,"2,907 GICS_BOUNDARY_GAP observations carried forward unchanged.",NO_CURRENT_GICS_BACKFILL
+phase2a_gics_blank_indthru,WARN,OPEN,"12,118 blank raw INDTHRU values carried forward unchanged.",PROVIDER_ENCODING_PENDING
+phase2b2_verdict,CRITICAL,PASS WITH WARNINGS,See issuer coverage and raw integrity evidence.,FORMAL_GATE0_REMAINS_PENDING
