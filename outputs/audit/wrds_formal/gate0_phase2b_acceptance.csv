@@ -1,0 +1,10 @@
+check_id,check_name,severity,status,evidence,notes
+dlyret_canonical_semantics,CIZ DlyRet total-return semantics documented,CRITICAL,PASS,RESOLVED_WITH_EVIDENCE,USE_CIZ_DLYRET_DIRECTLY__DO_NOT_ADD_SEPARATE_DELRET
+delisting_reconciliation,Every delivered delisting event has deterministic reconciliation,CRITICAL,PASS,"{""DLYRET_INCORPORATES_DELISTING"":320,""NO_DELISTING_RETURN_AVAILABLE"":2}",No separate DelRet is added to CIZ DlyRet.
+corporate_action_double_count,Distribution audit documents no manual add-on to DlyRet,CRITICAL,PASS,"{""NONORDINARY_DISTRIBUTION"":18,""ORDINARY_DIVIDEND"":43436,""SPLIT_OR_SHARE_ADJUSTMENT"":1164}","Representative ordinary, split, and nonordinary samples retained."
+dlycap_unit_reconciliation,DlyCap versus DlyPrc × ShrOut candidate scale audit,CRITICAL,PASS,valid=2527062; near_exact_scale_1=2527062,CRSP_DLYCAP_SECURITY_LEVEL_RAW_SOURCE__NO_ISSUER_AGGREGATION_IN_PHASE2B
+shareout_interval_reconciliation,Share history inclusive-date reconciliation completed,CRITICAL,PASS,"{""EXACT_MATCH"":2527068,""NO_HISTORY_INTERVAL_MATCH"":72}","Differences are retained diagnostically, not overwritten."
+index_semantics,Selected index identities and field coverage agree with SSOT,CRITICAL,PASS,1000080/1000500 DlyTotRet; 1000502 DlyPrcRet,"Contradiction would require SSOT review, not a silent patch."
+issuer_marketcap_sufficiency,Current extraction issuer equity-class coverage classified,WARN,SUPPLEMENTAL_DATA_REQUIRED,identified_groups=37,No issuer market cap constructed.
+raw_immutability,All 16 raw physical files have stable pre/post SHA256,CRITICAL,PASS,pre_count=16; post_count=16,Raw package was read only.
+phase_boundary,"No canonical data, Compustat PIT, factor, or bridge work begun",CRITICAL,PASS,PHASE_2B_ONLY,Formal Gate 0 remains PENDING.
