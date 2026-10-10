@@ -1,0 +1,4 @@
+factor,status,failure_reason,notes
+Value,BLOCKED,INDUSTRY_NEUTRALIZATION_LEVEL_AND_MARKET_CAP_ECONOMIC_LEVEL_CONFIRMATION_REQUIRED,no intercept/all-dummy regression was not run without frozen controls
+Quality,BLOCKED,INDUSTRY_NEUTRALIZATION_LEVEL_AND_MARKET_CAP_ECONOMIC_LEVEL_CONFIRMATION_REQUIRED,no intercept/all-dummy regression was not run without frozen controls
+Investment,BLOCKED,INDUSTRY_NEUTRALIZATION_LEVEL_AND_MARKET_CAP_ECONOMIC_LEVEL_CONFIRMATION_REQUIRED,no intercept/all-dummy regression was not run without frozen controls

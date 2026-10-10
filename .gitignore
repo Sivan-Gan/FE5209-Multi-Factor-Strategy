@@ -30,6 +30,9 @@ __pycache__/
 /data/canonical/wrds_formal/*.sqlite
 /data/canonical/wrds_formal/*.sqlite-wal
 /data/canonical/wrds_formal/*.sqlite-shm
+/data/factors/us_formal/*.sqlite
+/data/factors/us_formal/*.sqlite-wal
+/data/factors/us_formal/*.sqlite-shm
 /data/interim/*
 !/data/interim/README.md
 /data/dev_legacy/canonical/*.sqlite

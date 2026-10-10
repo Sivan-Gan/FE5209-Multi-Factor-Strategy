@@ -1,0 +1,2 @@
+dataset_name,relative_path,grain,natural_key,row_count,column_count,min_signal_date,max_signal_date,unique_permno,file_size,sha256_or_logical_hash,source_canonical_dataset,construction_script,notes
+us_candidate_factors,data/factors/us_formal/us_candidate_factors.sqlite,signal_date x PERMNO,"(signal_date, permno)",523909,82,2006-01-06,2025-12-26,940,732090368,bf8efd0718dbcb0e2604e8550ce766e90f29bf9a5460e204078c18e40c311fc4,data/canonical/wrds_formal/us_wrds_formal_canonical.sqlite,src/factors/build_candidate_factors.py,derived only; blocked definitions retained explicitly

@@ -1,0 +1,5 @@
+research_period,signal_date_count,mean_member_count,size_available_rows,size_coverage,momentum_available_rows,momentum_coverage,lowrisk_available_rows,lowrisk_coverage,value_available_rows,value_coverage,quality_available_rows,quality_coverage,investment_available_rows,investment_coverage,dividend_available_rows,dividend_coverage
+CONFIGURATION_AND_STRATEGY_FREEZE,261,504.93869731800766,0,0.0,131381,0.9969041422273482,131103,0.9947947097253944,0,0.0,0,0.0,0,0.0,0,0.0
+DEV_WARMUP,261,499.97701149425285,0,0.0,129997,0.9961913957729858,129763,0.9943982098793814,0,0.0,0,0.0,0,0.0,0,0.0
+FACTOR_SELECTION,261,500.7931034482759,0,0.0,130155,0.995776813789621,129941,0.9941395640631335,0,0.0,0,0.0,0,0.0,0,0.0
+HIST_OOS_BASE,260,503.5346153846154,0,0.0,130602,0.9975786555045486,130464,0.9965245686264026,0,0.0,0,0.0,0,0.0,0,0.0
