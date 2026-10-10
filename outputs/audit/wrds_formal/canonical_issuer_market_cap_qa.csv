@@ -1,0 +1,4 @@
+metric,value,status,notes
+available_rows,3891965,PASS,sum only when all active included common classes have DlyCap.
+unavailable_rows,6347,WARNING,explicit unavailability; no partial issuer aggregation.
+permco_47011_signed_off_active_class_unavailable_dates,5,PASS,must equal five; no class omission or imputation.

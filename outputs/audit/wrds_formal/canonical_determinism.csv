@@ -1,0 +1,2 @@
+run_1_logical_hash,run_2_logical_hash,status,comparison,notes
+de1bf079e6399025ebde6a81883bbad21aec9c5443dbb39f7ca2f00b5a409c6e,de1bf079e6399025ebde6a81883bbad21aec9c5443dbb39f7ca2f00b5a409c6e,PASS,identical logical canonical table hashes,same immutable 19-file raw package and frozen construction script

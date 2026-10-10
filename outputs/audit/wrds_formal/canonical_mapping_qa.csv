@@ -1,0 +1,3 @@
+metric,value,status,notes
+unmapped_ccm_panel_rows,5,WARNING,market rows retained without GVKEY; no CCM fill.
+unavailable_historical_gics_panel_rows,604,WARNING,no current GICS fallback.

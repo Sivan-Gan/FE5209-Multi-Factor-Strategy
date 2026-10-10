@@ -1,0 +1,7 @@
+metric,value,status,notes
+annual_standard_events,16520,PASS,unique standard USD annual records.
+annual_pit_available,15763,PASS_WITH_WARNING,exact Q4 RDQ requirement can reduce coverage.
+quarterly_standard_events,66300,PASS,unique standard USD quarterly records.
+quarterly_pit_available,64117,PASS_WITH_WARNING,valid RDQ then next local trading day only.
+lookahead_events,0,PASS,must equal zero; availability is next local trading day.
+ttm_capability_endpoints,60247,PASS_WITH_WARNING,capability metadata only; no TTM factor panel is built.

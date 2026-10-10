@@ -1,0 +1,24 @@
+check,status,blocking,evidence,canonical_action,notes
+RAW_IMMUTABILITY,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+HISTORICAL_UNIVERSE,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+SECURITY_DAILY_KEY,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+CRSP_RETURN_CONTRACT,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+CCM_MAPPING,PASS_WITH_WARNING,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed; disclosed Gate 0 limitation retained.
+HISTORICAL_GICS,PASS_WITH_WARNING,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed; disclosed Gate 0 limitation retained.
+DENOMINATOR_ONLY_SEPARATION,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+ISSUER_SHARE_CLASS_COVERAGE,PASS_WITH_WARNING,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed; disclosed Gate 0 limitation retained.
+ISSUER_MARKET_CAP,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+MARKET_INDEX_LAYER,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+COMPUSTAT_STANDARD_RECORD,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+QUARTERLY_PIT,PASS_WITH_WARNING,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed; disclosed Gate 0 limitation retained.
+ANNUAL_PIT,PASS_WITH_WARNING,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed; disclosed Gate 0 limitation retained.
+NUMERIC_UNIT_NORMALIZATION,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+YTD_FLOW_CONVERSION,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+TTM_DATA_CAPABILITY,PASS_WITH_WARNING,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed; disclosed Gate 0 limitation retained.
+FORMAL_SAMPLE_BOUNDARY,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+NO_2026_LEAKAGE,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+WEEKLY_CALENDAR,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+WEEKLY_SIGNAL_PANEL_KEY,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+NO_LOOKAHEAD,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+DETERMINISM,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.
+REPRODUCIBILITY,PASS,false,outputs/audit/wrds_formal/canonical_dataset_manifest.csv,constructed and validated,No factor or strategy computation performed.

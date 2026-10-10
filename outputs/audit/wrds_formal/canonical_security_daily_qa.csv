@@ -1,0 +1,3 @@
+metric,value,status,notes
+row_count,3930454,PASS,2004–2025 original 959 PERMNO CIZ history; membership flag is separate.
+direct_ciz_return_rows,3923876,PASS,DlyRet preserved directly; no delisting/distribution re-addition.

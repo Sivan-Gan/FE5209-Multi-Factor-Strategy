@@ -1,0 +1,3 @@
+metric,value,status,notes
+row_count,523909,PASS,"natural key is (signal_date, PERMNO)."
+sample_labels,"[""CONFIGURATION_AND_STRATEGY_FREEZE"", ""DEV_WARMUP"", ""FACTOR_SELECTION"", ""HIST_OOS_BASE""]",PASS,formal period only; no 2026.

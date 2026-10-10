@@ -27,6 +27,9 @@ __pycache__/
 /data/canonical/*.sqlite-wal
 /data/canonical/*.sqlite-shm
 /data/canonical/*.csv.gz
+/data/canonical/wrds_formal/*.sqlite
+/data/canonical/wrds_formal/*.sqlite-wal
+/data/canonical/wrds_formal/*.sqlite-shm
 /data/interim/*
 !/data/interim/README.md
 /data/dev_legacy/canonical/*.sqlite
