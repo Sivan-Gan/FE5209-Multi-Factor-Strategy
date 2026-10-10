@@ -1,0 +1,22 @@
+check,status,blocking,evidence,canonical_action,notes
+RAW_INTEGRITY,PASS,false,Phase 1 manifest plus Phase 2B.2 supplemental manifest rehashed.,Immutable raw inputs verified.,expected_files=19
+UNIVERSE_HISTORY,PASS_WITH_WARNING,false,Historical daily S&P 500 constituent file.,Use exact historical constituent membership.,No current-universe substitution.
+CCM_IDENTIFIER_MAPPING,PASS_WITH_WARNING,false,"2,527,111/2,527,140 matched; 29 unmatched; zero different-GVKEY ambiguity.",Strict accepted interval mapping; unmatched unavailable.,No link fill.
+HISTORICAL_GICS,PASS_WITH_WARNING,false,"2,907 boundary gaps; 12,118 blank raw INDTHRU; no ambiguous matches.",Industry-dependent transform unavailable if no one historical interval.,No current-GICS backfill.
+CRSP_RETURN_SEMANTICS,PASS,false,Phase 2B CIZ return audit.,USE_CIZ_DLYRET_DIRECTLY__DO_NOT_ADD_SEPARATE_DELRET.,No return-formula reopening.
+DELISTING_HANDLING,PASS,false,Phase 2B delisting reconciliation.,Use CIZ DlyRet semantics.,No separate delisting return.
+CORPORATE_ACTION_HANDLING,PASS,false,Phase 2B distribution and split audit.,No manual return adjustment.,Avoids double counting.
+SECURITY_MARKET_CAP,PASS,false,Phase 2B DlyCap reconciliation.,Use DlyCap as security-level cap only.,No issuer aggregation in this audit.
+ISSUER_SHARE_CLASS_COVERAGE,PASS_WITH_WARNING,false,45 issuer audit: 22 complete; 23 with limitation; no unresolved issuer.,Use final issuer limitation assessment.,Five active-class dates for PERMCO 47011 unavailable.
+SHARES_OUTSTANDING,PASS_WITH_WARNING,false,Phase 2B/2B.2 time-valid share-history audit.,Use active interval evidence; missing active coverage makes issuer-date unavailable.,No shares imputation.
+MARKET_INDEX_SEMANTICS,PASS,false,Phase 2B index field audit.,Use frozen documented market-return identities.,Exact-date source only.
+QUARTERLY_RDQ_TIMING,PASS,false,Phase 2C RDQ audit.,Next local trading day after valid RDQ.,No same-day use.
+ANNUAL_INFORMATION_AVAILABILITY,PASS_WITH_WARNING,false,Phase 2C Q4-RDQ annual audit.,Exact Q4 evidence only; otherwise unavailable.,Annual datadate never used as publication date.
+COMPUSTAT_REVISION_CLAIM,PASS_WITH_WARNING,false,Phase 2C provider evidence distinguishes ordinary history from Snapshot.,Publication-date-aligned historical claim only.,No vintage-perfect claim.
+QUARTERLY_FLOW_SEMANTICS,PASS,false,Phase 2C WRDS QUARTERIZE evidence.,Same-fiscal-year YTD differencing only.,No missing predecessor fill.
+TTM_CAPABILITY,PASS,false,Phase 2C TTM capability audit.,Require four consecutive eligible single quarters.,No partial TTM.
+COMPUSTAT_DUPLICATE_POLICY,PASS,false,annual_conflicts=25437; quarterly_conflicts=451.,Final unique standard USD-record policy.,Unresolved selected duplicates unavailable.
+NUMERIC_UNIT_ALIGNMENT,BLOCKED,true,No authoritative Compustat field dictionary/scale is retained locally; cross-source values cannot be aligned.,Acquire authoritative evidence and rerun this gate.,"E/P, B/P, FCF Yield prohibited."
+FORMAL_SAMPLE_CUTOFF,PASS,false,Frozen formal cutoff 2025-12-31.,"Enforce 2004-2005 initialization, 2006-2010 warm-up, 2011-2025 formal periods.",2026 separate.
+NO_FUTURE_INFORMATION,PASS,false,Final PIT availability contract.,Availability date must precede/equal signal date and remain within formal cutoff.,"No future date, fill, or annual-lag proxy."
+CANONICAL_CONSTRUCTION_DETERMINISM,BLOCKED,true,All non-unit rules are deterministic; numeric alignment remains unresolved.,Do not construct the formal canonical dataset until blocker is resolved.,Blocked only by numeric units.
