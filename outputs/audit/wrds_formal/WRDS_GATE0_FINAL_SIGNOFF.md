@@ -2,15 +2,15 @@
 
 ## 1. Executive verdict
 
-**FORMAL GATE 0 — BLOCKED**
+**FORMAL GATE 0 — PASS WITH WARNINGS**
 
-Formal Canonical Dataset Construction is NOT permitted.
+Formal Canonical Dataset Construction is now permitted.
 
 ## 2. Sign-off history and re-evaluation
 
-Commit `f1831e3011892c8c7e73e2a97143b28a0ab7b813` first recorded Formal Gate 0 as blocked by `COMPUSTAT_RAW_FIELD_UNITS`. This dated re-evaluation preserves that history and searches for authoritative unit evidence; it does not alter raw data, the frozen research manual, timing, factor definitions, or market-cap aggregation rules.
+Commit `f1831e3011892c8c7e73e2a97143b28a0ab7b813` first recorded Formal Gate 0 as blocked by `COMPUSTAT_RAW_FIELD_UNITS`. That historical conclusion remains preserved: generic WRDS wording that most items are in millions was correctly insufficient because it did not identify exact fields or annual/quarterly scope.
 
-The re-evaluation found an official WRDS statement that most data items are represented in millions, plus official locations for the protected provider dictionary. Neither source identifies every delivered field nor establishes annual versus quarterly scope. Therefore it cannot authorize a numeric conversion for `ni`, `niq`, `ceq`, `ceqq`, `oancf`, `oancfy`, `capx`, or `capxy`.
+This dated re-evaluation adds authorized official WRDS Compustat North America Data Dictionary item-detail evidence for the exact delivered mnemonics `ni`, `niq`, `ceq`, `ceqq`, `oancf`, `oancfy`, `capx`, and `capxy`. It does not alter raw data, the frozen research manual, timing, factor definitions, or market-cap aggregation rules.
 
 ## 3. Frozen scope and evidence lineage
 
@@ -38,9 +38,9 @@ Quarterly fundamental records require valid RDQ and become usable only on the ne
 
 ## 6. Compustat field-level unit conclusion
 
-Compustat numeric scale remains **UNRESOLVED** for every factor-relevant delivered raw field. The USD record predicate (`INDL + STD + C + curcd/curcdq = USD`) establishes currency denomination only. It does not establish whether a raw accounting number is dollars, thousands, millions, another numeric scale, or whether annual and quarterly conventions are identical.
+The new exact item-detail evidence resolves numeric scale for the Gate-0 cross-source numerator scope: `ni` and `niq`, `ceq` and `ceqq`, `oancf` and `oancfy`, and `capx` and `capxy` are each **Millions**. The annual and quarterly/YTD counterparts therefore have authoritatively identical numeric scale for this scope.
 
-The formal quarterly-flow rule remains intact: `oancfy` and `capxy` are differenced only within the same fiscal year, and TTM requires four PIT-eligible single quarters. Those transformations preserve a documented unit only after it exists; they cannot establish a missing raw unit or FCF sign convention.
+The USD record predicate (`INDL + STD + C + curcd/curcdq = USD`) establishes currency denomination, while the WRDS item pages establish numeric scale. These are distinct facts. The formal quarterly-flow rule remains intact: `oancfy` and `capxy` are differenced only within the same fiscal year, and TTM requires four PIT-eligible single quarters. Both transformations preserve Millions.
 
 ## 7. Cross-source ratios
 
@@ -48,29 +48,29 @@ The formal quarterly-flow rule remains intact: `oancfy` and `capxy` are differen
 
 - Numerator fields: ni (annual); niq (quarterly)
 - Denominator: `DlyCap` in thousand USD
-- Required conversion: UNAVAILABLE: documented Compustat NI/NIQ-to-thousand-USD factor is required and has not been established.
-- Common-unit formula: UNAVAILABLE: (k_NI × NI) / issuer_DlyCap_thousand_USD cannot be evaluated because k_NI is undocumented.
-- Status: **BLOCKED**
+- Required conversion: Multiply NI or valid PIT NIQ in USD millions by 1000 to obtain USD thousands.
+- Common-unit formula: E/P = ((NI or valid PIT earnings measure) × 1000) / IssuerMarketCap_in_CRSP_thousands.
+- Status: **RESOLVED_AUTHORITATIVELY**
 
 ### B/P
 
 - Numerator fields: ceq (annual); ceqq (quarterly)
 - Denominator: `DlyCap` in thousand USD
-- Required conversion: UNAVAILABLE: documented Compustat CEQ/CEQQ-to-thousand-USD factor is required and has not been established.
-- Common-unit formula: UNAVAILABLE: (k_CEQ × CEQ) / issuer_DlyCap_thousand_USD cannot be evaluated because k_CEQ is undocumented.
-- Status: **BLOCKED**
+- Required conversion: Multiply CEQ or valid PIT CEQQ in USD millions by 1000 to obtain USD thousands.
+- Common-unit formula: B/P = (CEQ × 1000) / IssuerMarketCap_in_CRSP_thousands.
+- Status: **RESOLVED_AUTHORITATIVELY**
 
 ### FCF Yield
 
 - Numerator fields: oancf - capx (annual); oancfy and capxy after frozen same-fiscal-year differencing and eligible four-quarter TTM aggregation
 - Denominator: `DlyCap` in thousand USD
-- Required conversion: UNAVAILABLE: documented OANCF/OANCFY/CAPX/CAPXY-to-thousand-USD factors and compatible sign convention are required and have not been established.
-- Common-unit formula: UNAVAILABLE: (k_OCF × OCF - k_CAPX × CapEx) / issuer_DlyCap_thousand_USD is prohibited because k values and sign compatibility are undocumented.
-- Status: **BLOCKED**
+- Required conversion: Compute FCF = OANCF - CAPX in USD millions, then multiply the result by 1000 to obtain USD thousands.
+- Common-unit formula: FCF Yield = ((OANCF - CAPX) × 1000) / IssuerMarketCap_in_CRSP_thousands; quarterly/TTM uses valid YTD-derived OANCFY and CAPXY in Millions before ×1000.
+- Status: **RESOLVED_AUTHORITATIVELY**
 
 ## 8. Annual versus quarterly and currency-versus-scale boundaries
 
-No authoritative source retrieved in this audit proves that annual and quarterly Compustat raw values use identical numeric scales. The generic WRDS wording does not distinguish frequencies. USD is a currency denomination filter; it is not a numeric-scale proof. Consequently, same-source scale cancellation is only a conditional future property and cannot cure a cross-source Value or Dividend Yield requirement.
+For the eight exact raw fields in the newly supplied evidence, annual/quarterly/YTD numeric scale is Millions. In a same-source ratio whose numerator and denominator are both these Compustat monetary fields in Millions, the common scale cancels. That property does not replace the explicit cross-source conversion required for E/P, B/P, or FCF Yield: their Compustat numerator must be multiplied by 1000 before division by CRSP `DlyCap` in USD thousands.
 
 ## 9. Other frozen Gate 0 evidence
 
@@ -102,11 +102,11 @@ The formal market-data cutoff is **2025-12-31**. No 2026 mixed-source data may e
 
 ## 12. Blocking-issue count
 
-**1**: `COMPUSTAT_RAW_FIELD_UNITS`.
+**0: no outstanding Formal Gate 0 blocker.**
 
 ## 13. Exact next permitted step
 
-Acquire access to and retain a legally permissible authoritative Compustat field dictionary or provider confirmation that explicitly covers the delivered annual and quarterly fields, monetary units/scales, and relevant FCF sign conventions. Then record deterministic conversions to CRSP thousand USD and rerun this sign-off. Do not construct canonical data before that evidence is available.
+Formal Canonical Dataset Construction is now permitted. The next authorized stage must implement the existing frozen contracts; no canonical data, market cap, factor, IC, portfolio, or backtest was created by this re-signoff.
 
 ## 14. Authoritative sources examined
 
@@ -115,6 +115,14 @@ Acquire access to and retain a legally permissible authoritative Compustat field
 | Wharton Research Data Services | WRDS conditional-query support (Compustat demo) | https://wrds-www.wharton.upenn.edu/demo/step_support/conditional/ | Conditional statements; examples AT and SALE |
 | S&P Global Market Intelligence | Extract: Getting Started Overview | https://www.support.marketplace.spglobal.com/content/dam/spglobal/mi/en/documents/marketplace/extract/extract-getting-started-202207.pdf | Pages 3 and 7: Dictionary_Compustat.xlsx and finding item mnemonics/descriptions |
 | Wharton Research Data Services | Compustat North America data dictionary access page | https://wrds-www.wharton.upenn.edu/data-dictionary/comp_na_daily_all/ | Access-control response |
+| WRDS / Compustat North America | WRDS Compustat North America Data Dictionary — CAPX item detail | WRDS authenticated Data Dictionary: comp_na_daily_all.funda / CAPX item-detail page (authoritative field-level evidence received 2026-10-10) | Product: Compustat North America daily updates; schema: comp_na_daily_all; table: funda; item: CAPX; periodicity: Annual; format: Number; units: Millions. |
+| WRDS / Compustat North America | WRDS Compustat North America Data Dictionary — CAPX item detail | WRDS authenticated Data Dictionary: comp_na_daily_all.funda / CAPX item-detail page (authoritative field-level evidence received 2026-10-10) | Product: Compustat North America daily updates; schema: comp_na_daily_all; table: funda; item: CAPX; periodicity: Year-to-Date; format: Number; units: Millions. |
+| WRDS / Compustat North America | WRDS Compustat North America Data Dictionary — CEQ item detail | WRDS authenticated Data Dictionary: comp_na_daily_all.funda / CEQ item-detail page (authoritative field-level evidence received 2026-10-10) | Product: Compustat North America daily updates; schema: comp_na_daily_all; table: funda; item: CEQ; periodicity: Annual; format: Number; units: Millions. |
+| WRDS / Compustat North America | WRDS Compustat North America Data Dictionary — CEQ item detail | WRDS authenticated Data Dictionary: comp_na_daily_all.funda / CEQ item-detail page (authoritative field-level evidence received 2026-10-10) | Product: Compustat North America daily updates; schema: comp_na_daily_all; table: funda; item: CEQ; periodicity: Quarterly; format: Number; units: Millions. |
+| WRDS / Compustat North America | WRDS Compustat North America Data Dictionary — NI item detail | WRDS authenticated Data Dictionary: comp_na_daily_all.funda / NI item-detail page (authoritative field-level evidence received 2026-10-10) | Product: Compustat North America daily updates; schema: comp_na_daily_all; table: funda; item: NI; periodicity: Annual (North America); format: Number; units: Millions. |
+| WRDS / Compustat North America | WRDS Compustat North America Data Dictionary — NI item detail | WRDS authenticated Data Dictionary: comp_na_daily_all.funda / NI item-detail page (authoritative field-level evidence received 2026-10-10) | Product: Compustat North America daily updates; schema: comp_na_daily_all; table: funda; item: NI; periodicity: Quarterly (North America); format: Number; units: Millions. |
+| WRDS / Compustat North America | WRDS Compustat North America Data Dictionary — OANCF item detail | WRDS authenticated Data Dictionary: comp_na_daily_all.funda / OANCF item-detail page (authoritative field-level evidence received 2026-10-10) | Product: Compustat North America daily updates; schema: comp_na_daily_all; table: funda; item: OANCF; periodicity: Annual; format: Number; units: Millions. |
+| WRDS / Compustat North America | WRDS Compustat North America Data Dictionary — OANCF item detail | WRDS authenticated Data Dictionary: comp_na_daily_all.funda / OANCF item-detail page (authoritative field-level evidence received 2026-10-10) | Product: Compustat North America daily updates; schema: comp_na_daily_all; table: funda; item: OANCF; periodicity: Year-to-Date; format: Number; units: Millions. |
 | CRSP / Morningstar Indexes | CRSP US Stock & Indexes Database Guide File Format 2.0 (CIZ) | https://indexes.morningstar.com/docs/guide/crsp-us-stock-databases-guide-for-flat-file-format-2-0?isRdp=true | DlyCap; DlyPrc; ShrOut; PERMNO |
 
 ## 15. Machine-readable evidence

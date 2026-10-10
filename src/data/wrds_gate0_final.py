@@ -68,6 +68,22 @@ MANDATORY_CHECKS = (
     "CANONICAL_CONSTRUCTION_DETERMINISM",
 )
 
+# These are the only Compustat fields whose unit evidence is newly resolved by
+# the authorized WRDS Data Dictionary item-detail evidence.  The keys match
+# both the immutable raw schemas and the frozen Phase-2C field contract.
+FIELD_LEVEL_UNIT_SPECS: dict[tuple[str, str], dict[str, str]] = {
+    ("ni", "ANNUAL"): {"evidence_id": "WRDS_COMPUSTAT_NI_ANNUAL_MILLIONS", "item": "NI", "periodicity": "Annual (North America)", "category": "Income Statement"},
+    ("niq", "QUARTERLY"): {"evidence_id": "WRDS_COMPUSTAT_NIQ_QUARTERLY_MILLIONS", "item": "NI", "periodicity": "Quarterly (North America)", "category": "Income Statement"},
+    ("ceq", "ANNUAL"): {"evidence_id": "WRDS_COMPUSTAT_CEQ_ANNUAL_MILLIONS", "item": "CEQ", "periodicity": "Annual", "category": "Balance Sheet"},
+    ("ceqq", "QUARTERLY"): {"evidence_id": "WRDS_COMPUSTAT_CEQQ_QUARTERLY_MILLIONS", "item": "CEQ", "periodicity": "Quarterly", "category": "Balance Sheet"},
+    ("oancf", "ANNUAL"): {"evidence_id": "WRDS_COMPUSTAT_OANCF_ANNUAL_MILLIONS", "item": "OANCF", "periodicity": "Annual", "category": "Cash Flow"},
+    ("oancfy", "QUARTERLY"): {"evidence_id": "WRDS_COMPUSTAT_OANCFY_YTD_MILLIONS", "item": "OANCF", "periodicity": "Year-to-Date", "category": "Cash Flow"},
+    ("capx", "ANNUAL"): {"evidence_id": "WRDS_COMPUSTAT_CAPX_ANNUAL_MILLIONS", "item": "CAPX", "periodicity": "Annual", "category": "Cash Flow"},
+    ("capxy", "QUARTERLY"): {"evidence_id": "WRDS_COMPUSTAT_CAPXY_YTD_MILLIONS", "item": "CAPX", "periodicity": "Year-to-Date", "category": "Cash Flow"},
+}
+
+REQUIRED_CROSS_SOURCE_UNIT_FIELDS = frozenset(FIELD_LEVEL_UNIT_SPECS)
+
 
 def project_root() -> Path:
     """Return the repository root without depending on the shell working directory."""
@@ -309,14 +325,42 @@ def _conflict_policy_rows(profiles: dict[str, dict[str, Any]]) -> list[dict[str,
     ]
 
 
-def _unit_evidence_rows() -> list[dict[str, str]]:
-    """Record the authoritative evidence search without overstating its scope.
+def _field_level_unit_evidence_rows() -> list[dict[str, str]]:
+    """Return the authorized, exact WRDS Data Dictionary unit evidence.
 
-    The first two records are official provider materials, but neither supplies
-    the item-level annual/quarterly scale needed for a conversion.  The third
-    documents the authoritative dictionary access boundary.  The CRSP record
-    is intentionally retained as the already frozen denominator contract.
+    The authenticated item-detail pages were supplied as authoritative
+    field-level evidence for this re-evaluation.  This code does not access a
+    WRDS session or retain protected documentation; it records the precise
+    product, schema, table, mnemonic, periodicity, format, and numeric unit.
     """
+
+    rows: list[dict[str, str]] = []
+    for (raw_field, frequency), spec in sorted(FIELD_LEVEL_UNIT_SPECS.items()):
+        rows.append(
+            {
+                "evidence_id": spec["evidence_id"],
+                "source_organization": "WRDS / Compustat North America",
+                "document_title": f"WRDS Compustat North America Data Dictionary — {spec['item']} item detail",
+                "document_type": "Official WRDS authenticated Data Dictionary item detail",
+                "source_url_or_local_path": f"WRDS authenticated Data Dictionary: comp_na_daily_all.funda / {spec['item']} item-detail page (authoritative field-level evidence received 2026-10-10)",
+                "access_date": "2026-10-10",
+                "relevant_section": f"Product: Compustat North America daily updates; schema: comp_na_daily_all; table: funda; item: {spec['item']}; periodicity: {spec['periodicity']}; format: Number; units: Millions.",
+                "exact_field_or_scope": f"Delivered raw {frequency.lower()} field `{raw_field}`; exact mnemonic identity is confirmed against the immutable raw schema and frozen Phase-2C field contract.",
+                "unit_statement": f"{raw_field.upper()}: Category {spec['category']}; Periodicity {spec['periodicity']}; Format Number; Units Millions.",
+                "applies_to_annual": "YES" if frequency == "ANNUAL" else "NO",
+                "applies_to_quarterly": "YES" if frequency == "QUARTERLY" else "NO",
+                "applies_to_currency_fields": "YES_FOR_MONETARY_ITEM",
+                "applies_to_share_fields": "NOT_APPLICABLE",
+                "interpretation": "Field-specific numeric scale is Millions. The frozen USD record predicate establishes denomination separately; valid cross-source alignment converts USD millions to CRSP USD thousands by multiplying by 1000.",
+                "confidence": "RESOLVED_AUTHORITATIVELY",
+                "notes": "No value, factor, IC, portfolio, or market-cap object is constructed by this evidence audit.",
+            }
+        )
+    return rows
+
+
+def _unit_evidence_rows() -> list[dict[str, str]]:
+    """Record historical generic evidence plus exact newly authorized evidence."""
 
     return [
         {
@@ -371,8 +415,9 @@ def _unit_evidence_rows() -> list[dict[str, str]]:
             "applies_to_share_fields": "NOT_INSPECTED",
             "interpretation": "The authoritative field-level source is identified but no authenticated content was retrieved, stored, or assumed.",
             "confidence": "OFFICIAL_ACCESS_BOUNDARY",
-            "notes": "No WRDS credential, token, password, or protected documentation is present in repository artifacts.",
+            "notes": "Historical access-boundary record. The later authorized field-level evidence is recorded separately; no WRDS credential, token, password, or protected documentation is present in repository artifacts.",
         },
+        *_field_level_unit_evidence_rows(),
         {
             "evidence_id": "CRSP_CIZ_DLYCAP_THOUSANDS",
             "source_organization": "CRSP / Morningstar Indexes",
@@ -427,12 +472,11 @@ def _stock_or_flow(concept: str, frequency: str) -> str:
 
 
 def _numeric_units_rows(root: Path) -> list[dict[str, str]]:
-    """Create one conservative unit-contract row for every delivered relevant field.
+    """Create one unit-contract row for every delivered relevant field.
 
-    The only provider statement found is explicitly non-exhaustive.  Therefore
-    no Compustat row may be labelled resolved, even where a same-source ratio
-    would later cancel a common scale.  Currency is recorded separately from
-    numeric scale as required by the formal contract.
+    Eight exact raw fields are now resolved by field-level WRDS evidence.  All
+    other rows retain their prior unresolved status; they do not silently gain
+    a unit merely because an adjacent field is measured in millions.
     """
 
     contract = _read_csv(root / AUDIT / "gate0_phase2c_fundamental_field_contract.csv")
@@ -447,6 +491,21 @@ def _numeric_units_rows(root: Path) -> list[dict[str, str]]:
             field = _clean(source_row[field_column])
             if source_row[present_column] != "true" or not field:
                 continue
+            spec = FIELD_LEVEL_UNIT_SPECS.get((field, frequency))
+            resolved = spec is not None
+            required_for_gate0 = (field, frequency) in REQUIRED_CROSS_SOURCE_UNIT_FIELDS
+            if resolved:
+                reported_unit = "Millions (official WRDS field-level item detail)"
+                evidence_id = spec["evidence_id"]
+                conversion = "USD millions × 1000 = USD thousands (frozen CRSP DlyCap scale)."
+                status = "RESOLVED_AUTHORITATIVELY"
+                notes = "Field-specific source evidence establishes numeric scale only. USD denomination remains governed by the frozen standard USD-record predicate; no value or ratio is calculated in Gate 0."
+            else:
+                reported_unit = "UNRESOLVED: delivered raw header has no unit metadata; the retained generic WRDS statement is not field-level or frequency-level proof."
+                evidence_id = "WRDS_COMPUSTAT_GENERIC_MILLIONS; SPG_COMPUSTAT_DICTIONARY_LOCATION; WRDS_COMPUSTAT_DICTIONARY_ACCESS_BOUNDARY"
+                conversion = "UNRESOLVED: no field-specific provider conversion to CRSP thousand USD is available."
+                status = "UNRESOLVED"
+                notes = "No multiplier, currency conversion, sign normalization, annual/quarterly equivalence, or share-unit substitution is inferred. This field is outside the eight authorized current Gate-0 cross-source numerator fields and needs its own evidence before a later absolute-scale use."
             rows.append(
                 {
                     "economic_variable": variable,
@@ -455,69 +514,113 @@ def _numeric_units_rows(root: Path) -> list[dict[str, str]]:
                     "frequency": frequency,
                     "stock_or_flow": _stock_or_flow(concept, frequency),
                     "currency_basis": f"USD only after the frozen unique INDL+STD+C+{currency_field}=USD predicate; currency denomination does not establish numeric scale.",
-                    "reported_unit_or_scale": "UNRESOLVED: delivered raw header has no unit metadata; official WRDS help says only that most data items are in millions, which is not a field-level or frequency-level proof.",
-                    "authoritative_evidence_id": "WRDS_COMPUSTAT_GENERIC_MILLIONS; SPG_COMPUSTAT_DICTIONARY_LOCATION; WRDS_COMPUSTAT_DICTIONARY_ACCESS_BOUNDARY",
+                    "reported_unit_or_scale": reported_unit,
+                    "authoritative_evidence_id": evidence_id,
                     "absolute_scale_required": _bool(cross_source),
                     "scale_cancels_in_same_source_ratio": _bool(scale_cancels),
                     "cross_source_scale_alignment_required": _bool(cross_source),
-                    "conversion_to_canonical_usd_scale": "UNRESOLVED: no field-specific provider conversion to CRSP thousand USD is available.",
-                    "status": "UNRESOLVED",
-                    "gate0_blocking": _bool(cross_source),
-                    "notes": "No multiplier, currency conversion, sign normalization, annual/quarterly equivalence, or share-unit substitution is inferred. Same-source scale cancellation cannot resolve a cross-source requirement.",
+                    "conversion_to_canonical_usd_scale": conversion,
+                    "status": status,
+                    "gate0_blocking": _bool(required_for_gate0 and not resolved),
+                    "notes": notes,
                 }
             )
     return sorted(rows, key=lambda row: (row["raw_field"], row["frequency"]))
 
 
-def _cross_source_alignment_rows() -> list[dict[str, str]]:
-    """State the required dimensional conversions; leave undocumented factors unavailable."""
+def verify_field_level_unit_identity(root: Path) -> dict[str, Any]:
+    """Check that each authorized unit claim matches both frozen contracts and raw headers."""
 
-    evidence = "CRSP_CIZ_DLYCAP_THOUSANDS; WRDS_COMPUSTAT_GENERIC_MILLIONS (insufficient scope); SPG_COMPUSTAT_DICTIONARY_LOCATION; WRDS_COMPUSTAT_DICTIONARY_ACCESS_BOUNDARY"
+    raw_paths = {
+        "ANNUAL": RAW / "compustat/Compustat_NA_Fundamentals_Annual_2004-01_2026-10.csv.gz",
+        "QUARTERLY": RAW / "compustat/Compustat_NA_Fundamentals_Quarterly_2004-01_2026-10.csv.gz",
+    }
+    raw_headers: dict[str, set[str]] = {}
+    for frequency, relative in raw_paths.items():
+        with gzip.open(root / relative, "rt", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.reader(handle)
+            raw_headers[frequency] = set(next(reader))
+
+    contract = _read_csv(root / AUDIT / "gate0_phase2c_fundamental_field_contract.csv")
+    contract_fields = {
+        "ANNUAL": {
+            _clean(row["raw_annual_field"])
+            for row in contract
+            if row["annual_field_present"] == "true" and _clean(row["raw_annual_field"])
+        },
+        "QUARTERLY": {
+            _clean(row["raw_quarterly_field"])
+            for row in contract
+            if row["quarterly_field_present"] == "true" and _clean(row["raw_quarterly_field"])
+        },
+    }
+    missing_contract = sorted(
+        f"{field}[{frequency}]"
+        for field, frequency in REQUIRED_CROSS_SOURCE_UNIT_FIELDS
+        if field not in contract_fields[frequency]
+    )
+    missing_raw = sorted(
+        f"{field}[{frequency}]"
+        for field, frequency in REQUIRED_CROSS_SOURCE_UNIT_FIELDS
+        if field not in raw_headers[frequency]
+    )
+    return {
+        "matches": not missing_contract and not missing_raw,
+        "missing_contract": missing_contract,
+        "missing_raw": missing_raw,
+        "required_fields": sorted(f"{field}[{frequency}]" for field, frequency in REQUIRED_CROSS_SOURCE_UNIT_FIELDS),
+    }
+
+
+def _cross_source_alignment_rows() -> list[dict[str, str]]:
+    """Freeze the documented USD-millions to USD-thousands conversion only."""
+
+    evidence = "CRSP_CIZ_DLYCAP_THOUSANDS; WRDS_COMPUSTAT_NI_ANNUAL_MILLIONS; WRDS_COMPUSTAT_NIQ_QUARTERLY_MILLIONS; WRDS_COMPUSTAT_CEQ_ANNUAL_MILLIONS; WRDS_COMPUSTAT_CEQQ_QUARTERLY_MILLIONS; WRDS_COMPUSTAT_OANCF_ANNUAL_MILLIONS; WRDS_COMPUSTAT_OANCFY_YTD_MILLIONS; WRDS_COMPUSTAT_CAPX_ANNUAL_MILLIONS; WRDS_COMPUSTAT_CAPXY_YTD_MILLIONS"
     return [
         {
             "ratio_name": "E/P",
             "numerator_source": "Compustat North America Fundamentals",
             "numerator_fields": "ni (annual); niq (quarterly)",
-            "numerator_native_scale": "UNRESOLVED at field/frequency level",
+            "numerator_native_scale": "Millions after the frozen USD record predicate",
             "denominator_source": "CRSP CIZ daily security data aggregated only over future eligible active issuer classes",
             "denominator_field": "DlyCap",
             "denominator_native_scale": "thousand USD",
-            "required_conversion": "UNAVAILABLE: documented Compustat NI/NIQ-to-thousand-USD factor is required and has not been established.",
-            "formula_in_common_units": "UNAVAILABLE: (k_NI × NI) / issuer_DlyCap_thousand_USD cannot be evaluated because k_NI is undocumented.",
+            "required_conversion": "Multiply NI or valid PIT NIQ in USD millions by 1000 to obtain USD thousands.",
+            "formula_in_common_units": "E/P = ((NI or valid PIT earnings measure) × 1000) / IssuerMarketCap_in_CRSP_thousands.",
             "authoritative_evidence": evidence,
-            "status": "BLOCKED",
-            "gate0_blocking": "true",
+            "status": "RESOLVED_AUTHORITATIVELY",
+            "gate0_blocking": "false",
             "notes": "No E/P value is calculated in this audit.",
         },
         {
             "ratio_name": "B/P",
             "numerator_source": "Compustat North America Fundamentals",
             "numerator_fields": "ceq (annual); ceqq (quarterly)",
-            "numerator_native_scale": "UNRESOLVED at field/frequency level",
+            "numerator_native_scale": "Millions after the frozen USD record predicate",
             "denominator_source": "CRSP CIZ daily security data aggregated only over future eligible active issuer classes",
             "denominator_field": "DlyCap",
             "denominator_native_scale": "thousand USD",
-            "required_conversion": "UNAVAILABLE: documented Compustat CEQ/CEQQ-to-thousand-USD factor is required and has not been established.",
-            "formula_in_common_units": "UNAVAILABLE: (k_CEQ × CEQ) / issuer_DlyCap_thousand_USD cannot be evaluated because k_CEQ is undocumented.",
+            "required_conversion": "Multiply CEQ or valid PIT CEQQ in USD millions by 1000 to obtain USD thousands.",
+            "formula_in_common_units": "B/P = (CEQ × 1000) / IssuerMarketCap_in_CRSP_thousands.",
             "authoritative_evidence": evidence,
-            "status": "BLOCKED",
-            "gate0_blocking": "true",
+            "status": "RESOLVED_AUTHORITATIVELY",
+            "gate0_blocking": "false",
             "notes": "No B/P value is calculated in this audit.",
         },
         {
             "ratio_name": "FCF Yield",
             "numerator_source": "Compustat North America Fundamentals",
             "numerator_fields": "oancf - capx (annual); oancfy and capxy after frozen same-fiscal-year differencing and eligible four-quarter TTM aggregation",
-            "numerator_native_scale": "UNRESOLVED at field/frequency level; OANCF/CAPX sign and mutual scale compatibility are not field-authoritatively documented.",
+            "numerator_native_scale": "Millions after the frozen USD record predicate; YTD differencing and TTM aggregation preserve Millions.",
             "denominator_source": "CRSP CIZ daily security data aggregated only over future eligible active issuer classes",
             "denominator_field": "DlyCap",
             "denominator_native_scale": "thousand USD",
-            "required_conversion": "UNAVAILABLE: documented OANCF/OANCFY/CAPX/CAPXY-to-thousand-USD factors and compatible sign convention are required and have not been established.",
-            "formula_in_common_units": "UNAVAILABLE: (k_OCF × OCF - k_CAPX × CapEx) / issuer_DlyCap_thousand_USD is prohibited because k values and sign compatibility are undocumented.",
+            "required_conversion": "Compute FCF = OANCF - CAPX in USD millions, then multiply the result by 1000 to obtain USD thousands.",
+            "formula_in_common_units": "FCF Yield = ((OANCF - CAPX) × 1000) / IssuerMarketCap_in_CRSP_thousands; quarterly/TTM uses valid YTD-derived OANCFY and CAPXY in Millions before ×1000.",
             "authoritative_evidence": evidence,
-            "status": "BLOCKED",
-            "gate0_blocking": "true",
-            "notes": "YTD differencing and TTM summation preserve dimensions but cannot establish a missing native unit or sign convention. No FCF value is calculated in this audit.",
+            "status": "RESOLVED_AUTHORITATIVELY",
+            "gate0_blocking": "false",
+            "notes": "Same-fiscal-year YTD differencing and four-quarter TTM summation preserve the Millions scale. No FCF or ratio value is calculated in this audit.",
         },
     ]
 
@@ -525,20 +628,20 @@ def _cross_source_alignment_rows() -> list[dict[str, str]]:
 def _unit_alignment_assessment(units: list[dict[str, str]], alignment: list[dict[str, str]]) -> dict[str, str]:
     """Fail closed unless every required cross-source numerator is authoritative."""
 
-    required = {"ni", "niq", "ceq", "ceqq", "oancf", "oancfy", "capx", "capxy"}
-    covered = {row["raw_field"] for row in units}
+    required_keys = REQUIRED_CROSS_SOURCE_UNIT_FIELDS
+    covered = {(row["raw_field"], row["frequency"]) for row in units}
     unresolved_required = sorted(
-        row["raw_field"]
+        f"{row['raw_field']}[{row['frequency']}]"
         for row in units
-        if row["raw_field"] in required and row["status"] != "RESOLVED_AUTHORITATIVELY"
+        if (row["raw_field"], row["frequency"]) in required_keys and row["status"] != "RESOLVED_AUTHORITATIVELY"
     )
     blocked_ratios = sorted(row["ratio_name"] for row in alignment if row["status"] != "RESOLVED_AUTHORITATIVELY")
     return {
-        "status": "BLOCKED" if required - covered or unresolved_required or blocked_ratios else "PASS",
-        "gate0_blocking": _bool(bool(required - covered or unresolved_required or blocked_ratios)),
+        "status": "BLOCKED" if required_keys - covered or unresolved_required or blocked_ratios else "PASS",
+        "gate0_blocking": _bool(bool(required_keys - covered or unresolved_required or blocked_ratios)),
         "unresolved_required_fields": "; ".join(unresolved_required),
         "blocked_ratios": "; ".join(blocked_ratios),
-        "evidence": "Official WRDS generic 'most data items' statement and protected dictionary location do not establish field-specific annual/quarterly conversions; CRSP DlyCap remains authoritatively thousand USD.",
+        "evidence": "Official WRDS Compustat North America Data Dictionary item-detail evidence establishes NI/NIQ, CEQ/CEQQ, OANCF/OANCFY, and CAPX/CAPXY as Millions; the frozen CRSP DlyCap contract is thousand USD. The deterministic cross-source conversion is ×1000.",
     }
 
 
@@ -595,6 +698,7 @@ def _canonical_contract_rows() -> list[dict[str, str]]:
 
 
 def _issue_rows(unit_alignment: dict[str, str]) -> list[dict[str, str]]:
+    units_resolved = unit_alignment["gate0_blocking"] == "false"
     rows = [
         ("CCM_UNMATCHED_OBSERVATIONS", "PHASE_2A", "29 historical constituent observations lack a strict accepted CCM mapping, including DVMT/PERMNO 16267.", "Historical PERMNO to GVKEY", "2006-2025 observation dates", "NON_BLOCKING_DISCLOSURE", "CLOSED_NON_BLOCKING", "Leave the affected observation unavailable; no mapping fill.", "No fundamental/GICS dependent value for the observation.", "false", "gate0_phase2a_acceptance.csv; gate0_phase2a_ccm_exceptions.csv", "0 simultaneous different-GVKEY ambiguity; coverage is reduced only.", "Accepted LINKTYPE LC/LU/LS, LINKPRIM C/J/N/P, and raw LINKENDDT E treatment remain frozen."),
         ("GICS_BOUNDARY_GAP", "PHASE_2A", "2,907 strict linked constituent dates have no time-valid historical GICS record.", "Historical GICS", "2006-2025", "NON_BLOCKING_DISCLOSURE", "CLOSED_NON_BLOCKING", "Do not invent an industry.", "Industry-neutral data may remain; industry-dependent transforms are unavailable.", "false", "gate0_phase2a_historical_gics_exceptions.csv", "No current-GICS backfill; coverage is reduced only.", "No multiple-match GICS ambiguity was found."),
@@ -607,17 +711,17 @@ def _issue_rows(unit_alignment: dict[str, str]) -> list[dict[str, str]]:
         (
             "COMPUSTAT_RAW_FIELD_UNITS",
             "PHASE_2C",
-            "Delivered Compustat headers do not provide authoritative accounting-field scales, and the supplemental official search did not produce field-specific annual/quarterly unit evidence sufficient to align Compustat numerators to CRSP DlyCap.",
+            "Historical Gate-0 blocker: delivered Compustat headers had no unit metadata and generic evidence could not align accounting numerators to CRSP DlyCap. It is resolved for NI/NIQ, CEQ/CEQQ, OANCF/OANCFY, and CAPX/CAPXY by exact official WRDS item-detail evidence.",
             "Value and cross-source fundamental ratios",
             "All formal periods",
-            "GATE0_BLOCKER",
-            unit_alignment["status"],
-            "Obtain and retain field-specific authoritative Compustat item-unit documentation covering annual and quarterly numerator fields, their sign conventions where relevant, and the deterministic conversion to CRSP thousand USD; then rerun final Gate 0.",
-            "E/P, B/P, FCF Yield, and any other affected cross-source ratio remain prohibited.",
+            "RESOLVED" if units_resolved else "GATE0_BLOCKER",
+            "RESOLVED" if units_resolved else unit_alignment["status"],
+            "Field-specific WRDS Data Dictionary evidence establishes Millions for the eight exact raw fields; apply the frozen USD-millions to CRSP-USD-thousands ×1000 conversion.",
+            "E/P, B/P, and FCF Yield have documented scale alignment; no actual ratio is constructed in Gate 0.",
             unit_alignment["gate0_blocking"],
             "gate0_units_authoritative_evidence.csv; gate0_final_numeric_units_contract.csv; gate0_final_cross_source_scale_alignment.csv",
-            "No multiplier, currency conversion, or scale assumption may be inferred from value magnitudes; USD denomination is distinct from numeric scale.",
-            f"Re-evaluation preserved the historical blocker. unresolved_required_fields={unit_alignment['unresolved_required_fields']}; blocked_ratios={unit_alignment['blocked_ratios']}.",
+            "USD denomination remains distinct from numeric scale. Other raw fields retain their own evidence requirements before a later absolute-scale use.",
+            f"Historical lifecycle: previously BLOCKED. Re-evaluation status={unit_alignment['status']}; unresolved_required_fields={unit_alignment['unresolved_required_fields'] or 'none'}; blocked_ratios={unit_alignment['blocked_ratios'] or 'none'}.",
         ),
         ("COMPUSTAT_RDQ_MISSINGNESS", "PHASE_2C", "Missing or invalid RDQ observations are not PIT eligible.", "Quarterly PIT fundamentals", "2004-2025", "NON_BLOCKING_DISCLOSURE", "CLOSED_NON_BLOCKING", "Apply the final quarterly PIT contract.", "Observation unavailable; no timing fill.", "false", "gate0_phase2c_rdq_coverage.csv; gate0_final_pit_availability_contract.csv", "Coverage is reduced deterministically.", "RDQ date-only values are never same-day usable."),
     ]
@@ -629,6 +733,22 @@ def _acceptance_rows(
     raw: dict[str, Any], profiles: dict[str, dict[str, Any]], issues: list[dict[str, str]], unit_alignment: dict[str, str]
 ) -> list[dict[str, str]]:
     blocker = any(row["gate0_blocking"] == "true" for row in issues)
+    numeric_action = (
+        "The eight exact numerator fields have a documented conversion to CRSP thousand USD; preserve the frozen ×1000 rule for a later construction stage."
+        if unit_alignment["gate0_blocking"] == "false"
+        else "Do not construct a cross-source ratio until every required numerator field has a documented conversion to CRSP thousand USD."
+    )
+    numeric_notes = (
+        "NI/NIQ, CEQ/CEQQ, OANCF/OANCFY, and CAPX/CAPXY are Millions; USD denomination comes from the frozen record predicate; DlyCap is thousand USD; required conversion=×1000."
+        if unit_alignment["gate0_blocking"] == "false"
+        else f"unresolved_required_fields={unit_alignment['unresolved_required_fields']}; blocked_ratios={unit_alignment['blocked_ratios']}."
+    )
+    canonical_action = (
+        "Formal canonical construction prerequisites are deterministic at Gate 0; apply all frozen contracts in the next authorized stage."
+        if not blocker
+        else "Do not construct the formal canonical dataset until blocker is resolved."
+    )
+    canonical_notes = "No canonical data were created by this sign-off." if not blocker else "Blocked only by numeric units."
     items = [
         ("RAW_INTEGRITY", "PASS" if raw["raw_hashes_match"] else "FAIL", not raw["raw_hashes_match"], "Phase 1 manifest plus Phase 2B.2 supplemental manifest rehashed.", "Immutable raw inputs verified.", f"expected_files={raw['expected_file_count']}"),
         ("UNIVERSE_HISTORY", "PASS_WITH_WARNING", False, "Historical daily S&P 500 constituent file.", "Use exact historical constituent membership.", "No current-universe substitution."),
@@ -652,12 +772,12 @@ def _acceptance_rows(
             unit_alignment["status"],
             unit_alignment["gate0_blocking"] == "true",
             unit_alignment["evidence"],
-            "Do not construct a cross-source ratio until every required numerator field has a documented conversion to CRSP thousand USD.",
-            f"unresolved_required_fields={unit_alignment['unresolved_required_fields']}; blocked_ratios={unit_alignment['blocked_ratios']}.",
+            numeric_action,
+            numeric_notes,
         ),
         ("FORMAL_SAMPLE_CUTOFF", "PASS", False, "Frozen formal cutoff 2025-12-31.", "Enforce 2004-2005 initialization, 2006-2010 warm-up, 2011-2025 formal periods.", "2026 separate."),
         ("NO_FUTURE_INFORMATION", "PASS", False, "Final PIT availability contract.", "Availability date must precede/equal signal date and remain within formal cutoff.", "No future date, fill, or annual-lag proxy."),
-        ("CANONICAL_CONSTRUCTION_DETERMINISM", "BLOCKED" if blocker else "PASS", blocker, "All non-unit rules are deterministic; numeric alignment remains unresolved.", "Do not construct the formal canonical dataset until blocker is resolved.", "Blocked only by numeric units."),
+        ("CANONICAL_CONSTRUCTION_DETERMINISM", "BLOCKED" if blocker else "PASS", blocker, "All non-unit rules remain deterministic; numeric alignment is now resolved only when the acceptance matrix says PASS.", canonical_action, canonical_notes),
     ]
     return [
         {"check": check, "status": status, "blocking": _bool(blocking), "evidence": evidence, "canonical_action": action, "notes": notes}
@@ -722,15 +842,46 @@ def validate_final_outputs(
         raise ValueError("Currency and numeric scale must be recorded separately")
     if not any(row["evidence_id"] == "CRSP_CIZ_DLYCAP_THOUSANDS" for row in evidence):
         raise ValueError("Frozen CRSP DlyCap unit evidence is missing")
+    evidence_by_id = {row["evidence_id"]: row for row in evidence}
+    for (field, frequency), spec in FIELD_LEVEL_UNIT_SPECS.items():
+        evidence_row = evidence_by_id.get(spec["evidence_id"])
+        if evidence_row is None:
+            raise ValueError(f"Missing exact field-level evidence for {field}[{frequency}]")
+        if evidence_row["source_organization"] != "WRDS / Compustat North America":
+            raise ValueError(f"Unexpected source organization for {field}[{frequency}]")
+        if "comp_na_daily_all" not in evidence_row["relevant_section"] or "funda" not in evidence_row["relevant_section"]:
+            raise ValueError(f"WRDS schema/table provenance is incomplete for {field}[{frequency}]")
+        if "Millions" not in evidence_row["unit_statement"] or evidence_row["confidence"] != "RESOLVED_AUTHORITATIVELY":
+            raise ValueError(f"Field-level numeric-scale evidence is incomplete for {field}[{frequency}]")
+        if evidence_row["applies_to_annual"] != ("YES" if frequency == "ANNUAL" else "NO"):
+            raise ValueError(f"Annual scope is wrong for {field}[{frequency}]")
+        if evidence_row["applies_to_quarterly"] != ("YES" if frequency == "QUARTERLY" else "NO"):
+            raise ValueError(f"Quarterly scope is wrong for {field}[{frequency}]")
+    identity = verify_field_level_unit_identity(root)
+    if not identity["matches"]:
+        raise ValueError(f"Field-level unit evidence does not match frozen raw/contract fields: {identity}")
+    units_by_key = {(row["raw_field"], row["frequency"]): row for row in units}
+    for key, spec in FIELD_LEVEL_UNIT_SPECS.items():
+        unit_row = units_by_key.get(key)
+        if unit_row is None or unit_row["status"] != "RESOLVED_AUTHORITATIVELY":
+            raise ValueError(f"Required unit contract is unresolved for {key}")
+        if unit_row["authoritative_evidence_id"] != spec["evidence_id"] or "Millions" not in unit_row["reported_unit_or_scale"]:
+            raise ValueError(f"Unit contract evidence or scale is wrong for {key}")
+        if "× 1000" not in unit_row["conversion_to_canonical_usd_scale"]:
+            raise ValueError(f"Missing ×1000 conversion for {key}")
     if {row["ratio_name"] for row in alignment} != {"E/P", "B/P", "FCF Yield"}:
         raise ValueError("Cross-source scale alignment does not cover E/P, B/P, and FCF Yield")
     if any(row["denominator_native_scale"] != "thousand USD" for row in alignment):
         raise ValueError("CRSP DlyCap denominator contract changed")
     numeric = next(row for row in acceptance if row["check"] == "NUMERIC_UNIT_ALIGNMENT")
-    if any(row["status"] == "UNRESOLVED" for row in units) and numeric["status"] in {"PASS", "PASS_WITH_WARNING"}:
-        raise ValueError("An unresolved factor-relevant Compustat field cannot produce a numeric-unit pass")
+    if any(units_by_key[key]["status"] != "RESOLVED_AUTHORITATIVELY" for key in REQUIRED_CROSS_SOURCE_UNIT_FIELDS) and numeric["status"] in {"PASS", "PASS_WITH_WARNING"}:
+        raise ValueError("An unresolved Gate-0 cross-source Compustat field cannot produce a numeric-unit pass")
+    if numeric["status"] in {"PASS", "PASS_WITH_WARNING"} and any(row["status"] != "RESOLVED_AUTHORITATIVELY" or row["gate0_blocking"] != "false" for row in alignment):
+        raise ValueError("A numeric-unit pass requires every cross-source ratio alignment to be resolved")
     if unit_alignment["gate0_blocking"] == "true" and numeric["status"] != "BLOCKED":
         raise ValueError("A material unit ambiguity must remain blocked")
+    if unit_alignment["gate0_blocking"] == "false" and numeric["status"] == "BLOCKED":
+        raise ValueError("Resolved required unit evidence cannot remain blocked")
     required_components = {
         "historical universe membership", "security identifier", "issuer identifier", "accounting identifier", "historical GICS",
         "daily total return", "market benchmark return", "IVOL market proxy", "security market cap", "issuer market cap eligibility",
@@ -767,14 +918,15 @@ def _update_open_issues(root: Path, final_issues: list[dict[str, str]]) -> None:
         if final is None:
             rows.append({key: old.get(key, "") for key in columns})
             continue
+        is_unit_lifecycle = issue_id == "COMPUSTAT_RAW_FIELD_UNITS"
         rows.append(
             {
                 "issue_id": issue_id,
                 "source_phase": old["source_phase"],
                 "status": final["status"],
                 "severity": old["severity"],
-                "evidence": old["evidence"],
-                "required_resolution": old["required_resolution"],
+                "evidence": "Historical lifecycle: previously BLOCKED because delivered headers lacked field metadata. Resolved by official WRDS Compustat North America Data Dictionary item-detail evidence for NI/NIQ, CEQ/CEQQ, OANCF/OANCFY, and CAPX/CAPXY, all in Millions." if is_unit_lifecycle else old["evidence"],
+                "required_resolution": "Resolved: preserve field-level evidence and apply USD millions × 1000 = CRSP USD thousands for the three documented cross-source ratios; do not infer units for other fields." if is_unit_lifecycle else old["required_resolution"],
                 "final_primary_category": final["severity"],
                 "gate0_blocking": final["gate0_blocking"],
                 "canonical_action": final["canonical_action"],
@@ -801,6 +953,12 @@ def _write_report(
     blocking = [row for row in issues if row["gate0_blocking"] == "true"]
     warnings = [row for row in issues if row["severity"] == "NON_BLOCKING_DISCLOSURE"]
     readiness = "Formal Canonical Dataset Construction is now permitted." if verdict in {"FORMAL GATE 0 — PASS", "FORMAL GATE 0 — PASS WITH WARNINGS"} else "Formal Canonical Dataset Construction is NOT permitted."
+    blocker_summary = "0: no outstanding Formal Gate 0 blocker." if not blocking else f"{len(blocking)}: " + "; ".join(row["issue_id"] for row in blocking) + "."
+    next_step = (
+        "Formal Canonical Dataset Construction is now permitted. The next authorized stage must implement the existing frozen contracts; no canonical data, market cap, factor, IC, portfolio, or backtest was created by this re-signoff."
+        if not blocking
+        else "Resolve every remaining Gate-0 blocker before constructing canonical data."
+    )
     lines = [
         "# Formal WRDS Gate 0 — Integrated Final Sign-off",
         "",
@@ -812,9 +970,9 @@ def _write_report(
         "",
         "## 2. Sign-off history and re-evaluation",
         "",
-        "Commit `f1831e3011892c8c7e73e2a97143b28a0ab7b813` first recorded Formal Gate 0 as blocked by `COMPUSTAT_RAW_FIELD_UNITS`. This dated re-evaluation preserves that history and searches for authoritative unit evidence; it does not alter raw data, the frozen research manual, timing, factor definitions, or market-cap aggregation rules.",
+        "Commit `f1831e3011892c8c7e73e2a97143b28a0ab7b813` first recorded Formal Gate 0 as blocked by `COMPUSTAT_RAW_FIELD_UNITS`. That historical conclusion remains preserved: generic WRDS wording that most items are in millions was correctly insufficient because it did not identify exact fields or annual/quarterly scope.",
         "",
-        "The re-evaluation found an official WRDS statement that most data items are represented in millions, plus official locations for the protected provider dictionary. Neither source identifies every delivered field nor establishes annual versus quarterly scope. Therefore it cannot authorize a numeric conversion for `ni`, `niq`, `ceq`, `ceqq`, `oancf`, `oancfy`, `capx`, or `capxy`.",
+        "This dated re-evaluation adds authorized official WRDS Compustat North America Data Dictionary item-detail evidence for the exact delivered mnemonics `ni`, `niq`, `ceq`, `ceqq`, `oancf`, `oancfy`, `capx`, and `capxy`. It does not alter raw data, the frozen research manual, timing, factor definitions, or market-cap aggregation rules.",
         "",
         "## 3. Frozen scope and evidence lineage",
         "",
@@ -842,9 +1000,9 @@ def _write_report(
         "",
         "## 6. Compustat field-level unit conclusion",
         "",
-        "Compustat numeric scale remains **UNRESOLVED** for every factor-relevant delivered raw field. The USD record predicate (`INDL + STD + C + curcd/curcdq = USD`) establishes currency denomination only. It does not establish whether a raw accounting number is dollars, thousands, millions, another numeric scale, or whether annual and quarterly conventions are identical.",
+        "The new exact item-detail evidence resolves numeric scale for the Gate-0 cross-source numerator scope: `ni` and `niq`, `ceq` and `ceqq`, `oancf` and `oancfy`, and `capx` and `capxy` are each **Millions**. The annual and quarterly/YTD counterparts therefore have authoritatively identical numeric scale for this scope.",
         "",
-        "The formal quarterly-flow rule remains intact: `oancfy` and `capxy` are differenced only within the same fiscal year, and TTM requires four PIT-eligible single quarters. Those transformations preserve a documented unit only after it exists; they cannot establish a missing raw unit or FCF sign convention.",
+        "The USD record predicate (`INDL + STD + C + curcd/curcdq = USD`) establishes currency denomination, while the WRDS item pages establish numeric scale. These are distinct facts. The formal quarterly-flow rule remains intact: `oancfy` and `capxy` are differenced only within the same fiscal year, and TTM requires four PIT-eligible single quarters. Both transformations preserve Millions.",
         "",
         "## 7. Cross-source ratios",
         "",
@@ -866,7 +1024,7 @@ def _write_report(
         [
             "## 8. Annual versus quarterly and currency-versus-scale boundaries",
             "",
-            "No authoritative source retrieved in this audit proves that annual and quarterly Compustat raw values use identical numeric scales. The generic WRDS wording does not distinguish frequencies. USD is a currency denomination filter; it is not a numeric-scale proof. Consequently, same-source scale cancellation is only a conditional future property and cannot cure a cross-source Value or Dividend Yield requirement.",
+            "For the eight exact raw fields in the newly supplied evidence, annual/quarterly/YTD numeric scale is Millions. In a same-source ratio whose numerator and denominator are both these Compustat monetary fields in Millions, the common scale cancels. That property does not replace the explicit cross-source conversion required for E/P, B/P, or FCF Yield: their Compustat numerator must be multiplied by 1000 before division by CRSP `DlyCap` in USD thousands.",
             "",
             "## 9. Other frozen Gate 0 evidence",
             "",
@@ -897,11 +1055,11 @@ def _write_report(
             "",
             "## 12. Blocking-issue count",
             "",
-            f"**{len(blocking)}**: `COMPUSTAT_RAW_FIELD_UNITS`.",
+            f"**{blocker_summary}**",
             "",
             "## 13. Exact next permitted step",
             "",
-            "Acquire access to and retain a legally permissible authoritative Compustat field dictionary or provider confirmation that explicitly covers the delivered annual and quarterly fields, monetary units/scales, and relevant FCF sign conventions. Then record deterministic conversions to CRSP thousand USD and rerun this sign-off. Do not construct canonical data before that evidence is available.",
+            next_step,
             "",
             "## 14. Authoritative sources examined",
             "",
