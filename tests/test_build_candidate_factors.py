@@ -140,9 +140,12 @@ class TestCandidateFactorSchema(unittest.TestCase):
         self.assertEqual(candidate.FORMAL_CUTOFF, "2025-12-31")
         self.assertEqual(str(candidate.CANONICAL), "data/canonical/wrds_formal/us_wrds_formal_canonical.sqlite")
 
-    def test_blockers_are_explicit_not_silent_substitutions(self) -> None:
-        self.assertIn("CONFIRMATION_REQUIRED", candidate.BLOCKED["size_final"])
-        self.assertIn("CANONICAL_DEPENDENCY", candidate.BLOCKED["dividend_final"])
+    def test_frozen_definition_and_dividend_extension_are_explicit_inputs(self) -> None:
+        self.assertEqual(candidate.FREEZE_COMMIT, "d68aaaec585a85fe00879d192f7c5a221e297b0e")
+        self.assertEqual(
+            str(candidate.DIVIDEND_EXTENSION),
+            "data/canonical/wrds_formal/extensions/us_crsp_cash_dividend_events.sqlite",
+        )
 
 
 if __name__ == "__main__":

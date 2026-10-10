@@ -1,35 +1,43 @@
 check,status,blocking,evidence,action,notes
-CANONICAL_INPUT_FREEZE,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
-SIZE_CONSTRUCTION,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-MOM12_1,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
-MOM6_1,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
-MOMENTUM_COMPOSITE,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
-VOL_252,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
-IVOL_252,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
-LOW_RISK_COMPOSITE,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
-EP,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-BP,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-FCF_YIELD,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-VALUE_FINANCIAL_BRANCH,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-VALUE_NONFINANCIAL_BRANCH,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-VALUE_COMPOSITE,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-ROE,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-ROA,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-GP_A,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-LEVERAGE,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-QUALITY_FINANCIAL_BRANCH,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-QUALITY_NONFINANCIAL_BRANCH,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-QUALITY_COMPOSITE,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-ASSET_GROWTH,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-INVESTMENT_COMPOSITE,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-DIVIDEND_YIELD,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,DIVIDEND_FACTOR_BLOCKED_BY_CANONICAL_DEPENDENCY
-WINSORIZATION,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
-ZSCORE_STANDARDIZATION,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
-VALUE_NEUTRALIZATION,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-QUALITY_NEUTRALIZATION,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-INVESTMENT_NEUTRALIZATION,BLOCKED,true,candidate factor QA / definition contract,do not substitute frozen definition,
-NO_FORWARD_RETURNS,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
-NO_LOOKAHEAD,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
-NO_2026_DATA,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
-DETERMINISM,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,logical hashes compared
-RAW_CANONICAL_IMMUTABILITY,PASS,false,candidate factor QA / definition contract,do not substitute frozen definition,
+CANONICAL_INPUT_FREEZE,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+DEFINITION_FREEZE,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+SIZE_CONSTRUCTION,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+MOM12_1,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+MOM6_1,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+MOMENTUM_COMPOSITE,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+VOL_252,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+IVOL_252,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+LOW_RISK_COMPOSITE,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+EP,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+BP,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+FCF_YIELD,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+VALUE_SOURCE_PRECEDENCE,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+VALUE_FINANCIAL_BRANCH,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+VALUE_NONFINANCIAL_BRANCH,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+VALUE_COMPOSITE,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+ROE,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+ROA,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+GP_A,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+LEVERAGE,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+QUALITY_SOURCE_PRECEDENCE,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+QUALITY_FINANCIAL_BRANCH,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+QUALITY_NONFINANCIAL_BRANCH,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+QUALITY_COMPOSITE,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+ASSET_GROWTH,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+INVESTMENT_SOURCE_PRECEDENCE,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+INVESTMENT_COMPOSITE,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+DIVIDEND_CANONICAL_EXTENSION,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+DIVIDEND_SPLIT_ADJUSTMENT,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+DIVIDEND_YIELD,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+WINSORIZATION,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+ZSCORE_STANDARDIZATION,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+GICS_SECTOR_BRANCHING,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+VALUE_NEUTRALIZATION,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+QUALITY_NEUTRALIZATION,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+INVESTMENT_NEUTRALIZATION,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+NO_FORWARD_RETURNS,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+NO_LOOKAHEAD,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+NO_2026_DATA,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+DETERMINISM,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+CANONICAL_IMMUTABILITY,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
+RAW_IMMUTABILITY,PASS,false,candidate_factor_*_qa.csv,frozen formal construction,No outcome or strategy field created.
