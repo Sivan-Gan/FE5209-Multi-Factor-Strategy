@@ -1,0 +1,2 @@
+performance_rows_after_2015_12_31,IC_observations_after_2015,spread_return_observations_after_2015,rolling_validation_windows_crossing_2016,gate_a_master_values_from_2016_2025_outcomes,new_post2015_performance_queries,status,evidence
+0,0,0,0,0,0,PASS,Existing validation artifacts only; all formal review filters are 2011-01-01 through 2015-12-31.

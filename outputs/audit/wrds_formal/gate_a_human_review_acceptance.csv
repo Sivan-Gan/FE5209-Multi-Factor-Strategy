@@ -1,0 +1,22 @@
+check,status,blocking,evidence,notes
+INPUT_VALIDATION_FREEZE,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+FORMAL_SAMPLE_2011_2015_ONLY,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+DEV_SEPARATION,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+YEARLY_IC_REVIEW,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+ROLLING_IC_STABILITY,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+YEARLY_PORTFOLIO_REVIEW,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+PORTFOLIO_STABILITY,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+SECTOR_BREADTH,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+SCORE_COMPLEMENTARITY,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+RETURN_COMPLEMENTARITY,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+COMMON_SAMPLE_ROBUSTNESS,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+TURNOVER_COST_REVIEW,PASS_WITH_WARNING,FALSE,gate_a_* review artifact,NO_FROZEN_COST_GRID
+COVERAGE_REVIEW,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+ECONOMIC_RATIONALE_FREEZE,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+FACTOR_REVIEW_SHEETS,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+NO_AUTOMATIC_RANKING,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+NO_KEEP_DROP,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+POST2015_FIREWALL,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+NO_2016_2025_PERFORMANCE,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+DETERMINISM,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.
+INPUT_IMMUTABILITY,PASS,FALSE,gate_a_* review artifact,Descriptive human-review evidence only; no automated factor decision.

@@ -1,0 +1,8 @@
+factor,mean_top_turnover,median_top_turnover,mean_bottom_turnover,median_bottom_turnover,top_break_even_oneway_cost,frozen_cost_sensitivity_grid_exists,cost_grid_status,notes
+Size,0.03141452445032806,0.03092292258607108,0.020458698780117975,0.020336503338894724,0.03597694446471558,FALSE,NO_FROZEN_COST_GRID,"Break-even is an exact gross-wealth diagnostic, not an expected real cost."
+Momentum,0.1212796172255122,0.119260734994559,0.1193590757895515,0.11558021881332028,0.009940001502862488,FALSE,NO_FROZEN_COST_GRID,"Break-even is an exact gross-wealth diagnostic, not an expected real cost."
+Low Risk,0.025451226478100584,0.02383142853383635,0.03314979614988681,0.031091854641070206,0.05393543394329435,FALSE,NO_FROZEN_COST_GRID,"Break-even is an exact gross-wealth diagnostic, not an expected real cost."
+Value,0.046579652576313774,0.0429550970801682,0.04399240742431689,0.0422317486433635,0.02440928164962173,FALSE,NO_FROZEN_COST_GRID,"Break-even is an exact gross-wealth diagnostic, not an expected real cost."
+Quality,0.026240129983828395,0.021562237877288008,0.029573013866620534,0.022653856043215823,0.045906019307397,FALSE,NO_FROZEN_COST_GRID,"Break-even is an exact gross-wealth diagnostic, not an expected real cost."
+Investment,0.04714625608154235,0.0315820299647689,0.0430283004344461,0.029991726245549338,0.026997043609320606,FALSE,NO_FROZEN_COST_GRID,"Break-even is an exact gross-wealth diagnostic, not an expected real cost."
+Dividend,0.034679349691291904,0.03417990614775539,0.025401097538173458,0.024475576577129152,0.03504326777491913,FALSE,NO_FROZEN_COST_GRID,"Break-even is an exact gross-wealth diagnostic, not an expected real cost."

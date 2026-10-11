@@ -1,0 +1,2 @@
+run_1_logical_hash,run_2_logical_hash,status,notes
+a90f27c854e21f06a3eaf63716401d5d80d6d1aef773b464d7176f332fe309d5,a90f27c854e21f06a3eaf63716401d5d80d6d1aef773b464d7176f332fe309d5,PASS,Two builds from identical frozen validation evidence; no runtime timestamps.

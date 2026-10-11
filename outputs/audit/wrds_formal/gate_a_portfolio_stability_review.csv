@@ -1,0 +1,8 @@
+factor,positive_spread_year_count,negative_spread_year_count,best_spread_year,worst_spread_year,median_yearly_spread,median_yearly_spread_sharpe,fraction_years_top_outperformed_bottom,maximum_year_contribution_share,maximum_year_contribution_formula
+Size,2,3,2012,2015,-0.00426812875216831,-0.004164210344498606,0.4,0.37716444150503714,max(abs(calendar_year_compounded_spread))/sum(abs(calendar_year_compounded_spread))
+Momentum,4,1,2015,2012,0.03951624370713569,0.460839459640775,0.8,0.389457995688825,max(abs(calendar_year_compounded_spread))/sum(abs(calendar_year_compounded_spread))
+Low Risk,3,2,2015,2013,0.048862108239762,0.6159959641363423,0.6,0.29660603228518323,max(abs(calendar_year_compounded_spread))/sum(abs(calendar_year_compounded_spread))
+Value,3,2,2013,2015,0.01674493885664785,0.2989688055064149,0.6,0.33652193477080466,max(abs(calendar_year_compounded_spread))/sum(abs(calendar_year_compounded_spread))
+Quality,3,2,2011,2012,0.013864744577119614,0.30241625278651146,0.6,0.4331942528244915,max(abs(calendar_year_compounded_spread))/sum(abs(calendar_year_compounded_spread))
+Investment,4,1,2012,2015,0.047845470162496184,1.2162705950193407,0.8,0.2719681362813712,max(abs(calendar_year_compounded_spread))/sum(abs(calendar_year_compounded_spread))
+Dividend,2,3,2011,2013,-0.04487162455790017,-0.6007043849654458,0.4,0.37839348241994136,max(abs(calendar_year_compounded_spread))/sum(abs(calendar_year_compounded_spread))

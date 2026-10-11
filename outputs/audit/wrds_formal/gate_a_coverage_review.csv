@@ -1,0 +1,8 @@
+factor,factor_score_coverage,mean_validation_cross_section,minimum_validation_cross_section,maximum_validation_cross_section,IC_1W_valid_week_count,IC_4W_valid_week_count,single_factor_valid_week_count,common_sample_available_fraction,known_factor_specific_limitation
+Size,0.9979878285153556,499.63984674329504,496,504,259,256,258,0.9893663795056898,Issuer-market-cap availability and multi-class denominator coverage
+Momentum,0.9957801379001275,498.5249042145594,495,502,259,256,257,0.9893663795056898,History availability and momentum crash/regime risk
+Low Risk,0.9941395209157514,497.7049808429119,493,502,259,256,257,0.9893663795056898,Market-proxy and rolling-window availability
+Value,0.9957855453845038,498.53639846743295,495,502,259,256,257,0.9893663795056898,Historical-GICS branch availability and issuer denominator coverage
+Quality,0.9957855453845038,498.53639846743295,495,502,259,256,257,0.9893663795056898,Historical-GICS branch availability and PIT fundamental coverage
+Investment,0.9941931950393613,497.7394636015326,493,501,259,256,257,0.9893663795056898,Exact fiscal lag availability
+Dividend,0.9996781609195402,500.48659003831415,497,505,259,256,257,0.9893663795056898,Event coverage and nonstandard corporate-action exclusions

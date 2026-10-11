@@ -1,0 +1,8 @@
+factor,mean_abs_score_corr_with_others,max_abs_score_corr_with_others,most_correlated_score_factor,least_correlated_score_factor,mean_abs_spread_return_corr_with_others,max_abs_spread_return_corr_with_others,most_correlated_return_factor,least_correlated_return_factor
+Size,0.10869125743083866,0.3098605578952057,Low Risk,Quality,0.45538216532318604,0.7771056069474631,Low Risk,Investment
+Momentum,0.09338425620163349,0.17039319559413268,Value,Quality,0.35141803321071025,0.5749255365448711,Size,Investment
+Low Risk,0.1494364344363947,0.4322444795338566,Dividend,Value,0.5056320547009301,0.8198290149137519,Dividend,Investment
+Value,0.08785624488782548,0.17039319559413268,Momentum,Low Risk,0.29422056879412706,0.5553984873399536,Momentum,Dividend
+Quality,0.03132861322098588,0.08901509368657015,Investment,Size,0.3684494251895661,0.5409489433014526,Low Risk,Investment
+Investment,0.08502602707407256,0.17504846682885583,Dividend,Size,0.1646195117965041,0.30779803152657964,Dividend,Size
+Dividend,0.16332668420201704,0.4322444795338566,Low Risk,Quality,0.3504516810302709,0.8198290149137519,Low Risk,Value

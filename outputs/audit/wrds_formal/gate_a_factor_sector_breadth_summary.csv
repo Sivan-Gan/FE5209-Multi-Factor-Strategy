@@ -1,0 +1,8 @@
+factor,number_of_sectors_with_positive_mean_ic_1w,number_of_sectors_with_negative_mean_ic_1w,best_sector_1w,worst_sector_1w,sector_ic_dispersion_1w,number_of_sectors_with_positive_mean_ic_4w,number_of_sectors_with_negative_mean_ic_4w,best_sector_4w,worst_sector_4w,sector_ic_dispersion_4w
+Size,3,6,30,10,0.015699739156164096,4,5,55,10,0.02577713436008114
+Momentum,9,0,10,35,0.014916541389858127,8,1,10,35,0.02534673661441251
+Low Risk,6,3,15,30,0.016203225364484958,6,3,15,35,0.031993853388891
+Value,6,3,30,55,0.01585339123367592,6,3,30,55,0.031665214134744386
+Quality,6,3,15,25,0.019367014555112194,5,4,15,55,0.03423525695841055
+Investment,4,5,10,55,0.009977427126349211,5,4,10,55,0.01973418383484698
+Dividend,5,4,40,55,0.011159409778821336,7,2,40,55,0.01559164804642247
