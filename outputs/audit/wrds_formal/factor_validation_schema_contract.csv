@@ -1,0 +1,6 @@
+dataset,column,economic_meaning,source,formula,timing,executable_or_diagnostic,sample_role,nullable,missing_reason,notes
+validation_observations,signal_date,Factor score information cutoff,candidate-factor store,S_t,after weekly close,NOT_APPLICABLE,DEV / FACTOR_SELECTION,FALSE,,No score after 2015 is read.
+validation_observations,execution_date,Next trading day close,canonical weekly calendar,E_t,next actual trading day,EXECUTABLE,DEV / FACTOR_SELECTION,FALSE,,Execution close itself is excluded from forward DlyRet compounding.
+validation_observations,r_1w_exec,1-week executable total return,canonical CIZ DlyRet,"product DlyRet over (E_t,E_t+1]",post-execution only,EXECUTABLE,DEV / FACTOR_SELECTION,TRUE,Execution/path/firewall failure,"No DelRet, dividend, or split return add-on."
+validation_observations,r_4w_exec,4-week executable total return,canonical CIZ DlyRet,"product DlyRet over (E_t,E_t+4]",post-execution only,EXECUTABLE,DEV / FACTOR_SELECTION,TRUE,Execution/path/firewall failure,Overlapping horizon; HAC lag 3 and block length 4.
+not_created,R_1W_SIGNAL_CLOSE_DIAGNOSTIC,Optional non-executable signal-close diagnostic,SSOT,S_t close to S_t+1 close,not constructed,NON_EXECUTABLE_DIAGNOSTIC,NOT_APPLICABLE,TRUE,SSOT does not require it,Cannot replace executable target.
