@@ -1,0 +1,5 @@
+check,violation_count,status,notes
+VALUE_FCF_NONFINANCIAL_ONLY,0,PASS,Frozen historical-GICS branch rule.
+QUALITY_GPA_NONFINANCIAL_ONLY,0,PASS,Frozen historical-GICS branch rule.
+QUALITY_NEG_LEVERAGE_NONFINANCIAL_ONLY,0,PASS,Frozen historical-GICS branch rule.
+QUALITY_ROA_FINANCIAL_RE_ONLY,0,PASS,Frozen historical-GICS branch rule.

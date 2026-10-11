@@ -121,9 +121,33 @@ class GateA0GovernanceTests(unittest.TestCase):
         self.assertEqual(entry["performance_2021_2025"], "NOT_ACCESSED")
         self.assertEqual(entry["post2015_returns_used_for_factor_choice"], "FALSE")
 
-    def test_16_no_new_gate_a0_performance_artifact_exists(self) -> None:
+    def test_16_only_authorized_construction_audits_exist_and_no_performance_artifact_exists(self) -> None:
         gate_a0_csvs = {path.name for path in AUDIT.glob("gate_a0_*.csv")}
-        self.assertEqual(gate_a0_csvs, {"gate_a0_within_family_specification_registry.csv", "gate_a0_governance_acceptance.csv"})
+        self.assertEqual(
+            gate_a0_csvs,
+            {
+                "gate_a0_within_family_specification_registry.csv",
+                "gate_a0_governance_acceptance.csv",
+                "gate_a0_incumbent_reproduction_qa.csv",
+                "gate_a0_specification_coverage.csv",
+                "gate_a0_neutralization_qa.csv",
+                "gate_a0_branch_qa.csv",
+                "gate_a0_direction_qa.csv",
+                "gate_a0_no_performance_access_qa.csv",
+                "gate_a0_factor_specification_definition_contract.csv",
+                "gate_a0_factor_specification_manifest.csv",
+                "gate_a0_factor_construction_determinism.csv",
+                "gate_a0_factor_construction_acceptance.csv",
+            },
+        )
+        forbidden_artifacts = (
+            "gate_a0_forward_ic_",
+            "gate_a0_factor_validation_",
+            "gate_a0_single_factor_portfolio_",
+            "gate_a0_performance_results_",
+            "gate_a0_representative_selection_",
+        )
+        self.assertFalse(any(name.startswith(forbidden_artifacts) for name in gate_a0_csvs))
 
     def test_17_governance_report_has_all_required_sections(self) -> None:
         content = REPORT.read_text(encoding="utf-8")

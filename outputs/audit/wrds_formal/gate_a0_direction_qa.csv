@@ -1,0 +1,13 @@
+specification_id,frozen_direction,status,notes
+VALUE_EP,higher E/P,PASS,Inherited; no empirical direction flip.
+VALUE_BP,higher B/P,PASS,Inherited; no empirical direction flip.
+VALUE_EP_BP,higher E/P+B/P,PASS,Inherited; no empirical direction flip.
+QUALITY_ROE,higher ROE,PASS,Inherited; no empirical direction flip.
+QUALITY_PROFITABILITY,higher profitability,PASS,Inherited; no empirical direction flip.
+QUALITY_GPA_COMPONENT,higher GP/A,PASS,Inherited; no empirical direction flip.
+QUALITY_NEG_LEVERAGE_COMPONENT,lower leverage,PASS,Inherited; no empirical direction flip.
+QUALITY_ROA_COMPONENT,higher ROA,PASS,Inherited; no empirical direction flip.
+MOMENTUM_12_1,higher momentum,PASS,Inherited; no empirical direction flip.
+MOMENTUM_6_1,higher momentum,PASS,Inherited; no empirical direction flip.
+LOWRISK_VOL,lower volatility,PASS,Inherited; no empirical direction flip.
+LOWRISK_IVOL,lower IVOL,PASS,Inherited; no empirical direction flip.
