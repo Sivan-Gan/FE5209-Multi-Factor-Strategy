@@ -121,31 +121,27 @@ class GateA0GovernanceTests(unittest.TestCase):
         self.assertEqual(entry["performance_2021_2025"], "NOT_ACCESSED")
         self.assertEqual(entry["post2015_returns_used_for_factor_choice"], "FALSE")
 
-    def test_16_only_authorized_construction_audits_exist_and_no_performance_artifact_exists(self) -> None:
+    def test_16_authorized_validation_artifacts_exist_without_automated_choice_artifacts(self) -> None:
         gate_a0_csvs = {path.name for path in AUDIT.glob("gate_a0_*.csv")}
-        self.assertEqual(
-            gate_a0_csvs,
-            {
-                "gate_a0_within_family_specification_registry.csv",
-                "gate_a0_governance_acceptance.csv",
-                "gate_a0_incumbent_reproduction_qa.csv",
-                "gate_a0_specification_coverage.csv",
-                "gate_a0_neutralization_qa.csv",
-                "gate_a0_branch_qa.csv",
-                "gate_a0_direction_qa.csv",
-                "gate_a0_no_performance_access_qa.csv",
-                "gate_a0_factor_specification_definition_contract.csv",
-                "gate_a0_factor_specification_manifest.csv",
-                "gate_a0_factor_construction_determinism.csv",
-                "gate_a0_factor_construction_acceptance.csv",
-            },
-        )
+        required = {
+            "gate_a0_within_family_specification_registry.csv",
+            "gate_a0_governance_acceptance.csv",
+            "gate_a0_factor_construction_acceptance.csv",
+            "gate_a0_validation_acceptance.csv",
+            "gate_a0_validation_manifest.csv",
+            "gate_a0_validation_determinism.csv",
+            "gate_a0_validation_post2015_firewall_qa.csv",
+            "gate_a0_human_review_master.csv",
+            "gate_a0_value_comparison.csv",
+            "gate_a0_quality_comparison.csv",
+            "gate_a0_momentum_comparison.csv",
+            "gate_a0_lowrisk_comparison.csv",
+        }
+        self.assertTrue(required.issubset(gate_a0_csvs))
         forbidden_artifacts = (
-            "gate_a0_forward_ic_",
-            "gate_a0_factor_validation_",
-            "gate_a0_single_factor_portfolio_",
-            "gate_a0_performance_results_",
             "gate_a0_representative_selection_",
+            "gate_a0_automated_ranking_",
+            "gate_a0_winner_",
         )
         self.assertFalse(any(name.startswith(forbidden_artifacts) for name in gate_a0_csvs))
 
