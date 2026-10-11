@@ -553,7 +553,15 @@ $$
 - 因子与选股使用本币数据；
 - 最终组合收益统一折算为美元汇报。
 
-当前 SOP 中“一只股票至少有 4 个因子可用”是基于未来 $K=6$ 的暂定规则。由于最终 Factor Set 尚未冻结，该规则不能提前视为最终参数；Factor Set 确定后，应同步把 minimum-available-factor rule 写成与最终 $K$ 一致的固定规则。
+美国 Base Strategy 的 Final Factor Set 已在 Gate A 冻结为 $K=4$（Quality、Momentum 12-1、Low Risk、Investment）。因此未来的 Base Strategy stock-score contract 只可在这四项冻结因子中定义：
+
+$$
+\mathcal F^{Final}_{US}
+=
+\{\texttt{QUALITY\_CURRENT},\texttt{MOMENTUM\_12\_1},\texttt{LOWRISK\_CURRENT},\texttt{INVESTMENT\_CURRENT}\}.
+$$
+
+旧有“至少 4 个因子可用”的 $K=6$ 暂定说明不构成最终 missing-factor policy。最低可用因子数与缺失权重重归一化规则仍须在后续获授权的 strategy-configuration governance 中明确冻结；本 Gate A freeze 不设定该参数，也不计算权重或股票分数。
 
 ---
 
@@ -1008,8 +1016,8 @@ Gate B / Gate C 的配置决策只能使用截至 2020 年的数据；对本 his
 | Turnover Buffer | TBD | **TBD** | Configuration | TBD | TBD |
 | Transaction Cost | TBD | **TBD** | Before OOS | US-specific | SG-specific |
 | Within-Family Specification | Gate A0 candidate registry | **GATE A0 CANDIDATE** | Factor Selection / Gate A0 | Existing-constituent Round 1 only | Same methodology when authorized |
-| Gate A0 Family Representative | TBD | **TBD** | Gate A0 | One at most per economic family | Base transfer uses frozen US representative |
-| Final Factor Set | TBD | **TBD** | Gate A | Developed in US | Base transfer uses same set |
+| Gate A0 Family Representative | `VALUE_CURRENT`; `QUALITY_CURRENT`; `MOMENTUM_12_1`; `LOWRISK_CURRENT`; `INVESTMENT_CURRENT`; `DIVIDEND_CURRENT`; `SIZE_CURRENT` | **GATE A0 FROZEN** | Gate A0 | One representative per economic family | Base transfer uses frozen US representative |
+| Final Factor Set | `QUALITY_CURRENT`; `MOMENTUM_12_1`; `LOWRISK_CURRENT`; `INVESTMENT_CURRENT` ($K=4$) | **GATE A FROZEN** | Gate A | Developed in US | Base transfer uses same set; `VALUE_CURRENT`, `DIVIDEND_CURRENT`, and `SIZE_CURRENT` are excluded from Base Strategy and FMOM |
 | US/SG Capital Allocation | 80/20 proposed | **DEPLOYMENT TBD** | Final Deployment | 80% | 20% |
 | FMOM Input Return | Gross factor L/S return | **FIXED** | Gate B | Same | Same |
 | FMOM Minimum History | Full $J$ valid weeks | **FIXED** | Gate B | Same | Same |
@@ -2460,7 +2468,7 @@ Gate A0 formal performance evidence is 2011–2015 only; 2006–2010 is DEV cont
 
 ## Formal Gate A0 Family-Representative Freeze — 2026-10-12
 
-> **GATE A0 STATUS: FROZEN.** The approved human Gate A0 review was recorded after the within-family validation lineage at commit `f18e4c2c491c355bb7f05e9c61fdc0eac3414598`. It is a human decision, not an automated ranking or mechanical threshold outcome. Gate A remains TBD.
+> **GATE A0 STATUS: FROZEN.** The approved human Gate A0 review was recorded after the within-family validation lineage at commit `f18e4c2c491c355bb7f05e9c61fdc0eac3414598`. It is a human decision, not an automated ranking or mechanical threshold outcome. Historical record: **Gate A remains TBD** was the status at the time of the Gate A0 freeze; Gate A is subsequently frozen below.
 
 The single frozen representative for each economic family is:
 
@@ -2476,7 +2484,7 @@ The single frozen representative for each economic family is:
 
 Exactly one representative per family enters the later Gate A comparison. Component diagnostics, including `VALUE_FCF_COMPONENT` and `QUALITY_GPA_COMPONENT`, are not promoted to whole-market representatives. **ROUND 2 — NOT AUTHORIZED**: no RMW, RMWc, Trend Momentum, Low Beta / BAB, Shareholder Yield, Net Payout Yield, EV-based Value, or other new factor definition may enter the Formal Base Gate A process.
 
-Gate A0 remains an adaptive refinement within the observed 2011–2015 Factor Selection evidence; that period is not labelled untouched for this design question. No 2016–2020, 2021–2025, or 2026 performance was accessed for this human decision. Gate A, Gate B, FMOM configuration, and the Final Factor Set remain unmade.
+Gate A0 remains an adaptive refinement within the observed 2011–2015 Factor Selection evidence; that period is not labelled untouched for this design question. No 2016–2020, 2021–2025, or 2026 performance was accessed for this human decision. Gate A is subsequently frozen below; Gate B and FMOM configuration remain unmade.
 
 ---
 
@@ -2656,7 +2664,7 @@ K=
 |\mathcal F^{Final}_{US}|
 $$
 
-到这一步才知道最终到底是 5、6、7 或其他数量的 Factor Strategy。
+Gate A 已冻结下列四项 Final Factor Set，而不是 5、6、7 或其他数量的 factor strategy：`QUALITY_CURRENT`、`MOMENTUM_12_1`、`LOWRISK_CURRENT`、`INVESTMENT_CURRENT`，即 $K=4$。
 
 ### Gate A — Final Factor Set Freeze
 
@@ -2668,6 +2676,33 @@ $$
 - Neutralization Rule。
 
 后续不得因为 US OOS 或 SG 结果不好而回头重选 Base Factors。
+
+### Formal Gate A Final Factor Set Freeze — 2026-10-12
+
+> **GATE A STATUS: FROZEN.** The human Gate A decision used only the designated 2011–2015 Factor Selection evidence package. It is not an automatic rank, p-value, or BH-q-value threshold result. The 2016–2020 Configuration Selection period remains unopened pending separate Gate B authorization; 2021–2025 remains protected Formal Historical OOS; and 2026 performance was not accessed.
+
+The frozen US Base Strategy factor contract is:
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal F^{Final}_{US} &= \{\texttt{QUALITY\_CURRENT},\ \texttt{MOMENTUM\_12\_1},\ \texttt{LOWRISK\_CURRENT},\ \texttt{INVESTMENT\_CURRENT}\},\\
+K &= 4.
+\end{aligned}
+}
+$$
+
+The canonical factor order is: (1) Quality / `QUALITY_CURRENT`; (2) Momentum / `MOMENTUM_12_1`; (3) Low Risk / `LOWRISK_CURRENT`; (4) Investment / `INVESTMENT_CURRENT`. `VALUE_CURRENT`, `DIVIDEND_CURRENT`, and `SIZE_CURRENT` are excluded from the US Base Strategy stock composite and from the Base Strategy FMOM universe. They remain preserved for audit, attribution, and authorized robustness research; exclusion is not deletion or a rewrite of historical evidence.
+
+For downstream documentation only, the future stock-score contract is:
+
+$$
+Score_{i,t}=\sum_{k\in\mathcal F^{Final}_{US}} w_{k,t}F_{k,i,t}.
+$$
+
+This Gate A freeze calculates neither $w_{k,t}$ nor $Score_{i,t}$. The future FMOM universe contains exactly the same four retained economic factor families; it may not assign Base Strategy weights to Value, Dividend, or Size. The pre-frozen FMOM configuration-search space, including $J$ and $\lambda$, remains pending Gate B and is not selected here.
+
+**ROUND_2_FACTOR_SEARCH = NOT_AUTHORIZED.** This prohibition includes FCF-only Value, GP/A-focused Quality, RMW, RMWc, Trend Momentum, Low Beta, BAB, Shareholder Yield, Net Payout Yield, EV-based Value, and any newly invented factor specification. Later US OOS or SG evidence cannot reopen this Gate A decision.
 
 ---
 
@@ -2810,7 +2845,7 @@ $$
 - 股票最低需要多少个 Factor；
 - 缺失 Factor Weight 如何重新归一化。
 
-当前“至少 4 个 Factor”只作为 $K=6$ 时的初步方案。
+旧有“至少 4 个 Factor”的 $K=6$ 初步方案已不再是当前 Base Strategy contract。$K=4$ 已冻结，但 minimum-available-factor 与 missing-weight policy 尚未获授权冻结。
 
 若允许部分 Factor 缺失并对剩余 Factor 重新归一化，每期必须额外保存：
 
