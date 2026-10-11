@@ -1,0 +1,22 @@
+check,status,blocking,evidence,notes
+GATE_A0_HUMAN_DECISION_RECORDED,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+EXACTLY_SEVEN_FAMILY_REPRESENTATIVES,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+VALUE_CURRENT_SELECTED,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+QUALITY_CURRENT_SELECTED,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+MOMENTUM_12_1_SELECTED,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+LOWRISK_CURRENT_SELECTED,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+INVESTMENT_CURRENT_SELECTED,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+DIVIDEND_CURRENT_SELECTED,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+SIZE_CURRENT_SELECTED,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+ONLY_MOMENTUM_INCUMBENT_REPLACED,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+COMPONENT_DIAGNOSTICS_NOT_PROMOTED,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+ROUND2_NOT_AUTHORIZED,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+ONE_REPRESENTATIVE_PER_FAMILY,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+GATE_A_STILL_TBD,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+NO_2016_2020_PERFORMANCE,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+NO_2021_2025_PERFORMANCE,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+NO_2026_PERFORMANCE,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+SSOT_CONSISTENCY,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+CONTAMINATION_REGISTER_UPDATED,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+NO_FMOM,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.
+NO_GATE_B,PASS,false,approved_human_gate_a0_decision,Recorded human decision; no performance calculation is performed by this freeze.

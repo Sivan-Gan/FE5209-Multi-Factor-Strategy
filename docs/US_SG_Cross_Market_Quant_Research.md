@@ -2458,6 +2458,28 @@ Gate A0 formal performance evidence is 2011–2015 only; 2006–2010 is DEV cont
 
 ---
 
+## Formal Gate A0 Family-Representative Freeze — 2026-10-12
+
+> **GATE A0 STATUS: FROZEN.** The approved human Gate A0 review was recorded after the within-family validation lineage at commit `f18e4c2c491c355bb7f05e9c61fdc0eac3414598`. It is a human decision, not an automated ranking or mechanical threshold outcome. Gate A remains TBD.
+
+The single frozen representative for each economic family is:
+
+| Family | Frozen representative | Gate A0 treatment |
+|---|---|---|
+| Value | `VALUE_CURRENT` | Retain incumbent |
+| Quality | `QUALITY_CURRENT` | Retain incumbent |
+| Momentum | `MOMENTUM_12_1` | Replace `MOMENTUM_CURRENT` |
+| Low Risk | `LOWRISK_CURRENT` | Retain incumbent |
+| Investment | `INVESTMENT_CURRENT` | Single-specification passthrough |
+| Dividend | `DIVIDEND_CURRENT` | Single-specification passthrough |
+| Size | `SIZE_CURRENT` | Single-specification passthrough |
+
+Exactly one representative per family enters the later Gate A comparison. Component diagnostics, including `VALUE_FCF_COMPONENT` and `QUALITY_GPA_COMPONENT`, are not promoted to whole-market representatives. **ROUND 2 — NOT AUTHORIZED**: no RMW, RMWc, Trend Momentum, Low Beta / BAB, Shareholder Yield, Net Payout Yield, EV-based Value, or other new factor definition may enter the Formal Base Gate A process.
+
+Gate A0 remains an adaptive refinement within the observed 2011–2015 Factor Selection evidence; that period is not labelled untouched for this design question. No 2016–2020, 2021–2025, or 2026 performance was accessed for this human decision. Gate A, Gate B, FMOM configuration, and the Final Factor Set remain unmade.
+
+---
+
 ## Step 12 — Gate A0 Within-Family 与 Gate A Cross-Family Forward IC
 
 只使用 Factor Selection Period。Gate A0 在另行授权后先按同一 executable validation engine 比较同一经济家族的已冻结 eligible representative specifications；Gate A 只比较每个家族经 Gate A0 冻结的一项 representative specification。
