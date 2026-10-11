@@ -5,7 +5,7 @@
 >
 > **先在美国市场从候选股票因子中筛选最终有效因子集合，构建“静态多因子 + Factor Momentum Tilt”的周度纯多头策略；在美国完成策略开发、参数冻结和深度验证后，再将同一核心策略迁移至新加坡市场进行外部跨市场验证。随后分别形成 US 与 SG 的完整 Strategy Profile，比较同一策略在两个市场中的表现差异，解释差异机制，并只针对已经识别出的市场结构问题进行有限适配。**
 >
-> 当前的 Value、Quality、Momentum、Low Risk、Investment、Dividend、Size 为 **Candidate Factor Pool**，不是最终因子集合。最终到底保留几个因子，只能在美国开发期完成 Forward IC、单因子组合回测、稳定性与冗余性分析后确定。
+> 当前的 Value、Quality、Momentum、Low Risk、Investment、Dividend、Size 为 **Candidate Factor Pool**，不是最终因子集合。最终到底保留几个因子，只能在美国开发期完成 Forward IC、单因子组合回测、稳定性与冗余性分析后确定。每个经济因子家族的度量方式与该家族是否进入最终策略是两个不同的问题：前者由 Gate A0 的 within-family specification selection 处理，后者由 Gate A 的跨家族 Final Factor Set selection 处理。
 >
 > 新加坡数据目前尚未完整获取，因此当前实施顺序为 **US-first Development → SG Out-of-Market External Validation**。这里的 “External” 指 **Out-of-Market**：SG 未参与 US Base 的核心开发；它并不自动等于时间意义上的 **Out-of-Time OOS**。文档中已经预设的部分 US/SG 参数差异属于 **Ex-Ante Market Feasibility Parameters**：这些差异是在看到 SG 策略结果之前、基于两个市场客观结构差异预设的规则，不属于后续的 Post-Diagnostic Adaptation。
 
@@ -23,8 +23,8 @@
 | 成员 | Primary Workstream | 主要负责 | 跨市场延伸责任 |
 |---|---|---|---|
 | **Member 1** | Data & PIT Lead | US / SG Universe、PIT、价格/财务/行业/FX、Coverage、Data Ready Gate | 两个市场的数据管线、Return Closure、数据审计 |
-| **Member 2** | Factor Engineering Lead | Candidate Factor 公式、字段映射、清洗、内部合成、Neutralization | 同一 Factor Engine 应用于 US / SG；Factor / Sector Attribution |
-| **Member 3** | Factor Research Lead | Forward IC、Single-Factor Backtest、稳定性、冗余性、Final Factor Set | 同一 Validation Engine 应用于 US / SG；Ablation / Robustness |
+| **Member 2** | Factor Engineering Lead | Candidate Factor 公式、字段映射、清洗、内部合成、Neutralization；按已冻结 Gate A0 registry 构造 within-family specifications | 同一 Factor Engine 应用于 US / SG；Factor / Sector Attribution |
+| **Member 3** | Factor Research Lead | Forward IC、Single-Factor Backtest、稳定性、冗余性；Gate A0 evidence 与 Gate A Final Factor Set | 同一 Validation Engine 应用于 US / SG；Ablation / Robustness |
 | **Member 4** | Strategy Engine Lead | Factor Return、FMOM、动态权重、Composite Score、选股、Buffer、执行逻辑 | 同一 Strategy Engine 应用于 US / SG；FMOM Attribution |
 | **Member 5** | Backtest & Risk Lead | Backtest、Benchmark、绩效、Turnover、Cost、Regression、Liquidity、Capacity、Drawdown | 同一 Backtest / Risk Engine 应用于 US / SG；Stress / Capacity |
 | **Member 6** | Cross-Market & Integration Lead | SG Transfer Specification、Strict vs Feasible 定义、Matched Comparison、Mechanism Diagnosis | Adaptation、Final Integration、Cross-Market Conclusions、Gate 协调 |
@@ -34,7 +34,7 @@
 - 每个模块只设 **1 名 Primary Owner**；Contributor 可以协助，但不能产生第二套正式口径。
 - SG **不重新实现一套独立 pipeline**。M1–M5 的同一数据 / factor / strategy / backtest engine 必须能够以 `market` 参数运行 US 与 SG；M6 负责 SG specification 与跨市场识别，不负责重写整条 SG pipeline。
 - 关键结果必须至少由 **1 名非负责人 Reviewer** 复核。
-- Gate A–F 的冻结决定由全组确认，不允许单个成员自行改变。
+- Gate A0–F 的冻结决定由全组确认，不允许单个成员自行改变。
 - 任何带有 `/` 或 `+` 的协作关系，都必须在任务表中拆成 **Primary Owner / Contributor / Reviewer**，避免共同负责导致无人最终负责。
 
 ---
@@ -103,7 +103,7 @@ $$
 |---|---|---|---|---|
 | Step 01–02 US Data | M1 | M2 | M6 | US Data Contract、PIT Panel、Coverage Report |
 | Step 03–11 Factor Engineering | M2 | M1 | M3 | Formula Dictionary、Candidate / Neutralized Scores |
-| Step 12–15 Factor Research | M3 | M2 | M4 | IC、Single-Factor Returns、Decision Cards、Final Factor Set Proposal |
+| Step 12–15 Factor Research | M3 | M2 | M4 | Gate A0 within-family evidence、IC、Single-Factor Returns、Decision Cards、Final Factor Set Proposal |
 | Step 16–22 Strategy Engine | M4 | M3 | M5 | Factor Returns、FMOM、Weights、Scores、Holdings、Trades |
 | Step 23–29A US Backtest & Diagnostics | M5 | M2/M3/M4 | M6 | US Backtest、Regression、Attribution Inputs、Robustness、US Strategy Profile |
 | Step 30 SG Data | M1 | M6 | M2 | SG Data Contract、Universe、Coverage、REIT Treatment Inputs |
@@ -213,6 +213,7 @@ Primary Owner 完成后，Reviewer 至少检查：
 以下 Gate 必须全组确认：
 
 - Gate 0：Data Ready；
+- Gate A0：Within-Family Specification Freeze；
 - Gate A：Final Factor Set；
 - Gate B：FMOM Configuration；
 - Gate C：US Base Strategy；
@@ -234,7 +235,7 @@ Primary Owner 完成后，Reviewer 至少检查：
 | Sample / Evidence Stage | 可以做什么 | 不允许做什么 |
 |---|---|---|
 | Warm-up | 累积历史、初始化窗口 | 用绩效选策略 |
-| Factor Selection | 选 Factor、方向、Neutralization | 选择最终 FMOM 配置 |
+| Factor Selection | 在 Gate A0 选择 within-family representative specification；在 Gate A 选择 factor family、方向（仅在既有 integrity rules 下）与既授权的 Neutralization | 选择最终 FMOM 配置；使用 2016–2025 outcome 选择 Gate A0 或 Gate A 结果 |
 | Configuration Selection | 选 $J$、Risk Adjustment、$\lambda$、Buffer 等 | 回头根据 OOS 重选 Factor |
 | Formal Historical OOS (`HIST_OOS_BASE`) | 评价冻结的 US Base、做预先规定的诊断 | 看完结果再修改 Base Strategy；与 2026 extension 混合统计 |
 | Recent / Operational Extension (`RECENT_EXTENSION`) | 用冻结策略进行近期/运行延伸与 bridge diagnostics | 用结果重新选择 Factor、参数或将其并入 formal OOS headline statistics |
@@ -396,7 +397,7 @@ $$
 
 ### OOS Contamination / Prior-Exposure Register
 
-`HIST_OOS_BASE` 保留为 2021–2025.12 的预先规定 formal research split；它不自动表示该时期从未被任何研究成员看到。由于 formal WRDS rebuild 前的 DEV work 可能已暴露部分后期信息，在 Gate A / B / C 被视为 fully frozen 前，必须建立并审核 `oos_contamination_register.csv`。
+`HIST_OOS_BASE` 保留为 2021–2025.12 的预先规定 formal research split；它不自动表示该时期从未被任何研究成员看到。由于 formal WRDS rebuild 前的 DEV work 可能已暴露部分后期信息，在 Gate A0 / A / B / C 被视为 fully frozen 前，必须建立并审核 `oos_contamination_register.csv`。
 
 每条记录至少包含：已查看的 evidence / result、已知时的查看日期、是否影响 Factor Selection、是否影响 Configuration、是否影响 Portfolio Rule，以及 contamination classification。应登记的 prior exposure 至少包括 2021–2025 factor performance、strategy performance、parameter comparisons、market-cap diagnostics 及其他可能影响设计的 evidence。
 
@@ -578,7 +579,7 @@ $$
 
 $$
 \boxed{
-US\ Data\ \&\ Candidate\ Factors
+US\ Data\ \&\ Candidate\ Metrics
 }
 $$
 
@@ -588,7 +589,47 @@ $$
 
 $$
 \boxed{
-Single\text{-}Factor\ Validation
+Incumbent\ Family\ Construction
+}
+$$
+
+$$
+\downarrow
+$$
+
+$$
+\boxed{
+Initial\ Family\ Validation
+}
+$$
+
+$$
+\downarrow
+$$
+
+$$
+\boxed{
+Within\text{-}Family\ Specification\ Validation
+}
+$$
+
+$$
+\downarrow
+$$
+
+$$
+\boxed{
+Gate\ A0\ Family\ Representative\ Freeze
+}
+$$
+
+$$
+\downarrow
+$$
+
+$$
+\boxed{
+Cross\text{-}Family\ Gate\ A\ Review
 }
 $$
 
@@ -876,7 +917,7 @@ $$
 |---|---|---|
 | Initialization / Pre-sample Buffer | 2004–2005 | 初始化 252-day 与其他长 lookback 的 Momentum、Volatility、IVOL 及相关 rolling metrics；不作正式绩效评价 |
 | Development / Warm-up | 2006–2010 | 管线与 signal-construction 验证、implementation debugging、基本经济 sanity check；不得使用后续证据反向优化 |
-| Factor Selection | 2011–2015 | Candidate Factor、Forward IC、single-factor Top/Bottom portfolio、稳定性、经济逻辑、互补性；期末 Gate A 冻结 Final Factor Set |
+| Factor Selection | 2011–2015 | Candidate metrics / specifications、Forward IC、single-factor Top/Bottom portfolio、稳定性、经济逻辑、互补性；先由 Gate A0 冻结每个多规格经济家族的一项 representative specification，再由 Gate A 冻结 Final Factor Set |
 | Configuration Selection | 2016–2020 | FMOM、$\lambda$、组合构造、调仓 / execution rules 等允许的配置选择；期末 Gate B 和 Gate C 冻结 |
 | Formal Historical OOS | 2021–2025.12 | 使用 formal WRDS historical stack 的 Frozen US Base 主历史样本外，标签 `HIST_OOS_BASE` |
 | Recent / Operational Extension | 2026.01–2026.09 | 使用冻结策略的独立近期 / operational extension，标签 `RECENT_EXTENSION`；不并入 formal OOS headline statistics |
@@ -966,6 +1007,8 @@ Gate B / Gate C 的配置决策只能使用截至 2020 年的数据；对本 his
 | Sector Cap | 30% | **CANDIDATE** | Configuration | Same principle | Same principle |
 | Turnover Buffer | TBD | **TBD** | Configuration | TBD | TBD |
 | Transaction Cost | TBD | **TBD** | Before OOS | US-specific | SG-specific |
+| Within-Family Specification | Gate A0 candidate registry | **GATE A0 CANDIDATE** | Factor Selection / Gate A0 | Existing-constituent Round 1 only | Same methodology when authorized |
+| Gate A0 Family Representative | TBD | **TBD** | Gate A0 | One at most per economic family | Base transfer uses frozen US representative |
 | Final Factor Set | TBD | **TBD** | Gate A | Developed in US | Base transfer uses same set |
 | US/SG Capital Allocation | 80/20 proposed | **DEPLOYMENT TBD** | Final Deployment | 80% | 20% |
 | FMOM Input Return | Gross factor L/S return | **FIXED** | Gate B | Same | Same |
@@ -1322,9 +1365,9 @@ Matched Calendar-Month Sample 至少比较：
 
 ---
 
-## 4.6 Factor Decision Card
+## 4.6 Gate A0 Specification Review Card 与 Gate A Family Decision Card
 
-Gate A 前，每一个 Candidate Factor 必须生成同样的 Decision Card，防止不同因子使用不同标准解释。
+Gate A0 前，每一个 eligible within-family specification 必须生成同样的 Specification Review Card，防止同一经济家族的不同 measurement specification 使用不同标准解释。Gate A 前，每一个已冻结的 family representative 必须生成同样的 Family Decision Card，防止不同经济家族使用不同标准解释。
 
 | Dimension | 必须记录 |
 |---|---|
@@ -1343,10 +1386,11 @@ Gate A 前，每一个 Candidate Factor 必须生成同样的 Decision Card，�
 | Illustrative Net Result | 仅在 pre-specified research-cost scenario 下；未冻结成本前不得作为硬性 Decision criterion |
 | Subperiod Stability | Stable / Mixed / Weak |
 | Highest Correlation with Other Factor | 数值 + Factor Name |
-| Decision | Keep / Watch / Drop |
+| Gate A0 Decision | Retain incumbent / replace with challenger / documented exception；仅由全组决定 |
+| Gate A Decision | Keep / Watch / Drop family |
 | Decision Rationale | 一段明确说明 |
 
-不提前设定机械的“IC > X 才保留”门槛，但所有 Factor 必须经过完全相同的证据框架。
+不提前设定机械的“IC > X 才保留”门槛。Gate A0 不设置 highest-Sharpe rule、weighted evidence score 或自动 winner；Gate A 不设置最高 Sharpe 的 family selection rule。两个阶段都必须在各自完全相同的证据框架下进行。
 
 ---
 
@@ -1367,7 +1411,7 @@ Factor Selection 不设置单一机械阈值（例如 “IC > x 即保留”）�
 - Benjamini–Hochberg FDR-adjusted q-values（或组内预先确定的等价 multiple-testing control）；
 - tested hypotheses 数量。
 
-最终 `Keep / Watch / Drop` 必须由 Gate A 全组确认，并在 Decision Card 中保存：`Decision`、`Reason`、`Exception`、`Approver`。任何例外不能只写口头理由。
+Gate A0 representative choice 与最终 Gate-A `Keep / Watch / Drop` 都必须由全组确认，并在对应 Card 中保存：`Decision`、`Reason`、`Exception`、`Approver`。任何例外不能只写口头理由。
 
 ---
 
@@ -2114,7 +2158,7 @@ Size 作为控制变量出现，不代表它自动属于最终 Factor Set。
 
 ## Step 10 — 因子内部合成
 
-若某一 Factor 由多个指标组成：
+若某一 Factor 由多个指标组成，初始 incumbent construction 为：
 
 $$
 F^{raw}_{k,i,t}
@@ -2122,7 +2166,7 @@ F^{raw}_{k,i,t}
 Average(Z_{1,i,t},Z_{2,i,t},...)
 $$
 
-第一版一律：
+历史上 initial incumbent family-level validation 所使用的第一版一律为：
 
 $$
 \boxed{
@@ -2130,7 +2174,9 @@ Equal\ Weight\ Within\ Factor
 }
 $$
 
-不优化内部指标权重。
+上述 equal-weight composites 仍是有效且保留的 **INCUMBENT BASELINE SPECIFICATIONS**；既有 validation 不被重写，也不得追溯声称 Gate A0 已经存在。
+
+在 Gate A freeze 前，Gate A0 可在已冻结、有限且离散的 within-family candidate specification pool 中选择一个 representative specification。Gate A0 不允许连续内部权重优化、任意 component-weight grid、machine-learning combination 或以 Sharpe 最大化内部权重。Gate A0 的 pool 与 validation contract 见下文的 **Formal Gate A0 Within-Family Specification Governance Freeze — 2026-10-11**。
 
 当前 availability 原则：
 
@@ -2223,7 +2269,7 @@ $$
 
 > **Historical record.** At commit `cd0151bd1df80b1834ce4cfe04b7e967adc6cbde`, Candidate Factor Construction was correctly marked **BLOCKED** because the definitions below had not yet been frozen.  This section records the subsequent user-approved research-design freeze.  No IC, return, Sharpe, alpha, portfolio, or backtest evidence was consulted to make these decisions.
 
-These rules apply to the Formal US candidate-factor construction only.  They do not select a Final Factor Set, do not determine whether a candidate survives Gate A, and do not alter the already frozen Momentum or Low Risk definitions.
+These rules apply to the Formal US candidate-factor construction only. They do not select a Gate A0 family representative or a Final Factor Set, do not determine whether a candidate survives Gate A, and do not alter the already frozen Momentum or Low Risk definitions.
 
 ### 1. Size
 
@@ -2301,9 +2347,120 @@ The security-level canonical signal-date price must be positive and finite.  A z
 
 # 8. Part IV — Single-Factor Validation 与 Final Factor Set
 
-## Step 12 — Forward IC
+## Formal Gate A0 Within-Family Specification Governance Freeze — 2026-10-11
 
-只使用 Factor Selection Period。
+> **Historical and adaptive-design disclosure.** The initial seven-family validation and the Gate-A human review package at commit `d19485a58ae5fc60520c167e13e11a458cf9c596` evaluated the incumbent, equal-weight family composites. That work remains valid under the framework then in force and is preserved as **INITIAL INCUMBENT FAMILY-LEVEL GATE-A EVIDENCE**. It is not retrospectively relabelled as within-family testing.
+>
+> After reviewing incumbent family-level 2011–2015 evidence, the group introduced Gate A0 because weak incumbent-composite evidence cannot distinguish a genuinely weak economic family from dilution by equal-weight aggregation of heterogeneous constituent signals. Gate A0 is therefore an **adaptive research refinement** within the designated 2011–2015 Factor Selection sample. It was not fully pre-specified before all factor-performance evidence. This disclosure does not open later periods: 2016–2020, 2021–2025, and 2026 outcome evidence remain inaccessible for Gate A0 selection.
+
+### A0.1 Research sequence and distinct decisions
+
+The frozen selection sequence is:
+
+$$
+Raw\ /\ Constituent\ Metrics
+\rightarrow
+Within\text{-}Family\ Candidate\ Specifications
+\rightarrow
+Gate\ A0
+\rightarrow
+One\ Frozen\ Representative\ per\ Economic\ Family
+\rightarrow
+Gate\ A
+\rightarrow
+Final\ Factor\ Set.
+$$
+
+Gate A0 asks **“How should this economic style be measured?”** Gate A asks **“Should this economic style enter the final multi-factor strategy?”** These questions must not be merged. Gate A0 is a sub-gate within the 2011–2015 Factor Selection stage and creates no new time sample.
+
+### A0.2 Frozen Round-1 scope and family categories
+
+The authoritative row-level contract is `outputs/audit/wrds_formal/gate_a0_within_family_specification_registry.csv`.
+
+- **Multi-specification families:** Value, Quality, Momentum, and Low Risk enter formal Gate A0 comparison.
+- **Single-specification families:** Investment, Dividend, and Size have `GATE_A0_STATUS = SINGLE_SPECIFICATION_NO_INTERNAL_SELECTION`. Their existing frozen specification proceeds as the family representative to later Gate A, subject to normal Gate-A review.
+- **Component diagnostics:** domain-specific metrics may diagnose an incumbent family but are not eligible whole-family representatives and cannot enter cross-family Gate A separately in this round.
+
+This is the **EXISTING-CONSTITUENT ROUND** only. No literature-motivated challenger is authorized in this round. In particular, do not add RMW / Operating Profitability, Cash Profitability / RMWc, Trend Momentum, Low Beta / BAB, Shareholder Yield / Net Payout Yield, EV-based Value, or an unlisted alternative. A future Round 2 requires a separate governance decision after Round-1 review.
+
+### A0.3 Value specification pool
+
+| Specification | Role | Eligible representative | Frozen definition |
+|---|---|---:|---|
+| `VALUE_CURRENT` | INCUMBENT | TRUE | Current branch-aware Value: Nonfinancial E/P, B/P, FCF Yield; Financials / Real Estate E/P, B/P; equal weight over valid standardized components under existing availability rules. |
+| `VALUE_EP` | CHALLENGER | TRUE | Frozen E/P only. |
+| `VALUE_BP` | CHALLENGER | TRUE | Frozen B/P only. |
+| `VALUE_EP_BP` | CHALLENGER | TRUE | Equal-weight standardized E/P and B/P in every sector where both existing definitions are valid. |
+| `VALUE_FCF_COMPONENT` | COMPONENT_DIAGNOSTIC_ONLY | FALSE | Frozen FCF Yield, only in its existing nonfinancial / non-Real-Estate natural domain. |
+
+Every eligible Value representative inherits the exact existing PIT source precedence, issuer-level denominator, direction, same-date winsorization, z-scoring, availability semantics, historical-GICS Sector plus log issuer-market-cap neutralization, and final residual z-score. Financials / Real Estate are not redefined merely to make FCF Yield universal. `VALUE_FCF_COMPONENT` may diagnose whether FCF Yield strengthens or dilutes `VALUE_CURRENT`; it cannot become the whole-market representative automatically.
+
+### A0.4 Quality specification pool
+
+| Specification | Role | Eligible representative | Frozen definition |
+|---|---|---:|---|
+| `QUALITY_CURRENT` | INCUMBENT | TRUE | Current branch-aware Quality: Nonfinancial ROE, GP/A, -Leverage; Financials / Real Estate ROE, ROA. |
+| `QUALITY_ROE` | CHALLENGER | TRUE | Frozen ROE only, the common cross-sector standalone Quality specification. |
+| `QUALITY_PROFITABILITY` | CHALLENGER | TRUE | Nonfinancial equal-weight standardized ROE and GP/A; Financials / Real Estate equal-weight standardized ROE and ROA; re-zscore the valid branch composite. |
+| `QUALITY_GPA_COMPONENT` | COMPONENT_DIAGNOSTIC_ONLY | FALSE | Frozen GP/A in the nonfinancial branch only. |
+| `QUALITY_NEG_LEVERAGE_COMPONENT` | COMPONENT_DIAGNOSTIC_ONLY | FALSE | Frozen -Leverage in the nonfinancial branch only. |
+| `QUALITY_ROA_COMPONENT` | COMPONENT_DIAGNOSTIC_ONLY | FALSE | Frozen ROA in the Financials / Real Estate branch only. |
+
+No artificial universal GP/A or leverage signal may be created. Every eligible Quality representative inherits the exact existing branch, PIT, availability, direction, same-date winsorization and z-scoring rules; it then uses the same mandatory historical-GICS Sector plus log issuer-market-cap neutralization and final residual z-score as `QUALITY_CURRENT`.
+
+### A0.5 Momentum specification pool
+
+| Specification | Role | Eligible representative | Frozen definition |
+|---|---|---:|---|
+| `MOMENTUM_CURRENT` | INCUMBENT | TRUE | Existing equal-weight standardized MOM12-1 and MOM6-1 composite. |
+| `MOMENTUM_12_1` | CHALLENGER | TRUE | Existing frozen MOM12-1 only. |
+| `MOMENTUM_6_1` | CHALLENGER | TRUE | Existing frozen MOM6-1 only. |
+
+All Momentum candidates retain existing direction, price-history and minimum-history rules, winsorization and z-scoring, with **no baseline size or sector neutralization**. Trend Momentum is a prohibited new literature challenger in Round 1.
+
+### A0.6 Low Risk specification pool
+
+| Specification | Role | Eligible representative | Frozen definition |
+|---|---|---:|---|
+| `LOWRISK_CURRENT` | INCUMBENT | TRUE | Existing equal-weight standardized -Volatility252 and -IVOL252 composite. |
+| `LOWRISK_VOL` | CHALLENGER | TRUE | Existing frozen -Volatility252 only. |
+| `LOWRISK_IVOL` | CHALLENGER | TRUE | Existing frozen -IVOL252 only. |
+
+All Low Risk candidates retain existing 252-day definition, minimum-history, market-proxy, direction, winsorization and standardization rules, with **no baseline size or sector neutralization**. Low Beta / BAB is a prohibited new literature challenger in Round 1.
+
+### A0.7 Single-specification families
+
+`INVESTMENT_CURRENT = -Asset Growth`, `DIVIDEND_CURRENT = trailing-12-month ordinary cash-dividend yield`, and `SIZE_CURRENT = -log(IssuerMarketCap)` are frozen as single-specification families. Do not invent alternative Investment, Dividend, or Size definitions in this round, including shareholder yield, net payout yield, residual size, industry-relative size, or CMA alternatives.
+
+### A0.8 Score-construction inheritance
+
+Gate A0 does not recompute accounting concepts, alter timing, change issuer/security economic levels, alter winsorization, or flip direction. It uses the same source data and PIT rules as the corresponding incumbent family. Value and Quality eligible representatives retain mandatory historical-GICS Sector plus log issuer-market-cap neutralization. Momentum and Low Risk retain their incumbent baseline of no mandatory neutralization. Component diagnostics retain their natural sector domain.
+
+### A0.9 Future validation and common-within-family comparison contract
+
+When separately authorized, every eligible representative specification receives the identical 2011–2015-only validation framework: economic rationale, coverage, executable 1W and 4W forward IC, ICIR, positive IC ratio, HAC / Newey-West and 4W block-bootstrap inference, yearly and rolling IC stability, Top/Bottom 30% single-factor portfolio evidence, gross Sharpe, turnover, break-even cost, yearly portfolio stability, applicable sector breadth, common-within-family robustness, and same-family correlation / redundancy diagnostics. It must use the existing $S_t \rightarrow E_t \rightarrow E_{t+1}$ convention; no second validation methodology is permitted.
+
+Each multi-specification family must have both (i) its natural factor-specific **PRIMARY** cross-section and (ii) the diagnostic **COMMON_WITHIN_FAMILY_SAMPLE**, where all eligible representatives of that family are simultaneously available. The common sample cannot silently replace the primary view.
+
+### A0.10 Human decision, incumbent default, and one-representative rule
+
+Gate A0 must assess integrity, economic interpretation, forward IC, stability, single-factor separation, portfolio stability, turnover / break-even economics, coverage, common-sample robustness, same-family redundancy, simplicity / interpretability, and multiple-testing evidence. There is no fixed mechanical IC or Sharpe threshold, weighted composite score, automated rank, or machine-selected winner.
+
+Because Gate A0 was introduced after incumbent evidence was reviewed, the conservative default is: **retain the INCUMBENT specification unless challenger evidence provides a clear, economically coherent, documented reason to replace it.** A higher historical point estimate alone is insufficient; no arbitrary numerical “clear superiority” threshold is allowed.
+
+At Gate A0 completion, each economic family has **at most one** formal representative entering Gate A. Component diagnostics never become separate cross-family factors in this round.
+
+### A0.11 Multiple testing and performance firewall
+
+Gate A0 must later record the number of tested eligible representatives, number of component diagnostics, number of IC horizons, raw p-values, Benjamini–Hochberg FDR-adjusted q-values, and family identifier. Within-family specification testing must be distinguished from later cross-family Gate A testing. The smallest p-value must not select a specification mechanically.
+
+Gate A0 formal performance evidence is 2011–2015 only; 2006–2010 is DEV context only if required. Do not access 2016–2020, 2021–2025, or 2026 outcome evidence for Gate A0 factor selection. This section authorizes only the governance freeze; it does not authorize factor-score construction, IC, returns, portfolios, or representative selection.
+
+---
+
+## Step 12 — Gate A0 Within-Family 与 Gate A Cross-Family Forward IC
+
+只使用 Factor Selection Period。Gate A0 在另行授权后先按同一 executable validation engine 比较同一经济家族的已冻结 eligible representative specifications；Gate A 只比较每个家族经 Gate A0 冻结的一项 representative specification。
 
 每周：
 
@@ -2435,9 +2592,9 @@ $$
 
 ---
 
-## Step 15 — Final Factor Set Selection
+## Step 15 — Gate A Cross-Family Final Factor Set Selection
 
-最终每一个因子同时从四层判断：
+Gate A0 先决定每个 multi-specification economic family 的 measurement specification。随后 Gate A 对最多七项 family representatives 同时从四层判断：
 
 ### A. Economic Rationale
 
@@ -2484,7 +2641,7 @@ $$
 冻结：
 
 - Final Factor Set；
-- Factor Formula；
+- 每个已由 Gate A0 冻结的 family-representative Formula；
 - Factor Direction；
 - Neutralization Rule。
 
@@ -4226,9 +4383,18 @@ Primary Cross-Market Regression 使用 USD reporting currency 与 USD risk-free 
 
 在 formal canonical construction 前完成 4.1 所列 WRDS integrity、PERMNO/GVKEY/CCM、Historical GICS、Compustat PIT、CRSP DlyCap / CIZ / index、Fama–French unit 与 cutoff 验证。raw files 已放置不等于 Gate 0 通过。
 
+## Gate A0 — Within-Family Specification Freeze
+
+Gate A0 在 2011–2015 Factor Selection sample 内进行，并冻结：
+
+- 每个 multi-specification family 的一项 representative specification；
+- 对应 formula、direction、branch rule 与 neutralization rule。
+
+Investment、Dividend 与 Size 作为 single-specification families 直接通过 Gate A0，不进行内部 selection。Gate A0 不决定哪些经济家族进入最终 multi-factor strategy，也不改变 2011–2015 以外样本的访问权限。
+
 ## Gate A — Final Factor Set Freeze
 
-在 US Factor Selection 完成后冻结：
+在 Gate A0 representative freeze 后，Gate A 比较七个 economic-family representatives，并冻结：
 
 - Final Factor Set；
 - Definitions；
@@ -4311,6 +4477,7 @@ $$
 
 ## Factor Level
 
+- Gate A0 within-family representative specification（仅 multi-specification families；在 Gate A0 前仍为 TBD）；
 - Final Factor Set；
 - Dividend 是否保留及最终方向；
 - Size 是否进入 Final Set；
@@ -4374,7 +4541,7 @@ $$
 
 ## Q1 — 哪些股票因子真正有效？
 
-从 Candidate Factor Pool 中，通过：
+从 Candidate Factor Pool 中，先通过 Gate A0 冻结每个经济家族的一项 measurement specification；随后 Gate A 通过：
 
 $$
 Economic\ Rationale
@@ -4518,6 +4685,7 @@ $$
 - Winsorization / Z-score / Neutralization 顺序固定；
 - Neutralization Check 通过；
 - Raw → Final Score 可追踪；
+- Gate A0 时只按 registry 中已冻结的 existing-constituent specifications 构造 score，不创造新概念或连续内部权重；
 - 输出统一 `factor_scores_weekly.csv`；
 - 后期协助 US / SG Return Source Map、Factor / Sector Attribution，确保 contribution 对真实 holdings 闭合。
 
@@ -4534,6 +4702,8 @@ $$
 - Long / Short / Long–Short 均保存；
 - HAC t-stat、Stability、Redundancy 完成；
 - 每个 Factor 有 Decision Card；
+- Gate A0 对同一经济家族的 eligible specifications 使用同一 validation engine，并保留 PRIMARY 与 COMMON_WITHIN_FAMILY_SAMPLE 两种视图；
+- Gate A0 准备 family-representative evidence package，但不得自动选择 winner；
 - Gate A 给出 Final Factor Set Proposal 和保留/删除理由；
 - 后期负责 US / SG 预先规定 Robustness 与 Ablation，禁止把 robustness grid 当作新的参数优化器。
 

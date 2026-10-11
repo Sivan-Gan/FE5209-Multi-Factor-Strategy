@@ -1,0 +1,23 @@
+check,status,blocking,evidence,notes
+HISTORICAL_INCUMBENT_EVIDENCE_PRESERVED,PASS,FALSE,SSOT Gate A0 historical disclosure and preserved prior Gate-A artifacts,Initial incumbent validation remains auditable and is not relabelled as Gate A0 testing
+ADAPTIVE_RESEARCH_DISCLOSURE,PASS_WITH_WARNING,FALSE,SSOT Gate A0 adaptive disclosure and contamination-register row,Gate A0 was introduced after 2011-2015 incumbent family-level evidence review and is disclosed as adaptive
+GATE_A0_DEFINED,PASS,FALSE,SSOT Gate A0 sections,Measurement-specification choice is distinct from final economic-family inclusion
+GATE_A_REDEFINED_AS_CROSS_FAMILY,PASS,FALSE,SSOT Step 15 and Current Research Gates,Gate A compares one representative per economic family
+VALUE_POOL_FROZEN,PASS,FALSE,gate_a0_within_family_specification_registry.csv,Four eligible representative specifications and one component diagnostic
+QUALITY_POOL_FROZEN,PASS,FALSE,gate_a0_within_family_specification_registry.csv,Three eligible representative specifications and three component diagnostics
+MOMENTUM_POOL_FROZEN,PASS,FALSE,gate_a0_within_family_specification_registry.csv,Incumbent plus MOM12-1 and MOM6-1 only
+LOWRISK_POOL_FROZEN,PASS,FALSE,gate_a0_within_family_specification_registry.csv,Incumbent plus negative Volatility252 and negative IVOL252 only
+SINGLE_SPEC_FAMILIES_IDENTIFIED,PASS,FALSE,gate_a0_within_family_specification_registry.csv,Investment Dividend and Size are SINGLE_SPECIFICATION
+COMPONENT_DIAGNOSTICS_SEPARATED,PASS,FALSE,gate_a0_within_family_specification_registry.csv,Component diagnostics are ineligible as family representatives
+NO_CONTINUOUS_WEIGHT_OPTIMIZATION,PASS,FALSE,SSOT Step 10 and Gate A0 construction rules,Only small pre-frozen discrete specifications are allowed
+NO_LITERATURE_CHALLENGERS,PASS,FALSE,SSOT Gate A0 Round-1 boundary,Round 2 is not authorized
+COMMON_WITHIN_FAMILY_RULE,PASS,FALSE,SSOT Gate A0 future validation contract,Primary and diagnostic common-within-family samples are distinct
+INCUMBENT_DEFAULT_RULE,PASS,FALSE,SSOT Gate A0 human decision rule,No replacement based only on a point estimate
+ONE_REPRESENTATIVE_PER_FAMILY,PASS,FALSE,SSOT Gate A0 human decision rule,At most one representative per economic family enters Gate A
+MULTIPLE_TESTING_GOVERNANCE,PASS,FALSE,SSOT Gate A0 multiple-testing section,Raw p values and BH FDR q values are future required evidence not mechanical selection rules
+2011_2015_SELECTION_BOUNDARY,PASS,FALSE,SSOT Gate A0 performance firewall,Formal Gate A0 evidence is limited to 2011-2015
+NO_2016_2020_PERFORMANCE_ACCESS,PASS,FALSE,SSOT Gate A0 performance firewall and contamination register,No 2016-2020 performance was accessed
+NO_2021_2025_PERFORMANCE_ACCESS,PASS,FALSE,SSOT Gate A0 performance firewall and contamination register,No 2021-2025 performance was accessed
+NO_NEW_PERFORMANCE_CALCULATION,PASS,FALSE,Governance-only scope and focused tests,No scores IC returns or portfolios were constructed
+INPUT_IMMUTABILITY,PASS,FALSE,Focused tests and existing hash contracts,Raw canonical candidate-factor and validation inputs remain unchanged
+SSOT_CONSISTENCY,PASS,FALSE,Targeted SSOT section audit,Gate A0 and Gate A roles are distinct across candidate construction validation gates registry and responsibilities
