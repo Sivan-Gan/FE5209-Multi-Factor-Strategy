@@ -1,0 +1,17 @@
+path,size,thresholds_exceeded,tracked,ignored,category,recommended_action,licensed_data
+data/dev_legacy/canonical/us_weekly_pit_fundamentals_dev.sqlite,2674880512,>25MB;>50MB;>100MB,false,true,C. HISTORICAL_AUDIT_KEEP,retain tracked or ignored status,false
+data/canonical/wrds_formal/us_wrds_formal_canonical.sqlite,2384883712,>25MB;>50MB;>100MB,false,true,B. REQUIRED_FOR_REPRODUCTION_BUT_LOCAL_DATA,keep ignored,false
+data/factors/us_formal/us_candidate_factors.sqlite,2166317056,>25MB;>50MB;>100MB,false,true,B. REQUIRED_FOR_REPRODUCTION_BUT_LOCAL_DATA,keep ignored,false
+data/factors/us_formal/us_gate_a0_factor_specifications.sqlite,1102041088,>25MB;>50MB;>100MB,false,true,B. REQUIRED_FOR_REPRODUCTION_BUT_LOCAL_DATA,keep ignored,false
+data/validation/us_formal/us_gate_a0_within_family_validation.sqlite,803262464,>25MB;>50MB;>100MB,false,true,B. REQUIRED_FOR_REPRODUCTION_BUT_LOCAL_DATA,keep ignored,false
+data/dev_legacy/interim/us_price_factor_preprocess_dev.sqlite,554704896,>25MB;>50MB;>100MB,false,true,C. HISTORICAL_AUDIT_KEEP,retain tracked or ignored status,false
+data/validation/us_formal/us_factor_validation_pre_gate_a.sqlite,496242688,>25MB;>50MB;>100MB,false,true,B. REQUIRED_FOR_REPRODUCTION_BUT_LOCAL_DATA,keep ignored,false
+data/dev_legacy/canonical/us_pit_fundamental_facts_dev.sqlite,348418048,>25MB;>50MB;>100MB,false,true,C. HISTORICAL_AUDIT_KEEP,retain tracked or ignored status,false
+raw_package/US_source_data_2026-10-08/yahoo_download_stage/sp500_daily_prices.csv,305363640,>25MB;>50MB;>100MB,false,true,E. PROPRIETARY_RAW_DATA_DO_NOT_UPLOAD,keep ignored,true
+data/validation/us_formal/us_gate_a_refreshed_evidence.sqlite,247930880,>25MB;>50MB;>100MB,false,true,B. REQUIRED_FOR_REPRODUCTION_BUT_LOCAL_DATA,keep ignored,false
+wrds_raw/US_WRDS_2026-10-09/crsp/CRSP_Daily_Stock_CIZ_2004-01-01_2025-12-31.tar,215879680,>25MB;>50MB;>100MB,false,true,E. PROPRIETARY_RAW_DATA_DO_NOT_UPLOAD,keep ignored,true
+wrds_raw/US_WRDS_2026-10-09/crsp/CRSP_SP500_Constituents_Daily_CIZ_2006-01-01_2025-12-31.csv.gz,189073846,>25MB;>50MB;>100MB,false,true,E. PROPRIETARY_RAW_DATA_DO_NOT_UPLOAD,keep ignored,true
+data/dev_legacy/canonical/us_daily_market_dev.csv.gz,121441991,>25MB;>50MB;>100MB,false,true,C. HISTORICAL_AUDIT_KEEP,retain tracked or ignored status,false
+wrds_raw/US_WRDS_2026-10-09/compustat/Compustat_NA_Fundamentals_Quarterly_2004-01_2026-10.csv.gz,73136872,>25MB;>50MB,false,true,E. PROPRIETARY_RAW_DATA_DO_NOT_UPLOAD,keep ignored,true
+outputs/factor_research/dev_legacy/price_factors/us_price_factor_scores_dev.csv.gz,56061439,>25MB;>50MB,false,true,C. HISTORICAL_AUDIT_KEEP,retain tracked,false
+outputs/factor_research/dev_legacy/price_factors/us_price_metrics_raw_dev.csv.gz,37192811,>25MB,false,true,C. HISTORICAL_AUDIT_KEEP,retain tracked,false

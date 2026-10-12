@@ -1,0 +1,10 @@
+# Portable path contract. Copy to a local, ignored paths.yaml only if a later
+# authorized workflow needs overrides. Relative paths are resolved from PROJECT_ROOT.
+project_root: auto
+raw_vendor_root: wrds_raw/US_WRDS_2026-10-09
+legacy_source_root: raw_package/US_source_data_2026-10-08
+canonical_store: data/canonical/wrds_formal/us_wrds_formal_canonical.sqlite
+candidate_factor_store: data/factors/us_formal/us_candidate_factors.sqlite
+gate_a0_score_store: data/factors/us_formal/us_gate_a0_factor_specifications.sqlite
+final_handoff_root: handoff/final_factor
+final_handoff_data: handoff/final_factor/data

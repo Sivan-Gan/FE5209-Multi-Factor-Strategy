@@ -1,0 +1,15 @@
+file,line,original_path_type,runtime_critical,action,remaining_risk
+docs/dev_legacy/DATA_CONTRACT_DEV.md,82,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/HISTORICAL_MARKET_CAP_SPEC_DEV.md,27,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/HISTORICAL_MARKET_CAP_SPEC_DEV.md,28,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/HISTORICAL_MARKET_CAP_SPEC_DEV.md,29,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/HISTORICAL_MARKET_CAP_SPEC_DEV.md,30,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/HISTORICAL_MARKET_CAP_SPEC_DEV.md,31,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/HISTORICAL_MARKET_CAP_SPEC_DEV.md,32,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/HISTORICAL_MARKET_CAP_SPEC_DEV.md,33,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/LEVERAGE_DEFINITION_TARGETED_AUDIT_DEV.md,10,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/SEC_FUNDAMENTAL_DESIGN_REVIEW_DEV.md,12,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/SEC_FUNDAMENTAL_DESIGN_REVIEW_DEV.md,14,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/SEC_FUNDAMENTAL_DESIGN_REVIEW_DEV.md,121,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/SEC_FUNDAMENTAL_DESIGN_REVIEW_DEV.md,125,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed
+docs/dev_legacy/SEC_FUNDAMENTAL_INPUT_SPEC_DEV.md,15,macOS_user_home_path,false,PRESERVE_HISTORICAL_EVIDENCE,Historical DEV provenance is intentionally nonportable but not executed

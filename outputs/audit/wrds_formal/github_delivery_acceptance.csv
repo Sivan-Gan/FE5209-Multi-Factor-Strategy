@@ -1,0 +1,39 @@
+check,status,blocker,details
+EXPECTED_BRANCH,PASS,false,branch formal-wrds-rebuild
+EXPECTED_HEAD_PARENT,PASS,false,parent 68a69ec70771ee6a8bc021c06ecfc55cbc5b89d9
+WORKTREE_INITIAL_CLEAN,PASS,false,Verified before delivery writes.
+GATE_A_FROZEN,PASS,false,Frozen Gate A acceptance exists.
+FINAL_HANDOFF_PASS,PASS,false,Handoff report is PASS.
+FINAL_K_EQUALS_4,PASS,false,Registry K.
+FINAL_FACTOR_IDS_EXACT,PASS,false,Frozen canonical order.
+ROOT_README,PASS,false,Root onboarding README.
+PROJECT_STATUS_DOC,PASS,false,Project status.
+TEAM_HANDOFF_DOC,PASS,false,Team guide.
+ENVIRONMENT_DOC,PASS,false,Environment instructions.
+DATA_NOTICE,PASS,false,Data notice.
+DATA_README,PASS,false,Local data instructions.
+FINAL_HANDOFF_DISCOVERABLE,PASS,false,Handoff contracts.
+CANONICAL_CODE_PATHS_DOCUMENTED,PASS,false,Code map.
+NO_RUNTIME_ABSOLUTE_PATHS,PASS,false,Runtime source/test/config/scripts audit.
+NO_CONFIRMED_SECRET_TRACKED,PASS,false,Value-free credential scan.
+NO_RAW_VENDOR_DATA_NEWLY_TRACKED,PASS,false,No raw vendor prefix in index.
+NO_ACCIDENTAL_FILE_OVER_100MB,PASS,false,Tracked-file size audit.
+GITIGNORE_REVIEW,PASS,false,Required narrow rules.
+GITHUB_DELIVERY_MANIFEST,PASS,false,Delivery manifest.
+LARGE_FILE_AUDIT,PASS,false,Large-file audit.
+SECRET_AUDIT,PASS,false,Secret audit.
+ABSOLUTE_PATH_AUDIT,PASS,false,Path audit.
+AUDIT_INDEX,PASS,false,Audit index.
+RECEIVER_SMOKE_SCRIPT,PASS,false,Read-only smoke script.
+FRESH_CLONE_TEST,PASS,false,Controlled fresh-clone test script; executed after final commit.
+FINAL_FACTOR_REGISTRY_LOAD,PASS,false,Registry CSV.
+FINAL_FACTOR_SAMPLE_LOAD,PASS,false,Tracked sample CSV.
+NO_RESEARCH_LOGIC_CHANGE,PASS,false,No existing formal research module changed.
+NO_GATE_B,PASS,false,Delivery code does not execute Gate B.
+NO_2016PLUS_PERFORMANCE,PASS,false,Delivery work does not query performance outcomes.
+NO_FACTOR_RETURN_BUILD,PASS,false,Delivery work does not construct factor returns.
+NO_FMOM,PASS,false,Delivery work does not calculate FMOM.
+NO_STRATEGY_BACKTEST,PASS,false,Delivery work does not run a backtest.
+UPSTREAM_IMMUTABILITY,PASS,false,"SSOT, OOS register, and frozen registry unchanged."
+NO_HISTORY_REWRITE,PASS,false,"No reset, rebase, squash, tag move, or history rewrite performed."
+NO_PUSH,PASS,false,No remote creation or push performed.

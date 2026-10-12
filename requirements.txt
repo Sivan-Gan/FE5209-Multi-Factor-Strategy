@@ -1,0 +1,4 @@
+# Direct runtime dependencies used by tracked FE5209 code.
+# Python standard-library modules (including sqlite3 and unittest) need no entry.
+pyarrow>=26,<27
+wrds>=3.5,<4

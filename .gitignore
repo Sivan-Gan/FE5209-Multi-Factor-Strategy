@@ -12,6 +12,24 @@ __pycache__/
 *.swo
 *.tmp
 *.temp
+.coverage
+.mypy_cache/
+build/
+dist/
+*.egg-info/
+*.log
+
+# Local secrets and machine authentication; example configuration remains trackable.
+.env
+.env.*
+!.env.example
+.pgpass
+.aws/
+wrds_credentials*
+credentials*.json
+secrets*.yaml
+secrets*.yml
+/config/paths.yaml
 
 # Local agent/session working ledgers; not research deliverables
 .planning/
