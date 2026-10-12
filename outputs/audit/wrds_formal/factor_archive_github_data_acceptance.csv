@@ -46,5 +46,5 @@ NO_RAW_VENDOR_DATA_STAGED,PASS,Raw vendor staged count is zero.
 NO_CANONICAL_SQLITE_STAGED,PASS,Canonical/source SQLite staged count is zero.
 NO_SECRETS,PASS,Tracked text secret audit passes.
 REPOSITORY_STORAGE_AUDIT,PASS,Git LFS storage report created.
-FRESH_CLONE_LFS_TEST,BLOCKED,Real GitHub receiver validation is pending after the initial local delivery commit.
+FRESH_CLONE_LFS_TEST,PASS,Real private GitHub receiver Sivan-Gan/FE5209-Multi-Factor-Strategy recovered 20/20 approved LFS Parquets with exact size/SHA256; branch formal-wrds-rebuild commit cfb02adb015278b25738924e3680bad7da5636c6; receiver smoke and focused tests PASS.
 UPSTREAM_IMMUTABILITY,PASS,Existing 12/12 source-immutability evidence remains PASS.

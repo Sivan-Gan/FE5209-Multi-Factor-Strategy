@@ -1,2 +1,13 @@
 check,status,details
-REMOTE_GITHUB_RECEIVER_VALIDATION,BLOCKED,"No GitHub remote, push, clone, or LFS pull is permitted before the initial local delivery commit."
+REMOTE_GITHUB_RECEIVER_VALIDATION,PASS,Read-only validation used the supplied real GitHub fresh clone; no authentication remote creation push or new clone was performed in this evidence round.
+GITHUB_REPOSITORY,PASS,Sivan-Gan/FE5209-Multi-Factor-Strategy
+GITHUB_VISIBILITY,PASS,PRIVATE
+DELIVERED_BRANCH_AND_COMMIT,PASS,formal-wrds-rebuild at cfb02adb015278b25738924e3680bad7da5636c6
+RECEIVER_GIT_STATUS,PASS,Working tree clean.
+GIT_LFS_VERSION,PASS,git-lfs/3.8.0 (GitHub; darwin arm64; go 1.27.0)
+RECEIVER_LFS_SCOPE,PASS,Exactly 20 approved LFS paths; no unexpected or missing LFS path.
+RECEIVER_REAL_PARQUET_CONTENT,PASS,20/20 recovered objects have PAR1 header/footer and are not LFS pointer text.
+RECEIVER_SIZE_SHA256,PASS,20/20 recovered Parquets exactly match authoritative delivery-manifest byte sizes and SHA256 values.
+RECEIVER_INVENTORY,PASS,20 files; 422615107 aggregate bytes; largest security_daily_market.parquet 133677806 bytes; one over 100 MB; none over 1 GB.
+RECEIVER_SMOKE,PASS,Research loader exactly 20 archived specs; strategy loader exact K=4 QUALITY_CURRENT MOMENTUM_12_1 LOWRISK_CURRENT INVESTMENT_CURRENT; no research-only or diagnostic factor enters strategy.
+RECEIVER_FOCUSED_DELIVERY_TESTS,PASS,30/30 focused archive GitHub and LFS delivery tests passed in the receiver clone.

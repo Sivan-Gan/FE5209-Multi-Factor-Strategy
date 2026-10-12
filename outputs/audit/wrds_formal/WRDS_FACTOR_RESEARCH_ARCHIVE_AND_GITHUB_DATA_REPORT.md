@@ -2,7 +2,7 @@
 
 ## 1. Executive Verdict
 
-**FACTOR ARCHIVE + GITHUB DATA DELIVERY — BLOCKED.** Acceptance: 48 PASS, 1 BLOCKED, 0 FAIL.
+**FACTOR ARCHIVE + GITHUB DATA DELIVERY — COMPLETE.** Acceptance: 49 PASS, 0 BLOCKED, 0 FAIL.
 
 ## 2. Frozen Research Boundary
 
@@ -24,14 +24,18 @@ All approved staged objects are valid LFS pointers with matching SHA-256/size: P
 
 Raw vendor paths, canonical/source SQLite files, SSOT, and protected upstream inputs are excluded from the staged delivery scope. The inherited upstream immutability evidence remains 12/12 PASS. Secret audit: PASS.
 
-## 7. Receiver Validation
+## 7. Real GitHub Receiver Validation
 
-Isolated local LFS receiver validation: BLOCKED. The procedure creates a temporary non-protected reference, clones it with `--no-local`, verifies all 20 actual Parquet hashes, runs the receiver smoke script, and removes its temporary artifacts.
+Validated read-only against the supplied fresh clone of private GitHub repository `Sivan-Gan/FE5209-Multi-Factor-Strategy`, branch `formal-wrds-rebuild`, commit `cfb02adb015278b25738924e3680bad7da5636c6`. Git LFS version: `git-lfs/3.8.0 (GitHub; darwin arm64; go 1.27.0)`.
+
+The clone was clean and recovered the exact approved LFS scope: 20/20 files, no missing paths, and no unexpected paths. Every receiver working-tree object was real Parquet content (not pointer text) and matched the authoritative delivery manifest's byte size and SHA-256. Aggregate inventory: 422615107 bytes; largest `security_daily_market.parquet` at 133677806 bytes; one object over 100 MB; none over 1 GB.
+
+Receiver smoke: PASS. Research loader exposes exactly 20 archived specifications. Strategy loader exposes exactly K=4: `QUALITY_CURRENT`, `MOMENTUM_12_1`, `LOWRISK_CURRENT`, `INVESTMENT_CURRENT`; no research-only or diagnostic factor enters the Strategy Engine. Receiver focused archive/GitHub/LFS delivery tests: 30/30 PASS.
 
 ## 8. Test Boundary
 
 This delivery step does not calculate IC, returns, factor returns, FMOM, portfolios, or strategy results; it does not begin Gate B.
 
-## 9. Remote / Push
+## 9. Evidence-Round Remote Boundary
 
-Remote created: no. Push performed: no.
+This validation round did not authenticate to GitHub, create or reconfigure a remote, push, or create a new clone. It used only the already-supplied receiver clone and recorded the successful result locally.
