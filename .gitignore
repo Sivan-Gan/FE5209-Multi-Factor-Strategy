@@ -68,12 +68,15 @@ secrets*.yml
 # Large compressed factor outputs; audit summaries and small reports remain trackable
 /outputs/factor_research/**/*.csv.gz
 
-# Local large M3 → M4 final-factor handoff exports; tracked handoff metadata
-# and the deterministic small inspection sample remain in the repository.
+# Protect any future/unapproved final-factor Parquet. The explicitly approved
+# delivery files are force-staged under exact Git-LFS rules in .gitattributes.
 /handoff/final_factor/data/*.parquet
 
-# Local large US downstream strategy/backtest handoff data.  Contracts,
-# manifests, QA and deterministic small CSV samples under this directory remain
-# tracked; only rebuilt Parquet market data stay local pending redistribution
-# review.
+# Protect any future/unapproved all-specification archive Parquet. Approved
+# delivery artifacts are force-staged under exact Git-LFS rules.
+/handoff/factor_research_archive/data/*.parquet
+
+# Protect any future/unapproved downstream Parquet. Contracts, manifests, QA,
+# deterministic samples, and explicitly approved Git-LFS artifacts are governed
+# separately; this rule remains the default guardrail.
 /handoff/us_downstream/data/*.parquet

@@ -1,0 +1,4 @@
+check,count,status,details
+RAW_VENDOR_FILES_NEWLY_STAGED,0,PASS,No raw vendor file is staged.
+CANONICAL_OR_SOURCE_SQLITE_NEWLY_STAGED,0,PASS,No canonical/source SQLite is staged.
+RAW_VENDOR_FILES_TRACKED,0,PASS,Raw vendor paths remain outside Git.

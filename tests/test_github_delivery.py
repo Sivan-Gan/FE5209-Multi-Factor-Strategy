@@ -66,7 +66,17 @@ class GitHubDeliveryTests(unittest.TestCase):
         manifest = rows(ROOT / "GITHUB_DELIVERY_MANIFEST.csv")
         self.assertFalse([row for row in manifest if row["tracked"] == "true" and row["licensed_data"] == "true"])
         large = rows(AUDIT / "github_delivery_large_file_audit.csv")
-        self.assertFalse([row for row in large if row["tracked"] == "true" and ">100MB" in row["thresholds_exceeded"]])
+        tracked_large = [row for row in large if row["tracked"] == "true" and ">100MB" in row["thresholds_exceeded"]]
+        self.assertTrue(tracked_large)
+        self.assertTrue(all(
+            row["category"] == "DERIVED_HANDOFF_DATA"
+            and row["recommended_action"] == "GIT_LFS_TRACKED"
+            and row["licensed_data"] == "false"
+            for row in tracked_large
+        ))
+        for row in tracked_large:
+            value = subprocess.run(("git", "check-attr", "filter", "--", row["path"]), cwd=ROOT, text=True, capture_output=True, check=True).stdout.strip()
+            self.assertEqual(value, f"{row['path']}: filter: lfs")
 
     def test_10_sample_loads_with_four_score_columns(self) -> None:
         sample = rows(ROOT / "handoff/final_factor/data/factor_scores_weekly_sample.csv")
@@ -78,9 +88,17 @@ class GitHubDeliveryTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         self.assertIn("SMOKE_TEST_HANDOFF PASS", completed.stdout)
 
-    def test_12_full_parquet_is_not_tracked(self) -> None:
+    def test_12_approved_final_factor_parquet_is_explicitly_lfs_backed(self) -> None:
         tracked = subprocess.run(("git", "ls-files", "--", "handoff/final_factor/data"), cwd=ROOT, text=True, capture_output=True, check=True).stdout.splitlines()
-        self.assertFalse([path for path in tracked if path.endswith(".parquet")])
+        expected = {
+            "handoff/final_factor/data/factor_availability_weekly.parquet",
+            "handoff/final_factor/data/factor_scores_weekly.parquet",
+            "handoff/final_factor/data/universe_weekly.parquet",
+        }
+        self.assertEqual({path for path in tracked if path.endswith(".parquet")}, expected)
+        for path in expected:
+            value = subprocess.run(("git", "check-attr", "filter", "--", path), cwd=ROOT, text=True, capture_output=True, check=True).stdout.strip()
+            self.assertEqual(value, f"{path}: filter: lfs")
 
     def test_13_acceptance_matrix_is_all_pass(self) -> None:
         acceptance = rows(AUDIT / "github_delivery_acceptance.csv")

@@ -1,0 +1,8 @@
+metric,value,notes
+Git_LFS_version,git-lfs/3.8.0 (GitHub; darwin arm64; go 1.27.0),Installed locally for this repository.
+LFS_object_count,20,Approved derived objects only.
+LFS_total_size_bytes,422615107,Physical approved derived Parquet size.
+largest_LFS_object,handoff/us_downstream/data/security_daily_market.parquet,133677806
+approved_derived_parquet_count,20,Exactly the explicit approved scope.
+files_over_100MB,1,Stored through Git LFS.
+files_over_1GB,0,Stored through Git LFS.

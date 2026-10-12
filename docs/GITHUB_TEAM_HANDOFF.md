@@ -5,6 +5,8 @@
 ```bash
 git clone <private-repository-url>
 cd FE5209
+git lfs install
+git lfs pull
 python3.12 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements.txt
@@ -17,6 +19,7 @@ Read [ENVIRONMENT.md](../ENVIRONMENT.md) for scope and platform notes. Never com
 - `docs/US_SG_Cross_Market_Quant_Research.md`: frozen SSOT.
 - `docs/PROJECT_STATUS.md`: completed and prohibited stages.
 - `handoff/final_factor/`: final K=4 downstream interface.
+- `handoff/factor_research_archive/`: complete frozen 20-specification research/audit archive.
 - `handoff/us_downstream/`: governed formal-US market-data interface for the future Strategy Engine and Backtest/Risk workflow.
 - `outputs/audit/wrds_formal/`: complete formal audit record.
 - `src/`: upstream formal pipeline plus controlled handoff exporter.
@@ -30,12 +33,13 @@ Read [ENVIRONMENT.md](../ENVIRONMENT.md) for scope and platform notes. Never com
 4. [Final factor registry](../handoff/final_factor/final_factor_registry.csv).
 5. [Downstream interface contract](../handoff/final_factor/downstream_interface_contract.csv).
 6. [US downstream data contract](../handoff/us_downstream/US_DOWNSTREAM_DATA_CONTRACT.md).
+7. [Factor Research Archive contract](../handoff/factor_research_archive/FACTOR_RESEARCH_ARCHIVE_CONTRACT.md).
 
 ## 4. Final factor data location
 
-The final factor interface is under `handoff/final_factor/data/`. The small CSV sample is tracked. Full Parquet files are local ignored interfaces with status **DATA_DISTRIBUTION_REVIEW_REQUIRED**. Obtain them only after the relevant data-sharing agreement has been reviewed, then place them at the paths in [data/README.md](../data/README.md) and verify the transfer manifest.
+The final factor interface is under `handoff/final_factor/data/`. The Formal Factor Research Archive is under `handoff/factor_research_archive/data/`. The US downstream interface is under `handoff/us_downstream/data/`. The project owner approved exactly 20 derived interfaces for the private team repository; each is covered by an explicit Git LFS rule. After cloning, a teammate uses `git lfs pull` (or normal LFS smudge checkout) and verifies the delivery manifest. Raw vendor and SQLite source data remain excluded.
 
-The companion downstream interface is under `handoff/us_downstream/data/`. Its full Parquet files are also local and ignored; contracts, QA, manifests and pre-2016 samples are tracked. Use `src/handoff/load_us_downstream_data.py` with an explicit stage—there is no normal OOS bypass.
+Strategy Engine work reads `handoff/final_factor/` plus `handoff/us_downstream/`. Research/audit work may read `handoff/factor_research_archive/`. Use `src/handoff/load_us_downstream_data.py` with an explicit stage—there is no normal OOS bypass. Archive existence does not create an all-20 Strategy Engine path.
 
 ## 5. Canonical factor definitions
 
@@ -58,6 +62,8 @@ The only active final specifications are, in order:
 | Factor validation | `src/validation/build_formal_factor_validation.py` | Frozen upstream. |
 | Gate A freeze | `src/validation/freeze_gate_a_final_factor_set.py` | Frozen. |
 | Final handoff export | `src/handoff/prepare_final_factor_handoff.py` | Controlled export. |
+| Factor research archive export | `src/handoff/prepare_factor_research_archive.py` | Controlled frozen 20-spec archive export. |
+| Final/archive loaders | `src/handoff/load_factor_research_archive.py` | Explicit K=4 versus research-only separation. |
 | Downstream data export | `src/handoff/prepare_us_downstream_data.py` | Controlled mechanical export. |
 | Downstream stage loader | `src/handoff/load_us_downstream_data.py` | Gate-B/OOS governed access. |
 | Future Strategy Engine | `src/strategy/` | Not implemented; separate authorization required. |
@@ -78,7 +84,7 @@ The next potential stage is a governed Gate B / Strategy Engine workflow, but on
 
 ## 10. Local large-data troubleshooting
 
-`python scripts/smoke_test_handoff.py` works in a fresh clone using the tracked sample. It reports `FULL_PARQUET=NOT_PRESENT_EXTERNAL_DATA_REQUIRED` until approved local files are placed. That is expected, not a reconstruction instruction.
+`python scripts/smoke_test_handoff.py` and `python scripts/smoke_test_complete_delivery.py` validate the interfaces. Full derived data are expected only after Git LFS is installed, narrow LFS tracking is committed, and `git lfs pull` succeeds. That is a delivery operation, not a reconstruction instruction.
 
 The downstream package behaves the same way: use its requirement and external-transfer manifests, then run its focused test only after authorized local Parquet placement. Never force-add the local Parquet files.
 
@@ -87,6 +93,7 @@ The downstream package behaves the same way: use its requirement and external-tr
 ```bash
 python -m unittest tests.test_github_delivery -v
 python scripts/smoke_test_handoff.py
+python scripts/smoke_test_complete_delivery.py
 python scripts/smoke_test_us_downstream.py
 python -m unittest discover -s tests -p 'test_*.py'
 ```

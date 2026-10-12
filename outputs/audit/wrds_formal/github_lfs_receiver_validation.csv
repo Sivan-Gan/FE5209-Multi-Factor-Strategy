@@ -1,0 +1,2 @@
+check,status,details
+REMOTE_GITHUB_RECEIVER_VALIDATION,BLOCKED,"No GitHub remote, push, clone, or LFS pull is permitted before the initial local delivery commit."

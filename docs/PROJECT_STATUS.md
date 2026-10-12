@@ -9,6 +9,7 @@
 - Gate A0 within-family governance, construction, validation, and representative freeze.
 - Gate A human review and Final Factor Set freeze.
 - Final Factor Handoff interface export and acceptance.
+- Formal Factor Research Archive: all 20 governed frozen specifications, exact score/availability reproduction, Gate A0/Gate A decision registries, and 2011–2015 evidence normalization.
 - US downstream Strategy/Backtest data handoff: mechanical formal market-data interfaces, protected partitions, contract, QA, and a 2006–2015 frozen final-factor return seed.
 
 ## Current Frozen Factors
@@ -24,7 +25,9 @@ The frozen Final Factor Set is K=4. Value, Dividend, and Size are not active Bas
 
 ## Current Delivery Boundary
 
-The governed final-factor signals, availability flags, universe interface, and local downstream calendar/market/return/liquidity/benchmark/RF/FF interfaces are prepared for a future Strategy Engine. The only constructed factor-return data are the frozen 2006–2015 K=4 seed needed for a later authorized Gate B initialization. This does not authorize a Gate B decision, FMOM, factor weights, composite scores, portfolio holdings, NAV, or strategy outcomes.
+The governed final-factor signals, availability flags, universe interface, factor-research archive, and local downstream calendar/market/return/liquidity/benchmark/RF/FF interfaces are prepared for a future Strategy Engine. The only constructed factor-return data are the frozen 2006–2015 K=4 seed needed for a later authorized Gate B initialization. This does not authorize a Gate B decision, FMOM, factor weights, composite scores, portfolio holdings, NAV, or strategy outcomes.
+
+The project owner approved private-team GitHub delivery for exactly 20 project-derived handoff Parquets. They are staged only as explicitly scoped Git LFS pointers; raw vendor/source data and local SQLite stores remain excluded. Receiver validation must verify the manifest hashes before downstream use.
 
 ## Not Started
 

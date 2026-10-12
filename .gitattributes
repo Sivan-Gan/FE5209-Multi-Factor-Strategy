@@ -1,0 +1,23 @@
+# Approved project-derived delivery artifacts only.  These explicit rules are
+# intentionally narrower than a directory or *.parquet rule: no raw/vendor,
+# SQLite, source, or future unapproved Parquet can enter Git LFS by accident.
+handoff/final_factor/data/factor_availability_weekly.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/final_factor/data/factor_scores_weekly.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/final_factor/data/universe_weekly.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/factor_research_archive/data/all_factor_availability_weekly.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/factor_research_archive/data/all_factor_scores_weekly.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/benchmark_daily_returns.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/benchmark_weekly_execution_returns.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/execution_liquidity_weekly.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/ff_factors_daily.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/ff_factors_monthly.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/final_factor_returns_seed_weekly.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/risk_free_daily.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/risk_free_weekly.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/security_daily_market.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/security_daily_market_gate_b_config.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/security_daily_market_hist_oos.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/security_daily_market_pre_gate_b.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/security_reference_history.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/security_weekly_execution_returns.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_downstream/data/weekly_execution_calendar.parquet filter=lfs diff=lfs merge=lfs -text

@@ -8,12 +8,12 @@ Repository code, documentation, tests, and project-authored audit artifacts are 
 
 ## Derived research artifacts
 
-Small contracts, registries, manifests, QA summaries, and deterministic samples are tracked. The full Final Factor Handoff Parquet files are derived downstream interfaces but their redistribution rights have not been established in the project materials. Their status is **DATA_DISTRIBUTION_REVIEW_REQUIRED**.
+The project owner has approved project-generated derived handoff datasets for the private FE5209 team repository. The operational policy status is **DERIVED_DATA_PRIVATE_TEAM_GITHUB_APPROVED**. This covers only the three derived interfaces: Final Factor Handoff, Formal Factor Research Archive, and US Downstream Strategy/Backtest Data.
 
-Before any private-team transfer of derived data, confirm that the applicable institutional and vendor agreements permit the proposed sharing. Use the tracked transfer manifest to verify file identity after an approved transfer.
+Their GitHub delivery uses narrow Git LFS tracking for exactly the approved project-derived handoff Parquets. This is not authorization to use ordinary Git, redistribute source data, or republish derived data publicly.
 
 ## Licensed third-party financial data
 
-WRDS, CRSP, Compustat, CCM, Historical GICS, and related raw vendor downloads are licensed third-party data. They are not included in this Git repository and must not be committed, copied into tracked paths, or redistributed through Git without authorization.
+WRDS, CRSP, Compustat, CCM, Historical GICS, and related raw vendor downloads are licensed third-party data. They are not included in this Git repository and must not be committed, copied into tracked paths, or redistributed through Git. **RAW_VENDOR_DATA_DISTRIBUTION_NOT_AUTHORIZED** remains in force; project-owner authorization for derived data does not create vendor-data rights.
 
 The old Yahoo/SEC DEV source package is also local-only project evidence. Retaining a local file does not establish a redistribution right.

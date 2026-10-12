@@ -23,6 +23,11 @@ from typing import Iterable
 DELIVERY_BASELINE = "803d20bb7c66e2726865a62ac9e73f882816bd7a"
 FINAL_IDS = ("QUALITY_CURRENT", "MOMENTUM_12_1", "LOWRISK_CURRENT", "INVESTMENT_CURRENT")
 RAW_PREFIXES = ("raw_package/", "wrds_raw/")
+APPROVED_DERIVED_PARQUET_PREFIXES = (
+    "handoff/final_factor/data/",
+    "handoff/factor_research_archive/data/",
+    "handoff/us_downstream/data/",
+)
 LOCAL_PREFIXES = ("data/canonical/", "data/factors/", "data/validation/", "data/interim/", "data/dev_legacy/")
 HISTORICAL_PREFIXES = ("docs/dev_legacy/", "outputs/audit/dev_legacy/", "outputs/factor_research/", "outputs/audit/wrds_formal/")
 COLLAPSED_LOCAL_DIRS = (".venv", ".planning")
@@ -65,6 +70,10 @@ def ignored(root: Path, rel: str) -> bool:
 
 def file_size(path: Path) -> int:
     return path.stat().st_size if path.is_file() else 0
+
+
+def is_approved_derived_parquet(rel: str) -> bool:
+    return rel.endswith(".parquet") and rel.startswith(APPROVED_DERIVED_PARQUET_PREFIXES)
 
 
 def directory_size(path: Path) -> int:
@@ -158,7 +167,7 @@ def inventory_rows(root: Path, tracked: set[str]) -> list[dict[str, object]]:
             "canonical_or_duplicate": canonical,
             "recommended_git_action": action,
             "reason": reason,
-            "notes": "DATA_DISTRIBUTION_REVIEW_REQUIRED" if rel.endswith(".parquet") else "",
+            "notes": "DERIVED_DATA_PRIVATE_TEAM_GITHUB_APPROVED__PENDING_GIT_LFS" if is_approved_derived_parquet(rel) else "",
         })
     return rows
 
@@ -186,7 +195,7 @@ def write_inventory_summary(path: Path, rows: list[dict[str, object]]) -> None:
         "",
         "## Delivery decision",
         "",
-        "Licensed WRDS/CRSP/Compustat/CCM/Historical-GICS raw data and the legacy raw source package remain local-only. Final handoff Parquet files are derived interfaces, but no explicit redistribution approval was found in project documentation; they remain Git-ignored with status **DATA_DISTRIBUTION_REVIEW_REQUIRED**. Their separate-transfer hashes are in `handoff/final_factor/EXTERNAL_DATA_TRANSFER_MANIFEST.csv`.",
+        "Licensed WRDS/CRSP/Compustat/CCM/Historical-GICS raw data and the legacy raw source package remain local-only. Project-generated Final Factor, Formal Factor Research Archive, and US downstream Parquet interfaces are approved for private-team GitHub delivery, but remain ignored until Git LFS is installed and narrow tracking is configured. Their current status is **DERIVED_DATA_PRIVATE_TEAM_GITHUB_APPROVED__PENDING_GIT_LFS**.",
         "",
         "See `github_delivery_inventory.csv` for one row per inventoried path.",
         "",
@@ -278,19 +287,23 @@ def large_rows(root: Path, tracked: set[str]) -> list[dict[str, object]]:
     return sorted(rows, key=lambda row: int(row["size"]), reverse=True)
 
 
-def external_transfer_rows(root: Path) -> list[dict[str, object]]:
+def external_transfer_rows(root: Path, paths: Iterable[Path] | None = None) -> list[dict[str, object]]:
     result: list[dict[str, object]] = []
-    for name in ("factor_scores_weekly.parquet", "factor_availability_weekly.parquet", "universe_weekly.parquet"):
-        rel = f"handoff/final_factor/data/{name}"
-        path = root / rel
+    paths = list(paths) if paths is not None else [
+        *sorted((root / "handoff/final_factor/data").glob("*.parquet")),
+        *sorted((root / "handoff/factor_research_archive/data").glob("*.parquet")),
+        *sorted((root / "handoff/us_downstream/data").glob("*.parquet")),
+    ]
+    for path in paths:
+        rel = path.relative_to(root).as_posix()
         result.append({
             "relative_path": rel,
-            "status": "DATA_DISTRIBUTION_REVIEW_REQUIRED",
-            "git_delivery": "IGNORED_NOT_INCLUDED",
+            "status": "DERIVED_DATA_PRIVATE_TEAM_GITHUB_APPROVED__PENDING_GIT_LFS",
+            "git_delivery": "NOT_STAGED__GIT_LFS_UNAVAILABLE",
             "bytes": file_size(path) if path.exists() else "MISSING_LOCAL_COPY",
             "sha256": sha256(path) if path.exists() else "MISSING_LOCAL_COPY",
-            "receiver_action": "Confirm institutional/vendor sharing permission; use approved private transfer; place at exact path; verify SHA256.",
-            "notes": "Derived downstream interface; not raw vendor data; no redistribution permission inferred.",
+            "receiver_action": "After Git LFS installation and narrow tracking commit, clone private repository and run git lfs pull; verify SHA256.",
+            "notes": "Project-generated derived interface; not raw vendor data; no public redistribution is implied.",
         })
     return result
 
@@ -301,7 +314,8 @@ def delivery_manifest_rows(root: Path, inventory: list[dict[str, object]], track
         rel = str(row["path"])
         if row["type"] == "DIRECTORY_AGGREGATE":
             continue
-        include = row["tracked"] == "true" or str(row["classification"]).startswith(("B.", "E."))
+        approved_derived = is_approved_derived_parquet(rel)
+        include = row["tracked"] == "true" or str(row["classification"]).startswith(("B.", "E.")) or approved_derived
         if not include:
             continue
         path = root / rel
@@ -315,16 +329,21 @@ def delivery_manifest_rows(root: Path, inventory: list[dict[str, object]], track
             digest = sha256(path)
         rows.append({
             "path": rel,
-            "category": category,
+            "category": "DERIVED_HANDOFF_DATA" if approved_derived else category,
             "tracked": row["tracked"],
             "required_for_clone": str(row["tracked"] == "true").lower(),
-            "required_for_downstream": row["required_by_teammate"],
+            "required_for_downstream": "true" if approved_derived and not rel.startswith("handoff/factor_research_archive/") else "false" if approved_derived else row["required_by_teammate"],
             "large_file": str(path.is_file() and path.stat().st_size > 25 * 1024 * 1024).lower(),
             "licensed_data": row["contains_vendor_data"],
             "generated": row["contains_generated_data"],
             "canonical": str(row["canonical_or_duplicate"] == "canonical").lower(),
             "sha256_or_logical_hash": digest,
-            "notes": "DATA_DISTRIBUTION_REVIEW_REQUIRED" if rel.endswith(".parquet") else row["reason"],
+            "Git_storage": "PENDING_GIT_LFS" if approved_derived else "GIT",
+            "approved_for_team_repo": str(approved_derived).lower(),
+            "source_vendor_derived": str(approved_derived).lower(),
+            "private_team_only": str(approved_derived).lower(),
+            "delivery_status": "DERIVED_DATA_PRIVATE_TEAM_GITHUB_APPROVED__PENDING_GIT_LFS" if approved_derived else "TRACKED_OR_LOCAL_AS_CLASSIFIED",
+            "notes": "Derived data approved but not staged until Git LFS is available." if approved_derived else row["reason"],
         })
     return sorted(rows, key=lambda row: str(row["path"]))
 
@@ -398,7 +417,7 @@ def write_report(root: Path, acceptance: list[dict[str, object]], large: list[di
     verdict = "GITHUB DELIVERY PREPARATION — PASS" if blockers == 0 else "GITHUB DELIVERY PREPARATION — BLOCKED"
     lines = [
         "# WRDS GitHub Delivery Preparation Report", "",
-        "## 1. Executive Verdict", "", f"**{verdict} WITH WARNINGS.** Blockers: {blockers}. Warning: derived full handoff Parquet redistribution remains `DATA_DISTRIBUTION_REVIEW_REQUIRED`.",
+        "## 1. Executive Verdict", "", f"**{verdict} WITH WARNINGS.** Legacy repository-preparation blockers: {blockers}. Project-generated derived Parquet delivery is approved for the private team but remains operationally blocked pending Git LFS installation and narrow LFS tracking.",
         "", "## 2. Purpose", "", "Prepare a portable private-team delivery surface without changing frozen research.",
         "", "## 3. Frozen Research State", "", f"Delivery baseline: `{DELIVERY_BASELINE}` remains an ancestor of HEAD. Gate A and Final Factor Handoff remain frozen.",
         "", "## 4. Final Factor Set", "", "K=4: `QUALITY_CURRENT`, `MOMENTUM_12_1`, `LOWRISK_CURRENT`, `INVESTMENT_CURRENT`.",
@@ -406,7 +425,7 @@ def write_report(root: Path, acceptance: list[dict[str, object]], large: list[di
         "", "## 6. Included Code", "", "Canonical upstream paths and the handoff exporter are documented in `docs/GITHUB_TEAM_HANDOFF.md`.",
         "", "## 7. Included Documentation", "", "README, environment guide, project status, team guide, data notice, audit index, and handoff contracts are tracked.",
         "", "## 8. Final Factor Handoff", "", "The sample and all contracts are tracked; full Parquet remains an external local interface.",
-        "", "## 9. Data Distribution Status", "", "**DATA_DISTRIBUTION_REVIEW_REQUIRED.** Use only approved private transfer after applicable agreements are confirmed.",
+        "", "## 9. Data Distribution Status", "", "**DERIVED_DATA_PRIVATE_TEAM_GITHUB_APPROVED__PENDING_GIT_LFS.** Project-generated derived handoff data are approved only for the private FE5209 team repository; raw vendor data remain excluded and no Parquet is staged until Git LFS is available.",
         "", "## 10. Excluded Raw Vendor Data", "", "WRDS/CRSP/Compustat/CCM/Historical-GICS raw data and legacy raw package files are ignored and not staged.",
         "", "## 11. Large File Review", "", f"Large-file audit lists {len(large)} local files above 25 MB; no tracked file exceeds 100 MB.",
         "", "## 12. Gitignore Review", "", "Rules cover vendor raw data, local large stores, Parquet exports, credentials, caches, and environment artifacts without broadly ignoring documentation or source.",
@@ -418,9 +437,9 @@ def write_report(root: Path, acceptance: list[dict[str, object]], large: list[di
         "", "## 18. Fresh Clone Test", "", "`scripts/fresh_clone_delivery_test.py` performs an external clean-clone check after the delivery commit.",
         "", "## 19. Receiver Smoke Test", "", "`scripts/smoke_test_handoff.py` validates K=4, order, sample schema, and gracefully reports missing external Parquet data.",
         "", "## 20. GitHub Readiness", "", "Repository content is prepared for human review before private upload; no remote was created and no push occurred.",
-        "", "## 21. Remaining External Data Requirements", "", "Authorized local raw/canonical stores are needed only for upstream reproduction. Downstream full handoff Parquet needs approved separate transfer and hash verification.",
-        "", "## 22. Warnings / Blockers", "", "Warning only: derived Parquet redistribution permission is not established. No delivery blocker is identified.",
-        "", "## 23. Exact Next Permitted Step", "", "Human review, confirmation of private data-sharing authorization, then separately authorized private GitHub upload. Gate B remains unauthorized.", "",
+        "", "## 21. Remaining External Data Requirements", "", "Authorized local raw/canonical stores are needed only for upstream reproduction. Derived Parquet delivery needs Git LFS installation, narrow tracking, and hash verification; raw vendor data are never included.",
+        "", "## 22. Warnings / Blockers", "", "Blocker: Git LFS is unavailable. No ordinary-Git staging is permitted for approved derived Parquet files.",
+        "", "## 23. Exact Next Permitted Step", "", "Obtain explicit authorization to install/configure Git LFS, then create narrow LFS rules and stage only the approved derived Parquet files. Gate B remains unauthorized.", "",
     ]
     (root / "outputs/audit/wrds_formal/WRDS_GITHUB_DELIVERY_PREPARATION_REPORT.md").write_text("\n".join(lines), encoding="utf-8")
 
@@ -429,9 +448,11 @@ def run(root: Path) -> dict[str, int | str]:
     audit = root / "outputs/audit/wrds_formal"
     audit.mkdir(parents=True, exist_ok=True)
     tracked = tracked_paths(root)
-    write_csv(root / "handoff/final_factor/EXTERNAL_DATA_TRANSFER_MANIFEST.csv", (
+    transfer_fields = (
         "relative_path", "status", "git_delivery", "bytes", "sha256", "receiver_action", "notes",
-    ), external_transfer_rows(root))
+    )
+    write_csv(root / "handoff/final_factor/EXTERNAL_DATA_TRANSFER_MANIFEST.csv", transfer_fields, external_transfer_rows(root, sorted((root / "handoff/final_factor/data").glob("*.parquet"))))
+    write_csv(root / "GITHUB_DERIVED_DATA_TRANSFER_MANIFEST.csv", transfer_fields, external_transfer_rows(root))
     rows = inventory_rows(root, tracked)
     write_csv(audit / "github_delivery_inventory.csv", CSV_INVENTORY_FIELDS, rows)
     write_inventory_summary(audit / "GITHUB_DELIVERY_REPOSITORY_INVENTORY.md", rows)
@@ -448,7 +469,7 @@ def run(root: Path) -> dict[str, int | str]:
         "path", "size", "thresholds_exceeded", "tracked", "ignored", "category", "recommended_action", "licensed_data",
     ), large)
     write_csv(root / "GITHUB_DELIVERY_MANIFEST.csv", (
-        "path", "category", "tracked", "required_for_clone", "required_for_downstream", "large_file", "licensed_data", "generated", "canonical", "sha256_or_logical_hash", "notes",
+        "path", "category", "tracked", "required_for_clone", "required_for_downstream", "large_file", "licensed_data", "generated", "canonical", "sha256_or_logical_hash", "Git_storage", "approved_for_team_repo", "source_vendor_derived", "private_team_only", "delivery_status", "notes",
     ), delivery_manifest_rows(root, rows, tracked))
     acceptance = acceptance_rows(root, tracked, absolute, secrets, large)
     write_csv(audit / "github_delivery_acceptance.csv", ("check", "status", "blocker", "details"), acceptance)

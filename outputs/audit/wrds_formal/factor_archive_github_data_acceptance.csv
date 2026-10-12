@@ -1,0 +1,50 @@
+check,status,details
+FORMAL_SPEC_COUNT_20,PASS,Frozen archive/export contract check.
+FINAL_ACTIVE_COUNT_4,PASS,Frozen archive/export contract check.
+VALUE_SPEC_COUNT_5,PASS,Frozen archive/export contract check.
+QUALITY_SPEC_COUNT_6,PASS,Frozen archive/export contract check.
+MOMENTUM_SPEC_COUNT_3,PASS,Frozen archive/export contract check.
+LOWRISK_SPEC_COUNT_3,PASS,Frozen archive/export contract check.
+INVESTMENT_SPEC_COUNT_1,PASS,Frozen archive/export contract check.
+DIVIDEND_SPEC_COUNT_1,PASS,Frozen archive/export contract check.
+SIZE_SPEC_COUNT_1,PASS,Frozen archive/export contract check.
+EXACT_SPEC_IDS,PASS,Frozen archive/export contract check.
+QUALITY_CURRENT_FINAL_ACTIVE,PASS,Frozen archive/export contract check.
+MOMENTUM_12_1_FINAL_ACTIVE,PASS,Frozen archive/export contract check.
+LOWRISK_CURRENT_FINAL_ACTIVE,PASS,Frozen archive/export contract check.
+INVESTMENT_CURRENT_FINAL_ACTIVE,PASS,Frozen archive/export contract check.
+MOMENTUM_CURRENT_NOT_ACTIVE,PASS,Frozen archive/export contract check.
+VALUE_CURRENT_NOT_ACTIVE,PASS,Frozen archive/export contract check.
+DIVIDEND_CURRENT_NOT_ACTIVE,PASS,Frozen archive/export contract check.
+SIZE_CURRENT_NOT_ACTIVE,PASS,Frozen archive/export contract check.
+DIAGNOSTIC_COMPONENTS_NOT_ACTIVE,PASS,Frozen archive/export contract check.
+NO_ROUND2_FACTORS,PASS,Frozen archive/export contract check.
+SCORE_REPRODUCTION_20_OF_20,PASS,Frozen archive/export contract check.
+AVAILABILITY_REPRODUCTION,PASS,Frozen archive/export contract check.
+NATURAL_KEY_UNIQUE,PASS,Frozen archive/export contract check.
+NO_2026_SCORE_ROWS,PASS,Frozen archive/export contract check.
+NO_FUTURE_RETURN_COLUMNS,PASS,Frozen archive/export contract check.
+NO_FACTOR_RETURN_COLUMNS,PASS,Frozen archive/export contract check.
+NO_FMOM_COLUMNS,PASS,Frozen archive/export contract check.
+NO_STRATEGY_WEIGHT_COLUMNS,PASS,Frozen archive/export contract check.
+FINAL_FACTOR_INTERFACE_UNCHANGED,PASS,Frozen archive/export contract check.
+DETERMINISTIC_EXPORT,PASS,Frozen archive/export contract check.
+NO_GATE_B,PASS,Archive exporter never imports or executes Gate B.
+NO_NEW_PERFORMANCE_RESEARCH,PASS,Only frozen 2011-2015 evidence summary is normalized.
+NO_FMOM,PASS,No FMOM calculations or columns.
+NO_STRATEGY_BACKTEST,PASS,No portfolio or strategy calculation.
+GIT_LFS_AVAILABLE,PASS,Git LFS is installed and available.
+GIT_LFS_NARROW_TRACKING,PASS,Exactly 20 explicit .gitattributes rules apply.
+APPROVED_DERIVED_FILE_COUNT_20,PASS,Approved delivery inventory is exact.
+FINAL_FACTOR_DATA_LFS,PASS,All three Final Factor files are LFS pointers.
+FACTOR_ARCHIVE_DATA_LFS,PASS,Both archive files are LFS pointers.
+US_DOWNSTREAM_DATA_LFS,PASS,All fifteen downstream files are LFS pointers.
+LFS_POINTERS_ALL_20,PASS,Every approved file is staged as an LFS pointer.
+LFS_POINTER_METADATA_MATCH,PASS,Each pointer OID/size matches the physical Parquet.
+UNAPPROVED_LFS_FILES_ZERO,PASS,No unapproved file appears in git lfs ls-files.
+NO_RAW_VENDOR_DATA_STAGED,PASS,Raw vendor staged count is zero.
+NO_CANONICAL_SQLITE_STAGED,PASS,Canonical/source SQLite staged count is zero.
+NO_SECRETS,PASS,Tracked text secret audit passes.
+REPOSITORY_STORAGE_AUDIT,PASS,Git LFS storage report created.
+FRESH_CLONE_LFS_TEST,BLOCKED,Real GitHub receiver validation is pending after the initial local delivery commit.
+UPSTREAM_IMMUTABILITY,PASS,Existing 12/12 source-immutability evidence remains PASS.
