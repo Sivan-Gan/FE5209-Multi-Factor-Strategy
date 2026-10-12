@@ -5,9 +5,30 @@
 >
 > **先在美国市场从候选股票因子中筛选最终有效因子集合，构建“静态多因子 + Factor Momentum Tilt”的周度纯多头策略；在美国完成策略开发、参数冻结和深度验证后，再将同一核心策略迁移至新加坡市场进行外部跨市场验证。随后分别形成 US 与 SG 的完整 Strategy Profile，比较同一策略在两个市场中的表现差异，解释差异机制，并只针对已经识别出的市场结构问题进行有限适配。**
 >
-> 当前的 Value、Quality、Momentum、Low Risk、Investment、Dividend、Size 为 **Candidate Factor Pool**，不是最终因子集合。最终到底保留几个因子，只能在美国开发期完成 Forward IC、单因子组合回测、稳定性与冗余性分析后确定。每个经济因子家族的度量方式与该家族是否进入最终策略是两个不同的问题：前者由 Gate A0 的 within-family specification selection 处理，后者由 Gate A 的跨家族 Final Factor Set selection 处理。
+> **Historical research design:** Value、Quality、Momentum、Low Risk、Investment、Dividend、Size 是原始 **Candidate Factor Pool**。每个经济因子家族的度量方式与该家族是否进入最终策略是两个不同的问题：前者由 Gate A0 的 within-family specification selection 处理，后者由 Gate A 的跨家族 Final Factor Set selection 处理。**Current frozen state:** Gate A0 与 Gate A 已完成；US Base Strategy Final Factor Set 已冻结为 $K=4$：`QUALITY_CURRENT`、`MOMENTUM_12_1`、`LOWRISK_CURRENT`、`INVESTMENT_CURRENT`。`VALUE_CURRENT`、`DIVIDEND_CURRENT` 与 `SIZE_CURRENT` 不进入 Base Strategy 或 Base FMOM universe，但仍保留为研究 / 审计证据。
 >
 > 新加坡数据目前尚未完整获取，因此当前实施顺序为 **US-first Development → SG Out-of-Market External Validation**。这里的 “External” 指 **Out-of-Market**：SG 未参与 US Base 的核心开发；它并不自动等于时间意义上的 **Out-of-Time OOS**。文档中已经预设的部分 US/SG 参数差异属于 **Ex-Ante Market Feasibility Parameters**：这些差异是在看到 SG 策略结果之前、基于两个市场客观结构差异预设的规则，不属于后续的 Post-Diagnostic Adaptation。
+
+---
+
+## CURRENT PROJECT STATUS — 2026-10-12
+
+| Gate | Current status |
+|---|---|
+| Gate 0 | **PASS / COMPLETE** |
+| Gate A0 | **FROZEN** |
+| Gate A | **FROZEN** |
+| Gate B | **NOT STARTED** |
+| Gate C | **NOT STARTED** |
+| Gate D | **NOT STARTED** |
+| Gate E | **NOT STARTED** |
+| Gate F | **NOT STARTED** |
+
+**Final US K=4:** `QUALITY_CURRENT`, `MOMENTUM_12_1`, `LOWRISK_CURRENT`, `INVESTMENT_CURRENT`.
+
+**Step 16 pre-Gate-B seed:** 2006–2015 K=4 executable gross factor-return history is **READY** at `handoff/us_downstream/data/final_factor_returns_seed_weekly.parquet`.
+
+**Current next stage:** **Gate B / Strategy Configuration**. No FMOM, factor weights, stock composite scores, holdings, portfolio NAV, Base Strategy result, or 2016–2025 strategy evaluation has been constructed.
 
 ---
 
@@ -154,44 +175,31 @@ $$
 
 ## 0.5 Canonical Outputs：全组统一交接文件
 
-为避免六个人产生不同版本的同类结果，统一保留以下逻辑文件名。内部可使用 Parquet，同时导出同名 CSV 用于组内检查和课程交付。
+逻辑 artifact 名称描述研究 contract；已完成阶段以当前 repository path 为权威。逻辑名称不要求已经以同名 CSV 实现，也不得据此创建缺失文件。下游成员不得绕过已冻结 handoff 从更早阶段自行构造另一套口径。
 
-| 文件 | Primary Owner | Contributors | 主要内容 |
-|---|---|---|---|
-| `us_universe_weekly.csv` | M1 | — | 每周 US 可投资标记及剔除原因 |
-| `sg_universe_weekly.csv` | M1 | M6 | 每周 SG 可投资标记及剔除原因 |
-| `data_coverage_report.csv` | M1 | M2 | 每期每指标覆盖率、缺失率、样本数 |
-| `factor_formula_dictionary.csv` | M2 | M1 | Factor、字段、公式、方向、lag、sector / REIT branch、neutralization |
-| `factor_scores_weekly.csv` | M2 | — | Raw / Winsorized / Z-score / Neutralized Factor Scores |
-| `factor_ic_timeseries.csv` | M3 | — | 每周 Forward IC |
-| `factor_validation_summary.csv` | M3 | M2 | IC、ICIR、HAC、FDR、稳定性、Decision Card |
-| `factor_returns_weekly.csv` | M3 | M4 | 每个 Factor 的 Top、Bottom、Long–Short Returns |
-| `factor_weights_weekly.csv` | M4 | — | EW、FMOM、Blended Weights |
-| `stock_scores_weekly.csv` | M4 | — | Composite Score、Rank、有效 Factor 数 |
-| `target_holdings_weekly.csv` | M4 | — | 目标权重、进入/退出原因、constraint flags |
-| `trades.csv` | M4 | M5 | Execution Date、Old/New Weight、Trade、Turnover、Cost |
-| `portfolio_nav_daily.csv` | M5 | M1 | Gross / Net NAV、Benchmark、USD NAV |
-| `us_strategy_profile.csv` | M5 | M2/M3/M4 | US 核心绩效与诊断指标 |
-| `sg_strict_profile.csv` | M5 | M6 | SG Strict Transfer 核心 portability 指标 |
-| `sg_strategy_profile.csv` | M5 | M6 | SG Feasibility-Adjusted Base 完整诊断指标 |
-| `comparable_market_regression.csv` | M5 | M6 | US / SG 统一 USD Market-Only Regression |
-| `us_factor_regression.csv` | M5 | M2 | US richer local factor diagnostics |
-| `sg_factor_regression.csv` | M5 | M2/M6 | SG local / regional richer diagnostics（如数据支持） |
-| `strategy_difference_inference.csv` | M3 | M5/M6 | Dynamic−Static、US−SG matched differences 的 HAC / block-bootstrap inference |
-| `us_return_source_map.csv` | M2 | M4/M5 | 分层 attribution：FMOM Increment、Holdings Contribution、Cost |
-| `sg_return_source_map.csv` | M2 | M4/M5/M6 | 分层 attribution：FMOM、Holdings、FX、Cost |
-| `us_robustness_summary.csv` | M3 | M5 | US 预设扰动、2×2 Momentum/FMom decomposition |
-| `sg_robustness_summary.csv` | M3 | M5/M6 | SG Strict / Feasible 与同口径 robustness |
-| `market_diagnostic_gate.csv` | M6 | M5 | US / SG Mandatory Diagnostic Package 完成状态 |
-| `cross_market_matched_comparison.csv` | M6 | M3/M5 | 同期 US–SG 对比 |
-| `adaptation_register.csv` | M6 | Relevant Owner | Problem → Mechanism → Proposed Change → Validation Design |
-| `adaptation_validation.csv` | M6 | M5 / Relevant Owner | Base vs Adapted、Primary Mechanism Metric、Secondary Metrics、Decision |
-| `reconciliation_ledger.csv` | M1 | M4/M5 | Holdings → Gross → Costs / FX → Net 的逐期闭合 |
-| `run_manifest.csv` | M1 | 全体 | Data / Config / Code / Environment / Sample 的可复现记录 |
-| `oos_contamination_register.csv` | M6 | 全体 | 后期样本的 prior exposure、潜在设计影响与 claim classification |
-| `acceptance_test_report.csv` | M1 | 各模块 Owner | Gate 自动化 invariant tests 与 PASS / FAIL 状态 |
-
-这些文件构成 **handoff contract**。下游成员不得绕过标准输出重新从更早阶段自行构造另一套口径。
+| Logical Artifact | Authoritative / Current Repository Path | Owner | Current Status / Stage | Purpose |
+|---|---|---|---|---|
+| `us_universe_weekly` | `handoff/final_factor/data/universe_weekly.parquet` | M1 | **COMPLETE THROUGH GATE A** | Frozen US final-factor universe, identity, membership, historical GICS, issuer-market-cap and execution support. |
+| `data_coverage_report` | `outputs/audit/wrds_formal/candidate_factor_availability_qa.csv`; `outputs/audit/wrds_formal/factor_validation_coverage.csv` | M1 | **COMPLETE THROUGH GATE A** | Formal coverage and availability evidence. |
+| `factor_formula_dictionary` | `handoff/final_factor/factor_formula_dictionary.csv` | M2 | **FROZEN** | Final K=4 formula, direction, PIT, availability and neutralization contract. |
+| Final factor scores | `handoff/final_factor/data/factor_scores_weekly.parquet` | M2 | **FROZEN / DELIVERED** | Strategy-facing K=4 weekly scores. |
+| Final factor availability | `handoff/final_factor/data/factor_availability_weekly.parquet` | M2 | **FROZEN / DELIVERED** | K=4 availability flags, counts and reasons. |
+| 20-spec research scores | `handoff/factor_research_archive/data/all_factor_scores_weekly.parquet` | M2/M3 | **FROZEN / RESEARCH-ONLY** | Complete Gate A0/A research and audit score archive; not a Strategy Engine input. |
+| 20-spec research availability | `handoff/factor_research_archive/data/all_factor_availability_weekly.parquet` | M2/M3 | **FROZEN / RESEARCH-ONLY** | Availability archive for the 20 governed specifications. |
+| `factor_ic_timeseries` | `outputs/audit/wrds_formal/factor_validation_forward_ic_weekly.csv` | M3 | **COMPLETE THROUGH GATE A** | Executable Forward-IC evidence. |
+| `factor_validation_summary` | `outputs/audit/wrds_formal/factor_validation_ic_summary.csv`; `outputs/audit/wrds_formal/factor_validation_single_factor_summary.csv`; `outputs/audit/wrds_formal/gate_a_final_factor_registry.csv` | M3 | **COMPLETE / FROZEN** | IC, stability, portfolio and Gate A decision evidence. |
+| `factor_returns_weekly` (single-factor evidence) | `outputs/audit/wrds_formal/factor_validation_single_factor_weekly.csv` | M3 | **COMPLETE THROUGH GATE A** | Existing executable single-factor Top / Bottom / Long–Short validation evidence. |
+| Pre-Gate-B K=4 factor-return seed | `handoff/us_downstream/data/final_factor_returns_seed_weekly.parquet` | M3/M4 | **READY — 2006–2015 ONLY** | Frozen executable gross K=4 seed history for later authorized Gate B initialization; not FMOM or a strategy result. |
+| `oos_contamination_register` | `outputs/audit/wrds_formal/oos_contamination_register.csv` | M6 | **ACTIVE GOVERNANCE RECORD** | Prior-exposure and claim-boundary register. |
+| `acceptance_test_report` | `outputs/audit/wrds_formal/gate0_final_acceptance.csv`; `outputs/audit/wrds_formal/factor_validation_acceptance.csv`; `outputs/audit/wrds_formal/gate_a_final_freeze_acceptance.csv` | M1 / relevant Gate Owner | **COMPLETE THROUGH GATE A** | Gate-specific acceptance evidence; no single same-named master CSV is implied. |
+| `run_manifest` | Stage-specific `*_manifest.csv` records in `outputs/audit/wrds_formal/` | M1 | **PARTIAL / STAGE-SPECIFIC** | Completed stages retain provenance manifests; the future unified strategy-run manifest is not yet created. |
+| `factor_weights_weekly` | **FUTURE / NOT STARTED** | M4 | Gate B | FMOM, equal-weight and blended factor weights. |
+| `stock_scores_weekly` | **FUTURE / NOT STARTED** | M4 | Gate B/C | Composite ranks and effective-factor diagnostics. |
+| `target_holdings_weekly`; `trades`; `portfolio_nav_daily`; `us_strategy_profile` | **FUTURE / NOT STARTED** | M4/M5 | Gate B/C and later | US holdings, execution, NAV and strategy-profile artifacts. |
+| `us_factor_regression`; `us_return_source_map`; `us_robustness_summary` | **FUTURE / NOT STARTED** | M2/M3/M5 | Post-Gate-C evaluation | US strategy diagnostics; no strategy has been constructed. |
+| `sg_universe_weekly`; `sg_strict_profile`; `sg_strategy_profile`; `sg_factor_regression`; `sg_return_source_map`; `sg_robustness_summary` | **FUTURE / NOT STARTED** | M1–M6 | Gate D and later | SG data, strict/feasible transfer and diagnostics. |
+| `comparable_market_regression`; `strategy_difference_inference`; `market_diagnostic_gate`; `cross_market_matched_comparison` | **FUTURE / NOT STARTED** | M3/M5/M6 | Cross-market stage | US–SG matched comparison and inference. |
+| `adaptation_register`; `adaptation_validation`; `reconciliation_ledger` | **FUTURE / NOT STARTED** | M1/M4/M5/M6 | Gate E and later | Adaptation governance and portfolio-level return closure. |
 
 ---
 
@@ -215,7 +223,7 @@ Primary Owner 完成后，Reviewer 至少检查：
 - Gate 0：Data Ready；
 - Gate A0：Within-Family Specification Freeze；
 - Gate A：Final Factor Set；
-- Gate B：FMOM Configuration；
+- Gate B：Strategy Configuration；
 - Gate C：US Base Strategy；
 - Gate D：SG Transfer Specification；
 - Gate E：Adaptation；
@@ -455,7 +463,7 @@ FMOM_{k,t}
 R^{factor}_{k,t-j}
 $$
 
-当前基准：
+Gate B candidate baseline：
 
 $$
 J=26\text{ weeks}
@@ -496,7 +504,7 @@ w_{k,t}
 }
 $$
 
-当前基准：
+Gate B candidate baseline：
 
 $$
 \lambda=0.5
@@ -1003,19 +1011,20 @@ Gate B / Gate C 的配置决策只能使用截至 2020 年的数据；对本 his
 | Execution | Next Trading Day Close | **FIXED** | 已定 | Same | Same |
 | Reporting Currency | USD | **FIXED** | 已定 | USD | USD |
 | FX Hedge | None | **FIXED** | 已定 | — | None |
-| Winsorization | 1% / 99% | **CANDIDATE** | Factor Selection | Same | Same |
+| Winsorization | 1% / 99% | **FACTOR-DEFINITION FROZEN** | Formal US Factor Definition / Gate A | Frozen same-date 1/99 rule | Same methodology when authorized |
 | Fundamental Coverage | 70% | **CANDIDATE** | Factor Selection | Same logic | Same logic |
 | Min Cross-Section | — | **EX-ANTE MARKET** | Pre-Specified | 50 | 15 |
 | Single-Factor L/S | — | **EX-ANTE MARKET** | Pre-Specified | Top/Bottom 30% | Top/Bottom 1/3 |
 | FMOM Lookback $J$ | 26 weeks | **CANDIDATE** | Configuration | Same | Same |
 | Risk-Adjusted FMOM | Off | **CANDIDATE** | Configuration | Same | Same |
 | $\lambda$ | 0.5 | **CANDIDATE** | Configuration | Same | Same |
-| Final Stock Selection | — | **EX-ANTE MARKET** | Pre-Specified | Top 20% | Top 30% |
+| Final Stock Selection Rule | Top 20% baseline | **CANDIDATE** | Gate B / Configuration | Top 20% baseline | Top 30% ex-ante market baseline |
 | Portfolio Weight | Equal Weight | **BASELINE** | Configuration | Same | Same |
-| Sector Cap | 30% | **CANDIDATE** | Configuration | Same principle | Same principle |
+| Minimum Available Factor / Missing-Factor Policy | TBD | **TBD** | Gate B / Configuration | TBD | TBD |
+| Sector Cap Implementation | 30% baseline | **CANDIDATE** | Gate B / Configuration | Same principle | Same principle |
 | Turnover Buffer | TBD | **TBD** | Configuration | TBD | TBD |
 | Transaction Cost | TBD | **TBD** | Before OOS | US-specific | SG-specific |
-| Within-Family Specification | Gate A0 candidate registry | **GATE A0 CANDIDATE** | Factor Selection / Gate A0 | Existing-constituent Round 1 only | Same methodology when authorized |
+| Within-Family Specification | Frozen Gate A0 registry; historical candidate / challenger record | **GATE A0 FROZEN / HISTORICAL REGISTRY** | Completed Gate A0 | Existing-constituent Round 1 complete | Same methodology when authorized |
 | Gate A0 Family Representative | `VALUE_CURRENT`; `QUALITY_CURRENT`; `MOMENTUM_12_1`; `LOWRISK_CURRENT`; `INVESTMENT_CURRENT`; `DIVIDEND_CURRENT`; `SIZE_CURRENT` | **GATE A0 FROZEN** | Gate A0 | One representative per economic family | Base transfer uses frozen US representative |
 | Final Factor Set | `QUALITY_CURRENT`; `MOMENTUM_12_1`; `LOWRISK_CURRENT`; `INVESTMENT_CURRENT` ($K=4$) | **GATE A FROZEN** | Gate A | Developed in US | Base transfer uses same set; `VALUE_CURRENT`, `DIVIDEND_CURRENT`, and `SIZE_CURRENT` are excluded from Base Strategy and FMOM |
 | US/SG Capital Allocation | 80/20 proposed | **DEPLOYMENT TBD** | Final Deployment | 80% | 20% |
@@ -1037,6 +1046,8 @@ Gate B / Gate C 的配置决策只能使用截至 2020 年的数据；对本 his
 - **EX-ANTE MARKET**：允许市场不同，但必须在 SG 结果出现前冻结；
 - **TBD**：尚未决定，执行到相关 Gate 前必须解决；
 - **POST-DIAGNOSTIC ONLY**：只能在发现具体问题后提出。
+- **FACTOR-DEFINITION FROZEN**：已成为 Formal US factor-definition contract，不再是 Factor Selection 优化变量；
+- **GATE A0 FROZEN / HISTORICAL REGISTRY**：within-family candidate / challenger record 与 representative decision 已冻结，保留用于研究谱系与审计。
 
 ---
 
@@ -2444,15 +2455,15 @@ All Low Risk candidates retain existing 252-day definition, minimum-history, mar
 
 Gate A0 does not recompute accounting concepts, alter timing, change issuer/security economic levels, alter winsorization, or flip direction. It uses the same source data and PIT rules as the corresponding incumbent family. Value and Quality eligible representatives retain mandatory historical-GICS Sector plus log issuer-market-cap neutralization. Momentum and Low Risk retain their incumbent baseline of no mandatory neutralization. Component diagnostics retain their natural sector domain.
 
-### A0.9 Future validation and common-within-family comparison contract
+### A0.9 Completed validation and common-within-family comparison contract
 
-When separately authorized, every eligible representative specification receives the identical 2011–2015-only validation framework: economic rationale, coverage, executable 1W and 4W forward IC, ICIR, positive IC ratio, HAC / Newey-West and 4W block-bootstrap inference, yearly and rolling IC stability, Top/Bottom 30% single-factor portfolio evidence, gross Sharpe, turnover, break-even cost, yearly portfolio stability, applicable sector breadth, common-within-family robustness, and same-family correlation / redundancy diagnostics. It must use the existing $S_t \rightarrow E_t \rightarrow E_{t+1}$ convention; no second validation methodology is permitted.
+The completed Gate A0 execution applied the identical 2011–2015-only validation framework to every eligible representative specification: economic rationale, coverage, executable 1W and 4W forward IC, ICIR, positive IC ratio, HAC / Newey-West and 4W block-bootstrap inference, yearly and rolling IC stability, Top/Bottom 30% single-factor portfolio evidence, gross Sharpe, turnover, break-even cost, yearly portfolio stability, applicable sector breadth, common-within-family robustness, and same-family correlation / redundancy diagnostics. It used the existing $S_t \rightarrow E_t \rightarrow E_{t+1}$ convention; no second validation methodology was permitted.
 
 Each multi-specification family must have both (i) its natural factor-specific **PRIMARY** cross-section and (ii) the diagnostic **COMMON_WITHIN_FAMILY_SAMPLE**, where all eligible representatives of that family are simultaneously available. The common sample cannot silently replace the primary view.
 
 ### A0.10 Human decision, incumbent default, and one-representative rule
 
-Gate A0 must assess integrity, economic interpretation, forward IC, stability, single-factor separation, portfolio stability, turnover / break-even economics, coverage, common-sample robustness, same-family redundancy, simplicity / interpretability, and multiple-testing evidence. There is no fixed mechanical IC or Sharpe threshold, weighted composite score, automated rank, or machine-selected winner.
+The completed Gate A0 assessment evaluated integrity, economic interpretation, forward IC, stability, single-factor separation, portfolio stability, turnover / break-even economics, coverage, common-sample robustness, same-family redundancy, simplicity / interpretability, and multiple-testing evidence. There is no fixed mechanical IC or Sharpe threshold, weighted composite score, automated rank, or machine-selected winner.
 
 Because Gate A0 was introduced after incumbent evidence was reviewed, the conservative default is: **retain the INCUMBENT specification unless challenger evidence provides a clear, economically coherent, documented reason to replace it.** A higher historical point estimate alone is insufficient; no arbitrary numerical “clear superiority” threshold is allowed.
 
@@ -2460,9 +2471,9 @@ At Gate A0 completion, each economic family has **at most one** formal represent
 
 ### A0.11 Multiple testing and performance firewall
 
-Gate A0 must later record the number of tested eligible representatives, number of component diagnostics, number of IC horizons, raw p-values, Benjamini–Hochberg FDR-adjusted q-values, and family identifier. Within-family specification testing must be distinguished from later cross-family Gate A testing. The smallest p-value must not select a specification mechanically.
+The completed Gate A0 record preserves the number of tested eligible representatives, component diagnostics, IC horizons, raw p-values, Benjamini–Hochberg FDR-adjusted q-values, and family identifier. Within-family specification testing remains distinguished from later cross-family Gate A testing. The smallest p-value did not select a specification mechanically.
 
-Gate A0 formal performance evidence is 2011–2015 only; 2006–2010 is DEV context only if required. Do not access 2016–2020, 2021–2025, or 2026 outcome evidence for Gate A0 factor selection. This section authorizes only the governance freeze; it does not authorize factor-score construction, IC, returns, portfolios, or representative selection.
+Gate A0 formal performance evidence is 2011–2015 only; 2006–2010 is DEV context only if required. No 2016–2020, 2021–2025, or 2026 outcome evidence was accessed for Gate A0 factor selection. **Historical pre-execution governance scope:** this governance-freeze section did not itself authorize factor-score construction, IC, returns, portfolios, or representative selection; those activities were later executed under the same frozen contract and are now preserved as completed Gate A0 evidence.
 
 ---
 
@@ -2490,7 +2501,9 @@ Gate A0 remains an adaptive refinement within the observed 2011–2015 Factor Se
 
 ## Step 12 — Gate A0 Within-Family 与 Gate A Cross-Family Forward IC
 
-只使用 Factor Selection Period。Gate A0 在另行授权后先按同一 executable validation engine 比较同一经济家族的已冻结 eligible representative specifications；Gate A 只比较每个家族经 Gate A0 冻结的一项 representative specification。
+> **CURRENT FORMAL US STATUS:** Steps 12–14 were completed using only the 2011–2015 Factor Selection evidence under the frozen executable validation engine. Step 15 / Gate A is complete and frozen. The methodology below is preserved as the governing historical research contract; it does not need to be rerun before Gate B.
+
+只使用 Factor Selection Period。Gate A0 已按同一 executable validation engine 比较同一经济家族的已冻结 eligible representative specifications；Gate A 只比较每个家族经 Gate A0 冻结的一项 representative specification。
 
 每周：
 
@@ -2624,6 +2637,8 @@ $$
 
 ## Step 15 — Gate A Cross-Family Final Factor Set Selection
 
+> **STEP 15 STATUS: COMPLETE / GATE A FROZEN.**
+
 Gate A0 先决定每个 multi-specification economic family 的 measurement specification。随后 Gate A 对最多七项 family representatives 同时从四层判断：
 
 ### A. Economic Rationale
@@ -2709,6 +2724,8 @@ This Gate A freeze calculates neither $w_{k,t}$ nor $Score_{i,t}$. The future FM
 # 9. Part V — Factor Momentum Configuration
 
 ## Step 16 — Factor Return History
+
+> **STEP 16 STATUS: PRE-GATE-B SEED COMPLETE.** `handoff/us_downstream/data/final_factor_returns_seed_weekly.parquet` already contains the frozen 2006–2015 K=4 executable gross factor-return seed history. It is initialization / history for later authorized Gate B, not a Gate B decision, not FMOM, and not a strategy result. 2016–2020 Configuration-period factor returns have not been constructed under Gate B authorization.
 
 从 Warm-up Period 开始连续保存每个最终因子的周度 Long–Short Return：
 
@@ -2815,13 +2832,21 @@ $$
 
 > Factor Momentum Tilt 是否在合理参数邻域内持续提供价值？
 
-### Gate B — Factor Timing Configuration Freeze
+### Gate B — Strategy Configuration Freeze
 
-冻结：
+Gate B is not started. Using only separately authorized 2016–2020 Configuration Selection data, it freezes the permitted configuration choices required to construct the US Base Strategy:
 
 - $J$；
 - Risk Adjustment；
-- $\lambda$。
+- $\lambda$；
+- minimum-available-factor / missing-factor policy；
+- stock-selection rule；
+- turnover buffer；
+- sector-cap implementation；
+- portfolio-weighting rule；
+- other explicitly permitted configuration choices required for the US Base Strategy.
+
+Gate B does not access 2021–2025 Historical OOS and does not itself claim a constructed Base Strategy. It must not add arbitrary new optimization parameters.
 
 ---
 
@@ -4436,45 +4461,70 @@ Primary Cross-Market Regression 使用 USD reporting currency 与 USD risk-free 
 
 # 20. 当前正式 Research Gates
 
+| Gate | Current project status |
+|---|---|
+| Gate 0 | **PASS / COMPLETE** |
+| Gate A0 | **FROZEN** |
+| Gate A | **FROZEN** |
+| Gate B | **NOT STARTED** |
+| Gate C | **NOT STARTED** |
+| Gate D | **NOT STARTED** |
+| Gate E | **NOT STARTED** |
+| Gate F | **NOT STARTED** |
+
 ## Formal Gate 0 — WRDS Data Ready
 
-在 formal canonical construction 前完成 4.1 所列 WRDS integrity、PERMNO/GVKEY/CCM、Historical GICS、Compustat PIT、CRSP DlyCap / CIZ / index、Fama–French unit 与 cutoff 验证。raw files 已放置不等于 Gate 0 通过。
+**Definition:** 在 formal canonical construction 前完成 4.1 所列 WRDS integrity、PERMNO/GVKEY/CCM、Historical GICS、Compustat PIT、CRSP DlyCap / CIZ / index、Fama–French unit 与 cutoff 验证。raw files 已放置不等于 Gate 0 通过。
+
+**Current project status:** **PASS / COMPLETE.** Formal Gate 0 and canonical US dataset construction are complete. Documented formal PIT and historical-vintage limitations remain claim boundaries; completion does not assert that those limitations disappeared.
 
 ## Gate A0 — Within-Family Specification Freeze
 
-Gate A0 在 2011–2015 Factor Selection sample 内进行，并冻结：
+**Definition:** Gate A0 在 2011–2015 Factor Selection sample 内进行，并冻结：
 
 - 每个 multi-specification family 的一项 representative specification；
 - 对应 formula、direction、branch rule 与 neutralization rule。
 
 Investment、Dividend 与 Size 作为 single-specification families 直接通过 Gate A0，不进行内部 selection。Gate A0 不决定哪些经济家族进入最终 multi-factor strategy，也不改变 2011–2015 以外样本的访问权限。
 
+**Current project status:** **FROZEN.** The frozen representatives are `VALUE_CURRENT`、`QUALITY_CURRENT`、`MOMENTUM_12_1`、`LOWRISK_CURRENT`、`INVESTMENT_CURRENT`、`DIVIDEND_CURRENT`、`SIZE_CURRENT`.
+
 ## Gate A — Final Factor Set Freeze
 
-在 Gate A0 representative freeze 后，Gate A 比较七个 economic-family representatives，并冻结：
+**Definition:** 在 Gate A0 representative freeze 后，Gate A 比较七个 economic-family representatives，并冻结：
 
 - Final Factor Set；
 - Definitions；
 - Directions；
 - Neutralization Rules。
 
+**Current project status:** **FROZEN.** The US Base Strategy factor set is exactly `QUALITY_CURRENT`、`MOMENTUM_12_1`、`LOWRISK_CURRENT`、`INVESTMENT_CURRENT` ($K=4$). `VALUE_CURRENT`、`DIVIDEND_CURRENT`、`SIZE_CURRENT` remain research/audit evidence and are not active Base Strategy or Base FMOM factors.
+
 ---
 
-## Gate B — Factor Momentum Configuration Freeze
+## Gate B — Strategy Configuration Freeze
 
-在 US Configuration Selection 完成后冻结：
+**Definition:** Gate B freezes the permitted configuration choices required to construct the US Base Strategy, using only separately authorized 2016–2020 Configuration Selection data:
 
 - $J$；
 - Risk Adjustment；
 - $\lambda$；
-- Selection / Buffer Rules；
-- Portfolio Construction。
+- minimum-available-factor / missing-factor policy；
+- stock-selection rule；
+- turnover buffer；
+- sector-cap implementation；
+- portfolio-weighting rule；
+- other explicitly permitted configuration choices required for the US Base Strategy.
+
+Gate B must not add arbitrary new optimization parameters or access 2021–2025 Historical OOS.
+
+**Current project status:** **NOT STARTED.**
 
 ---
 
 ## Gate C — US Base Strategy Freeze
 
-形成：
+**Definition:** Gate C assembles the full US Base Strategy from the frozen Gate-B configuration, validates implementation invariants, and freezes:
 
 $$
 \boxed{
@@ -4482,13 +4532,15 @@ S^{Base}_{US}
 }
 $$
 
-之后以 2021–2025.12 的 `HIST_OOS_BASE` 进入 formal US Historical OOS 与 Deep Validation；2026.01–2026.09 只能作为独立 `RECENT_EXTENSION`。
+After Gate C, no Base Strategy configuration change is permitted before opening 2021–2025.12 `HIST_OOS_BASE` for formal US Historical OOS and Deep Validation; 2026.01–2026.09 remains a separate `RECENT_EXTENSION`.
+
+**Current project status:** **NOT STARTED.**
 
 ---
 
 ## Gate D — SG Transfer Specification Freeze
 
-在正式查看任何 SG strategy performance 之前，同时冻结：
+**Definition:** 在正式查看任何 SG strategy performance 之前，同时冻结：
 
 - SG Universe；
 - Historical Coverage Rule；
@@ -4504,19 +4556,25 @@ $$
 
 Gate D 之后，任何基于 SG 历史结果提出的变化都只能进入 Adaptation Register，不能回写 Strict / Feasible Base。
 
+**Current project status:** **NOT STARTED.**
+
 ---
 
 ## Gate E — Adaptation Freeze
 
-只有在诊断出明确问题时：
+**Definition:** 只有在诊断出明确问题时：
 
 - 登记 Adaptation Hypothesis；
 - 在独立 Validation Sample 中测试；
 - 冻结最终版本。
 
+**Current project status:** **NOT STARTED.**
+
 ---
 
 ## Gate F — Final Untouched Test
+
+**Definition:**
 
 Final Test 第一次打开后：
 
@@ -4526,71 +4584,56 @@ No\ More\ Strategy\ Changes
 }
 $$
 
+**Current project status:** **NOT STARTED.**
+
 ---
 
 # 21. 当前真正待确定的事项
 
-以下内容仍然不能默认补齐。
+以下区分已经解决的冻结决定、真正尚待后续 Gate 决定的事项，以及不能被误称为“待解决”的数据 / claim limitation。
 
-## Factor Level
+## A. Resolved / Frozen Decisions
 
-- Gate A0 within-family representative specification（仅 multi-specification families；在 Gate A0 前仍为 TBD）；
-- Final Factor Set；
-- Dividend 是否保留及最终方向；
-- Size 是否进入 Final Set；
-- Dividend / Size Neutralization；
-- 原始财务字段映射；
-- Profit 使用 TTM 还是 Single Quarter。
+- Gate A0 representatives are frozen: `VALUE_CURRENT`、`QUALITY_CURRENT`、`MOMENTUM_12_1`、`LOWRISK_CURRENT`、`INVESTMENT_CURRENT`、`DIVIDEND_CURRENT`、`SIZE_CURRENT`；
+- Gate A Final Factor Set is frozen at $K=4$: `QUALITY_CURRENT`、`MOMENTUM_12_1`、`LOWRISK_CURRENT`、`INVESTMENT_CURRENT`；
+- `VALUE_CURRENT`、`DIVIDEND_CURRENT` 与 `SIZE_CURRENT` are excluded from the Base Strategy and Base FMOM universe, while remaining research / audit evidence；
+- frozen directions, factor definitions, PIT timing, branch rules, same-date 1/99 winsorization and baseline neutralization rules are part of the Formal US factor contract；
+- major Gate-0 semantics are signed off: CRSP CIZ return treatment, DlyCap unit/security-level semantics, issuer-level factor-denominator construction rule, historical GICS / CCM logic, Compustat PIT availability rules, quarterly-flow / field-precedence rules, and cross-source scale alignment.
 
-## Formal Data-Contract Level
+## B. Current Gate-B / Portfolio Decisions Still Pending
 
-- Compustat historical revision / restatement / vintage semantics：ordinary historical extract 是否包含 later-restated historical values，以及相应 PIT claim boundary；
-- CRSP `DlyCap` / `ShrOut` exact unit and **security-level** semantic documentation；
-- issuer-level vs security-level market-cap construction：Value denominator 的 relevant equity share-class coverage、multi-share-class accounting consistency，以及 Size / neutralization 的 economic-level rule；
-- 同一 `GVKEY` / `PERMCO` 的 issuer-level holdings duplicate / concentration audit；
-- CRSP CIZ return、corporate-action 与 delisting treatment，确保不 double count；
-- Compustat annual PIT availability rule：`datadate` 不可直接作为 publication date，必须在 Q4 / earnings timing 或 conservative lag approach 中形成可辩护规则；
-- quarterly flow differencing、field precedence 与 conflict handling；
-- 2025 CRSP–Yahoo bridge validation 的 acceptance criteria，作为任何 2026 market-price / return bridge 的前置条件。
+- minimum-available-factor rule and missing-factor reweighting policy；
+- FMOM lookback $J$, Risk Adjustment and $\lambda$；
+- final stock-selection rule, turnover buffer, sector-cap implementation and portfolio-weighting rule；
+- US and SG transaction-cost calibration；
+- drawdown threshold / failure-analysis configuration；
+- short borrow, financing and short-side execution cost if a net Long–Short metric is later reported；
+- issuer-level holdings duplicate / concentration audit as a portfolio-stage diagnostic.
 
-## Portfolio Level
+## C. Known Data / Claim Limitations
 
-- 最终 Minimum Available Factor Rule；
-- Turnover Buffer 是否启用；
-- US 单边 all-in transaction-cost calibration；
-- SG 单边 all-in transaction-cost calibration；
-- Sector-constraint 最终实现算法（两种候选中选一）；
-- Drawdown Count Threshold；
-- 若未来要报告 Long–Short Net Sharpe：Short Borrow / Financing / Short-Side Execution Cost。
+- **Known Limitation / Claim Boundary:** ordinary delivered Compustat history is publication-date-aligned, not vintage-perfect PIT; later-restatement / vintage claims remain limited accordingly；
+- documented Gate-0 issuer/share-class coverage limitations remain claim boundaries; they are not permission to substitute a different economic-level rule；
+- **Future Bridge Requirement:** the CRSP–Yahoo bridge requires its own acceptance criteria before any separately labelled 2026 price / return bridge claim. It is not part of the Formal 2006–2025 US research lineage.
 
-## Singapore Level
+## D. Singapore Decisions Still Pending
 
-- SG Universe Threshold；
-- Historical Data Coverage；
-- Final Industry Mapping；
-- Liquidity Parameters；
-- Historical / Live Price Source；
-- Financial Data Source；
-- FX Source。
+- SG universe threshold, historical data coverage and reliable data start；
+- REIT treatment / final industry mapping；
+- liquidity parameters, historical/live price source, financial-data source and FX source；
+- SG transaction-cost calibration and any strictly pre-specified feasibility implementation required before SG performance is viewed.
 
-## Validation Level
+## E. Validation / Inference Decisions Still Pending
 
-- SG 数据可靠起点；
-- Adaptation / Validation Period；
-- Final Untouched Test Period；
-- 若无法保留新 Final Test，Adaptation 是否只能定位为 exploratory；
-- HAC maxlag rule；
-- Block-bootstrap block-length rule；
-- 正式 Regime thresholds / data source。
+- Adaptation / Validation Period and Final Untouched Test Period；
+- whether an adaptation must be labelled exploratory if no new Final Test can be preserved；
+- HAC maxlag rule, block-bootstrap block length and formal regime definitions / data source；
+- future strategy-level risk, return-closure, capacity, stress and cross-market inference diagnostics after their governing gates.
 
-## Deployment Level
+## F. Deployment Decisions Still Pending
 
-- Final US / SG Capital Allocation；
-- 80/20 是否最终采用；
-- No-Trade Band 是否保持 75%–85%；
-- Live Initial Capital；
-- Live Daily Data Source；
-- 实际 Strategy Freeze Date 与第一个真正 Live Signal Date（不得回溯认定）。
+- final US / SG capital allocation, including whether the illustrative 80/20 allocation is adopted；
+- no-trade band, live initial capital, live data source, actual Strategy Freeze date and first genuine Live signal date; no date may be backfilled as live evidence.
 
 ---
 
@@ -4872,41 +4915,36 @@ $$
 
 ---
 
-# 25. Framework Completeness Audit：冻结前最终检查
+# 25. Framework Completeness Audit：Framework Coverage 与 Execution Status
 
-以此前参考项目总结出的八层验证思想为基准，再加入本项目额外的 cross-market identification 与 team governance，当前框架覆盖如下：
+以此前参考项目总结出的八层验证思想为基准，再加入本项目额外的 cross-market identification 与 team governance。**Framework Coverage** 表示研究设计已经定义；**Execution Status** 表示该层在当前 Formal US lineage 中实际完成到什么阶段，二者不得混淆。
 
-| Validation Layer | 当前框架对应内容 | 状态 |
-|---|---|---|
-| Data Integrity | Gate 0、PIT、Coverage、Universe、REIT / Currency / Corporate Action、Run Manifest | **Covered** |
-| Signal Integrity | Forward IC、Direction Rule、Neutralization、Decision Card、FDR | **Covered** |
-| Portfolio Construction | 唯一执行顺序、FMOM、Buffer、Sector Cap、Strict / Feasible object | **Covered** |
-| Return / Accounting | Gross→Net、Dividend rule、FX interaction、Return Closure | **Covered** |
-| Research Design | Development / Config / OOS / Adaptation / Final Gates、Decision Rights | **Covered** |
-| Statistical Inference | HAC、Block Bootstrap、Difference Test、Multiple Testing | **Covered** |
-| Implementation Realism | Cost、Turnover、Liquidity、Capacity Scenario、Live Governance | **Covered** |
-| Interpretation / Attribution | Increment / Holdings / FX / Cost / Regression 分层 taxonomy | **Covered** |
-| Cross-Market Identification | US Base vs SG Strict、SG Strict vs SG Feasible、Matched Sample | **Covered** |
-| Reproducibility / Governance | Single Owner、Reviewer、Canonical Outputs、Run Manifest、Gate Approval | **Covered** |
-| Automated Acceptance / Invariants | Gate 自动测试、Timing / Weight / Accounting / FX Closure | **Covered** |
-| Evidence / Claim Governance | DEV / OOS / Transfer / Adaptation / Final / Live 标签、Survivorship Claim Boundary | **Covered** |
-| Execution-Timing Consistency | Signal Cutoff、Next-Close Execution、Executable Factor Return、Completed-Period FMOM | **Covered** |
-| Adaptation Validation | Register → Independent Validation → Gate E → Freeze | **Covered** |
+| Validation Layer | 当前框架对应内容 | Framework Coverage | Execution Status |
+|---|---|---|---|
+| Data Integrity | Gate 0、PIT、Coverage、Universe、Currency / Corporate Action、stage manifests | **Covered** | **COMPLETE** — Gate 0 / canonical US data ready, subject to documented claim limitations. |
+| Signal Integrity | Forward IC、Direction Rule、Neutralization、Decision Card、FDR | **Covered** | **COMPLETE THROUGH GATE A** — formal factor construction, validation and final-factor freeze complete. |
+| Portfolio Construction | 唯一执行顺序、FMOM、Buffer、Sector Cap、Strict / Feasible object | **Covered** | **NOT STARTED — GATE B/C**. |
+| Return / Accounting | Gross→Net、Dividend rule、FX interaction、Return Closure | **Covered** | **PARTIAL DATA READY; STRATEGY NOT STARTED**. |
+| Research Design | Development / Config / OOS / Adaptation / Final Gates、Decision Rights | **Covered** | **GATE 0/A0/A COMPLETE OR FROZEN; GATE B–F NOT STARTED**. |
+| Statistical Inference | HAC、Block Bootstrap、Difference Test、Multiple Testing | **Covered** | **FACTOR-RESEARCH EVIDENCE COMPLETE; STRATEGY / CROSS-MARKET INFERENCE NOT STARTED**. |
+| Implementation Realism | Cost、Turnover、Liquidity、Capacity Scenario、Live Governance | **Covered** | **PARTIAL DATA READY; STRATEGY NOT STARTED**. |
+| Interpretation / Attribution | Increment / Holdings / FX / Cost / Regression 分层 taxonomy | **Covered** | **FACTOR-SELECTION INTERPRETATION COMPLETE; STRATEGY ATTRIBUTION NOT STARTED**. |
+| Cross-Market Identification | US Base vs SG Strict、SG Strict vs SG Feasible、Matched Sample | **Covered** | **NOT STARTED**. |
+| Reproducibility / Governance | Single Owner、Reviewer、Canonical Outputs、manifests、Gate Approval | **Covered** | **COMPLETE THROUGH GATE A AND HANDOFF DELIVERY**. |
+| Automated Acceptance / Invariants | Gate 自动测试、Timing / Weight / Accounting / FX Closure | **Covered** | **COMPLETE THROUGH GATE A / HANDOFF; STRATEGY INVARIANTS NOT STARTED**. |
+| Evidence / Claim Governance | DEV / OOS / Transfer / Adaptation / Final / Live 标签、Survivorship Claim Boundary | **Covered** | **ACTIVE** — current claim labels and OOS firewall are in force. |
+| Execution-Timing Consistency | Signal Cutoff、Next-Close Execution、Executable Factor Return、Completed-Period FMOM | **Covered** | **COMPLETE THROUGH SINGLE-FACTOR VALIDATION AND PRE-GATE-B SEED; FMOM NOT STARTED**. |
+| Adaptation Validation | Register → Independent Validation → Gate E → Freeze | **Covered** | **NOT STARTED**. |
 
-### 仍然存在但不属于“框架缺口”的 TBD
+### 仍然存在但不属于“框架缺口”的 implementation-dependent TBD
 
-以下项目必须等待真实数据或组内决定后填入，因此不能在框架阶段假装已经解决：
+以下项目必须等待后续正式授权、真实 SG 数据或配置决策后填入；Final Factor Set 不在此列，因为 $K=4$ 已冻结：
 
-- 最终 Factor Set；
-- SG 数据覆盖起点；
-- SG REIT 最终字段可用性；
-- 实际 transaction-cost calibration；
-- SG liquidity / industry thresholds；
-- 是否有可靠 SG style-factor data；
-- Adaptation 是否真的需要；
-- Final Untouched Sample 能否保留足够长度；
-- 实际 Live Freeze Date；
-- 最终 80/20 deployment 是否采用。
+- Gate-B missing-factor policy、FMOM configuration、stock-selection / buffer / sector-cap / portfolio-weighting choices；
+- actual US / SG transaction-cost calibration；
+- SG data coverage start、REIT field availability、liquidity / industry thresholds 与 style-factor availability；
+- whether adaptation is needed and whether a sufficiently long Final Untouched Sample can be preserved；
+- actual Live Freeze Date and whether the illustrative 80/20 deployment is adopted.
 
 这些是 **implementation-dependent inputs**，不是研究设计缺陷。
 
