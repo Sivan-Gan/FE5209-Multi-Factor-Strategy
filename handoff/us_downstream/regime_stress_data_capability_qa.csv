@@ -1,0 +1,3 @@
+check,status,notes
+DATA_AVAILABLE,PASS,"Market, RF, FF, security-return, liquidity and sector interfaces support future diagnostics."
+REGIME_RULE_NOT_YET_FROZEN,PASS_WITH_WARNING,Formal bull/bear/volatility/crisis thresholds remain a future governance decision.

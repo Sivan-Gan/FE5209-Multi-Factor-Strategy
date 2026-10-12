@@ -1,0 +1,12 @@
+signal_date,PERMNO,execution_date,next_execution_date,compounded_trading_day_count,stored_return,independent_return,status,notes
+2006-01-06,10078,2006-01-09,2006-01-17,5,-0.006465046282055353,-0.006465046282055353,PASS,"Independent direct-CIZ DlyRet compounding over (E_t,E_t+1]; E_t excluded. No separate DelRet/dividend/split adjustment."
+2006-01-06,10104,2006-01-09,2006-01-17,5,-0.03415499770966901,-0.03415499770966901,PASS,"Independent direct-CIZ DlyRet compounding over (E_t,E_t+1]; E_t excluded. No separate DelRet/dividend/split adjustment."
+2006-01-06,10107,2006-01-09,2006-01-17,5,0.004838811893410622,0.004838811893410622,PASS,"Independent direct-CIZ DlyRet compounding over (E_t,E_t+1]; E_t excluded. No separate DelRet/dividend/split adjustment."
+2006-01-06,10137,2006-01-09,2006-01-17,5,0.05648846436973631,0.05648846436973631,PASS,"Independent direct-CIZ DlyRet compounding over (E_t,E_t+1]; E_t excluded. No separate DelRet/dividend/split adjustment."
+2006-01-06,10138,2006-01-09,2006-01-17,5,0.002271318103147957,0.002271318103147957,PASS,"Independent direct-CIZ DlyRet compounding over (E_t,E_t+1]; E_t excluded. No separate DelRet/dividend/split adjustment."
+2006-01-06,10145,2006-01-09,2006-01-17,5,-0.01863597265261485,-0.01863597265261485,PASS,"Independent direct-CIZ DlyRet compounding over (E_t,E_t+1]; E_t excluded. No separate DelRet/dividend/split adjustment."
+2006-01-06,10147,2006-01-09,2006-01-17,5,-0.0205891572568353,-0.0205891572568353,PASS,"Independent direct-CIZ DlyRet compounding over (E_t,E_t+1]; E_t excluded. No separate DelRet/dividend/split adjustment."
+2006-01-06,10225,2006-01-09,2006-01-17,5,-0.004233209374935321,-0.004233209374935321,PASS,"Independent direct-CIZ DlyRet compounding over (E_t,E_t+1]; E_t excluded. No separate DelRet/dividend/split adjustment."
+2006-01-06,10299,2006-01-09,2006-01-17,5,0.004172713474601242,0.004172713474601242,PASS,"Independent direct-CIZ DlyRet compounding over (E_t,E_t+1]; E_t excluded. No separate DelRet/dividend/split adjustment."
+2006-01-06,10324,2006-01-09,2006-01-17,5,-0.024254120825089598,-0.024254120825089598,PASS,"Independent direct-CIZ DlyRet compounding over (E_t,E_t+1]; E_t excluded. No separate DelRet/dividend/split adjustment."
+2006-01-27,83693,2006-01-30,2006-02-06,5,0.0018797093399998133,0.0018797093399998133,PASS,"Independent direct-CIZ DlyRet compounding over (E_t,E_t+1]; E_t excluded. No separate DelRet/dividend/split adjustment."

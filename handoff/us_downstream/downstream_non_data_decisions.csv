@@ -1,0 +1,13 @@
+parameter,current_status,current_baseline,decision_stage,data_required,data_now_available,must_freeze_before,notes
+FMOM J,TBD,Candidate values remain SSOT configuration space; no selection,Gate B,FALSE,TRUE,before Gate B freeze,Data seed is ready; selecting J is prohibited here.
+Risk Adjustment,TBD,Off baseline candidate only; no choice,Gate B,FALSE,TRUE,before Gate B freeze,No risk-adjusted FMOM calculated.
+lambda,TBD,Candidate configuration only,Gate B,FALSE,TRUE,before Gate B freeze,No factor weights calculated.
+sector cap,TBD,Candidate configuration only,Gate B/C,FALSE,TRUE,before US Base freeze,Historical GICS data are ready; no cap selected.
+turnover buffer,TBD,Candidate configuration only,Gate B/C,FALSE,TRUE,before US Base freeze,No holdings/trades constructed.
+minimum factor availability rule,TBD,Final score availability flags are supplied,Gate B/C,FALSE,TRUE,before composite construction,No missing-factor rule selected.
+missing-factor weight renormalization,TBD,No baseline chosen,Gate B/C,FALSE,TRUE,before composite construction,No composite score exists.
+transaction-cost value / grid,TRANSACTION_COST_GRID_NOT_YET_FROZEN,Formula frozen; value/grid not frozen,Gate B/C,FALSE,TRUE,before net OOS interpretation,ADV/turnover inputs are data-ready; no cost value is selected.
+HAC lag rule for strategy inference,TBD,No strategy inference run,Gate C / Backtest,FALSE,TRUE,before strategy inference,Existing factor-validation inference is not silently reused.
+bootstrap block rule for strategy inference,TBD,No strategy inference run,Gate C / Backtest,FALSE,TRUE,before strategy inference,No strategy bootstrap run.
+formal regime definitions,FORMAL_REGIME_RULE_NOT_YET_FROZEN,No thresholds selected,Gate C / Backtest,FALSE,TRUE,before regime conclusion,Data support is present; regime rule remains governance work.
+Gate C readiness parameters,TBD,No US Base selected,Gate C,FALSE,TRUE,before Gate C freeze,This handoff does not freeze US Base.

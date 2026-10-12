@@ -1,0 +1,6 @@
+check,status,notes
+TURNOVER_INPUT,PASS,Future target/pretrade weights can use supplied weekly returns.
+ADV_INPUT,PASS,DlyPrcVol-based ADV20/ADV60 proxy supplied.
+PARTICIPATION_INPUT,PASS,Future traded notional and ADV can be joined.
+BREAK_EVEN_COST_INPUT,PASS,Future gross return/turnover series can be supported after strategy construction.
+TRANSACTION_COST_GRID_NOT_YET_FROZEN,PASS_WITH_WARNING,"This is a governance parameter warning, not a data gap."

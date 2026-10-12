@@ -10,9 +10,9 @@ The project develops a weekly, long-only US multi-factor strategy and will later
 
 ## 3. Current Project Status
 
-**Completed:** Formal Gate 0, canonical dataset, candidate-factor construction, factor validation, Gate A0, Gate A, and the Final Factor Handoff.
+**Completed:** Formal Gate 0, canonical dataset, candidate-factor construction, factor validation, Gate A0, Gate A, the Final Factor Handoff, and the governed US downstream Strategy/Backtest data handoff.
 
-**Current frozen stage:** Gate A + Final Factor Handoff.
+**Current frozen stage:** Gate A + Final Factor Handoff; downstream data are mechanically materialized and stage-governed.
 
 **Next research stage:** Gate B / Strategy Engine, only after separate authorization. Gate B, FMOM configuration, base strategy construction, 2016–2020 configuration evaluation, 2021–2025 formal OOS evaluation, Singapore transfer, and adaptation are not started in this delivery task.
 
@@ -37,10 +37,11 @@ Licensed WRDS raw data (local, not Git)
   -> Gate 0 / canonical data (local large stores)
   -> candidate factors / Gate A0 / Gate A (frozen evidence)
   -> Final Factor Handoff (contracts + local execution data)
+  -> US downstream data handoff (calendar / return / liquidity / benchmark interfaces)
   -> future authorized Gate B / Strategy Engine
 ```
 
-The handoff is an interface export of existing frozen scores. It does not calculate factor returns, FMOM, weights, stock composite scores, holdings, portfolios, or strategy results.
+The handoffs are governed interfaces, not Strategy Engine research. The downstream data package contains only a frozen 2006–2015 final-factor L/S seed return history; it makes no Gate B decision and calculates no FMOM, weights, stock composite scores, holdings, portfolios, NAV, or strategy results.
 
 ## 6. Repository Structure
 
@@ -51,6 +52,7 @@ The handoff is an interface export of existing frozen scores. It does not calcul
 | `tests/` | Native `unittest` regression and delivery checks. |
 | `config/` | Approved query inputs and a portable path example. |
 | `handoff/final_factor/` | Frozen final-factor interface contracts, manifests, QA, and deterministic sample. |
+| `handoff/us_downstream/` | Governed local-US calendar, return, liquidity, benchmark, RF/FF, reference, and pre-Gate-B seed data contract. |
 | `outputs/audit/wrds_formal/` | Complete formal audit trail, including final delivery QA. |
 | `data/` | Local large canonical/research stores; see [data/README.md](data/README.md). |
 | `wrds_raw/`, `raw_package/` | Local immutable vendor/source evidence; never upload or alter. |
@@ -70,6 +72,8 @@ python scripts/smoke_test_handoff.py
 
 Then read [the Final Factor Handoff contract](handoff/final_factor/FINAL_FACTOR_HANDOFF_CONTRACT.md), inspect [the registry](handoff/final_factor/final_factor_registry.csv), and load the deterministic tracked sample at `handoff/final_factor/data/factor_scores_weekly_sample.csv`.
 
+For downstream data, then read [the US downstream contract](handoff/us_downstream/US_DOWNSTREAM_DATA_CONTRACT.md). Its large Parquet files remain local and stage-governed; they are not bundled in Git.
+
 ## 8. Environment Setup
 
 Use Python 3.12 or a compatible Python 3.12+ environment. See [ENVIRONMENT.md](ENVIRONMENT.md) for dependency scope, platform notes, and the test command. No WRDS credentials belong in this repository.
@@ -88,8 +92,9 @@ The three Parquet files are deliberately external local data pending redistribut
 
 1. **Licensed raw vendor data:** WRDS/CRSP/Compustat/CCM/Historical GICS downloads in local ignored directories.
 2. **Local large derived stores:** canonical, factor, and validation SQLite files required to reproduce upstream research.
-3. **Final downstream interface:** the governed handoff Parquet files, availability data, and universe data.
-4. **Tracked delivery metadata:** contracts, registries, manifests, QA summaries, and a small score sample.
+3. **Final-factor interface:** frozen score, availability, and universe Parquet files.
+4. **US downstream interface:** local daily/weekly market, liquidity, benchmark, RF/FF, reference, and 2006–2015 seed Parquet files.
+5. **Tracked delivery metadata:** contracts, registries, manifests, QA summaries, and deterministic samples.
 
 ## 11. What Is Included in Git
 
@@ -101,11 +106,11 @@ Licensed raw vendor files, raw Yahoo/SEC source package files, large local SQLit
 
 ## 13. Reproduction Workflow
 
-Upstream reconstruction requires locally authorized data and follows [reproduction_manifest.csv](handoff/final_factor/reproduction_manifest.csv). Downstream users should not rerun upstream construction merely to start Strategy Engine work: consume the frozen handoff after receiving the separately approved local Parquet files.
+Upstream reconstruction requires locally authorized data and follows [reproduction_manifest.csv](handoff/final_factor/reproduction_manifest.csv). Downstream users should not rerun upstream construction merely to start Strategy Engine work: consume the frozen handoffs after receiving the separately approved local Parquet files.
 
 ## 14. Strategy Engine Starting Point
 
-Read the handoff contract, registry, formula dictionary, and downstream interface contract. Join frozen score, availability, and universe data on `(signal_date, PERMNO)`. Do not calculate anything until Gate B is separately authorized.
+Read both handoff contracts, registry, formula dictionary, and the downstream access contract. Join frozen score, availability, and universe data on `(signal_date, PERMNO)`. The stage-aware loader permits only pre-2021 data for Gate B; it blocks Historical OOS until future Gate-B and Gate-C freeze evidence exists. Do not calculate anything until Gate B is separately authorized.
 
 ## 15. Governance Timeline
 
@@ -128,6 +133,7 @@ Run the delivery checks first, then the full native suite:
 ```bash
 python -m unittest tests.test_github_delivery -v
 python scripts/smoke_test_handoff.py
+python scripts/smoke_test_us_downstream.py
 python -m unittest discover -s tests -p 'test_*.py'
 ```
 

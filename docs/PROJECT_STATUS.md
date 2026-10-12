@@ -9,6 +9,7 @@
 - Gate A0 within-family governance, construction, validation, and representative freeze.
 - Gate A human review and Final Factor Set freeze.
 - Final Factor Handoff interface export and acceptance.
+- US downstream Strategy/Backtest data handoff: mechanical formal market-data interfaces, protected partitions, contract, QA, and a 2006–2015 frozen final-factor return seed.
 
 ## Current Frozen Factors
 
@@ -23,7 +24,7 @@ The frozen Final Factor Set is K=4. Value, Dividend, and Size are not active Bas
 
 ## Current Delivery Boundary
 
-The governed final-factor signals, availability flags, and universe interface are prepared for a future Strategy Engine. This does not authorize calculation of returns, factor returns, FMOM, factor weights, composite scores, portfolio holdings, or strategy outcomes.
+The governed final-factor signals, availability flags, universe interface, and local downstream calendar/market/return/liquidity/benchmark/RF/FF interfaces are prepared for a future Strategy Engine. The only constructed factor-return data are the frozen 2006–2015 K=4 seed needed for a later authorized Gate B initialization. This does not authorize a Gate B decision, FMOM, factor weights, composite scores, portfolio holdings, NAV, or strategy outcomes.
 
 ## Not Started
 
@@ -37,3 +38,5 @@ The governed final-factor signals, availability flags, and universe interface ar
 ## Governance Reminder
 
 The SSOT remains [US_SG_Cross_Market_Quant_Research.md](US_SG_Cross_Market_Quant_Research.md). `HIST_OOS_BASE` is protected; it may not be used for parameter tuning. See [GITHUB_TEAM_HANDOFF.md](GITHUB_TEAM_HANDOFF.md) before starting any subsequent stage.
+
+The downstream package is [handoff/us_downstream](../handoff/us_downstream/). Its loader permits Gate-B data through 2020 only and requires future Gate-B and Gate-C freeze evidence before it will load 2021–2025 data.

@@ -1,0 +1,7 @@
+record_type,family,specification_id,matched_weeks,max_abs_difference,mean_abs_difference,mismatch_count,status,notes
+BOUNDARY,,,,,,,PASS,Seed signal dates are 2006–2015 only; no 2016+ available factor return is generated.
+CONSTRUCTION,,,,,,,PASS,"Top/Bottom 30%, floor rounding, PERMNO tie break, equal-weight legs, and S_t→E_t→E_t+1 direct-CIZ returns are applied."
+REPRODUCTION_2011_2015,Quality,QUALITY_CURRENT,257,0.0,0.0,0,PASS,Rowwise reproduction against frozen 2011–2015 primary representative evidence; no performance summary.
+REPRODUCTION_2011_2015,Momentum,MOMENTUM_12_1,257,0.0,0.0,0,PASS,Rowwise reproduction against frozen 2011–2015 primary representative evidence; no performance summary.
+REPRODUCTION_2011_2015,Low Risk,LOWRISK_CURRENT,257,0.0,0.0,0,PASS,Rowwise reproduction against frozen 2011–2015 primary representative evidence; no performance summary.
+REPRODUCTION_2011_2015,Investment,INVESTMENT_CURRENT,257,0.0,0.0,0,PASS,Rowwise reproduction against frozen 2011–2015 primary representative evidence; no performance summary.

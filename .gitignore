@@ -71,3 +71,9 @@ secrets*.yml
 # Local large M3 → M4 final-factor handoff exports; tracked handoff metadata
 # and the deterministic small inspection sample remain in the repository.
 /handoff/final_factor/data/*.parquet
+
+# Local large US downstream strategy/backtest handoff data.  Contracts,
+# manifests, QA and deterministic small CSV samples under this directory remain
+# tracked; only rebuilt Parquet market data stay local pending redistribution
+# review.
+/handoff/us_downstream/data/*.parquet

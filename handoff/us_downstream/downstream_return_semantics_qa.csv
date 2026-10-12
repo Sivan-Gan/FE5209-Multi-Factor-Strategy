@@ -1,0 +1,5 @@
+check,status,value,notes
+CIZ_DLYRET_DIRECT,PASS,USE_CIZ_DLYRET_DIRECTLY__DO_NOT_ADD_SEPARATE_DELRET,"No DelRet, dividend return, or split adjustment is added."
+EXECUTION_WINDOW,PASS,"(E_t,E_t+1]",Signal close-to-signal close is not substituted.
+CONFIRMED_DELISTING,PASS,TERMINAL_CIZ_RETURN_THEN_CASH,A confirmed DlyDelFlg path compounds its terminal CIZ return and then holds cash at zero return.
+UNEXPLAINED_PATH_FAILURES,PASS,0,Must be zero for acceptance.

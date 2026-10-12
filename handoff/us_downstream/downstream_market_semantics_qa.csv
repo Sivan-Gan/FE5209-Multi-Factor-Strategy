@@ -1,0 +1,6 @@
+check,status,value,notes
+PRIMARY_BENCHMARK,PASS,INDNO=1000500;DlyTotRet,CRSP Value-Weighted Index of the S&P 500 Universe.
+IVOL_MARKET_PROXY,PASS,INDNO=1000080;DlyTotRet,Retained frozen formal market-proxy identity.
+PRICE_RETURN_CROSSCHECK,PASS,INDNO=1000502;DlyPrcRet diagnostic only,Never substituted for primary total-return benchmark.
+FF_RF_UNITS,PASS,DECIMAL_RETURN,mktrf/smb/hml/rmw/cma/rf/umd are never divided by 100.
+DLYVOL_DLYPRCVOL_UNITS,PASS,DlyVol raw shares; DlyPrcVol price-times-volume USD proxy,DlyPrcVol is not a transaction-by-transaction actual dollar-volume claim.

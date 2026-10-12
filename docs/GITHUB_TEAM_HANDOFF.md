@@ -17,6 +17,7 @@ Read [ENVIRONMENT.md](../ENVIRONMENT.md) for scope and platform notes. Never com
 - `docs/US_SG_Cross_Market_Quant_Research.md`: frozen SSOT.
 - `docs/PROJECT_STATUS.md`: completed and prohibited stages.
 - `handoff/final_factor/`: final K=4 downstream interface.
+- `handoff/us_downstream/`: governed formal-US market-data interface for the future Strategy Engine and Backtest/Risk workflow.
 - `outputs/audit/wrds_formal/`: complete formal audit record.
 - `src/`: upstream formal pipeline plus controlled handoff exporter.
 - `tests/`: native regression and delivery checks.
@@ -28,10 +29,13 @@ Read [ENVIRONMENT.md](../ENVIRONMENT.md) for scope and platform notes. Never com
 3. [Final Factor Handoff contract](../handoff/final_factor/FINAL_FACTOR_HANDOFF_CONTRACT.md).
 4. [Final factor registry](../handoff/final_factor/final_factor_registry.csv).
 5. [Downstream interface contract](../handoff/final_factor/downstream_interface_contract.csv).
+6. [US downstream data contract](../handoff/us_downstream/US_DOWNSTREAM_DATA_CONTRACT.md).
 
 ## 4. Final factor data location
 
 The final factor interface is under `handoff/final_factor/data/`. The small CSV sample is tracked. Full Parquet files are local ignored interfaces with status **DATA_DISTRIBUTION_REVIEW_REQUIRED**. Obtain them only after the relevant data-sharing agreement has been reviewed, then place them at the paths in [data/README.md](../data/README.md) and verify the transfer manifest.
+
+The companion downstream interface is under `handoff/us_downstream/data/`. Its full Parquet files are also local and ignored; contracts, QA, manifests and pre-2016 samples are tracked. Use `src/handoff/load_us_downstream_data.py` with an explicit stage—there is no normal OOS bypass.
 
 ## 5. Canonical factor definitions
 
@@ -54,6 +58,8 @@ The only active final specifications are, in order:
 | Factor validation | `src/validation/build_formal_factor_validation.py` | Frozen upstream. |
 | Gate A freeze | `src/validation/freeze_gate_a_final_factor_set.py` | Frozen. |
 | Final handoff export | `src/handoff/prepare_final_factor_handoff.py` | Controlled export. |
+| Downstream data export | `src/handoff/prepare_us_downstream_data.py` | Controlled mechanical export. |
+| Downstream stage loader | `src/handoff/load_us_downstream_data.py` | Gate-B/OOS governed access. |
 | Future Strategy Engine | `src/strategy/` | Not implemented; separate authorization required. |
 
 DEV/Yahoo/SEC code and artifacts remain archived historical evidence; they are not the formal 2006–2025 research path.
@@ -74,11 +80,14 @@ The next potential stage is a governed Gate B / Strategy Engine workflow, but on
 
 `python scripts/smoke_test_handoff.py` works in a fresh clone using the tracked sample. It reports `FULL_PARQUET=NOT_PRESENT_EXTERNAL_DATA_REQUIRED` until approved local files are placed. That is expected, not a reconstruction instruction.
 
+The downstream package behaves the same way: use its requirement and external-transfer manifests, then run its focused test only after authorized local Parquet placement. Never force-add the local Parquet files.
+
 ## 11. Tests
 
 ```bash
 python -m unittest tests.test_github_delivery -v
 python scripts/smoke_test_handoff.py
+python scripts/smoke_test_us_downstream.py
 python -m unittest discover -s tests -p 'test_*.py'
 ```
 

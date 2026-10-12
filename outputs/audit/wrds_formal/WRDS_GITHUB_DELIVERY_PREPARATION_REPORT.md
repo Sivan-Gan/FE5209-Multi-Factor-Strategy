@@ -10,7 +10,7 @@ Prepare a portable private-team delivery surface without changing frozen researc
 
 ## 3. Frozen Research State
 
-Preparation parent: `68a69ec70771ee6a8bc021c06ecfc55cbc5b89d9`. Gate A and Final Factor Handoff remain frozen.
+Delivery baseline: `803d20bb7c66e2726865a62ac9e73f882816bd7a` remains an ancestor of HEAD. Gate A and Final Factor Handoff remain frozen.
 
 ## 4. Final Factor Set
 
@@ -42,7 +42,7 @@ WRDS/CRSP/Compustat/CCM/Historical-GICS raw data and legacy raw package files ar
 
 ## 11. Large File Review
 
-Large-file audit lists 16 local files above 25 MB; no tracked file exceeds 100 MB.
+Large-file audit lists 21 local files above 25 MB; no tracked file exceeds 100 MB.
 
 ## 12. Gitignore Review
 

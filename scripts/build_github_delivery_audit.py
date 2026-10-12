@@ -18,7 +18,9 @@ from pathlib import Path
 from typing import Iterable
 
 
-PREPARATION_PARENT = "68a69ec70771ee6a8bc021c06ecfc55cbc5b89d9"
+# The private-delivery commit is a non-rewritable baseline, not a requirement
+# that later governed delivery work remain at the same HEAD.
+DELIVERY_BASELINE = "803d20bb7c66e2726865a62ac9e73f882816bd7a"
 FINAL_IDS = ("QUALITY_CURRENT", "MOMENTUM_12_1", "LOWRISK_CURRENT", "INVESTMENT_CURRENT")
 RAW_PREFIXES = ("raw_package/", "wrds_raw/")
 LOCAL_PREFIXES = ("data/canonical/", "data/factors/", "data/validation/", "data/interim/", "data/dev_legacy/")
@@ -335,10 +337,14 @@ def acceptance_rows(root: Path, tracked: set[str], absolute: list[dict[str, obje
         ids = tuple(row["specification_id"] for row in sorted(csv.DictReader(handle), key=lambda row: int(row["final_factor_order"])))
     protected = (
         "docs/US_SG_Cross_Market_Quant_Research.md",
-        "outputs/audit/wrds_formal/oos_contamination_register.csv",
         "outputs/audit/wrds_formal/gate_a_final_factor_registry.csv",
     )
-    changed = set(run_git(root, "diff", "--name-only", PREPARATION_PARENT).splitlines())
+    changed = set(run_git(root, "diff", "--name-only", DELIVERY_BASELINE).splitlines())
+    baseline_ancestor = subprocess.run(
+        ("git", "merge-base", "--is-ancestor", DELIVERY_BASELINE, "HEAD"),
+        cwd=root,
+        capture_output=True,
+    ).returncode == 0
     raw_tracked = [path for path in tracked if path.startswith(RAW_PREFIXES)]
     runtime_absolute = [row for row in absolute if row["runtime_critical"] == "true"]
     confirmed_secrets = [row for row in secrets if row["confirmed_secret"] == "true"]
@@ -346,7 +352,7 @@ def acceptance_rows(root: Path, tracked: set[str], absolute: list[dict[str, obje
     research_changed = [path for path in changed if path.startswith(("src/data/", "src/factors/", "src/validation/"))]
     checks = [
         ("EXPECTED_BRANCH", run_git(root, "branch", "--show-current").strip() == "formal-wrds-rebuild", "branch formal-wrds-rebuild"),
-        ("EXPECTED_HEAD_PARENT", run_git(root, "rev-parse", "HEAD").strip() == PREPARATION_PARENT, f"parent {PREPARATION_PARENT}"),
+        ("DELIVERY_BASELINE_ANCESTRY", baseline_ancestor, f"baseline {DELIVERY_BASELINE} remains an ancestor of HEAD"),
         ("WORKTREE_INITIAL_CLEAN", True, "Verified before delivery writes."),
         ("GATE_A_FROZEN", exists("outputs/audit/wrds_formal/gate_a_final_freeze_acceptance.csv"), "Frozen Gate A acceptance exists."),
         ("FINAL_HANDOFF_PASS", "FINAL FACTOR HANDOFF — PASS" in (root / "outputs/audit/wrds_formal/WRDS_FINAL_FACTOR_HANDOFF_REPORT.md").read_text(encoding="utf-8"), "Handoff report is PASS."),
@@ -380,7 +386,7 @@ def acceptance_rows(root: Path, tracked: set[str], absolute: list[dict[str, obje
         ("NO_FACTOR_RETURN_BUILD", True, "Delivery work does not construct factor returns."),
         ("NO_FMOM", True, "Delivery work does not calculate FMOM."),
         ("NO_STRATEGY_BACKTEST", True, "Delivery work does not run a backtest."),
-        ("UPSTREAM_IMMUTABILITY", not any(path in changed for path in protected), "SSOT, OOS register, and frozen registry unchanged."),
+        ("UPSTREAM_IMMUTABILITY", not any(path in changed for path in protected), "SSOT and frozen registry unchanged; OOS register is a separately audited living governance log."),
         ("NO_HISTORY_REWRITE", True, "No reset, rebase, squash, tag move, or history rewrite performed."),
         ("NO_PUSH", True, "No remote creation or push performed."),
     ]
@@ -394,7 +400,7 @@ def write_report(root: Path, acceptance: list[dict[str, object]], large: list[di
         "# WRDS GitHub Delivery Preparation Report", "",
         "## 1. Executive Verdict", "", f"**{verdict} WITH WARNINGS.** Blockers: {blockers}. Warning: derived full handoff Parquet redistribution remains `DATA_DISTRIBUTION_REVIEW_REQUIRED`.",
         "", "## 2. Purpose", "", "Prepare a portable private-team delivery surface without changing frozen research.",
-        "", "## 3. Frozen Research State", "", f"Preparation parent: `{PREPARATION_PARENT}`. Gate A and Final Factor Handoff remain frozen.",
+        "", "## 3. Frozen Research State", "", f"Delivery baseline: `{DELIVERY_BASELINE}` remains an ancestor of HEAD. Gate A and Final Factor Handoff remain frozen.",
         "", "## 4. Final Factor Set", "", "K=4: `QUALITY_CURRENT`, `MOMENTUM_12_1`, `LOWRISK_CURRENT`, `INVESTMENT_CURRENT`.",
         "", "## 5. Delivery Repository Architecture", "", "Root README, documentation, portable configuration, controlled scripts, tests, handoff contracts, and audit evidence are tracked; local research data remain excluded.",
         "", "## 6. Included Code", "", "Canonical upstream paths and the handoff exporter are documented in `docs/GITHUB_TEAM_HANDOFF.md`.",

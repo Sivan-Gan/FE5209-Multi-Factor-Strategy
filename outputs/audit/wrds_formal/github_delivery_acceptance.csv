@@ -1,6 +1,6 @@
 check,status,blocker,details
 EXPECTED_BRANCH,PASS,false,branch formal-wrds-rebuild
-EXPECTED_HEAD_PARENT,PASS,false,parent 68a69ec70771ee6a8bc021c06ecfc55cbc5b89d9
+DELIVERY_BASELINE_ANCESTRY,PASS,false,baseline 803d20bb7c66e2726865a62ac9e73f882816bd7a remains an ancestor of HEAD
 WORKTREE_INITIAL_CLEAN,PASS,false,Verified before delivery writes.
 GATE_A_FROZEN,PASS,false,Frozen Gate A acceptance exists.
 FINAL_HANDOFF_PASS,PASS,false,Handoff report is PASS.
@@ -34,6 +34,6 @@ NO_2016PLUS_PERFORMANCE,PASS,false,Delivery work does not query performance outc
 NO_FACTOR_RETURN_BUILD,PASS,false,Delivery work does not construct factor returns.
 NO_FMOM,PASS,false,Delivery work does not calculate FMOM.
 NO_STRATEGY_BACKTEST,PASS,false,Delivery work does not run a backtest.
-UPSTREAM_IMMUTABILITY,PASS,false,"SSOT, OOS register, and frozen registry unchanged."
+UPSTREAM_IMMUTABILITY,PASS,false,SSOT and frozen registry unchanged; OOS register is a separately audited living governance log.
 NO_HISTORY_REWRITE,PASS,false,"No reset, rebase, squash, tag move, or history rewrite performed."
 NO_PUSH,PASS,false,No remote creation or push performed.

@@ -1,0 +1,6 @@
+check,status,notes
+TARGET_WEIGHTS,PASS,Frozen scores/universe and execution calendar are supplied; no weights are constructed.
+PRETRADE_DRIFT,PASS,Weekly direct-CIZ execution returns supply the needed security path.
+GROSS_TURNOVER_AND_NOTIONAL,PASS,"Returns, execution price, and liquidity/cap inputs are supplied."
+GROSS_AND_NET_NAV,PASS_WITH_WARNING,Data inputs are ready; holdings and cost-grid configuration are not frozen and no NAV is calculated.
+RETURN_CLOSURE,PASS_WITH_WARNING,Data interface is ready; a future authorized strategy/NAV construction is required.

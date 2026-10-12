@@ -1,0 +1,4 @@
+check,status,notes
+MARKET_ONLY_REGRESSION,PASS,Future strategy excess return can be aligned with CRSP INDNO 1000500 DlyTotRet and FF RF.
+RICH_EXTERNAL_FACTOR_REGRESSION,PASS,"Daily/monthly decimal mktrf, smb, hml, rmw, cma, rf, umd are supplied; no regression is run."
+WEEKLY_FF_TRANSFORMATION,NOT_APPLICABLE,Deferred to M5 because the regression aggregation specification is not required for this data handoff.

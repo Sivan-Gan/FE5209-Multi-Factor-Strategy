@@ -1,0 +1,9 @@
+check,value,status,notes
+NO_GATE_B_DECISION,0,PASS,No J/lambda/risk-adjustment/weight/configuration decision generated.
+NO_FMOM,0,PASS,No FMOM signal constructed.
+NO_STRATEGY_HOLDINGS,0,PASS,No final strategy holdings constructed.
+NO_STRATEGY_NAV,0,PASS,No gross/net strategy NAV constructed.
+NO_STRATEGY_PERFORMANCE_SUMMARY,0,PASS,No 2016–2025 strategy performance statistic emitted.
+SEED_DATES_AFTER_2015,0,PASS,Seed factor-return observations are bounded by signal date to 2006–2015.
+SEED_2016_PLUS_AVAILABLE_FACTOR_RETURNS,0,PASS,No factor return whose execution path reaches 2016 is available in the seed.
+MECHANICAL_DATA_MATERIALIZATION_ONLY,1,PASS,2016–2025 market rows are physically exported without performance research or summary.

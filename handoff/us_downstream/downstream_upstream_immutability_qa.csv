@@ -1,0 +1,10 @@
+check,status,notes
+RAW_IMMUTABILITY,PASS,Pre-export and post-export hashes/snapshots must match.
+SSOT_IMMUTABILITY,PASS,Pre-export and post-export hashes/snapshots must match.
+CANONICAL_IMMUTABILITY,PASS,Pre-export and post-export hashes/snapshots must match.
+SCORE_STORE_IMMUTABILITY,PASS,Pre-export and post-export hashes/snapshots must match.
+CANDIDATE_STORE_IMMUTABILITY,PASS,Pre-export and post-export hashes/snapshots must match.
+REFRESHED_VALIDATION_IMMUTABILITY,PASS,Pre-export and post-export hashes/snapshots must match.
+FINAL_HANDOFF_SCORE_IMMUTABILITY,PASS,Pre-export and post-export hashes/snapshots must match.
+FINAL_HANDOFF_UNIVERSE_IMMUTABILITY,PASS,Pre-export and post-export hashes/snapshots must match.
+FINAL_REGISTRY_IMMUTABILITY,PASS,Pre-export and post-export hashes/snapshots must match.

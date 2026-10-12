@@ -8,13 +8,13 @@ This inventory classifies physical delivery-relevant files and collapsed local e
 
 | Classification | Paths |
 | --- | ---: |
-| A. REQUIRED_FOR_GITHUB_DELIVERY | 156 |
-| B. REQUIRED_FOR_REPRODUCTION_BUT_LOCAL_DATA | 12 |
-| C. HISTORICAL_AUDIT_KEEP | 319 |
+| A. REQUIRED_FOR_GITHUB_DELIVERY | 193 |
+| B. REQUIRED_FOR_REPRODUCTION_BUT_LOCAL_DATA | 27 |
+| C. HISTORICAL_AUDIT_KEEP | 321 |
 | D. TEMPORARY_OR_REGENERABLE | 6 |
 | E. PROPRIETARY_RAW_DATA_DO_NOT_UPLOAD | 530 |
 
-Tracked physical paths at audit time: **421**. Ignored physical paths at audit time: **602**.
+Tracked physical paths at audit time: **460**. Ignored physical paths at audit time: **617**.
 
 ## Delivery decision
 

@@ -1,0 +1,44 @@
+check,status,blocking,evidence,notes
+GATE_A_FROZEN,PASS,false,SSOT Gate A freeze,Gate A remains frozen.
+FINAL_FACTOR_HANDOFF_VALID,PASS,false,Final Factor Handoff acceptance,Frozen upstream handoff is valid.
+FINAL_K_4,PASS,false,final_factor_registry.csv,Exact K=4 contract verified before export.
+SECURITY_DAILY_MARKET,PASS,false,security_daily_market.parquet,Local market interface materialized.
+WEEKLY_EXECUTION_CALENDAR,PASS,false,weekly_execution_calendar.parquet,Exact calendar materialized.
+SECURITY_WEEKLY_EXECUTION_RETURNS,PASS,false,security_weekly_execution_returns.parquet,Direct-CIZ weekly interface materialized.
+EXECUTION_LIQUIDITY,PASS,false,execution_liquidity_weekly.parquet,ADV/cap interface materialized.
+BENCHMARK_DAILY,PASS,false,benchmark_daily_returns.parquet,INDNO 1000500 daily total return.
+BENCHMARK_WEEKLY,PASS,false,benchmark_weekly_execution_returns.parquet,Execution-aligned benchmark.
+RISK_FREE_DAILY,PASS,false,risk_free_daily.parquet,Decimal RF daily interface.
+RISK_FREE_WEEKLY,PASS,false,risk_free_weekly.parquet,Execution-aligned compounded RF.
+FF_FACTOR_DATA,PASS,false,FF daily/monthly Parquet,Decimal FF factors supplied.
+SECURITY_REFERENCE,PASS,false,security_reference_history.parquet,Time-valid reference supplied.
+HISTORICAL_GICS,PASS,false,Frozen Final Factor Handoff universe,Signal-date historical GICS reused; no current-GICS backfill.
+UNIVERSE_DOWNSTREAM_SUPPORT,PASS,false,downstream_join_qa.csv,Universe joins to returns.
+FACTOR_RETURN_SEED_2006_2015,PASS,false,final_factor_returns_seed_weekly.parquet,Seed materialized in allowed date scope.
+FACTOR_RETURN_REPRODUCTION,PASS,false,final_factor_return_seed_qa.csv,2011–2015 frozen-row reproduction.
+CRSP_RETURN_SEMANTICS,PASS,false,downstream_return_semantics_qa.csv,Direct DlyRet only; no add-ons.
+DELISTING_SEMANTICS,PASS,false,downstream_return_semantics_qa.csv,Terminal CIZ delisting return then cash; unexplained failures zero.
+BENCHMARK_SEMANTICS,PASS,false,downstream_market_semantics_qa.csv,1000500 DlyTotRet is primary; 1000502 never substituted.
+RF_UNITS,PASS,false,downstream_market_semantics_qa.csv,RF is not divided by 100.
+LIQUIDITY_UNITS,PASS,false,downstream_market_semantics_qa.csv,DlyVol/DlyPrcVol semantics disclosed.
+JOIN_INTEGRITY,PASS,false,downstream_join_qa.csv,All required key joins are clean.
+NAV_DATA_CAPABILITY,PASS_WITH_WARNING,false,downstream_nav_capability_qa.csv,Data ready; configuration remains future work.
+TURNOVER_DATA_CAPABILITY,PASS_WITH_WARNING,false,downstream_nav_capability_qa.csv,Data ready; holdings configuration remains future work.
+COST_DATA_CAPABILITY,PASS_WITH_WARNING,false,transaction_cost_input_capability_qa.csv,Data ready; transaction-cost grid remains unfrozen.
+CAPACITY_DATA_CAPABILITY,PASS_WITH_WARNING,false,downstream_liquidity_capability_qa.csv,Data ready; impact calibration remains future work.
+REGRESSION_DATA_CAPABILITY,PASS,false,strategy_regression_capability_qa.csv,Data ready; no regression run.
+ATTRIBUTION_DATA_CAPABILITY,PASS,false,US_DOWNSTREAM_CAPABILITY_MATRIX.csv,Data ready with future holdings.
+DRAWDOWN_DATA_CAPABILITY,PASS_WITH_WARNING,false,downstream_nav_capability_qa.csv,Data ready with future NAV.
+STRESS_DATA_CAPABILITY,PASS_WITH_WARNING,false,regime_stress_data_capability_qa.csv,Data ready; regime rule remains unfrozen.
+RETURN_CLOSURE_DATA_CAPABILITY,PASS_WITH_WARNING,false,downstream_nav_capability_qa.csv,Data ready with future strategy construction.
+CONFIG_SAMPLE_DATA_READY,PASS,false,downstream_partition_manifest.csv,2016–2020 physical partition materialized; no performance summary.
+HIST_OOS_DATA_MATERIALIZED_OR_DOCUMENTED,PASS,false,downstream_partition_manifest.csv,2021–2025 physical partition protected by loader.
+STAGE_AWARE_ACCESS,PASS,false,src/handoff/load_us_downstream_data.py,OOS requires future Gate B/C evidence.
+NO_GATE_B_DECISION,PASS,false,downstream_no_research_decision_qa.csv,No configuration decision.
+NO_FMOM,PASS,false,downstream_no_research_decision_qa.csv,No FMOM constructed.
+NO_STRATEGY_BACKTEST,PASS,false,downstream_no_research_decision_qa.csv,No strategy holdings/NAV/backtest constructed.
+NO_STRATEGY_PERFORMANCE_SUMMARY,PASS,false,downstream_no_research_decision_qa.csv,No 2016–2025 strategy performance summary.
+NO_2026,PASS,false,source manifest / formal cutoff QA,No formal daily rows after 2025-12-31.
+REDISTRIBUTION_POLICY,PASS_WITH_WARNING,false,EXTERNAL_DOWNSTREAM_DATA_TRANSFER_MANIFEST.csv,Full Parquet remain local-large/ignored pending permission.
+DETERMINISM,PASS,false,downstream_determinism.csv,Two independent materializations have equal logical hashes.
+UPSTREAM_IMMUTABILITY,PASS,false,upstream immutability QA,All frozen upstream inputs match pre-export hashes.

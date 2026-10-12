@@ -1,0 +1,5 @@
+check,status,notes
+TRADE_DOLLAR_NOTIONAL,PASS,"Execution price, volume, DlyPrcVol proxy, and security/issuer caps are exported."
+ADV_PARTICIPATION_RATE,PASS,Backward-looking ADV20/ADV60 and valid-day counts are exported; no participation threshold is selected.
+AUM_CAPACITY_SCENARIOS,PASS_WITH_WARNING,Inputs are available; impact/calibration assumptions are not frozen.
+LIQUIDITY_CONCENTRATION,PASS,PERMNO-level ADV proxy and historical GICS joins are available.

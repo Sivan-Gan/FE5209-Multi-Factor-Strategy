@@ -95,11 +95,17 @@ class GitHubDeliveryTests(unittest.TestCase):
     def test_15_frozen_upstream_files_are_unchanged_since_delivery_parent(self) -> None:
         protected = (
             "docs/US_SG_Cross_Market_Quant_Research.md",
-            "outputs/audit/wrds_formal/oos_contamination_register.csv",
             "outputs/audit/wrds_formal/gate_a_final_factor_registry.csv",
         )
         changed = subprocess.run(("git", "diff", "--name-only", "68a69ec70771ee6a8bc021c06ecfc55cbc5b89d9", "--", *protected), cwd=ROOT, text=True, capture_output=True, check=True).stdout.strip()
         self.assertEqual(changed, "")
+
+    def test_16_oos_register_is_a_living_governance_record(self) -> None:
+        register = rows(AUDIT / "oos_contamination_register.csv")
+        record = next(row for row in register if row["stage"] == "US_DOWNSTREAM_DATA_MECHANICAL_MATERIALIZATION")
+        self.assertEqual(record["performance_evidence_accessed"], "MECHANICAL_DATA_MATERIALIZATION_ONLY")
+        self.assertEqual(record["post2015_returns_used_for_factor_choice"], "FALSE")
+        self.assertEqual(record["status"], "NONDECISIONAL_OPERATIONAL_ACCESS_DOCUMENTED")
 
 
 if __name__ == "__main__":

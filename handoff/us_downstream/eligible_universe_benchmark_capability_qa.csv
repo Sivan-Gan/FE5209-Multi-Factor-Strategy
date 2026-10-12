@@ -1,0 +1,3 @@
+check,status,notes
+UNIVERSE_RETURN_JOIN,PASS,"Frozen universe and weekly execution return interface share (signal_date, PERMNO)."
+ELIGIBLE_UNIVERSE_EW_BENCHMARK,PASS,Sufficient for later exact EW computation; no benchmark performance is calculated here.

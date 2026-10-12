@@ -1,0 +1,38 @@
+capability,required_data,available_after_this_task,remaining_data_gap,remaining_parameter_gap,future_gate_required,status,notes
+FACTOR_RETURN_CONSTRUCTION,final-factor scores + 2006–2015 seed + weekly security returns,TRUE,,,Gate B and/or Gate C as stated,DATA_READY,Gate B only for later completed periods
+FMOM,factor-return interface,TRUE,,J/risk adjustment/lambda remain Gate B decisions,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,J/risk adjustment/lambda remain Gate B decisions
+FACTOR_WEIGHTING,final factors + factor returns,TRUE,,lambda/risk adjustment remain Gate B decisions,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,lambda/risk adjustment remain Gate B decisions
+STOCK_COMPOSITE_SCORE,frozen score interface,TRUE,,missing-factor rule/weights remain frozen later,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,missing-factor rule/weights remain frozen later
+TOP20_SELECTION,weekly universe + score/return interface,TRUE,,composite/selection configuration remains future work,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,composite/selection configuration remains future work
+SECTOR_CAP,historical GICS universe interface,TRUE,,sector-cap parameter remains future work,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,sector-cap parameter remains future work
+BUFFER,weekly universe/return interface,TRUE,,turnover buffer remains future work,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,turnover buffer remains future work
+NEXT_CLOSE_EXECUTION,weekly execution calendar + direct CIZ return interface,TRUE,,,Gate B and/or Gate C as stated,DATA_READY,exact E_t to E_t+1 path
+HOLDINGS,"universe, scores, calendar",TRUE,,strategy rule not constructed,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,strategy rule not constructed
+TRADES,"returns, liquidity, calendar",TRUE,,strategy rule not constructed,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,strategy rule not constructed
+TURNOVER,return interface + target/pretrade formulas,TRUE,,target-weight configuration remains future work,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,target-weight configuration remains future work
+GROSS_NAV,execution return + future holdings,TRUE,,no NAV generated,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,no NAV generated
+NET_NAV,gross NAV inputs + ADV,TRUE,,transaction-cost grid not frozen,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,transaction-cost grid not frozen
+SP500_BENCHMARK,INDNO 1000500 DlyTotRet daily/weekly,TRUE,,,Gate B and/or Gate C as stated,DATA_READY,primary total-return benchmark
+ELIGIBLE_UNIVERSE_EW,frozen weekly universe + weekly security returns,TRUE,,,Gate B and/or Gate C as stated,DATA_READY,capability only; no benchmark performance computed
+STATIC_VS_DYNAMIC,factor scores/returns,TRUE,,weighting rule deferred,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,weighting rule deferred
+SHARPE,future net/gross strategy return + RF,TRUE,,strategy not run,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,strategy not run
+SORTINO,future strategy return + RF,TRUE,,strategy not run,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,strategy not run
+MAX_DRAWDOWN,future strategy NAV,TRUE,,strategy not run,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,strategy not run
+CALMAR,future strategy NAV,TRUE,,strategy not run,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,strategy not run
+HIT_RATE,future strategy return,TRUE,,strategy not run,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,strategy not run
+ROLLING_METRICS,future strategy return,TRUE,,window/rule not selected,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,window/rule not selected
+FACTOR_REGRESSION,FF daily/monthly factors + RF,TRUE,,,Gate B and/or Gate C as stated,DATA_READY,regression specification not run
+MARKET_ONLY_REGRESSION,benchmark total return + RF,TRUE,,,Gate B and/or Gate C as stated,DATA_READY,regression not run
+SECTOR_ATTRIBUTION,historical GICS + future holdings,TRUE,,,Gate B and/or Gate C as stated,DATA_READY,no holdings generated
+STOCK_ATTRIBUTION,PERMNO returns + future holdings,TRUE,,,Gate B and/or Gate C as stated,DATA_READY,no holdings generated
+HOLDINGS_CONCENTRATION,universe/cap + future holdings,TRUE,,,Gate B and/or Gate C as stated,DATA_READY,no holdings generated
+MARKET_CAP_DISTRIBUTION,security/issuer cap interface,TRUE,,,Gate B and/or Gate C as stated,DATA_READY,diagnostic only
+ADV,DlyPrcVol/ADV20/ADV60 interface,TRUE,,,Gate B and/or Gate C as stated,DATA_READY,"proxy, not impact calibration"
+PARTICIPATION_RATE,future traded notional + ADV,TRUE,,,Gate B and/or Gate C as stated,DATA_READY,no trades generated
+CAPACITY,market cap + ADV inputs,TRUE,,scenario/impact assumptions remain future work,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,scenario/impact assumptions remain future work
+COST_DRAG,turnover + cost formula inputs,TRUE,,cost grid not frozen,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,cost grid not frozen
+BREAK_EVEN_COST,future strategy gross returns + turnover,TRUE,,strategy not run,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,strategy not run
+DRAWDOWN_ANATOMY,future NAV + holdings + factors,TRUE,,strategy not run,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,strategy not run
+ROBUSTNESS,interfaces available,TRUE,,future pre-authorized robustness design required,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,future pre-authorized robustness design required
+REGIME_STRESS,market/FF/return interface,TRUE,,formal regime rule not frozen,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,formal regime rule not frozen
+RETURN_CLOSURE,"daily/weekly returns, RF, costs inputs",TRUE,,strategy/NAV/cost configuration remains future work,Gate B and/or Gate C as stated,DATA_READY__PARAMETER_FREEZE_STILL_REQUIRED,strategy/NAV/cost configuration remains future work

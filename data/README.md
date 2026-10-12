@@ -25,3 +25,21 @@ They remain ignored by Git. Verify bytes and SHA256 against [the external transf
 ## Reproduction and limitations
 
 The upstream sequence and frozen source hashes are documented in `handoff/final_factor/reproduction_manifest.csv` and `source_manifest.csv`. Reproduction requires authorized local data access; downstream Strategy Engine work should consume the frozen handoff rather than reconstruct factor research.
+
+## US downstream Strategy/Backtest handoff placement
+
+The governed companion package is `handoff/us_downstream/`. Its Parquet interfaces remain local and Git-ignored:
+
+```text
+handoff/us_downstream/data/security_daily_market*.parquet
+handoff/us_downstream/data/weekly_execution_calendar.parquet
+handoff/us_downstream/data/security_weekly_execution_returns.parquet
+handoff/us_downstream/data/execution_liquidity_weekly.parquet
+handoff/us_downstream/data/benchmark_*.parquet
+handoff/us_downstream/data/risk_free_*.parquet
+handoff/us_downstream/data/ff_factors_*.parquet
+handoff/us_downstream/data/security_reference_history.parquet
+handoff/us_downstream/data/final_factor_returns_seed_weekly.parquet
+```
+
+Before any approved private transfer, read `handoff/us_downstream/EXTERNAL_DOWNSTREAM_DATA_TRANSFER_MANIFEST.csv` and confirm redistribution permission. Use `US_DOWNSTREAM_DATA_CONTRACT.md` and the stage-aware loader; do not directly bypass the protected 2021–2025 Historical OOS partition.
