@@ -32,33 +32,24 @@ class GridTest(unittest.TestCase):
                          {(4, False), (4, True), (3, False), (3, True)})
 
 
-class PreviewTest(unittest.TestCase):
-    def setUp(self):
-        self.hold = pd.DataFrame({"signal_date": ["2020-12-11"] * 2 + ["2020-12-24"] * 2,
-                                  "PERMNO": ["1", "2", "1", "2"], "weight": [0.5, 0.5, 0.5, 0.5]})
-        self.ret = pd.DataFrame({
-            "signal_date": ["2020-12-11", "2020-12-11", "2020-12-24", "2020-12-24"],
-            "next_execution_date": ["2020-12-21", "2020-12-21", "2021-01-04", "2021-01-04"],
-            "PERMNO": ["1", "2", "1", "2"],
-            "execution_to_next_execution_total_return": [0.02, -0.01, 0.05, 0.05],
-            "usable": [1, 1, 1, 1]})
-
-    def test_weighted_return_and_window_cut(self):
-        weekly = rg.gross_preview(self.hold, self.ret, end="2020-12-31")
-        self.assertEqual(list(weekly.index), ["2020-12-11"])    # 12-24 ends in 2021 -> dropped
-        self.assertAlmostEqual(weekly["gross_return"].iloc[0], 0.5 * 0.02 + 0.5 * -0.01)
-
-    def test_unusable_stock_counts_as_cash(self):
-        self.ret.loc[1, "usable"] = 0
-        weekly = rg.gross_preview(self.hold, self.ret, end="2020-12-31")
-        self.assertAlmostEqual(weekly["gross_return"].iloc[0], 0.01)
-        self.assertAlmostEqual(weekly["unpriced_weight"].iloc[0], 0.5)
-
-    def test_stats(self):
-        weekly = pd.DataFrame({"gross_return": [0.01, -0.01] * 26, "unpriced_weight": 0.0})
-        s = rg.preview_stats(weekly)
-        self.assertEqual(s["preview_weeks"], 52)
-        self.assertAlmostEqual(s["preview_gross_sharpe_rf0"], 0.0)
+class EvaluateTest(unittest.TestCase):
+    def test_evaluate_columns_and_cost_order(self):
+        dates = ["2016-01-08", "2016-01-15", "2016-01-22", "2016-01-29"]
+        ends = ["2016-01-19", "2016-01-25", "2016-02-01", "2016-02-08"]
+        rng = np.random.default_rng(0)
+        hold = pd.DataFrame([{"signal_date": d, "PERMNO": p, "weight": 0.5}
+                             for i, d in enumerate(dates) for p in (("A", "B") if i % 2 == 0 else ("A", "C"))])
+        ret = pd.DataFrame([{"signal_date": d, "next_execution_date": e, "PERMNO": p,
+                             "execution_to_next_execution_total_return": rng.normal(0.01, 0.02), "usable": 1}
+                            for d, e in zip(dates, ends) for p in ("A", "B", "C")])
+        rf = pd.Series(0.0, index=dates)
+        row, weekly = rg.evaluate(hold, ret, rf, rf, "2020-12-31", 0.001)
+        for col in ("gross_sharpe", "net_sharpe", "stress_sharpe", "net_max_drawdown", "break_even_oneway_cost",
+                    "avg_holding_weeks", "trade_win_rate", "cost_drag_ann", "net_information_ratio"):
+            self.assertIn(col, row)
+        self.assertGreater(row["gross_ann_return"], row["net_ann_return"])
+        self.assertGreater(row["net_ann_return"], row["stress_ann_return"])
+        self.assertEqual(len(weekly), 4)
 
 
 if __name__ == "__main__":
