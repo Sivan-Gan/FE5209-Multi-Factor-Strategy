@@ -244,7 +244,7 @@ Primary Owner 完成后，Reviewer 至少检查：
 |---|---|---|
 | Warm-up | 累积历史、初始化窗口 | 用绩效选策略 |
 | Factor Selection | 在 Gate A0 选择 within-family representative specification；在 Gate A 选择 factor family、方向（仅在既有 integrity rules 下）与既授权的 Neutralization | 选择最终 FMOM 配置；使用 2016–2025 outcome 选择 Gate A0 或 Gate A 结果 |
-| Configuration Selection | 选 $J$、Risk Adjustment、$\lambda$、Buffer 等 | 回头根据 OOS 重选 Factor |
+| Configuration Selection | 选 FMOM configuration、minimum-available-factor / missing-factor policy、stock-selection rule、turnover buffer、sector-cap implementation、portfolio-weighting rule 及其他明确允许的 Gate B configuration choices | 回头根据 OOS 重选 Factor；改变已经固定的 Weekly rebalance、Weekly Last Close signal time 或 Next Trading Day Close execution |
 | Formal Historical OOS (`HIST_OOS_BASE`) | 评价冻结的 US Base、做预先规定的诊断 | 看完结果再修改 Base Strategy；与 2026 extension 混合统计 |
 | Recent / Operational Extension (`RECENT_EXTENSION`) | 用冻结策略进行近期/运行延伸与 bridge diagnostics | 用结果重新选择 Factor、参数或将其并入 formal OOS headline statistics |
 | Adaptation Validation | 验证已登记的针对性改进 | 无限制参数搜索 |
@@ -256,7 +256,7 @@ Primary Owner 完成后，Reviewer 至少检查：
 
 ## 0.8 Reproducibility Manifest：每次正式运行必须可复现
 
-任何进入 Gate、正式表格或最终报告的 run，都必须生成 `run_manifest.csv` 或等价记录，至少包含：
+任何进入 Gate、正式表格或最终报告的 run，都必须生成 `run_manifest.csv` 或阶段特定的 authoritative manifest equivalent，至少包含：
 
 - `run_id`；
 - `run_timestamp`；
@@ -368,7 +368,7 @@ $$
 - SG Local / FX / Interaction → USD 恒等式通过；
 - Final Reconciliation Residual 在冻结 numerical tolerance 内。
 
-每次 Gate Run 保存 `acceptance_test_report.csv` 并写入对应 `run_id`。任一 Critical Test 失败，该 Run 自动标记为 `REJECTED`，不得进入正式结果表。
+每次 Gate Run 保存 `acceptance_test_report.csv` 或阶段特定的 Gate acceptance artifact，并写入对应 `run_id`。任一 Critical Test 失败，该 Run 自动标记为 `REJECTED`，不得进入正式结果表。
 
 ---
 
@@ -519,7 +519,7 @@ $$
 因此三种核心对象是：
 
 - $\lambda=0$：静态等权多因子；
-- $\lambda=0.5$：静态多因子 + Factor Momentum Tilt，当前主策略；
+- $\lambda=0.5$：静态多因子 + Factor Momentum Tilt，Gate B candidate focal configuration；
 - $\lambda=1$：纯 Factor Momentum Weighting。
 
 项目最核心的增量比较是：
@@ -934,12 +934,12 @@ $$
 | Initialization / Pre-sample Buffer | 2004–2005 | 初始化 252-day 与其他长 lookback 的 Momentum、Volatility、IVOL 及相关 rolling metrics；不作正式绩效评价 |
 | Development / Warm-up | 2006–2010 | 管线与 signal-construction 验证、implementation debugging、基本经济 sanity check；不得使用后续证据反向优化 |
 | Factor Selection | 2011–2015 | Candidate metrics / specifications、Forward IC、single-factor Top/Bottom portfolio、稳定性、经济逻辑、互补性；先由 Gate A0 冻结每个多规格经济家族的一项 representative specification，再由 Gate A 冻结 Final Factor Set |
-| Configuration Selection | 2016–2020 | FMOM、$\lambda$、组合构造、调仓 / execution rules 等允许的配置选择；期末 Gate B 和 Gate C 冻结 |
+| Configuration Selection | 2016–2020 | FMOM configuration、minimum-available-factor / missing-factor policy、stock-selection rule、turnover buffer、sector-cap implementation、portfolio-weighting rule 及其他明确允许的 Gate B configuration choices；期末 Gate B 和 Gate C 冻结 |
 | Formal Historical OOS | 2021–2025.12 | 使用 formal WRDS historical stack 的 Frozen US Base 主历史样本外，标签 `HIST_OOS_BASE` |
 | Recent / Operational Extension | 2026.01–2026.09 | 使用冻结策略的独立近期 / operational extension，标签 `RECENT_EXTENSION`；不并入 formal OOS headline statistics |
 | Live / Forward Test | 2026.10+ | 真实 freeze 后开始的前瞻运行，标签 `LIVE_OPS` |
 
-基本面因子的实际起点不强行设为 2006。若某一期合格股票的基本面覆盖率不足 70%，该因子在该期视为不可用。
+基本面因子的实际起点不强行设为 2006。Formal US pipeline 通过已冻结的 availability / coverage evidence 记录基本面因子的可用性与覆盖率；70% 是 legacy / non-active framework assumption，不是已冻结的 Formal US factor rule，且不得在 Gate A 后追溯引入新的 market-wide cutoff，除非经单独的后续治理授权。
 
 ### 时间切分的冻结含义
 
@@ -991,7 +991,7 @@ Gate B / Gate C 的配置决策只能使用截至 2020 年的数据；对本 his
 ### Gate 0 主要输出
 
 - raw manifest / SHA256 / schema / coverage audit；
-- `data_coverage_report.csv` 与 formal universe summary；
+- formal coverage / availability evidence（当前为 `outputs/audit/wrds_formal/candidate_factor_availability_qa.csv` 与 `outputs/audit/wrds_formal/factor_validation_coverage.csv`）与 formal universe summary；
 - PERMNO–GVKEY CCM exception table、Historical-GICS timing spot-check table；
 - PIT spot-check table、Data Dictionary、Compustat vintage / restatement claim note、CRSP security-/issuer-level market-cap / return / index semantics note；
 - Formal Data Ready Checklist 与 acceptance report。
@@ -1012,7 +1012,7 @@ Gate B / Gate C 的配置决策只能使用截至 2020 年的数据；对本 his
 | Reporting Currency | USD | **FIXED** | 已定 | USD | USD |
 | FX Hedge | None | **FIXED** | 已定 | — | None |
 | Winsorization | 1% / 99% | **FACTOR-DEFINITION FROZEN** | Formal US Factor Definition / Gate A | Frozen same-date 1/99 rule | Same methodology when authorized |
-| Fundamental Coverage | 70% | **CANDIDATE** | Factor Selection | Same logic | Same logic |
+| Fundamental Coverage | 70% legacy framework assumption | **LEGACY / NON-ACTIVE** | 不作追溯性 Factor Selection 决策 | Formal availability / coverage evidence | Same methodology when authorized |
 | Min Cross-Section | — | **EX-ANTE MARKET** | Pre-Specified | 50 | 15 |
 | Single-Factor L/S | — | **EX-ANTE MARKET** | Pre-Specified | Top/Bottom 30% | Top/Bottom 1/3 |
 | FMOM Lookback $J$ | 26 weeks | **CANDIDATE** | Configuration | Same | Same |
@@ -4764,8 +4764,8 @@ $$
 - Coverage Report 完整；
 - Currency / Price / Return / Corporate Action 定义固定；
 - Final Reconciliation 可由 Holdings 重建；
-- 每次正式 run 都有完整 `run_manifest.csv`；
-- 每个 Gate Run 都有 `acceptance_test_report.csv`，Critical Test 必须全部通过。
+- 每次正式 run 都有完整 `run_manifest.csv` 或阶段特定的 authoritative manifest equivalent；
+- 每个 Gate Run 都有 `acceptance_test_report.csv` 或阶段特定的 Gate acceptance artifact，Critical Test 必须全部通过。
 
 不得自行决定：
 
@@ -4786,7 +4786,7 @@ $$
 - Neutralization Check 通过；
 - Raw → Final Score 可追踪；
 - Gate A0 时只按 registry 中已冻结的 existing-constituent specifications 构造 score，不创造新概念或连续内部权重；
-- 输出统一 `factor_scores_weekly.csv`；
+- 输出统一逻辑 artifact `factor_scores_weekly`；当前 strategy-facing authoritative output 为 `handoff/final_factor/data/factor_scores_weekly.parquet`；
 - 后期协助 US / SG Return Source Map、Factor / Sector Attribution，确保 contribution 对真实 holdings 闭合。
 
 不得自行根据回测结果改变 Factor 定义。
