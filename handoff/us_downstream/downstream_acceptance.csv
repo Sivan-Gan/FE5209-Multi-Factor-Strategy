@@ -39,6 +39,6 @@ NO_FMOM,PASS,false,downstream_no_research_decision_qa.csv,No FMOM constructed.
 NO_STRATEGY_BACKTEST,PASS,false,downstream_no_research_decision_qa.csv,No strategy holdings/NAV/backtest constructed.
 NO_STRATEGY_PERFORMANCE_SUMMARY,PASS,false,downstream_no_research_decision_qa.csv,No 2016–2025 strategy performance summary.
 NO_2026,PASS,false,source manifest / formal cutoff QA,No formal daily rows after 2025-12-31.
-REDISTRIBUTION_POLICY,PASS_WITH_WARNING,false,EXTERNAL_DOWNSTREAM_DATA_TRANSFER_MANIFEST.csv,Full Parquet remain local-large/ignored pending permission.
+REDISTRIBUTION_POLICY,PASS,false,GITHUB_DERIVED_DATA_TRANSFER_MANIFEST.csv; github_lfs_receiver_validation.csv,Approved derived Parquets are delivered through explicit Git LFS rules in the PRIVATE team repository; raw vendor/source data remain excluded; no public redistribution is authorized.
 DETERMINISM,PASS,false,downstream_determinism.csv,Two independent materializations have equal logical hashes.
 UPSTREAM_IMMUTABILITY,PASS,false,upstream immutability QA,All frozen upstream inputs match pre-export hashes.
