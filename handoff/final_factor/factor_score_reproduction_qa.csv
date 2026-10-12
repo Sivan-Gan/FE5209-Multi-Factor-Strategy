@@ -1,0 +1,5 @@
+specification_id,score_column,matched_rows,both_nonmissing,max_abs_difference,mean_abs_difference,mismatch_count,availability_mismatch_count,status
+QUALITY_CURRENT,quality_score,523909,522008,0.0,0.0,0,0,PASS
+MOMENTUM_12_1,momentum_score,523909,520325,0.0,0.0,0,0,PASS
+LOWRISK_CURRENT,lowrisk_score,523909,521271,0.0,0.0,0,0,PASS
+INVESTMENT_CURRENT,investment_score,523909,520810,0.0,0.0,0,0,PASS

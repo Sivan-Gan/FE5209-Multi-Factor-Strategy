@@ -1,0 +1,16 @@
+step,stage,description,commit,status,notes
+1,WRDS raw,Formal raw data placed and integrity governed,37dee025929b2a69079150976a08ba3002f106b2,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+2,Gate 0,Formal WRDS Gate 0 sign-off,37dee025929b2a69079150976a08ba3002f106b2,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+3,Canonical dataset,Formal canonical construction,4eb8497a578fcd760a4aae3856b2e4b752f1e272,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+4,Candidate-factor definition,Freeze formal US definitions,d68aaaec585a85fe00879d192f7c5a221e297b0e,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+5,Dividend extension,Canonical cash-dividend extension,18092bab762a558f1356c519f5f8a3380ca574a0,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+6,Candidate-factor construction,Construct and validate candidate factors,d85792c106e1dc63a31c2e62bdbe2a19503a7c36,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+7,Factor validation,Build pre-Gate-A evidence,668ecc65dfbe95d7f720946ee1554a27cc4cd7f4,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+8,Initial Gate A human evidence,Initial evidence review package,d19485a58ae5fc60520c167e13e11a458cf9c596,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+9,Gate A0 governance,Controlled within-family selection governance,37850d23b520cc2c67728dc756389c514faadb16,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+10,Gate A0 specification construction,Construct Gate A0 specifications,939d64e85b93afab5bc1f1017a28dc7297094784,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+11,Gate A0 validation,Validate Gate A0 specifications,f18e4c2c491c355bb7f05e9c61fdc0eac3414598,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+12,Gate A0 representative freeze,Freeze human family representatives,fcdee42c03e01d38cc32fd71959457b6c799759b,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+13,Refreshed Gate A evidence,Refresh seven frozen-representative evidence,c9054c42bdf75ada808a1f27427facfd47aa301f,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+14,Gate A Final Factor Set freeze,Freeze final K=4 factor set,9f27dfb17dc60f45c8c383e50292eb925589da12,FROZEN_UPSTREAM,Do not skip or redefine frozen upstream stages.
+15,Handoff export,Export frozen M2 / M3 -> M4 interface,Prepare final factor handoff package,CURRENT_GOVERNED_EXPORT,Do not skip or redefine frozen upstream stages.

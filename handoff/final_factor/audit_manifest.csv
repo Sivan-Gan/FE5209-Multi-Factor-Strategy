@@ -1,0 +1,11 @@
+audit_name,relative_path,purpose,exists
+Gate 0 final report,outputs/audit/wrds_formal/WRDS_GATE0_FINAL_SIGNOFF.md,Formal data readiness and limitations.,TRUE
+Candidate-factor construction,outputs/audit/wrds_formal/WRDS_CANDIDATE_FACTOR_CONSTRUCTION_REPORT.md,Candidate-factor construction audit.,TRUE
+Gate A0 governance freeze,outputs/audit/wrds_formal/WRDS_GATE_A0_WITHIN_FAMILY_GOVERNANCE_FREEZE.md,Within-family governance contract.,TRUE
+Gate A0 construction,outputs/audit/wrds_formal/WRDS_GATE_A0_FACTOR_SPECIFICATION_CONSTRUCTION_REPORT.md,Gate A0 score construction lineage.,TRUE
+Gate A0 validation,outputs/audit/wrds_formal/WRDS_GATE_A0_WITHIN_FAMILY_VALIDATION_REPORT.md,"Within-family evidence, not a downstream input calculation.",TRUE
+Gate A0 representative freeze,outputs/audit/wrds_formal/WRDS_GATE_A0_FAMILY_REPRESENTATIVE_FREEZE.md,Frozen representative map.,TRUE
+Refreshed Gate A report,outputs/audit/wrds_formal/WRDS_GATE_A_REFRESHED_HUMAN_EVIDENCE_REVIEW.md,Frozen representative evidence review.,TRUE
+Gate A Final Factor Set freeze,outputs/audit/wrds_formal/WRDS_GATE_A_FINAL_FACTOR_SET_FREEZE.md,Final K=4 human decision.,TRUE
+Contamination register,outputs/audit/wrds_formal/oos_contamination_register.csv,Protected-period access log.,TRUE
+Gate A acceptance,outputs/audit/wrds_formal/gate_a_final_freeze_acceptance.csv,Gate A acceptance matrix.,TRUE

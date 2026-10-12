@@ -49,3 +49,7 @@ __pycache__/
 
 # Large compressed factor outputs; audit summaries and small reports remain trackable
 /outputs/factor_research/**/*.csv.gz
+
+# Local large M3 → M4 final-factor handoff exports; tracked handoff metadata
+# and the deterministic small inspection sample remain in the repository.
+/handoff/final_factor/data/*.parquet

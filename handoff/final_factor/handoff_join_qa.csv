@@ -1,0 +1,2 @@
+score_row_count,availability_row_count,universe_row_count,orphan_score_rows,orphan_availability_rows,duplicate_score_keys,duplicate_availability_keys,duplicate_universe_keys,identifier_conflicts,status
+523909,523909,523909,0,0,0,0,0,0,PASS

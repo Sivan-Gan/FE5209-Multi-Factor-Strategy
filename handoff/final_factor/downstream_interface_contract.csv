@@ -1,0 +1,8 @@
+object,status,grain,factor_universe,definition_or_timing,allowed_current_action,prohibited_current_action
+FINAL_FACTOR_SCORES,AVAILABLE_NOW__FROZEN,signal_date x PERMNO,4,Frozen four score columns; no future return columns.,"Load, join to universe, inspect availability.",Do not construct composite scores or returns.
+WEEKLY_UNIVERSE,AVAILABLE_NOW__UPSTREAM_FROZEN_INPUT,signal_date x PERMNO,4,Frozen upstream membership / identity / availability interface.,"Join on (signal_date, PERMNO).",Do not recompute future eligibility.
+FACTOR_RETURNS_WEEKLY,NOT_YET_GENERATED__GATE_B_NOT_STARTED,factor x week,4,"Future R_factor(k,t+1)=R_Top30(k,t+1)-R_Bottom30(k,t+1), using S_t -> E_t -> E_t+1.",None in this handoff.,Do not calculate factor returns.
+FMOM_SIGNAL,NOT_YET_GENERATED__GATE_B_NOT_STARTED,factor x week,4,Pending Gate B configuration.,None.,Do not calculate FMOM.
+FACTOR_WEIGHTS,NOT_YET_GENERATED__GATE_B_NOT_STARTED,factor x week,4,Pending Gate B configuration.,None.,Do not calculate weights.
+STOCK_COMPOSITE_SCORE,NOT_YET_GENERATED__GATE_B_NOT_STARTED,signal_date x PERMNO,4,Pending Gate B and frozen missingness policy.,None.,Do not calculate composite scores.
+BASE_STRATEGY_HOLDINGS,NOT_YET_GENERATED__GATE_B_NOT_STARTED,signal_date x PERMNO,4,Pending strategy construction.,None.,Do not calculate holdings or backtests.
