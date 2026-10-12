@@ -4,7 +4,7 @@
 
 ```bash
 git clone <private-repository-url>
-cd FE5209
+cd FE5209-Multi-Factor-Strategy
 git lfs install
 git lfs pull
 python3.12 -m venv .venv
@@ -37,7 +37,7 @@ Read [ENVIRONMENT.md](../ENVIRONMENT.md) for scope and platform notes. Never com
 
 ## 4. Final factor data location
 
-The final factor interface is under `handoff/final_factor/data/`. The Formal Factor Research Archive is under `handoff/factor_research_archive/data/`. The US downstream interface is under `handoff/us_downstream/data/`. The project owner approved exactly 20 derived interfaces for the private team repository; each is covered by an explicit Git LFS rule. After cloning, a teammate uses `git lfs pull` (or normal LFS smudge checkout) and verifies the delivery manifest. Raw vendor and SQLite source data remain excluded.
+The final factor interface is under `handoff/final_factor/data/`. The Formal Factor Research Archive is under `handoff/factor_research_archive/data/`. The US downstream interface is under `handoff/us_downstream/data/`. Exactly 20 approved project-derived Parquets across these three interfaces are delivered through explicit Git LFS rules in the PRIVATE team repository. After cloning, a teammate runs `git lfs pull` and verifies the delivery manifest; real GitHub receiver validation recovered all 20/20 approved LFS objects. Raw vendor data and source/canonical SQLite databases remain excluded.
 
 Strategy Engine work reads `handoff/final_factor/` plus `handoff/us_downstream/`. Research/audit work may read `handoff/factor_research_archive/`. Use `src/handoff/load_us_downstream_data.py` with an explicit stage—there is no normal OOS bypass. Archive existence does not create an all-20 Strategy Engine path.
 
@@ -82,11 +82,11 @@ The next potential stage is a governed Gate B / Strategy Engine workflow, but on
 
 2016–2020 is the future configuration-selection period. 2021–2025 (`HIST_OOS_BASE`) is protected formal OOS. Out-of-market evidence is not out-of-time evidence. Consult [oos_contamination_register.csv](../outputs/audit/wrds_formal/oos_contamination_register.csv) before any authorized use.
 
-## 10. Local large-data troubleshooting
+## 10. Git LFS delivery troubleshooting
 
-`python scripts/smoke_test_handoff.py` and `python scripts/smoke_test_complete_delivery.py` validate the interfaces. Full derived data are expected only after Git LFS is installed, narrow LFS tracking is committed, and `git lfs pull` succeeds. That is a delivery operation, not a reconstruction instruction.
+`python scripts/smoke_test_handoff.py` and `python scripts/smoke_test_complete_delivery.py` validate the interfaces. The approved full derived Parquets are already delivered through explicit Git LFS rules; after cloning the PRIVATE repository, run `git lfs pull` and verify the relevant manifest/hash records. This is a delivery operation, not a reconstruction instruction.
 
-The downstream package behaves the same way: use its requirement and external-transfer manifests, then run its focused test only after authorized local Parquet placement. Never force-add the local Parquet files.
+The downstream package behaves the same way: use its requirement and transfer manifests, then run its focused test after `git lfs pull`. Never force-add Parquet files or add raw vendor/source data.
 
 ## 11. Tests
 

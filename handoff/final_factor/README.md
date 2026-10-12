@@ -64,9 +64,9 @@ No factor returns, FMOM, factor weights, stock composite score, holdings, portfo
 
 Gate B is not started. 2016–2020 is the future configuration period; 2021–2025 is protected Formal Historical OOS. Do not use 2021–2025 to tune Gate B.
 
-## 17. large-data files not stored in Git
+## 17. approved private-team Parquet delivery
 
-The three Parquet files are `LOCAL_LARGE_DATA` and ignored by Git. Generate them with this exporter from the local frozen stores; do not commit them. CSV/Markdown contracts, manifests, and the deterministic small sample are tracked.
+The three Parquet files are approved project-derived private-team data, tracked through explicit Git LFS paths and delivered in the PRIVATE GitHub repository. A teammate receives them with `git lfs pull`; their hashes and sizes remain governed by the existing manifests. Raw upstream/vendor data and local SQLite stores are not distributed.
 
 ## 18. how to verify hashes
 

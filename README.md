@@ -2,7 +2,7 @@
 
 ## 1. Project Overview
 
-This repository is the controlled team-delivery workspace for the FE5209 US–Singapore cross-market quantitative-research project. It contains the frozen formal-US research implementation, governance evidence, Final Factor Handoff contracts, and the tests needed to begin the next authorized downstream stage without rebuilding factor research.
+This PRIVATE team repository is the controlled delivery workspace for the FE5209 US–Singapore cross-market quantitative-research project. It contains the frozen formal-US research implementation, governance evidence, Final Factor Handoff contracts, and the tests needed to begin the next authorized downstream stage without rebuilding factor research.
 
 ## 2. Research Objective
 
@@ -54,7 +54,7 @@ The handoffs are governed interfaces, not Strategy Engine research. The downstre
 | `config/` | Approved query inputs and a portable path example. |
 | `handoff/final_factor/` | Frozen final-factor interface contracts, manifests, QA, and deterministic sample. |
 | `handoff/factor_research_archive/` | Frozen 20-specification research/audit archive; never an automatic Strategy Engine input. |
-| `handoff/us_downstream/` | Governed local-US calendar, return, liquidity, benchmark, RF/FF, reference, and pre-Gate-B seed data contract. |
+| `handoff/us_downstream/` | Governed US calendar, return, liquidity, benchmark, RF/FF, reference, and pre-Gate-B seed data contract. |
 | `outputs/audit/wrds_formal/` | Complete formal audit trail, including final delivery QA. |
 | `data/` | Local large canonical/research stores; see [data/README.md](data/README.md). |
 | `wrds_raw/`, `raw_package/` | Local immutable vendor/source evidence; never upload or alter. |
@@ -63,7 +63,7 @@ The handoffs are governed interfaces, not Strategy Engine research. The downstre
 
 ```bash
 git clone <private-repository-url>
-cd FE5209
+cd FE5209-Multi-Factor-Strategy
 git lfs install
 git lfs pull
 python3.12 -m venv .venv
@@ -76,7 +76,7 @@ python scripts/smoke_test_handoff.py
 
 Then read [the Final Factor Handoff contract](handoff/final_factor/FINAL_FACTOR_HANDOFF_CONTRACT.md), inspect [the registry](handoff/final_factor/final_factor_registry.csv), and load the deterministic tracked sample at `handoff/final_factor/data/factor_scores_weekly_sample.csv`.
 
-For private-team delivery after Git LFS is installed and the approved derived-data commit exists, `git lfs pull` receives the Final Factor, Formal Factor Research Archive, and US Downstream Parquet interfaces. No GitHub URL is implied before a remote is created.
+This PRIVATE team repository delivers exactly 20 approved project-derived Parquet artifacts through explicit Git LFS rules: the Final Factor, Formal Factor Research Archive, and US Downstream interfaces. Teammates normally receive them with `git lfs pull`; no manual placement is needed for these approved GitHub-delivered Parquets. Raw WRDS/CRSP/Compustat/CCM/vendor data and local SQLite stores remain excluded.
 
 ## 8. Environment Setup
 
@@ -100,9 +100,9 @@ Start at [the archive README](handoff/factor_research_archive/README.md). It con
 
 1. **Licensed raw vendor data:** WRDS/CRSP/Compustat/CCM/Historical GICS downloads in local ignored directories.
 2. **Local large derived stores:** canonical, factor, and validation SQLite files required to reproduce upstream research.
-3. **Final-factor interface:** frozen score, availability, and universe Parquet files.
-4. **Formal factor-research archive:** 20-spec score/availability Parquet plus frozen decisions and evidence.
-5. **US downstream interface:** local daily/weekly market, liquidity, benchmark, RF/FF, reference, and 2006–2015 seed Parquet files.
+3. **Final-factor interface:** frozen score, availability, and universe Parquet files delivered through approved Git LFS paths.
+4. **Formal factor-research archive:** 20-spec score/availability Parquet plus frozen decisions and evidence, delivered through approved Git LFS paths.
+5. **US downstream interface:** approved daily/weekly market, liquidity, benchmark, RF/FF, reference, and 2006–2015 seed Parquet files delivered through approved Git LFS paths.
 6. **Tracked delivery metadata:** contracts, registries, manifests, QA summaries, and deterministic samples.
 
 ## 12. What Is Included in Git
@@ -115,7 +115,7 @@ Licensed raw vendor files, raw Yahoo/SEC source package files, large local SQLit
 
 ## 14. Reproduction Workflow
 
-Upstream reconstruction requires locally authorized data and follows [reproduction_manifest.csv](handoff/final_factor/reproduction_manifest.csv). Downstream users should not rerun upstream construction merely to start Strategy Engine work: consume the frozen handoffs after receiving the separately approved local Parquet files.
+Upstream reconstruction requires locally authorized data and follows [reproduction_manifest.csv](handoff/final_factor/reproduction_manifest.csv). Downstream users should not rerun upstream construction merely to start Strategy Engine work: consume the frozen handoffs after `git lfs pull` recovers the approved Parquets.
 
 ## 15. Strategy Engine Starting Point
 
@@ -163,6 +163,6 @@ Raw WRDS/CRSP/Compustat/CCM/Historical-GICS data are licensed third-party materi
 
 1. Read [PROJECT_STATUS.md](docs/PROJECT_STATUS.md) and [GITHUB_TEAM_HANDOFF.md](docs/GITHUB_TEAM_HANDOFF.md).
 2. Read the handoff contract and final registry.
-3. Install Git LFS, clone, and run `git lfs pull` only after the approved derived-data LFS commit exists.
+3. Clone the PRIVATE repository, install Git LFS, and run `git lfs pull` to recover the approved derived-data interfaces.
 4. Install the documented environment and run the smoke tests.
 5. Start only the separately authorized Gate B / Strategy Engine workflow.

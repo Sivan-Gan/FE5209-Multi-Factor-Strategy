@@ -10,7 +10,7 @@ The only active final factors are, in canonical order: `QUALITY_CURRENT`, `MOMEN
 
 ## 3. Dataset architecture
 
-Large Parquet files under `data/` are local, Git-ignored derived data. Their schemas, logical hashes, source paths and redistribution status are recorded in `downstream_source_manifest.csv`. Small pre-2016 samples, contracts, QA, manifests, code and tests are tracked.
+Upstream canonical/raw/SQLite source datasets remain local and excluded. The selected downstream derived Parquets under `data/` are approved project-derived private-team artifacts tracked through explicit Git LFS paths and delivered only through the PRIVATE team GitHub repository. Their schemas, logical hashes, source paths and delivery status are recorded in `downstream_source_manifest.csv` and the existing delivery/transfer manifests. Small pre-2016 samples, contracts, QA, manifests, code and tests are tracked. GitHub delivery does not change any governance, access-stage, or research-use restriction in this contract.
 
 ## 4. Security return semantics
 

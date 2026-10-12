@@ -10,9 +10,16 @@ This directory intentionally separates local large research data from Git-delive
 
 None of those datasets is bundled in a fresh Git clone. Do not commit them or add credentials.
 
-## Final Factor Handoff placement
+## Approved Git LFS handoff delivery
 
-After approved private transfer, place these three files exactly here:
+After cloning the PRIVATE repository, run:
+
+```bash
+git lfs install
+git lfs pull
+```
+
+The approved handoff Parquets then populate their governed paths automatically, including these Final Factor files:
 
 ```text
 handoff/final_factor/data/factor_scores_weekly.parquet
@@ -20,15 +27,15 @@ handoff/final_factor/data/factor_availability_weekly.parquet
 handoff/final_factor/data/universe_weekly.parquet
 ```
 
-They remain ignored by Git. Verify bytes and SHA256 against [the external transfer manifest](../handoff/final_factor/EXTERNAL_DATA_TRANSFER_MANIFEST.csv). The full interface is defined in [the handoff contract](../handoff/final_factor/FINAL_FACTOR_HANDOFF_CONTRACT.md); the deterministic tracked sample is `handoff/final_factor/data/factor_scores_weekly_sample.csv`.
+No manual copying is required for the 20 approved Git LFS artifacts. Verify bytes and SHA256 against the relevant delivery/transfer manifest records, including [the Final Factor transfer manifest](../handoff/final_factor/EXTERNAL_DATA_TRANSFER_MANIFEST.csv). The full interface is defined in [the handoff contract](../handoff/final_factor/FINAL_FACTOR_HANDOFF_CONTRACT.md); the deterministic tracked sample is `handoff/final_factor/data/factor_scores_weekly_sample.csv`.
 
 ## Reproduction and limitations
 
 The upstream sequence and frozen source hashes are documented in `handoff/final_factor/reproduction_manifest.csv` and `source_manifest.csv`. Reproduction requires authorized local data access; downstream Strategy Engine work should consume the frozen handoff rather than reconstruct factor research.
 
-## US downstream Strategy/Backtest handoff placement
+## US downstream Strategy/Backtest handoff delivery
 
-The governed companion package is `handoff/us_downstream/`. Its Parquet interfaces remain local and Git-ignored:
+The governed companion package is `handoff/us_downstream/`. Its approved Parquet interfaces are included in the 20 explicit Git LFS delivery artifacts and populate automatically after `git lfs pull`:
 
 ```text
 handoff/us_downstream/data/security_daily_market*.parquet
@@ -42,4 +49,4 @@ handoff/us_downstream/data/security_reference_history.parquet
 handoff/us_downstream/data/final_factor_returns_seed_weekly.parquet
 ```
 
-Before any approved private transfer, read `handoff/us_downstream/EXTERNAL_DOWNSTREAM_DATA_TRANSFER_MANIFEST.csv` and confirm redistribution permission. Use `US_DOWNSTREAM_DATA_CONTRACT.md` and the stage-aware loader; do not directly bypass the protected 2021–2025 Historical OOS partition.
+Verify these files against the relevant delivery/transfer manifests, including `handoff/us_downstream/EXTERNAL_DOWNSTREAM_DATA_TRANSFER_MANIFEST.csv`. Use `US_DOWNSTREAM_DATA_CONTRACT.md` and the stage-aware loader; do not directly bypass the protected 2021–2025 Historical OOS partition.

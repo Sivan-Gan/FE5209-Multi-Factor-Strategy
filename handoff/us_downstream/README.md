@@ -15,9 +15,9 @@ This is the governed US market-data companion to `handoff/final_factor/`. It con
 9. Construct/freeze the US Base at Gate C.
 10. Only then use the `HIST_OOS` loader stage to unlock the 2021–2025 market-data partition.
 
-## Local data policy
+## Delivery and source-data policy
 
-Full Parquet files are intentionally Git-ignored and local because redistribution remains `DATA_DISTRIBUTION_REVIEW_REQUIRED`. Check the source and external-transfer manifests before moving any data. Deterministic small pre-2016 schema samples are tracked under `data/samples/`.
+The approved downstream Parquets are part of the 20 approved project-derived Git LFS delivery artifacts. Authorized teammates receive them from the PRIVATE GitHub repository with `git lfs pull` and must verify hashes and sizes against the existing delivery/transfer manifests. Raw vendor/source data remain excluded. GitHub delivery does not alter any Gate-B or OOS access restriction, and deterministic small pre-2016 schema samples remain tracked under `data/samples/`.
 
 ## Core files
 
