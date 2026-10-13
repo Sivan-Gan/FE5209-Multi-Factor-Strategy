@@ -78,6 +78,17 @@ def fill_seed_boundary(root: Path, seed: pd.DataFrame) -> pd.DataFrame:
     return _clean(redo, "step16_boundary_recompute")
 
 
+def combine_history(parts: list[pd.DataFrame]) -> pd.DataFrame:
+    """One row per week x factor; an available return wins, ties go to the frozen seed."""
+    hist = pd.concat(parts, ignore_index=True)
+    hist["_seed_first"] = (hist["source"] != "seed").astype(int)
+    hist = (hist.sort_values(["signal_date", "family", "factor_return_available", "_seed_first"],
+                             ascending=[True, True, False, True])
+                .drop_duplicates(["signal_date", "family"])
+                .drop(columns="_seed_first"))
+    return hist.reset_index(drop=True)
+
+
 def load_history(root: Path, returns_csv: Path) -> pd.DataFrame:
     """Seed (2006-2015) + Step 16 output (2016-2020), one row per week x factor.
 
@@ -85,16 +96,10 @@ def load_history(root: Path, returns_csv: Path) -> pd.DataFrame:
     the frozen seed.
     """
     seed = _clean(pd.read_parquet(root / SEED_FILE), "seed")
-    parts = [seed, fill_seed_boundary(root, seed), _clean(pd.read_csv(returns_csv), "step16")]
-    hist = pd.concat(parts, ignore_index=True)
-    hist["_seed_first"] = (hist["source"] != "seed").astype(int)
-    hist = (hist.sort_values(["signal_date", "family", "factor_return_available", "_seed_first"],
-                             ascending=[True, True, False, True])
-                .drop_duplicates(["signal_date", "family"])
-                .drop(columns="_seed_first"))
+    hist = combine_history([seed, fill_seed_boundary(root, seed), _clean(pd.read_csv(returns_csv), "step16")])
     if (hist["signal_date"] > fr.GATE_B_LAST_DATE).any():
         raise ValueError("history contains signal dates after the Gate B window")
-    return hist.reset_index(drop=True)
+    return hist
 
 
 def to_wide(hist: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:

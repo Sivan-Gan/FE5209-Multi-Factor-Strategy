@@ -128,3 +128,11 @@ python -m src.strategy.run_gate_b            # 默认单边成本 10bp，压力�
 4. FMOM 窗口遇到缺失周的处理（目前：不跳过，整周退回等权）。
 5. 交易类指标的定义（第 7 节）。
 6. 周度指标仅用于 Gate B 比较，最终由 M5 用日度 NAV 复核。
+
+## 10. 冻结后的正式运行（Gate C）
+
+- 冻结配置只放在 `config/strategy/us_base_strategy.json`；`run_frozen.py` 只读它，不做任何选择。
+- `python -m src.strategy.run_frozen --period gate_b`：2016–2020 的 Gate C 验收运行，输出持仓、交易记录、权重、周度路径、`acceptance_test_report.csv`（SSOT 0.10）和 `run_manifest.csv`（SSOT 0.8）。
+- `python -m src.strategy.run_frozen --period hist_oos`：2021–2025。`governance.py` 会检查 json 的 `status`、`freeze_date`、`approvers`、`transaction_cost.status`，任何一项没填好就拒绝运行。该模式不打印任何绩效数字。
+- [M4 选择] 策略从 2016-01-01 连续运行，样本外第一周从 2020 年末的持仓调仓，而不是从现金建仓。
+- 决策记录与签字表：`docs/GATE_B_C_US_BASE_DECISION.md`。

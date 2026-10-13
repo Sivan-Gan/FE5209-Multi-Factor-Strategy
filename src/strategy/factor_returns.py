@@ -39,10 +39,13 @@ def project_root() -> Path:
 
 
 # ---------------------------------------------------------------- 1. read data
-def load_inputs(root: Path, start: str, end: str) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Read factor scores and weekly execution returns for signal dates in [start, end]."""
-    if end > GATE_B_LAST_DATE:
-        raise ValueError(f"Gate B may not read data after {GATE_B_LAST_DATE}; got end={end}")
+def load_inputs(root: Path, start: str, end: str, allow_oos: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Read factor scores and weekly execution returns for signal dates in [start, end].
+
+    Anything after 2020-12-31 needs allow_oos=True AND a FROZEN strategy config (governance.py).
+    """
+    from src.strategy import governance
+    governance.check_window(end, allow_oos, root)
 
     score_cols = ["signal_date", "PERMNO", "execution_date", "research_period", "eligible_universe_flag"]
     for _, _, score, avail in FINAL_FACTORS:

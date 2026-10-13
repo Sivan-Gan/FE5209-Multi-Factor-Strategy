@@ -35,11 +35,22 @@ def weekly_path(hold: pd.DataFrame, returns: pd.DataFrame, end: str) -> pd.DataF
              execution_to_next_execution_total_return, usable
     Weeks whose holding period ends after `end` are dropped.
     """
+    return weekly_path_and_ledger(hold, returns, end)[0]
+
+
+def weekly_path_and_ledger(hold: pd.DataFrame, returns: pd.DataFrame, end: str,
+                           cost_oneway: float = 0.0) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Weekly path plus a trade ledger (one row per security traded at each E_t).
+
+    Ledger columns: signal_date, PERMNO, pretrade_weight (drifted), target_weight,
+    trade_weight = target - pretrade (>0 buy, <0 sell), side, cost = c * |trade_weight|.
+    Sum of ledger |trade_weight| per week equals GTR, so the ledger rebuilds the cost.
+    """
     m = hold.merge(returns, on=["signal_date", "PERMNO"], how="left")
     m["usable"] = m["usable"].fillna(0).astype(int)
     m["r"] = np.where(m["usable"] == 1, m["execution_to_next_execution_total_return"], 0.0)
 
-    rows, drifted = [], {CASH: 1.0}
+    rows, trades, drifted = [], [], {CASH: 1.0}
     for signal_date, week in m.groupby("signal_date", sort=True):
         period_end = week["next_execution_date"].dropna()
         period_end = str(period_end.max()) if len(period_end) else ""
@@ -50,7 +61,15 @@ def weekly_path(hold: pd.DataFrame, returns: pd.DataFrame, end: str) -> pd.DataF
         if cash_w > 1e-12:
             target[CASH] = cash_w
         stocks = (set(target) | set(drifted)) - {CASH}      # SSOT: GTR sums over securities only
-        gtr = sum(abs(target.get(k, 0.0) - drifted.get(k, 0.0)) for k in stocks)
+        gtr = 0.0
+        for k in sorted(stocks):
+            pre, tgt = drifted.get(k, 0.0), target.get(k, 0.0)
+            delta = tgt - pre
+            gtr += abs(delta)
+            if abs(delta) > 1e-15:
+                trades.append({"signal_date": signal_date, "PERMNO": k, "pretrade_weight": pre,
+                               "target_weight": tgt, "trade_weight": delta,
+                               "side": "BUY" if delta > 0 else "SELL", "cost": cost_oneway * abs(delta)})
         r = dict(zip(week["PERMNO"], week["r"]))
         gross = sum(w * r.get(k, 0.0) for k, w in target.items())          # cash earns 0
         value = {k: w * (1.0 + r.get(k, 0.0)) for k, w in target.items()}
@@ -59,7 +78,9 @@ def weekly_path(hold: pd.DataFrame, returns: pd.DataFrame, end: str) -> pd.DataF
         rows.append({"signal_date": signal_date, "period_end": period_end, "gross_return": gross,
                      "gtr": gtr, "turnover": 0.5 * gtr,
                      "unpriced_weight": float(week.loc[week["usable"] == 0, "weight"].sum())})
-    return pd.DataFrame(rows)
+    ledger = pd.DataFrame(trades, columns=["signal_date", "PERMNO", "pretrade_weight", "target_weight",
+                                           "trade_weight", "side", "cost"])
+    return pd.DataFrame(rows), ledger
 
 
 def net_returns(path: pd.DataFrame, cost_oneway: float) -> pd.Series:

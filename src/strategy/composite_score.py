@@ -41,9 +41,9 @@ WEIGHTS_FILE = "outputs/strategy/factor_weights_weekly_2016_2020.csv"
 
 
 # ------------------------------------------------------------- 1. inputs
-def load_scores(root: Path, start: str, end: str) -> pd.DataFrame:
-    if end > fr.GATE_B_LAST_DATE:
-        raise ValueError(f"Gate B may not read data after {fr.GATE_B_LAST_DATE}; got end={end}")
+def load_scores(root: Path, start: str, end: str, allow_oos: bool = False) -> pd.DataFrame:
+    from src.strategy import governance
+    governance.check_window(end, allow_oos, root)
     cols = ["signal_date", "execution_date", "PERMNO", "historical_gics_sector",
             "eligible_universe_flag"] + SCORE_COLS + AVAIL_COLS
     scores = pd.read_parquet(root / SCORES_FILE, columns=cols,
