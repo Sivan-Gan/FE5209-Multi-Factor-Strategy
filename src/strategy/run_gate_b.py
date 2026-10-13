@@ -130,12 +130,17 @@ def run(root: Path, start: str, end: str, out_dir: Path, cost_bps: float) -> pd.
     t0 = time.time()
     cost = cost_bps / 1e4
     weights = pd.read_csv(root / cs.WEIGHTS_FILE)
+    rules = weights["window_rule"].unique() if "window_rule" in weights.columns else ["strict_calendar"]
+    if len(rules) != 1:
+        raise ValueError(f"factor weights file mixes window rules {list(rules)}; rerun fmom_weights.py")
+    window_rule = rules[0]
     scores = cs.load_scores(root, start, end)
     returns = load_returns(root, start, end)
     rf = load_weekly_series(root, RF_FILE, "risk_free_return", start, end)
     bench = load_weekly_series(root, BENCH_FILE, "benchmark_total_return", start, end)
     print(f"loaded inputs in {time.time() - t0:.0f}s; base cost {cost_bps:g} bp one-way, "
-          f"stress {cost_bps * STRESS_MULTIPLIER:g} bp (PROVISIONAL until frozen by the group)")
+          f"stress {cost_bps * STRESS_MULTIPLIER:g} bp (PROVISIONAL until frozen by the group); "
+          f"FMOM window rule {window_rule}")
 
     out_dir.mkdir(parents=True, exist_ok=True)
     rows, weekly_all, yearly_all = [], [], []
@@ -148,7 +153,7 @@ def run(root: Path, start: str, end: str, out_dir: Path, cost_bps: float) -> pd.
         tag = tag_of(c)
         hold.to_csv(out_dir / f"target_holdings_{tag}.csv", index=False)
         perf, weekly = evaluate(hold, returns, rf, bench, end, cost)
-        row = {"tag": tag, **c, "cost_bps": cost_bps,
+        row = {"tag": tag, **c, "cost_bps": cost_bps, "fmom_window_rule": window_rule,
                "avg_names_held": construction["n_held"].mean(),
                "weeks_sector_cap_binding": int((construction["n_skipped_by_sector_cap"] > 0).sum()),
                "weeks_with_cash": int(construction["constraint_infeasible"].sum()),

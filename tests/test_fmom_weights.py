@@ -26,9 +26,10 @@ def synthetic_history(n_weeks: int = 140, value: float = 0.01) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def run(hist: pd.DataFrame, J: int, lam: float, ra: bool = False, last_n: int = 1) -> pd.DataFrame:
+def run(hist: pd.DataFrame, J: int, lam: float, ra: bool = False, last_n: int = 1,
+        rule: str = fw.DEFAULT_WINDOW_RULE) -> pd.DataFrame:
     wide, next_exec = fw.to_wide(hist)
-    return fw.compute_weights(wide, next_exec, list(wide.index[-last_n:]), J, lam, ra)
+    return fw.compute_weights(wide, next_exec, list(wide.index[-last_n:]), J, lam, ra, rule)
 
 
 class FmomTimingTest(unittest.TestCase):
@@ -56,14 +57,46 @@ class FmomTimingTest(unittest.TestCase):
 
 
 class FmomWeightTest(unittest.TestCase):
-    def test_missing_return_falls_back_to_equal(self):
+    def test_strict_rule_missing_return_falls_back_to_equal(self):
         hist = synthetic_history()
         dates = sorted(hist["signal_date"].unique())
         hist.loc[(hist["signal_date"] == dates[-5]) & (hist["family"] == "Momentum"),
                  "factor_return_available"] = 0
-        out = run(hist, J=26, lam=1.0)
+        out = run(hist, J=26, lam=1.0, rule="strict_calendar")
         self.assertEqual(out["dynamic_status"].iloc[0], "FALLBACK_MISSING_FACTOR_RETURN")
         np.testing.assert_allclose(out["weight"], 0.25)
+
+    def test_last_valid_rule_skips_missing_week(self):
+        hist = synthetic_history(value=0.01)
+        dates = sorted(hist["signal_date"].unique())
+        mask = (hist["signal_date"] == dates[-5]) & (hist["family"] == "Momentum")
+        hist.loc[mask, "factor_return_gross"] = 99.0          # would be absurd if it were used
+        hist.loc[mask, "factor_return_available"] = 0
+        out = run(hist, J=26, lam=1.0).set_index("family")
+        self.assertEqual(out["dynamic_status"].iloc[0], "OK")
+        np.testing.assert_allclose(out["fmom"], 0.26)          # still 26 valid weeks for every factor
+        self.assertEqual(out["missing_weeks_skipped"].iloc[0], 1)
+        np.testing.assert_allclose(out["weight"], 0.25)        # equal FMOM -> equal weights
+
+    def test_last_valid_rule_does_not_touch_other_factors(self):
+        hist = synthetic_history(value=0.01)
+        dates = sorted(hist["signal_date"].unique())
+        hist.loc[(hist["signal_date"] == dates[-5]) & (hist["family"] == "Momentum"),
+                 "factor_return_available"] = 0
+        hist.loc[(hist["family"] == "Quality") & (hist["signal_date"] == dates[-30]),
+                 "factor_return_gross"] = 0.50                # Quality's own window must not shift
+        out = run(hist, J=26, lam=0.0).set_index("family")
+        self.assertAlmostEqual(out.loc["Quality", "fmom"], 0.26)
+
+    def test_last_valid_rule_risk_adjustment_skips_missing(self):
+        hist = synthetic_history(n_weeks=140)
+        rng = np.random.default_rng(3)
+        hist["factor_return_gross"] = rng.normal(0.002, 0.01, len(hist))
+        dates = sorted(hist["signal_date"].unique())
+        hist.loc[hist["signal_date"] == dates[-60], "factor_return_available"] = 0
+        self.assertEqual(run(hist, J=26, lam=1.0, ra=True)["dynamic_status"].iloc[0], "OK")
+        self.assertEqual(run(hist, J=26, lam=1.0, ra=True, rule="strict_calendar")["dynamic_status"].iloc[0],
+                         "FALLBACK_MISSING_FACTOR_RETURN_RA")
 
     def test_short_history_falls_back(self):
         out = run(synthetic_history(n_weeks=20), J=26, lam=1.0)

@@ -5,23 +5,28 @@ Rules (SSOT 4.3 D/E and Steps 17-19):
     factor-return period u counts as completed at signal cutoff S_t only if
     E_{u+1} <= S_t (its holding period has fully ended).  In practice the most
     recent usable period is usually two signal weeks back.
-  - All J periods in the window must have a valid return for every factor;
-    missing returns are never filled with 0.  If any factor fails, the whole
-    dynamic component falls back to equal weight that week.
-  - Optional risk adjustment: FMOM / std(last 104 completed returns), needing
-    104 valid weeks.
+  - Window rule (decided 2026-10-13, reading B of "Full J valid weeks" / "104 valid weeks"):
+    each factor uses its own last J completed AND valid weekly returns; a week with a
+    missing return for that factor is skipped, never filled with 0.  If any factor has
+    fewer than J (104 for risk adjustment) valid completed weeks, the whole dynamic
+    component falls back to equal weight that week.
+    The old rule (reading A: the last J calendar weeks must all be valid) is kept as
+    window_rule="strict_calendar" for reproduction only.
+  - Optional risk adjustment: FMOM / std(last 104 valid completed returns).
   - S = max(FMOM, 0); w_FMOM = S / sum(S), or 1/K if every S is 0.
   - w = (1 - lambda) / K + lambda * w_FMOM.
 
 Grid compared in Gate B: J in {13, 26, 52}, lambda in {0, 0.5, 1},
 risk adjustment off / on.  Baseline candidate: J=26, lambda=0.5, off.
+Frozen selection (pending sign-off): see config/strategy/us_base_strategy.json.
 
 Inputs:
   - handoff/us_downstream/data/final_factor_returns_seed_weekly.parquet (2006-2015, frozen)
   - outputs/strategy/factor_returns_weekly_2016_2020.csv (Step 16 output)
 
 Usage (run from the repository root):
-  python -m src.strategy.fmom_weights
+  python -m src.strategy.fmom_weights                                  # reading B (default)
+  python -m src.strategy.fmom_weights --window-rule strict_calendar    # reading A, reproduction only
 """
 from __future__ import annotations
 
@@ -40,6 +45,8 @@ LAMBDA_GRID = (0.0, 0.5, 1.0)
 RISK_ADJ_GRID = (False, True)
 RA_WINDOW = 104
 BASELINE = {"J": 26, "lam": 0.5, "risk_adjusted": False}
+WINDOW_RULES = ("last_valid", "strict_calendar")
+DEFAULT_WINDOW_RULE = "last_valid"   # reading B; "strict_calendar" = reading A
 SEED_LAST_DATE = "2015-12-31"
 
 SEED_FILE = "handoff/us_downstream/data/final_factor_returns_seed_weekly.parquet"
@@ -115,39 +122,75 @@ def to_wide(hist: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
 
 # -------------------------------------------------- 2. one configuration
 def compute_weights(wide: pd.DataFrame, next_exec: pd.Series, signal_dates: list[str],
-                    J: int, lam: float, risk_adjusted: bool) -> pd.DataFrame:
+                    J: int, lam: float, risk_adjusted: bool,
+                    window_rule: str = "last_valid") -> pd.DataFrame:
+    """FMOM factor weights per signal date.
+
+    window_rule (how a missing weekly factor return inside the lookback is treated):
+      "strict_calendar"  (reading A) the last J (and 104 for RA) COMPLETED calendar weeks must all
+                         be valid for every factor, otherwise the dynamic part falls back to 1/K;
+      "last_valid"       (reading B) each factor uses its own last J (and 104) completed AND valid
+                         weeks; missing weeks are skipped, never filled with 0.  Falls back to 1/K
+                         only if some factor has fewer than J (or 104) valid completed weeks.
+    """
+    if window_rule not in WINDOW_RULES:
+        raise ValueError(f"window_rule must be one of {WINDOW_RULES}")
     returns = wide.to_numpy(dtype=float)
     ends = next_exec.to_numpy(dtype=object)
     dates = wide.index.to_numpy(dtype=object)
     need = max(J, RA_WINDOW) if risk_adjusted else J
     rows = []
     for s_t in signal_dates:
-        # completed periods: E_{u+1} known and <= S_t.  Weeks are in signal order and
-        # E_{u+1} is increasing, but a mask is used so a blank date can never sneak in.
+        # completed periods: E_{u+1} known and <= S_t
         done = np.flatnonzero((ends != "") & (ends <= s_t))
         fmom = np.full(K, np.nan)
         signal = np.full(K, np.nan)
-        status, first, last, last_end = "OK", "", "", ""
-        if len(done) < need:
-            status = "FALLBACK_INSUFFICIENT_HISTORY"
-        else:
-            window = done[-J:]
-            first, last, last_end = dates[window[0]], dates[window[-1]], ends[window[-1]]
-            block = returns[window]
-            if np.isnan(block).any():
-                status = "FALLBACK_MISSING_FACTOR_RETURN"
+        status, first, last, last_end, skipped = "OK", "", "", "", 0
+        if window_rule == "strict_calendar":
+            if len(done) < need:
+                status = "FALLBACK_INSUFFICIENT_HISTORY"
             else:
-                fmom = block.sum(axis=0)
-                signal = fmom.copy()
+                window = done[-J:]
+                first, last, last_end = dates[window[0]], dates[window[-1]], ends[window[-1]]
+                block = returns[window]
+                if np.isnan(block).any():
+                    status = "FALLBACK_MISSING_FACTOR_RETURN"
+                else:
+                    fmom = block.sum(axis=0)
+                    signal = fmom.copy()
+                    if risk_adjusted:
+                        ra_block = returns[done[-RA_WINDOW:]]
+                        sigma = np.nanstd(ra_block, axis=0, ddof=1)
+                        if np.isnan(ra_block).any():
+                            status = "FALLBACK_MISSING_FACTOR_RETURN_RA"
+                        elif (sigma <= 0).any():
+                            status = "FALLBACK_ZERO_VOLATILITY"
+                        else:
+                            signal = fmom / sigma
+        else:
+            firsts, lasts = [], []
+            for k in range(K):
+                valid = done[~np.isnan(returns[done, k])]
+                if len(valid) < need:
+                    status = "FALLBACK_INSUFFICIENT_HISTORY"
+                    break
+                window = valid[-J:]
+                fmom[k] = returns[window, k].sum()
+                skipped = max(skipped, int(window[-1] - window[0] + 1 - J))   # missing weeks skipped
+                firsts.append(window[0])
+                lasts.append(window[-1])
                 if risk_adjusted:
-                    ra_block = returns[done[-RA_WINDOW:]]
-                    sigma = np.nanstd(ra_block, axis=0, ddof=1)
-                    if np.isnan(ra_block).any():
-                        status = "FALLBACK_MISSING_FACTOR_RETURN_RA"
-                    elif (sigma <= 0).any():
+                    sigma_k = np.std(returns[valid[-RA_WINDOW:], k], ddof=1)
+                    if sigma_k <= 0:
                         status = "FALLBACK_ZERO_VOLATILITY"
-                    else:
-                        signal = fmom / sigma
+                        break
+                    signal[k] = fmom[k] / sigma_k
+                else:
+                    signal[k] = fmom[k]
+            if status == "OK":
+                first, last, last_end = dates[min(firsts)], dates[max(lasts)], ends[max(lasts)]
+            else:
+                fmom, signal = np.full(K, np.nan), np.full(K, np.nan)
         if status == "OK":
             positive = np.maximum(signal, 0.0)
             if positive.sum() > 0:
@@ -160,10 +203,11 @@ def compute_weights(wide: pd.DataFrame, next_exec: pd.Series, signal_dates: list
         for k, family in enumerate(FAMILIES):
             rows.append({
                 "signal_date": s_t, "J": J, "lambda": lam, "risk_adjusted": int(risk_adjusted),
+                "window_rule": window_rule,
                 "family": family, "specification_id": fr.FINAL_FACTORS[k][1],
                 "fmom": fmom[k], "fmom_signal": signal[k], "fmom_positive": positive[k],
                 "w_fmom": w_fmom[k], "w_equal": 1.0 / K, "weight": weight[k],
-                "dynamic_status": status,
+                "dynamic_status": status, "missing_weeks_skipped": skipped,
                 "window_first_signal_date": first, "window_last_signal_date": last,
                 "window_last_next_execution_date": last_end,
             })
@@ -204,6 +248,7 @@ def main() -> None:
     parser.add_argument("--start", default="2016-01-01")
     parser.add_argument("--end", default=fr.GATE_B_LAST_DATE)
     parser.add_argument("--returns-csv", default=GATE_B_RETURNS_FILE)
+    parser.add_argument("--window-rule", choices=WINDOW_RULES, default=DEFAULT_WINDOW_RULE)
     args = parser.parse_args()
     if args.end > fr.GATE_B_LAST_DATE:
         raise ValueError(f"Gate B may not go beyond {fr.GATE_B_LAST_DATE}; got end={args.end}")
@@ -213,11 +258,11 @@ def main() -> None:
     boundary = (hist["source"] == "step16_boundary_recompute").sum()
     print(f"history: {hist['signal_date'].nunique()} weeks "
           f"({hist['signal_date'].min()} .. {hist['signal_date'].max()}); "
-          f"boundary week x factor rows recomputed: {boundary}")
+          f"boundary week x factor rows recomputed: {boundary}; window rule: {args.window_rule}")
     wide, next_exec = to_wide(hist)
     signal_dates = [d for d in wide.index if args.start <= d <= args.end]
 
-    out = pd.concat([compute_weights(wide, next_exec, signal_dates, J, lam, ra)
+    out = pd.concat([compute_weights(wide, next_exec, signal_dates, J, lam, ra, args.window_rule)
                      for J in J_GRID for lam in LAMBDA_GRID for ra in RISK_ADJ_GRID],
                     ignore_index=True)
     problems = check_weights(out)

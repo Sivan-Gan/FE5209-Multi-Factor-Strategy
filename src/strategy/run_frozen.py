@@ -66,7 +66,8 @@ def run(period: str) -> str:
     gv.check_window(end, allow_oos, root)                     # raises unless FROZEN for hist_oos
     cost = cfg["transaction_cost"]["oneway_bps"] / 1e4
     tag = cfg["gate_b_selection"]["tag"]
-    print(f"[{period}] {tag}  window {start}..{end}  config status {cfg['status']}  cost {cost * 1e4:g} bp")
+    print(f"[{period}] {tag}  window {start}..{end}  config status {cfg['status']}  cost {cost * 1e4:g} bp  "
+          f"FMOM window rule {p.get('fmom_window_rule', 'strict_calendar')}")
 
     # Step 16: factor returns from 2016 to the period end (needed for FMOM history)
     fret = fr.compute_factor_returns(*fr.load_inputs(root, RUN_FROM, end, allow_oos), end=end)
@@ -76,7 +77,7 @@ def run(period: str) -> str:
     wide, next_exec = fw.to_wide(hist)
     dates = [d for d in wide.index if RUN_FROM <= d <= end]
     weights = fw.compute_weights(wide, next_exec, dates, p["fmom_lookback_weeks_J"], p["lambda"],
-                                 p["risk_adjusted_fmom"])
+                                 p["risk_adjusted_fmom"], p.get("fmom_window_rule", "strict_calendar"))
     # Step 20: composite score
     week_w = cs.weights_for_config(weights, p["fmom_lookback_weeks_J"], p["lambda"], p["risk_adjusted_fmom"])
     scored = cs.compute_scores(cs.load_scores(root, RUN_FROM, end, allow_oos), week_w, p["min_available_factors"])
