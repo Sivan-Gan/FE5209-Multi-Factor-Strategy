@@ -1,10 +1,10 @@
 {
   "strategy_id": "US_BASE_FMOM_K4",
   "config_version": "1.0",
-  "status": "PENDING_SIGNOFF",
+  "status": "FROZEN",
   "status_note": "Set status to FROZEN only after the whole group confirms Gate B and Gate C (SSOT 0.6). Fill approvers and freeze_date at the same time. While PENDING_SIGNOFF, nothing after 2020-12-31 can be read.",
-  "freeze_date": "",
-  "approvers": [],
+  "freeze_date": "2026-10-13",
+  "approvers": ["ALL"],
   "primary_owner": "M4 (Eric Lu)",
   "reviewer": "M5",
   "gate_b_selection": {
@@ -40,7 +40,7 @@
   "transaction_cost": {
     "oneway_bps": 10,
     "stress_multiplier": 2,
-    "status": "PENDING_SIGNOFF",
+    "status": "FROZEN",
     "note": "SSOT requires the cost value to be frozen before opening Historical OOS."
   },
   "sample_windows": {

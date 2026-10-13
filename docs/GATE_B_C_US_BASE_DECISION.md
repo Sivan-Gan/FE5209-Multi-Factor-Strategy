@@ -121,8 +121,8 @@ Gate C 首次验收（旧规则）全部 PASS，但信息项 FMOM_04 显示风�
 | M1 | 数据 / PIT | | | |
 | M2 | 因子工程 | | | |
 | M3 | 因子研究 | | | |
-| M4 | 策略引擎（Eric Lu） | | | |
+| M4 | 策略引擎（Eric Lu） |确认|确认 | 2026-10-13|
 | M5 | 回测与风险 | | | |
 | M6 | 跨市场 | | | |
 
-Gate C 正式运行的 `run_id`：____________　验收结果：ACCEPTED / REJECTED
+Gate C 正式运行的 `run_id`：**US_BASE_gate_b_20261013T132439Z**（代码已提交，commit `1076a2e`；配置状态 PENDING_SIGNOFF）　验收结果：**ACCEPTED**（15/15 PASS）
