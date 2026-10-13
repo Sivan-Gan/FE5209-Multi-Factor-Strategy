@@ -125,4 +125,4 @@ Gate C 首次验收（旧规则）全部 PASS，但信息项 FMOM_04 显示风�
 | M5 | 回测与风险 | | | |
 | M6 | 跨市场 | | | |
 
-Gate C 正式运行的 `run_id`：**US_BASE_gate_b_20261013T132439Z**（代码已提交，commit `1076a2e`；配置状态 PENDING_SIGNOFF）　验收结果：**ACCEPTED**（15/15 PASS）
+Gate C 正式运行的 `run_id`：**US_BASE_gate_b_20261013T132439Z**（代码已提交，commit `1076a2e`；配置状态 FROZEN）　验收结果：**ACCEPTED**（15/15 PASS）
