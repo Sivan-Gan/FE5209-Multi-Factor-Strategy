@@ -1,0 +1,15 @@
+{
+  "benchmark": "STATIC_EQUAL_FACTOR_K4",
+  "role": "HIST_OOS_BENCHMARK",
+  "base_strategy": "US_BASE_FMOM_K4",
+  "base_config_version": "1.0",
+  "factor_weighting": "equal",
+  "lambda": 0.0,
+  "min_available_factors": 4,
+  "buffer": true,
+  "cost_oneway_bps": 10,
+  "history_start": "2016-01-01",
+  "oos_start": "2021-01-01",
+  "oos_end": "2025-12-31",
+  "n_return_weeks": 259
+}
