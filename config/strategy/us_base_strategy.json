@@ -1,0 +1,61 @@
+{
+  "strategy_id": "US_BASE_FMOM_K4",
+  "config_version": "1.0",
+  "status": "FROZEN",
+  "status_note": "Set status to FROZEN only after the whole group confirms Gate B and Gate C (SSOT 0.6). Fill approvers and freeze_date at the same time. While PENDING_SIGNOFF, nothing after 2020-12-31 can be read.",
+  "freeze_date": "2026-10-13",
+  "approvers": ["ALL"],
+  "primary_owner": "M4 (Eric Lu)",
+  "reviewer": "M5",
+  "gate_b_selection": {
+    "tag": "J26_lam0.5_ra1_min4_buf1",
+    "selected_from": "28 candidate configurations, 2016-2020 only (run_gate_b.py)",
+    "decision_date": "2026-10-13",
+    "note": "Selected under the old strict_calendar rule and re-confirmed on 2026-10-13 after rerunning all 28 configurations under fmom_window_rule=last_valid (net Sharpe 0.905, 2nd of 28; risk adjustment beats no risk adjustment in all 6 J x lambda comparisons)."
+  },
+  "parameters": {
+    "final_factor_set": [
+      "QUALITY_CURRENT",
+      "MOMENTUM_12_1",
+      "LOWRISK_CURRENT",
+      "INVESTMENT_CURRENT"
+    ],
+    "fmom_lookback_weeks_J": 26,
+    "risk_adjusted_fmom": true,
+    "risk_adjustment_window_weeks": 104,
+    "fmom_window_rule": "last_valid",
+    "fmom_window_rule_note": "Reading B (decided 2026-10-13): each factor uses its own last J (and 104 for risk adjustment) completed AND valid weekly returns; weeks with a missing factor return are skipped, never filled. Adopted after Gate C acceptance found 3 single-stock MISSING_DLYRET gaps (2015-05-08 PERMNO 76744, 2015-06-05 PERMNO 76614, 2020-10-30 PERMNO 76841) that are NA in the CRSP source.",
+    "lambda": 0.5,
+    "fmom_input_return": "gross factor long-short return (Step 16)",
+    "min_available_factors": 4,
+    "selection_fraction": 0.2,
+    "buffer": true,
+    "buffer_exit_fraction": 0.3,
+    "sector_cap": 0.3,
+    "sector_cap_algorithm": "SSOT 4.7 algorithm 2 (greedy by rank, skip full sectors, unfilled -> cash)",
+    "portfolio_weighting": "equal weight, long only",
+    "rebalance": "weekly; signal at week's last close S_t, execute at next trading day close E_t",
+    "cash_return": 0.0
+  },
+  "transaction_cost": {
+    "oneway_bps": 10,
+    "stress_multiplier": 2,
+    "status": "FROZEN",
+    "note": "SSOT requires the cost value to be frozen before opening Historical OOS."
+  },
+  "sample_windows": {
+    "gate_b_configuration": [
+      "2016-01-01",
+      "2020-12-31"
+    ],
+    "hist_oos_base": [
+      "2021-01-01",
+      "2025-12-31"
+    ],
+    "recent_extension": [
+      "2026-01-01",
+      "2026-09-30"
+    ],
+    "live_ops_from": "first executable signal date after FROZEN"
+  }
+}
