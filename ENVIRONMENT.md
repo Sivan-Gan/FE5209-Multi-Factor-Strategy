@@ -17,19 +17,31 @@ macOS and Linux use the same commands apart from the Python launcher available o
 
 ## Dependency scope
 
-Tracked runtime code directly imports `pyarrow` for Final Factor Handoff Parquet export/loading and `wrds` only for the separately governed supplemental-extraction client. Core construction and tests otherwise use the Python standard library, including `sqlite3` and `unittest`.
+The project uses the following direct runtime dependencies:
 
-Validated local versions at delivery preparation:
+| Component | Purpose |
+|---|---|
+| pyarrow | Parquet data loading and export |
+| wrds | Authorized WRDS data extraction |
+| pandas | Data processing, portfolio returns and analytics |
+| numpy | Numerical calculations |
+| scipy | Statistical tests and numerical methods |
+| statsmodels | OLS regression and HAC/Newey-West inference |
+| matplotlib | Performance and risk visualizations |
 
-| Component | Version / status |
-| --- | --- |
-| Python | 3.12.8 |
-| pyarrow | 26.0.0 |
-| wrds | 3.5.0 |
-| pandas / numpy | available indirectly in the local environment; not direct tracked imports |
-| scipy / statsmodels / duckdb / pytest | not required by tracked code and not installed in the delivery environment |
+Python standard-library modules such as `sqlite3` and `unittest` do not require separate installation.
 
-No credentials are stored by these setup steps. If a separately authorized WRDS operation needs authentication, the receiver must use their own institutionally managed access outside Git.
+Install dependencies using:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+The recommended Python version is 3.12 or later.
+
+The dependency versions in `requirements.txt` specify compatible ranges rather than an exact environment lock.
+
+For reproducibility, record the actual installed versions when preparing a formal research delivery.
 
 ## Validation
 
