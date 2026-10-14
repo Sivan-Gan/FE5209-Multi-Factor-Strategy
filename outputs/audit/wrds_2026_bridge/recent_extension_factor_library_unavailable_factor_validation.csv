@@ -1,0 +1,3 @@
+factor_name,expected_reason,observation_count,nonnull_raw_count,nonnull_processed_count,nonnull_neutralized_count,nonnull_final_count,nonnull_rank_count,correct_reason_count,status
+LOWRISK_IVOL,CRSP_1000080_2026_SOURCE_UNAVAILABLE,20121,0,0,0,0,0,20121,PASS
+DIVIDEND_CURRENT,CRSP_DISTRIBUTION_TAXONOMY_NOT_REPRODUCIBLE,20121,0,0,0,0,0,20121,PASS

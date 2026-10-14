@@ -1,0 +1,12 @@
+check,status,value,notes
+HANDOFF_MANIFEST_INTEGRITY,PASS,true,Each declared payload/document file has matching bytes and SHA-256.
+CANONICAL_FACTOR_LIBRARY_SHA256,PASS,cd43d408990cb4efa35f03d47a6e99620e1ff6df3b5a078ec729f569b27a9edd,Must remain unchanged by packaging.
+CANONICAL_MARKET_SHA256,PASS,53f38434b30ae88a97977bded29fcaff47f58e53e6adea3f94d9ecdb72805c1d,Must remain unchanged by packaging.
+CANONICAL_SUPPORT_SHA256,PASS,45b5c7640d9522060f130f7f89b91aebe14ced751732a03ad63094a372b262a1,Internal-only support source must remain unchanged.
+REGISTRY_VALIDATION_20_OF_20,PASS,20/20,Existing governed registry validation must remain all-pass.
+PACKAGE_ACCEPTANCE,PASS,17,Every handoff acceptance check must pass.
+FACTOR_PARQUET_GITHUB_NORMAL_LIMIT,PASS,false,bytes=16574225; >100MiB=False; handoff/us_recent_extension_2026/data/factor_library_2026.parquet: filter: unspecified
+MARKET_PARQUET_GITHUB_NORMAL_LIMIT,PASS,false,bytes=2514326; >100MiB=False; handoff/us_recent_extension_2026/data/market_2026.parquet: filter: unspecified
+REDISTRIBUTION_CLASSIFICATION,PASS,TECHNICALLY_READY_BUT_REDISTRIBUTION_AUTHORIZATION_REQUIRED,No existing explicit GitHub/LFS authorization exists for these new 2026 observation-level derived Parquets.
+NO_STRATEGY_OUTPUTS,PASS,true,Schema scan excludes returns/IC/FMOM/portfolios/holdings/NAV/strategy outputs.
+HANDOFF_MANIFEST_SHA256,PASS,48a164e9b8e06930d5bf8c1d912ece78e8189b52b54ed9a2b0bed047352f3aa4,Physical hash of the self-referential manifest control file.

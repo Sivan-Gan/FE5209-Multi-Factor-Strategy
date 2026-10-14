@@ -1,0 +1,5 @@
+factor_name,actual_min_available,actual_max_available,expected_min_available,expected_max_available,out_of_expected_date_count,status
+QUALITY_CURRENT,502,503,502,503,0,PASS
+MOMENTUM_12_1,485,500,485,500,0,PASS
+LOWRISK_CURRENT,486,501,486,501,0,PASS
+INVESTMENT_CURRENT,501,503,501,503,0,PASS

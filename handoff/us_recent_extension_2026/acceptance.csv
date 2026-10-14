@@ -1,0 +1,18 @@
+check,status,blocking,evidence,notes
+MARKET_END_DATE,PASS,false,data/market_2026.parquet,Observed market end is 2026-10-09
+FACTOR_SIGNAL_END_DATE,PASS,false,data/factor_library_2026.parquet,Observed factor signal end is 2026-10-02
+SIGNAL_DATE_COUNT,PASS,false,data/factor_library_2026.parquet,Observed distinct signal dates: 40
+FACTOR_COUNT,PASS,false,data/factor_library_2026.parquet,Observed factors: 20
+CONSTRUCTIBLE_FACTOR_COUNT,PASS,false,factor_registry_2026.csv,Derived from exported registry availability status.
+FINAL_K4_COUNT,PASS,false,factor_registry_2026.csv,Observed Final K=4 count: 4
+FINAL_K4_IDENTITY,PASS,false,factor_registry_2026.csv,Exact frozen final-factor order and identity.
+UNAVAILABLE_FACTOR_COUNT,PASS,false,factor_registry_2026.csv,Observed governed unavailable factors: 2
+UNAVAILABLE_FACTOR_REASONS,PASS,false,factor_registry_2026.csv,Must retain governed reason codes exactly.
+FACTOR_LIBRARY_ROW_COUNT,PASS,false,data/factor_library_2026.parquet,Observed rows: 402420
+DUPLICATE_NATURAL_KEYS,PASS,false,Parquet natural-key order scan,"Factor key is (signal_date, canonical_security_id, factor_name); market key is (date, canonical_security_id)."
+LOOKAHEAD_CONTRACT,PASS,false,outputs/audit/wrds_2026_bridge/recent_extension_factor_library_registry_validation.csv,PIT registry validation must pass; execution cannot precede signal; outcomes/strategy columns are absent.
+LINEAGE,PASS,false,both exported Parquet interfaces,Each exported row retains RECENT_EXTENSION_MIXED_SOURCE lineage.
+SOURCE_CANONICAL_HASH_MATCH,PASS,false,pre/post source SHA-256 snapshot,All source canonical SQLite stores are byte-identical before and after export.
+UNAVAILABLE_NULL_CONTRACT,PASS,false,data/factor_library_2026.parquet,Unavailable score fields remain null with governed reasons; no proxy is exported.
+NO_STRATEGY_OUTPUTS,PASS,false,Parquet schema inspection,"No factor returns, FMOM, portfolios, holdings, NAV, or strategy output is included."
+SUPPORT_LAYER_BOUNDARY,PASS,false,data/canonical/wrds_recent_extension/us_recent_extension_quality_investment_support_2026.sqlite,Support SQLite is internal build support only and is not exported.
