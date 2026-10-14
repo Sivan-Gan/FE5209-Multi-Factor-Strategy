@@ -1,0 +1,13 @@
+check,status,detail
+259 aligned completed weeks,PASS,"Dynamic, Static and Universe EW"
+Dynamic FMOM: 10bp CAGR closure,PASS,error=1.402e-15
+Dynamic FMOM: valid GTR,PASS,
+Static MF: 10bp CAGR closure,PASS,error=1.610e-15
+Static MF: valid GTR,PASS,
+Universe EW: 10bp CAGR closure,PASS,error=1.110e-15
+Universe EW: valid GTR,PASS,
+Liquidity coverage and bottleneck QA,PENDING,Missing ADV observations require review
+Independent upstream PIT/return audit,PENDING,Deferred for final validation
+Market impact calibration,PENDING,Not included in fixed-cost model
+High/Low Rate regime,PENDING,Not yet analyzed
+Mandatory OOS robustness,PENDING,Separate exploratory sensitivity analysis
