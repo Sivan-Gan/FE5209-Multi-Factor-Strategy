@@ -168,10 +168,25 @@ M5 仅将其作为只读输入，不修改原始冻结结果。
 
 ```text
 outputs/strategy/benchmarks/hist_oos/
+    static_construction.csv
+    static_manifest.json
     static_target_holdings.csv
     static_trade_ledger.csv
     static_weekly_path.csv
 ```
+
+Static Benchmark 使用 λ=0，即四个因子等权，其余股票池、选股比例、Buffer、Sector Cap 和交易成本规则与 Dynamic 保持一致。
+
+上述五个文件作为 M5 正式交接数据提供。其中：
+
+- `static_manifest.json`：记录 Static Benchmark 的配置及运行信息；
+- `static_construction.csv`：记录组合构建过程及相关检查信息；
+- `static_target_holdings.csv`：每周目标持仓及权重；
+- `static_trade_ledger.csv`：实际交易权重及交易成本计算依据；
+- `static_weekly_path.csv`：每周 Gross Return、GTR、Turnover 和 Net Return。
+
+Static Benchmark 已通过 22 项 Acceptance Checks。
+
 
 Static 使用 λ=0，其余选股与交易规则保持一致。
 
@@ -185,6 +200,22 @@ Static 使用 λ=0，其余选股与交易规则保持一致。
 | `risk_free_weekly.parquet` | 周度无风险收益 |
 | `execution_liquidity_weekly.parquet` | ADV、历史市值、历史 GICS |
 | `security_daily_market_hist_oos.parquet` | 日度市场数据及后续独立审计 |
+| `ff_factors_daily.parquet` | FF5 + Momentum 日度因子数据，用于 FF6 Regression |
+
+**FF6 数据接口说明：**
+
+`ff_factor_regression.py` 已统一使用：
+
+`handoff/us_downstream/data/ff_factors_daily.parquet`
+
+该文件由项目 Git LFS 管理，包含 Mkt-RF、SMB、HML、RMW、CMA、RF 和 Momentum。
+
+数据单位为 `DECIMAL_RETURN`，无需再除以 100。
+
+M5 已验证新旧数据源下的 FF6 回归结果一致，Alpha、Beta、HAC p-value 和 R² 的差异均处于浮点计算误差范围内。
+
+因此，M5 模块不再依赖 `data/external/fama_french/` 下的原始 CSV。
+
 
 上游数据位于 `handoff/final_factor/data/` 和 `handoff/us_downstream/data/`。
 
@@ -224,6 +255,58 @@ Static 使用 λ=0，其余选股与交易规则保持一致。
 ## 5. 运行顺序
 
 在项目根目录运行。
+
+### 首次运行与数据依赖
+
+首次克隆项目的组员需要先获取 Git LFS 管理的上游数据：
+
+```bash
+git lfs pull
+```
+
+然后安装依赖：
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+**已交付的输入数据：**
+
+- Frozen Dynamic Strategy：`outputs/strategy/frozen/hist_oos/`
+- Static Multi-Factor Benchmark：`outputs/strategy/benchmarks/hist_oos/`
+- FF6 Factor Data：`handoff/us_downstream/data/ff_factors_daily.parquet`
+- 其他股票收益、流动性和市场基准 Parquet：`handoff/us_downstream/data/`
+
+**需要重新生成的中间数据：**
+
+Universe EW 的完整持仓与交易记录不作为本次 Git 交付内容，需要先执行：
+
+```bash
+python -m src.risk_analysis.universe_ew_benchmark
+```
+
+该脚本将生成：
+
+```text
+outputs/risk_analysis/us_hist_oos/
+    universe_ew_holdings.csv
+    universe_ew_trade_ledger.csv
+    universe_ew_weekly_path.csv
+    universe_ew_summary.csv
+    universe_ew_acceptance.csv
+```
+
+完成后才能运行依赖 Universe EW Holdings 或 Trade Ledger 的下游模块，例如：
+
+- `cost_analysis.py`
+- `concentration.py`
+- `liquidity_capacity.py`
+- `market_cap_analysis.py`
+
+如果只是查看已经交付的综合结果，可以直接读取 `us_strategy_risk_summary.csv` 和 `us_strategy_risk_map.csv`，不需要重新执行所有分析。
+
+**注意：** 此处假设 Frozen 和 Static 数据已经通过正式交接提供。如果相关文件未包含在接收人的工作目录中，应先从团队批准的交付渠道取得，不得直接使用其他版本的冻结结果替代。
+
 
 ### 5.1 环境准备
 
@@ -558,13 +641,43 @@ Member 4 已在 2016–2020 年完成 28 组配置的研究，并记录在：
 
 完整配置网格 CSV 尚未在本地找到。
 
-### 8.6 数据交付与 Git 管理
+### 8.6 数据交付、复现与 Git 管理
 
-`outputs/strategy/` 和 `outputs/risk_analysis/` 的本地文件不一定已经提交到 GitHub。
+本项目采用 Git + Git LFS 管理代码和经过批准的研究数据。
 
-交接前必须确认接收人能够取得必要的代码、CSV、PNG 和已授权 Parquet 数据。
+为保证 Member 5 的结果可复现，同时避免重复上传大型中间数据，本次交接采用以下方案：
 
-不得上传原始 WRDS 数据、凭证或未经批准的大型数据文件。
+| 数据类别 | 交接方式 |
+|---|---|
+| M5 Python 代码 | Git 正常提交 |
+| M5 README / Handoff | Git 正常提交 |
+| Requirements / Environment | Git 正常提交 |
+| 上游 Parquet | 沿用项目现有 Git LFS |
+| Frozen Dynamic Strategy | 经团队批准后提交全部 6 个正式输出文件 |
+| Static Multi-Factor Benchmark | 经团队批准后提交全部 5 个正式输出文件 |
+| Universe EW Summary / Weekly Path / Acceptance | Git 正常提交 |
+| Universe EW Holdings / Trade Ledger | 不提交，运行代码重新生成 |
+| M5 核心风险汇总 CSV | Git 正常提交 |
+| 大型中间分析 CSV | 本地保留，需要时重新生成 |
+| 外部 Fama-French CSV | 不作为 M5 交付依赖 |
+| 原始 WRDS 数据及凭证 | 不提交 |
+
+**复现原则：**
+
+1. 使用同一 Frozen Config 和 Run Manifest；
+2. 使用项目已批准的 Git LFS 上游数据；
+3. 保留 259 个已完成 OOS 持有期；
+4. 不修改 Frozen Strategy 的持仓及交易记录；
+5. 对需要重新生成的中间数据，按第 5 节运行顺序执行；
+6. 不根据 OOS 结果重新选择策略参数。
+
+**数据完整性说明：**
+
+提交汇总 CSV 不等于提交全部回测输入。接收人若需要重新运行分析，必须同时具备 Frozen Strategy、Static Benchmark、上游 Parquet，以及能够生成 Universe EW 中间数据的代码。
+
+不得上传未经批准的原始 WRDS 数据、外部受限数据、账号凭证或其他大型文件。
+
+本 README 中所述的 Git 交付方案以最终实际提交记录为准。
 
 ---
 
