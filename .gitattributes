@@ -24,3 +24,7 @@ handoff/us_downstream/data/weekly_execution_calendar.parquet filter=lfs diff=lfs
 handoff/us_recent_extension_2026/data/factor_library_2026.parquet filter=lfs diff=lfs merge=lfs -text
 handoff/us_recent_extension_2026/data/market_2026.parquet filter=lfs diff=lfs merge=lfs -text
 handoff/us_recent_extension_2026/data/benchmark_daily_returns_2026.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_cross_boundary_2025_2026/data/weekly_execution_calendar_bridge.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_cross_boundary_2025_2026/data/security_weekly_execution_returns_bridge.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_cross_boundary_2025_2026/data/benchmark_weekly_execution_return_bridge.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_cross_boundary_2025_2026/data/risk_free_weekly_return_bridge.parquet filter=lfs diff=lfs merge=lfs -text

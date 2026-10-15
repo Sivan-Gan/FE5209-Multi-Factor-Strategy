@@ -1,0 +1,23 @@
+check,status,blocking,evidence,notes
+BRIDGE_CALENDAR_EXACT,PASS,false,handoff/us_cross_boundary_2025_2026/data/weekly_execution_calendar_bridge.parquet,One exact completed bridge calendar row.
+CALENDAR_HASH_MATCH,PASS,false,handoff/us_cross_boundary_2025_2026/data/weekly_execution_calendar_bridge.parquet,58845e42a461ad4c279af20a6bc1c14fd6ac139c000db63d8f314338bac9ba3b
+BRIDGE_INTERVAL_EXACT,PASS,false,"(2025-12-29, 2026-01-05]",The bridge holds only the frozen cross-boundary interval.
+EXECUTION_DAY_EXCLUDED,PASS,false,bridge calendar contract,"2025-12-29 is the execution boundary, not a holding-date return."
+NEXT_EXECUTION_DAY_INCLUDED,PASS,false,bridge calendar contract,2026-01-05 is the included endpoint.
+SECURITY_ROWS_503,PASS,false,handoff/us_cross_boundary_2025_2026/data/security_weekly_execution_returns_bridge.parquet,rows=503
+IDENTITY_EXACT_503,PASS,false,handoff/us_cross_boundary_2025_2026/identity_mapping_audit.csv,exact=503
+IDENTITY_TEMPORAL_ZERO,PASS,false,handoff/us_cross_boundary_2025_2026/identity_mapping_audit.csv,temporal=0
+IDENTITY_AMBIGUOUS_ZERO,PASS,false,handoff/us_cross_boundary_2025_2026/identity_mapping_audit.csv,ambiguous=0
+IDENTITY_UNMAPPED_ZERO,PASS,false,handoff/us_cross_boundary_2025_2026/identity_mapping_audit.csv,unmapped=0
+SECURITY_RETURNS_AVAILABLE_503,PASS,false,handoff/us_cross_boundary_2025_2026/data/security_weekly_execution_returns_bridge.parquet,available=503
+SECURITY_NATURAL_KEY_UNIQUE,PASS,false,"(signal_date, PERMNO)",unique=503
+SECURITY_HASH_MATCH,PASS,false,handoff/us_cross_boundary_2025_2026/data/security_weekly_execution_returns_bridge.parquet,7255f2b69938f1c725e7c14e916378881cf73584f03703cc9379faa44953d0b7
+BENCHMARK_IDENTITY,PASS,false,handoff/us_cross_boundary_2025_2026/data/benchmark_weekly_execution_return_bridge.parquet,Compustat S&P 500 Comp-Ltd only; no proxy or aggregation.
+BENCHMARK_RETURN_MATCH,PASS,false,handoff/us_cross_boundary_2025_2026/data/benchmark_weekly_execution_return_bridge.parquet,Frozen bridge total return.
+BENCHMARK_HASH_MATCH,PASS,false,handoff/us_cross_boundary_2025_2026/data/benchmark_weekly_execution_return_bridge.parquet,256ccf221d1caf64b903e7518459824699525644e6bf59e06e847304beb56289
+RF_RETURN_MATCH,PASS,false,handoff/us_cross_boundary_2025_2026/data/risk_free_weekly_return_bridge.parquet,Frozen decimal bridge risk-free return.
+RF_HASH_MATCH,PASS,false,handoff/us_cross_boundary_2025_2026/data/risk_free_weekly_return_bridge.parquet,582833b7c398525eb659ab2b2ac944a4fcb877bc6cfac4bb1366099b070eafb0
+FORMAL_HISTORICAL_INPUTS_UNCHANGED,PASS,false,frozen Formal input SHA-256,files=5
+RECENT_EXTENSION_INPUTS_UNCHANGED,PASS,false,2026 handoff SHA-256,files=3
+SOURCE_FILES_UNCHANGED,PASS,false,raw/audit source SHA-256,files=6
+NO_STRATEGY_OUTPUTS,PASS,false,bridge output schemas,"No allocation, performance, or model-output fields."
