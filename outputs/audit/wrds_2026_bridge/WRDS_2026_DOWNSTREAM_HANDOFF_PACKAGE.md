@@ -2,7 +2,7 @@
 
 ## Result
 
-**TECHNICALLY READY BUT REDISTRIBUTION AUTHORIZATION REQUIRED**.
+**DERIVED_DATA_PRIVATE_TEAM_GITHUB_APPROVED**.
 
 ## Scope
 
@@ -12,26 +12,23 @@ This package is a local mechanical export of the completed 2026 `RECENT_EXTENSIO
 
 - factor-library Parquet: 402420 long-form observations, 20 factors, 40 signal dates, and exact frozen Final K=4.
 - market Parquet: 97587 security-day records through 2026-10-09.
+- benchmark Parquet: 194 Compustat S&P 500 Comp-Ltd return rows from 2026-01-02 through 2026-10-09.
 - registry CSV: 20 rows; 18 constructible factors and two governed unavailable factors.
 - Quality/Investment support SQLite: intentionally internal-only; no full support table is exported.
 
 ## Source integrity
 
-- factor-library source SHA-256: `cd43d408990cb4efa35f03d47a6e99620e1ff6df3b5a078ec729f569b27a9edd`.
-- market source SHA-256: `53f38434b30ae88a97977bded29fcaff47f58e53e6adea3f94d9ecdb72805c1d`.
-- support source SHA-256: `45b5c7640d9522060f130f7f89b91aebe14ced751732a03ad63094a372b262a1`.
+- factor-library source SHA-256: `cd43d408990cb4efa35f03d47a6e99620e1ff6df3b5a078ec729f569b27a9edd` (原版/data/canonical/wrds_recent_extension/us_recent_extension_factor_library_2026.sqlite).
+- market/benchmark source SHA-256: `53f38434b30ae88a97977bded29fcaff47f58e53e6adea3f94d9ecdb72805c1d` (原版/data/canonical/wrds_recent_extension/us_recent_extension_market_2026.sqlite).
+- support source SHA-256: `45b5c7640d9522060f130f7f89b91aebe14ced751732a03ad63094a372b262a1` (原版/data/canonical/wrds_recent_extension/us_recent_extension_quality_investment_support_2026.sqlite).
 - all three sources were byte-identical before and after export.
 
 ## Distribution / LFS
 
-`factor_library_2026.parquet` is 16574225 bytes; existing git attribute: `handoff/us_recent_extension_2026/data/factor_library_2026.parquet: filter: unspecified`.
-`market_2026.parquet` is 2514326 bytes; existing git attribute: `handoff/us_recent_extension_2026/data/market_2026.parquet: filter: unspecified`.
-Neither path has an approved existing Git LFS rule. No `.gitattributes` change was made. A future explicit authorization would need narrow proposed rules:
-```text
-handoff/us_recent_extension_2026/data/factor_library_2026.parquet filter=lfs diff=lfs merge=lfs -text
-handoff/us_recent_extension_2026/data/market_2026.parquet filter=lfs diff=lfs merge=lfs -text
-```
-The project owner must separately authorize redistribution/delivery before any GitHub staging, commit, or transfer.
+`factor_library_2026.parquet` is 16574225 bytes; existing git attribute: `handoff/us_recent_extension_2026/data/factor_library_2026.parquet: filter: lfs`.
+`market_2026.parquet` is 2514326 bytes; existing git attribute: `handoff/us_recent_extension_2026/data/market_2026.parquet: filter: lfs`.
+`benchmark_daily_returns_2026.parquet` is 8600 bytes; existing git attribute: `handoff/us_recent_extension_2026/data/benchmark_daily_returns_2026.parquet: filter: lfs`.
+All three observation-level derived Parquets are approved for private-team GitHub/LFS delivery only. No public redistribution authorization is implied; raw/vendor data and canonical SQLite remain excluded.
 
 ## Acceptance
 
@@ -52,6 +49,13 @@ The project owner must separately authorize redistribution/delivery before any G
 - `UNAVAILABLE_NULL_CONTRACT`: PASS — Unavailable score fields remain null with governed reasons; no proxy is exported.
 - `NO_STRATEGY_OUTPUTS`: PASS — No factor returns, FMOM, portfolios, holdings, NAV, or strategy output is included.
 - `SUPPORT_LAYER_BOUNDARY`: PASS — Support SQLite is internal build support only and is not exported.
+- `BENCHMARK_IDENTITY`: PASS — Required identity is GVKEYX=000003, index_code=I0003, name=S&P 500 Comp-Ltd.
+- `BENCHMARK_DATE_RANGE`: PASS — Observed range: 2026-01-02 through 2026-10-09
+- `BENCHMARK_ROW_COUNT`: PASS — Observed rows: 194
+- `BENCHMARK_DUPLICATE_DATES`: PASS — Observed duplicate dates: 0
+- `BENCHMARK_RETURN_AVAILABILITY`: PASS — All rows have return_available=1 and finite non-null benchmark_return.
+- `BENCHMARK_RETURN_FORMULA`: PASS — PRCCDDIV_t / PRCCDDIV_(t-1) - 1 passes for 193 in-window adjacent pairs; the first 2026 return is retained from the PIT canonical source.
+- `BENCHMARK_LINEAGE`: PASS — Every row retains Compustat PRCCDDIV method and RECENT_EXTENSION_MIXED_SOURCE lineage.
 
 ## Explicit exclusions
 

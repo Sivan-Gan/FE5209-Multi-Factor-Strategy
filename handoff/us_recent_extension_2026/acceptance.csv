@@ -15,4 +15,11 @@ LINEAGE,PASS,false,both exported Parquet interfaces,Each exported row retains RE
 SOURCE_CANONICAL_HASH_MATCH,PASS,false,pre/post source SHA-256 snapshot,All source canonical SQLite stores are byte-identical before and after export.
 UNAVAILABLE_NULL_CONTRACT,PASS,false,data/factor_library_2026.parquet,Unavailable score fields remain null with governed reasons; no proxy is exported.
 NO_STRATEGY_OUTPUTS,PASS,false,Parquet schema inspection,"No factor returns, FMOM, portfolios, holdings, NAV, or strategy output is included."
-SUPPORT_LAYER_BOUNDARY,PASS,false,data/canonical/wrds_recent_extension/us_recent_extension_quality_investment_support_2026.sqlite,Support SQLite is internal build support only and is not exported.
+SUPPORT_LAYER_BOUNDARY,PASS,false,us_recent_extension_quality_investment_support_2026.sqlite,Support SQLite is internal build support only and is not exported.
+BENCHMARK_IDENTITY,PASS,false,data/benchmark_daily_returns_2026.parquet,"Required identity is GVKEYX=000003, index_code=I0003, name=S&P 500 Comp-Ltd."
+BENCHMARK_DATE_RANGE,PASS,false,data/benchmark_daily_returns_2026.parquet,Observed range: 2026-01-02 through 2026-10-09
+BENCHMARK_ROW_COUNT,PASS,false,data/benchmark_daily_returns_2026.parquet,Observed rows: 194
+BENCHMARK_DUPLICATE_DATES,PASS,false,data/benchmark_daily_returns_2026.parquet,Observed duplicate dates: 0
+BENCHMARK_RETURN_AVAILABILITY,PASS,false,data/benchmark_daily_returns_2026.parquet,All rows have return_available=1 and finite non-null benchmark_return.
+BENCHMARK_RETURN_FORMULA,PASS,false,canonical_benchmark_daily.prccddiv,PRCCDDIV_t / PRCCDDIV_(t-1) - 1 passes for 193 in-window adjacent pairs; the first 2026 return is retained from the PIT canonical source.
+BENCHMARK_LINEAGE,PASS,false,data/benchmark_daily_returns_2026.parquet,Every row retains Compustat PRCCDDIV method and RECENT_EXTENSION_MIXED_SOURCE lineage.

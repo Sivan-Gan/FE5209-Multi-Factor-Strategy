@@ -27,6 +27,13 @@ explicit governed missing reasons. No proxy or replacement is supplied.
   naturally keyed by `(signal_date, canonical_security_id, factor_name)`.
 - `data/market_2026.parquet`: minimum daily security market/execution data,
   naturally keyed by `(date, canonical_security_id)`.
+- `data/benchmark_daily_returns_2026.parquet`: daily Compustat S&P 500
+  Comp-Ltd total-return benchmark, naturally keyed by `date`. Its identity is
+  `GVKEYX=000003` / `I0003`; its daily return is
+  `PRCCDDIV_t / PRCCDDIV_(t-1) - 1`; and it runs through
+  **2026-10-09**. It is independent of the security-level
+  `market_2026.parquet` interface and is not a constituent aggregation or
+  proxy benchmark.
 - `factor_registry_2026.csv`: exactly 20 governed factor entries and 2026
   availability status.
 - `acceptance.csv`: artifact-derived contract validation.
@@ -112,10 +119,13 @@ FMOM results, strategy weights, holdings, NAV/performance, Gate B, or Gate C.
 
 ## Redistribution and Git LFS boundary
 
-Classification: **TECHNICALLY READY BUT REDISTRIBUTION AUTHORIZATION REQUIRED**.
-The existing private GitHub/LFS policy explicitly approves only the existing
-three historical interfaces and 20 enumerated Parquet paths. It contains no
-matching rule or explicit authorization for these 2026 observation-level
-derived Parquets. Do not commit, publish, or transfer the Parquet payloads
-until the project owner authorizes their delivery policy and, if selected,
-adds narrow Git LFS rules.
+Classification: **DERIVED_DATA_PRIVATE_TEAM_GITHUB_APPROVED**.
+The project owner explicitly authorizes the following observation-level
+derived Parquets for **private team GitHub/LFS delivery only**:
+
+- `data/factor_library_2026.parquet`
+- `data/market_2026.parquet`
+- `data/benchmark_daily_returns_2026.parquet`
+
+This authorization is not permission for public redistribution. Raw/vendor
+data, canonical SQLite databases, and other source artifacts remain excluded.
