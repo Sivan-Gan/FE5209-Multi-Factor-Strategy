@@ -1,0 +1,3 @@
+﻿strategy,signal_date,holding_rows,reason
+Dynamic,2025-12-26,99,NOT_IN_FROZEN_COMPLETED_OOS_PATH
+Static,2025-12-26,99,NOT_IN_FROZEN_COMPLETED_OOS_PATH

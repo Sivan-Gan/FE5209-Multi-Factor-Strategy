@@ -1,0 +1,14 @@
+﻿file,grain,field,definition_and_unit
+stock_contributions_weekly.parquet,strategy × signal_date × PERMNO,gross_contribution,周度证券毛收益贡献 = weight × stock_return_used；小数收益
+stock_contributions_weekly.parquet,strategy × signal_date × PERMNO,net_contribution,(1−总TC)×毛贡献−该证券交易成本；小数收益
+stock_contributions_weekly.parquet,strategy × signal_date × PERMNO,net_linked,执行前净财富×净贡献；单位起始资本
+stock_contributions_weekly.parquet,strategy × signal_date × PERMNO,gross_linked,执行前毛财富×毛贡献；单位起始资本，属于毛账户
+stock_contributions_weekly.parquet,strategy × signal_date × PERMNO,direct_cost_linked,−执行前净财富×该证券费用；单位起始资本
+stock_contributions_weekly.parquet,strategy × signal_date × PERMNO,cost,该证券交易费用／当周执行前 NAV；非美元金额
+stock_contributions_weekly.parquet,strategy × signal_date × PERMNO,weight,冻结执行后目标权重，保留现金；未自行归一化
+stock_contributions_weekly.parquet,strategy × signal_date × PERMNO,sector_source,冻结持仓行业、同信号日历史行业、先前持仓退出成本行业或 UNKNOWN
+dynamic_minus_static_stock_summary.csv,PERMNO,terminal_net_wealth_gap,两套策略各自净财富连接贡献之差；单位起始资本
+dynamic_minus_static_by_signal_year.csv,signal_year,net_increment_arithmetic_sum,当年周度净收益差之和；非复合收益差
+factor_timing_contributions_weekly.csv,signal_date × family,factor_timing_increment_diagnostic,(冻结因子权重−0.25)×冻结因子模拟组合多空收益；诊断视图
+regression_mean_return_explanation.csv,model × component,annualized_arithmetic_mean_contribution,52×FF6 每周模型解释项均值；非持仓贡献
+drawdown_stock_contributors.csv,strategy × PERMNO,drawdown_net_linked,峰谷区间净财富贡献／峰值财富；可加回有符号回撤

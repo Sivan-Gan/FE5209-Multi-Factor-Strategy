@@ -1,0 +1,330 @@
+﻿check,status,critical,metric,detail
+pinned_source_commit,PASS,True,,
+source_exists_config/strategy/us_base_strategy.json,PASS,True,,<repo>\config\strategy\us_base_strategy.json
+frozen_text_config/strategy/us_base_strategy.json,PASS,True,,<repo>\config\strategy\us_base_strategy.json
+source_exists_docs/GATE_B_C_US_BASE_DECISION.md,PASS,True,,<repo>\docs\GATE_B_C_US_BASE_DECISION.md
+frozen_text_docs/GATE_B_C_US_BASE_DECISION.md,PASS,True,,<repo>\docs\GATE_B_C_US_BASE_DECISION.md
+source_exists_docs/MEMBER5_US_BACKTEST_RISK_HANDOFF.md,PASS,True,,<repo>\docs\MEMBER5_US_BACKTEST_RISK_HANDOFF.md
+frozen_text_docs/MEMBER5_US_BACKTEST_RISK_HANDOFF.md,PASS,True,,<repo>\docs\MEMBER5_US_BACKTEST_RISK_HANDOFF.md
+source_exists_handoff/final_factor/data/factor_scores_weekly.parquet,PASS,True,,<repo>\handoff\final_factor\data\factor_scores_weekly.parquet
+source_pointer_factor_scores_weekly,PASS,True,,<repo>\handoff\final_factor\data\factor_scores_weekly.parquet
+input_sha_factor_scores_weekly,PASS,True,,<data>\handoff\final_factor\data\factor_scores_weekly.parquet
+source_exists_handoff/final_factor/data/universe_weekly.parquet,PASS,True,,<repo>\handoff\final_factor\data\universe_weekly.parquet
+source_pointer_universe_weekly,PASS,True,,<repo>\handoff\final_factor\data\universe_weekly.parquet
+input_sha_universe_weekly,PASS,True,,<data>\handoff\final_factor\data\universe_weekly.parquet
+source_exists_handoff/us_downstream/data/benchmark_weekly_execution_returns.parquet,PASS,True,,<repo>\handoff\us_downstream\data\benchmark_weekly_execution_returns.parquet
+source_pointer_benchmark_weekly_execution_returns,PASS,True,,<repo>\handoff\us_downstream\data\benchmark_weekly_execution_returns.parquet
+input_sha_benchmark_weekly_execution_returns,PASS,True,,<data>\handoff\us_downstream\data\benchmark_weekly_execution_returns.parquet
+source_exists_handoff/us_downstream/data/ff_factors_daily.parquet,PASS,True,,<repo>\handoff\us_downstream\data\ff_factors_daily.parquet
+source_pointer_ff_factors_daily,PASS,True,,<repo>\handoff\us_downstream\data\ff_factors_daily.parquet
+input_sha_ff_factors_daily,PASS,True,,<data>\handoff\us_downstream\data\ff_factors_daily.parquet
+source_exists_handoff/us_downstream/data/risk_free_weekly.parquet,PASS,True,,<repo>\handoff\us_downstream\data\risk_free_weekly.parquet
+source_pointer_risk_free_weekly,PASS,True,,<repo>\handoff\us_downstream\data\risk_free_weekly.parquet
+input_sha_risk_free_weekly,PASS,True,,<data>\handoff\us_downstream\data\risk_free_weekly.parquet
+source_exists_handoff/us_downstream/data/security_reference_history.parquet,PASS,True,,<repo>\handoff\us_downstream\data\security_reference_history.parquet
+source_pointer_security_reference_history,PASS,True,,<repo>\handoff\us_downstream\data\security_reference_history.parquet
+input_sha_security_reference_history,PASS,True,,<data>\handoff\us_downstream\data\security_reference_history.parquet
+source_exists_handoff/us_downstream/data/security_weekly_execution_returns.parquet,PASS,True,,<repo>\handoff\us_downstream\data\security_weekly_execution_returns.parquet
+source_pointer_security_weekly_execution_returns,PASS,True,,<repo>\handoff\us_downstream\data\security_weekly_execution_returns.parquet
+input_sha_security_weekly_execution_returns,PASS,True,,<data>\handoff\us_downstream\data\security_weekly_execution_returns.parquet
+source_exists_handoff/us_downstream/data/weekly_execution_calendar.parquet,PASS,True,,<repo>\handoff\us_downstream\data\weekly_execution_calendar.parquet
+source_pointer_weekly_execution_calendar,PASS,True,,<repo>\handoff\us_downstream\data\weekly_execution_calendar.parquet
+input_sha_weekly_execution_calendar,PASS,True,,<data>\handoff\us_downstream\data\weekly_execution_calendar.parquet
+source_exists_outputs/risk_analysis/us_hist_oos/breakeven_cost.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\breakeven_cost.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/breakeven_cost.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\breakeven_cost.csv
+source_exists_outputs/risk_analysis/us_hist_oos/capacity_limits.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\capacity_limits.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/capacity_limits.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\capacity_limits.csv
+source_exists_outputs/risk_analysis/us_hist_oos/concentration_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\concentration_summary.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/concentration_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\concentration_summary.csv
+source_exists_outputs/risk_analysis/us_hist_oos/cost_sensitivity_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\cost_sensitivity_summary.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/cost_sensitivity_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\cost_sensitivity_summary.csv
+source_exists_outputs/risk_analysis/us_hist_oos/ff6_regression_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\ff6_regression_summary.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/ff6_regression_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\ff6_regression_summary.csv
+source_exists_outputs/risk_analysis/us_hist_oos/fmom_significance_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\fmom_significance_summary.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/fmom_significance_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\fmom_significance_summary.csv
+source_exists_outputs/risk_analysis/us_hist_oos/four_strategy_comparison.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\four_strategy_comparison.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/four_strategy_comparison.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\four_strategy_comparison.csv
+source_exists_outputs/risk_analysis/us_hist_oos/historical_stress_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\historical_stress_summary.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/historical_stress_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\historical_stress_summary.csv
+source_exists_outputs/risk_analysis/us_hist_oos/liquidity_capacity_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\liquidity_capacity_summary.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/liquidity_capacity_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\liquidity_capacity_summary.csv
+source_exists_outputs/risk_analysis/us_hist_oos/market_cap_sector_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\market_cap_sector_summary.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/market_cap_sector_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\market_cap_sector_summary.csv
+source_exists_outputs/risk_analysis/us_hist_oos/market_regression_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\market_regression_summary.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/market_regression_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\market_regression_summary.csv
+source_exists_outputs/risk_analysis/us_hist_oos/regime_performance_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\regime_performance_summary.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/regime_performance_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\regime_performance_summary.csv
+source_exists_outputs/risk_analysis/us_hist_oos/universe_ew_acceptance.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\universe_ew_acceptance.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/universe_ew_acceptance.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\universe_ew_acceptance.csv
+source_exists_outputs/risk_analysis/us_hist_oos/universe_ew_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\universe_ew_summary.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/universe_ew_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\universe_ew_summary.csv
+source_exists_outputs/risk_analysis/us_hist_oos/universe_ew_weekly_path.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\universe_ew_weekly_path.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/universe_ew_weekly_path.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\universe_ew_weekly_path.csv
+source_exists_outputs/risk_analysis/us_hist_oos/us_risk_map_validation.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\us_risk_map_validation.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/us_risk_map_validation.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\us_risk_map_validation.csv
+source_exists_outputs/risk_analysis/us_hist_oos/us_strategy_risk_map.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\us_strategy_risk_map.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/us_strategy_risk_map.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\us_strategy_risk_map.csv
+source_exists_outputs/risk_analysis/us_hist_oos/us_strategy_risk_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\us_strategy_risk_summary.csv
+frozen_text_outputs/risk_analysis/us_hist_oos/us_strategy_risk_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\us_strategy_risk_summary.csv
+source_exists_outputs/strategy/benchmarks/hist_oos/static_construction.csv,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_construction.csv
+frozen_text_outputs/strategy/benchmarks/hist_oos/static_construction.csv,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_construction.csv
+source_exists_outputs/strategy/benchmarks/hist_oos/static_manifest.json,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_manifest.json
+frozen_text_outputs/strategy/benchmarks/hist_oos/static_manifest.json,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_manifest.json
+source_exists_outputs/strategy/benchmarks/hist_oos/static_target_holdings.csv,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_target_holdings.csv
+frozen_text_outputs/strategy/benchmarks/hist_oos/static_target_holdings.csv,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_target_holdings.csv
+source_exists_outputs/strategy/benchmarks/hist_oos/static_trade_ledger.csv,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_trade_ledger.csv
+frozen_text_outputs/strategy/benchmarks/hist_oos/static_trade_ledger.csv,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_trade_ledger.csv
+source_exists_outputs/strategy/benchmarks/hist_oos/static_weekly_path.csv,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_weekly_path.csv
+frozen_text_outputs/strategy/benchmarks/hist_oos/static_weekly_path.csv,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_weekly_path.csv
+source_exists_outputs/strategy/frozen/hist_oos/acceptance_test_report.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\acceptance_test_report.csv
+frozen_text_outputs/strategy/frozen/hist_oos/acceptance_test_report.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\acceptance_test_report.csv
+source_exists_outputs/strategy/frozen/hist_oos/factor_weights.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\factor_weights.csv
+frozen_text_outputs/strategy/frozen/hist_oos/factor_weights.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\factor_weights.csv
+source_exists_outputs/strategy/frozen/hist_oos/run_manifest.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\run_manifest.csv
+frozen_text_outputs/strategy/frozen/hist_oos/run_manifest.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\run_manifest.csv
+source_exists_outputs/strategy/frozen/hist_oos/target_holdings.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\target_holdings.csv
+frozen_text_outputs/strategy/frozen/hist_oos/target_holdings.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\target_holdings.csv
+source_exists_outputs/strategy/frozen/hist_oos/trade_ledger.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\trade_ledger.csv
+frozen_text_outputs/strategy/frozen/hist_oos/trade_ledger.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\trade_ledger.csv
+source_exists_outputs/strategy/frozen/hist_oos/weekly_path.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\weekly_path.csv
+frozen_text_outputs/strategy/frozen/hist_oos/weekly_path.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\weekly_path.csv
+source_exists_src/risk_analysis/__init__.py,PASS,True,,<repo>\src\risk_analysis\__init__.py
+frozen_text_src/risk_analysis/__init__.py,PASS,True,,<repo>\src\risk_analysis\__init__.py
+source_exists_src/risk_analysis/benchmark_comparison.py,PASS,True,,<repo>\src\risk_analysis\benchmark_comparison.py
+frozen_text_src/risk_analysis/benchmark_comparison.py,PASS,True,,<repo>\src\risk_analysis\benchmark_comparison.py
+source_exists_src/risk_analysis/build_oos_factor_returns.py,PASS,True,,<repo>\src\risk_analysis\build_oos_factor_returns.py
+frozen_text_src/risk_analysis/build_oos_factor_returns.py,PASS,True,,<repo>\src\risk_analysis\build_oos_factor_returns.py
+source_exists_src/risk_analysis/concentration.py,PASS,True,,<repo>\src\risk_analysis\concentration.py
+frozen_text_src/risk_analysis/concentration.py,PASS,True,,<repo>\src\risk_analysis\concentration.py
+source_exists_src/risk_analysis/cost_analysis.py,PASS,True,,<repo>\src\risk_analysis\cost_analysis.py
+frozen_text_src/risk_analysis/cost_analysis.py,PASS,True,,<repo>\src\risk_analysis\cost_analysis.py
+source_exists_src/risk_analysis/drawdown_analysis.py,PASS,True,,<repo>\src\risk_analysis\drawdown_analysis.py
+frozen_text_src/risk_analysis/drawdown_analysis.py,PASS,True,,<repo>\src\risk_analysis\drawdown_analysis.py
+source_exists_src/risk_analysis/factor_regression.py,PASS,True,,<repo>\src\risk_analysis\factor_regression.py
+frozen_text_src/risk_analysis/factor_regression.py,PASS,True,,<repo>\src\risk_analysis\factor_regression.py
+source_exists_src/risk_analysis/factor_timing_diagnostics.py,PASS,True,,<repo>\src\risk_analysis\factor_timing_diagnostics.py
+frozen_text_src/risk_analysis/factor_timing_diagnostics.py,PASS,True,,<repo>\src\risk_analysis\factor_timing_diagnostics.py
+source_exists_src/risk_analysis/ff_factor_regression.py,PASS,True,,<repo>\src\risk_analysis\ff_factor_regression.py
+frozen_text_src/risk_analysis/ff_factor_regression.py,PASS,True,,<repo>\src\risk_analysis\ff_factor_regression.py
+source_exists_src/risk_analysis/liquidity_capacity.py,PASS,True,,<repo>\src\risk_analysis\liquidity_capacity.py
+frozen_text_src/risk_analysis/liquidity_capacity.py,PASS,True,,<repo>\src\risk_analysis\liquidity_capacity.py
+source_exists_src/risk_analysis/market_cap_analysis.py,PASS,True,,<repo>\src\risk_analysis\market_cap_analysis.py
+frozen_text_src/risk_analysis/market_cap_analysis.py,PASS,True,,<repo>\src\risk_analysis\market_cap_analysis.py
+source_exists_src/risk_analysis/performance_report.py,PASS,True,,<repo>\src\risk_analysis\performance_report.py
+frozen_text_src/risk_analysis/performance_report.py,PASS,True,,<repo>\src\risk_analysis\performance_report.py
+source_exists_src/risk_analysis/README.md,PASS,True,,<repo>\src\risk_analysis\README.md
+frozen_text_src/risk_analysis/README.md,PASS,True,,<repo>\src\risk_analysis\README.md
+source_exists_src/risk_analysis/regime_analysis.py,PASS,True,,<repo>\src\risk_analysis\regime_analysis.py
+frozen_text_src/risk_analysis/regime_analysis.py,PASS,True,,<repo>\src\risk_analysis\regime_analysis.py
+source_exists_src/risk_analysis/risk_map.py,PASS,True,,<repo>\src\risk_analysis\risk_map.py
+frozen_text_src/risk_analysis/risk_map.py,PASS,True,,<repo>\src\risk_analysis\risk_map.py
+source_exists_src/risk_analysis/run_static_benchmark.py,PASS,True,,<repo>\src\risk_analysis\run_static_benchmark.py
+frozen_text_src/risk_analysis/run_static_benchmark.py,PASS,True,,<repo>\src\risk_analysis\run_static_benchmark.py
+source_exists_src/risk_analysis/significance.py,PASS,True,,<repo>\src\risk_analysis\significance.py
+frozen_text_src/risk_analysis/significance.py,PASS,True,,<repo>\src\risk_analysis\significance.py
+source_exists_src/risk_analysis/stock_selection_diagnostics.py,PASS,True,,<repo>\src\risk_analysis\stock_selection_diagnostics.py
+frozen_text_src/risk_analysis/stock_selection_diagnostics.py,PASS,True,,<repo>\src\risk_analysis\stock_selection_diagnostics.py
+source_exists_src/risk_analysis/stress_analysis.py,PASS,True,,<repo>\src\risk_analysis\stress_analysis.py
+frozen_text_src/risk_analysis/stress_analysis.py,PASS,True,,<repo>\src\risk_analysis\stress_analysis.py
+source_exists_src/risk_analysis/universe_ew_benchmark.py,PASS,True,,<repo>\src\risk_analysis\universe_ew_benchmark.py
+frozen_text_src/risk_analysis/universe_ew_benchmark.py,PASS,True,,<repo>\src\risk_analysis\universe_ew_benchmark.py
+source_exists_src/risk_analysis/validate_static_benchmark.py,PASS,True,,<repo>\src\risk_analysis\validate_static_benchmark.py
+frozen_text_src/risk_analysis/validate_static_benchmark.py,PASS,True,,<repo>\src\risk_analysis\validate_static_benchmark.py
+source_exists_src/strategy/__init__.py,PASS,True,,<repo>\src\strategy\__init__.py
+frozen_text_src/strategy/__init__.py,PASS,True,,<repo>\src\strategy\__init__.py
+source_exists_src/strategy/acceptance.py,PASS,True,,<repo>\src\strategy\acceptance.py
+frozen_text_src/strategy/acceptance.py,PASS,True,,<repo>\src\strategy\acceptance.py
+source_exists_src/strategy/composite_score.py,PASS,True,,<repo>\src\strategy\composite_score.py
+frozen_text_src/strategy/composite_score.py,PASS,True,,<repo>\src\strategy\composite_score.py
+source_exists_src/strategy/factor_returns.py,PASS,True,,<repo>\src\strategy\factor_returns.py
+frozen_text_src/strategy/factor_returns.py,PASS,True,,<repo>\src\strategy\factor_returns.py
+source_exists_src/strategy/fmom_weights.py,PASS,True,,<repo>\src\strategy\fmom_weights.py
+frozen_text_src/strategy/fmom_weights.py,PASS,True,,<repo>\src\strategy\fmom_weights.py
+source_exists_src/strategy/governance.py,PASS,True,,<repo>\src\strategy\governance.py
+frozen_text_src/strategy/governance.py,PASS,True,,<repo>\src\strategy\governance.py
+source_exists_src/strategy/metrics.py,PASS,True,,<repo>\src\strategy\metrics.py
+frozen_text_src/strategy/metrics.py,PASS,True,,<repo>\src\strategy\metrics.py
+source_exists_src/strategy/portfolio.py,PASS,True,,<repo>\src\strategy\portfolio.py
+frozen_text_src/strategy/portfolio.py,PASS,True,,<repo>\src\strategy\portfolio.py
+source_exists_src/strategy/README.md,PASS,True,,<repo>\src\strategy\README.md
+frozen_text_src/strategy/README.md,PASS,True,,<repo>\src\strategy\README.md
+source_exists_src/strategy/run_frozen.py,PASS,True,,<repo>\src\strategy\run_frozen.py
+frozen_text_src/strategy/run_frozen.py,PASS,True,,<repo>\src\strategy\run_frozen.py
+source_exists_src/strategy/run_gate_b.py,PASS,True,,<repo>\src\strategy\run_gate_b.py
+frozen_text_src/strategy/run_gate_b.py,PASS,True,,<repo>\src\strategy\run_gate_b.py
+frozen_config_recorded,PASS,True,,FROZEN
+frozen_k4,PASS,True,,
+cost_matches_frozen_10bp,PASS,True,,
+upstream_dynamic_acceptance,PASS,True,,15 upstream checks
+static_comparison_contract,PASS,True,,
+exact_259_completed_periods,PASS,True,,
+paired_periods,PASS,True,,
+calendar_unique_and_complete,PASS,True,,
+calendar_matches_paths,PASS,True,,
+strict_next_close_timing,PASS,True,,
+completed_before_2026,PASS,True,,
+security_returns_unique,PASS,True,,
+universe_keys_unique,PASS,True,,
+score_keys_unique,PASS,True,,
+factor_weight_keys_unique,PASS,True,,
+factor_weight_full_k4,PASS,True,,
+factor_weights_sum_to_one,PASS,True,2.220446049250313e-16,max absolute residual=2.220e-16; tolerance=1e-09
+factor_weights_completed_information,PASS,True,,
+Dynamic_unique_holdings,PASS,True,,
+Dynamic_unique_trades,PASS,True,,
+Dynamic_nonnegative_weights,PASS,True,,
+Dynamic_eligible_holdings,PASS,True,,
+Dynamic_historical_sector_matches,PASS,True,,
+Dynamic_stock_weights_at_most_one,PASS,True,,
+Dynamic_held_return_keys_present,PASS,True,,
+Dynamic_execution_matches_returns,PASS,True,,
+Dynamic_held_return_end_matches,PASS,True,,
+Dynamic_unpriced_weight_matches_upstream,PASS,True,0.0,max absolute residual=0.000e+00; tolerance=1e-09
+Dynamic_gross_from_holdings,PASS,True,9.8879238130678e-17,max absolute residual=9.888e-17; tolerance=1e-09
+Dynamic_trade_cost_per_row,PASS,True,1.0164395367051604e-19,max absolute residual=1.016e-19; tolerance=1e-09
+Dynamic_trade_deltas,PASS,True,1.0110185258427329e-16,max absolute residual=1.011e-16; tolerance=1e-09
+Dynamic_gtr_from_ledger,PASS,True,4.773959005888173e-15,max absolute residual=4.774e-15; tolerance=1e-09
+Dynamic_reported_turnover,PASS,True,1.1102230246251565e-16,max absolute residual=1.110e-16; tolerance=1e-09
+Dynamic_weekly_cost_from_ledger,PASS,True,6.505213034913027e-19,max absolute residual=6.505e-19; tolerance=1e-09
+Dynamic_net_exact_identity,PASS,True,9.855397747893235e-17,max absolute residual=9.855e-17; tolerance=1e-09
+Dynamic_ledger_target_matches_holdings,PASS,True,0.0,max absolute residual=0.000e+00; tolerance=1e-09
+Dynamic_drifted_trade_weights_after_first_oos_week,PASS,True,1.0316183671199575e-16,max absolute residual=1.032e-16; tolerance=1e-09
+Dynamic_terminal_cost_counterfactual,PASS,True,9.2148511043888e-15,max absolute residual=9.215e-15; tolerance=1e-09
+Dynamic_stock_net_weekly_closure,PASS,True,3.400058012914542e-16,max absolute residual=3.400e-16; tolerance=1e-09
+Dynamic_stock_terminal_wealth_closure,PASS,True,4.9404924595819466e-15,max absolute residual=4.940e-15; tolerance=1e-09
+Static_unique_holdings,PASS,True,,
+Static_unique_trades,PASS,True,,
+Static_nonnegative_weights,PASS,True,,
+Static_eligible_holdings,PASS,True,,
+Static_historical_sector_matches,PASS,True,,
+Static_stock_weights_at_most_one,PASS,True,,
+Static_held_return_keys_present,PASS,True,,
+Static_execution_matches_returns,PASS,True,,
+Static_held_return_end_matches,PASS,True,,
+Static_unpriced_weight_matches_upstream,PASS,True,0.0,max absolute residual=0.000e+00; tolerance=1e-09
+Static_gross_from_holdings,PASS,True,9.8879238130678e-17,max absolute residual=9.888e-17; tolerance=1e-09
+Static_trade_cost_per_row,PASS,True,1.0164395367051604e-19,max absolute residual=1.016e-19; tolerance=1e-09
+Static_trade_deltas,PASS,True,1.0110185258427329e-16,max absolute residual=1.011e-16; tolerance=1e-09
+Static_gtr_from_ledger,PASS,True,4.6074255521944e-15,max absolute residual=4.607e-15; tolerance=1e-09
+Static_reported_turnover,PASS,True,5.551115123125783e-17,max absolute residual=5.551e-17; tolerance=1e-09
+Static_weekly_cost_from_ledger,PASS,True,1.3552527156068805e-19,max absolute residual=1.355e-19; tolerance=1e-09
+Static_net_exact_identity,PASS,True,2.0122792321330962e-16,max absolute residual=2.012e-16; tolerance=1e-09
+Static_ledger_target_matches_holdings,PASS,True,0.0,max absolute residual=0.000e+00; tolerance=1e-09
+Static_drifted_trade_weights_after_first_oos_week,PASS,True,1.0278236595162582e-16,max absolute residual=1.028e-16; tolerance=1e-09
+Static_terminal_cost_counterfactual,PASS,True,9.71445146547012e-15,max absolute residual=9.714e-15; tolerance=1e-09
+Static_stock_net_weekly_closure,PASS,True,2.749536709423239e-16,max absolute residual=2.750e-16; tolerance=1e-09
+Static_stock_terminal_wealth_closure,PASS,True,4.6629367034256575e-15,max absolute residual=4.663e-15; tolerance=1e-09
+no_ambiguous_reference_names,PASS,True,,
+unknown_sector_costs_disclosed,DISCLOSURE,False,,"Unverifiable sector classifications are preserved as UNKNOWN, including exit costs on securities inherited from before OOS."
+legacy_unpriced_zero_policy_disclosed,DISCLOSURE,False,,8 held security-weeks use the original M4 zero-return convention; no fix or imputation is introduced.
+weekly_annualization_not_daily_gate,DISCLOSURE,False,,Report reproduces M5 weekly NAV and 52-week annualization. Final daily-NAV and team sign-off remain upstream open items.
+Dynamic_sector_terminal_closure,PASS,True,5.051514762044462e-15,max absolute residual=5.052e-15; tolerance=1e-09
+Static_sector_terminal_closure,PASS,True,4.884981308350689e-15,max absolute residual=4.885e-15; tolerance=1e-09
+rf_has_all_completed_intervals,PASS,True,,
+Dynamic_M5_cagr_net,PASS,True,1.3877787807814457e-17,max absolute residual=1.388e-17; tolerance=1e-09
+Dynamic_M5_annualized_vol,PASS,True,2.7755575615628914e-17,max absolute residual=2.776e-17; tolerance=1e-09
+Dynamic_M5_sharpe,PASS,True,5.551115123125783e-17,max absolute residual=5.551e-17; tolerance=1e-09
+Dynamic_M5_max_drawdown,PASS,True,0.0,max absolute residual=0.000e+00; tolerance=1e-09
+Static_M5_cagr_net,PASS,True,0.0,max absolute residual=0.000e+00; tolerance=1e-09
+Static_M5_annualized_vol,PASS,True,5.551115123125783e-17,max absolute residual=5.551e-17; tolerance=1e-09
+Static_M5_sharpe,PASS,True,0.0,max absolute residual=0.000e+00; tolerance=1e-09
+Static_M5_max_drawdown,PASS,True,0.0,max absolute residual=0.000e+00; tolerance=1e-09
+paired_shared_holding_sectors,PASS,True,,
+paired_gross_stock_weekly,PASS,True,1.7694179454963432e-16,max absolute residual=1.769e-16; tolerance=1e-09
+paired_net_stock_weekly,PASS,True,4.0576266305270003e-16,max absolute residual=4.058e-16; tolerance=1e-09
+paired_gross_plus_cost_equals_net,PASS,True,3.469446951953614e-18,max absolute residual=3.469e-18; tolerance=1e-09
+paired_terminal_wealth_gap,PASS,True,2.498001805406602e-16,max absolute residual=2.498e-16; tolerance=1e-09
+M5_HAC_net_increment,PASS,True,2.220446049250313e-16,max absolute residual=2.220e-16; tolerance=1e-09
+Dynamic_drawdown_contribution_closure,PASS,True,1.9984014443252818e-15,max absolute residual=1.998e-15; tolerance=1e-09
+Static_drawdown_contribution_closure,PASS,True,1.7208456881689926e-15,max absolute residual=1.721e-15; tolerance=1e-09
+factor_mimicking_259_by_k4,PASS,True,,
+Dynamic_score_exposure_complete,PASS,True,,
+Static_score_exposure_complete,PASS,True,,
+ff_decimal_units,PASS,True,,
+Dynamic FMOM_regression_component_closure,PASS,True,1.3877787807814457e-17,max absolute residual=1.388e-17; tolerance=1e-09
+Static Multi-Factor_regression_component_closure,PASS,True,1.3877787807814457e-17,max absolute residual=1.388e-17; tolerance=1e-09
+Dynamic - Static_regression_component_closure,PASS,True,1.734723475976807e-18,max absolute residual=1.735e-18; tolerance=1e-09
+Dynamic FMOM_M5_FF6_reproduction,PASS,True,1.2620113287731272e-16,max absolute residual=1.262e-16; tolerance=1e-09
+Static Multi-Factor_M5_FF6_reproduction,PASS,True,1.124100812432971e-15,max absolute residual=1.124e-15; tolerance=1e-09
+Dynamic - Static_M5_FF6_reproduction,PASS,True,3.0531133177191805e-16,max absolute residual=3.053e-16; tolerance=1e-09
+unchanged_000_source_contract.json,PASS,True,,<repo>\attribution\us_hist_oos\source_contract.json
+unchanged_001_us_base_strategy.json,PASS,True,,<repo>\config\strategy\us_base_strategy.json
+unchanged_002_GATE_B_C_US_BASE_DECISION.md,PASS,True,,<repo>\docs\GATE_B_C_US_BASE_DECISION.md
+unchanged_003_MEMBER5_US_BACKTEST_RISK_HANDOFF.md,PASS,True,,<repo>\docs\MEMBER5_US_BACKTEST_RISK_HANDOFF.md
+unchanged_004_factor_scores_weekly.parquet,PASS,True,,<repo>\handoff\final_factor\data\factor_scores_weekly.parquet
+unchanged_005_factor_scores_weekly.parquet,PASS,True,,<data>\handoff\final_factor\data\factor_scores_weekly.parquet
+unchanged_006_universe_weekly.parquet,PASS,True,,<repo>\handoff\final_factor\data\universe_weekly.parquet
+unchanged_007_universe_weekly.parquet,PASS,True,,<data>\handoff\final_factor\data\universe_weekly.parquet
+unchanged_008_benchmark_weekly_execution_returns.parquet,PASS,True,,<repo>\handoff\us_downstream\data\benchmark_weekly_execution_returns.parquet
+unchanged_009_benchmark_weekly_execution_returns.parquet,PASS,True,,<data>\handoff\us_downstream\data\benchmark_weekly_execution_returns.parquet
+unchanged_010_ff_factors_daily.parquet,PASS,True,,<repo>\handoff\us_downstream\data\ff_factors_daily.parquet
+unchanged_011_ff_factors_daily.parquet,PASS,True,,<data>\handoff\us_downstream\data\ff_factors_daily.parquet
+unchanged_012_risk_free_weekly.parquet,PASS,True,,<repo>\handoff\us_downstream\data\risk_free_weekly.parquet
+unchanged_013_risk_free_weekly.parquet,PASS,True,,<data>\handoff\us_downstream\data\risk_free_weekly.parquet
+unchanged_014_security_reference_history.parquet,PASS,True,,<repo>\handoff\us_downstream\data\security_reference_history.parquet
+unchanged_015_security_reference_history.parquet,PASS,True,,<data>\handoff\us_downstream\data\security_reference_history.parquet
+unchanged_016_security_weekly_execution_returns.parquet,PASS,True,,<repo>\handoff\us_downstream\data\security_weekly_execution_returns.parquet
+unchanged_017_security_weekly_execution_returns.parquet,PASS,True,,<data>\handoff\us_downstream\data\security_weekly_execution_returns.parquet
+unchanged_018_weekly_execution_calendar.parquet,PASS,True,,<repo>\handoff\us_downstream\data\weekly_execution_calendar.parquet
+unchanged_019_weekly_execution_calendar.parquet,PASS,True,,<data>\handoff\us_downstream\data\weekly_execution_calendar.parquet
+unchanged_020_breakeven_cost.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\breakeven_cost.csv
+unchanged_021_capacity_limits.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\capacity_limits.csv
+unchanged_022_concentration_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\concentration_summary.csv
+unchanged_023_cost_sensitivity_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\cost_sensitivity_summary.csv
+unchanged_024_ff6_regression_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\ff6_regression_summary.csv
+unchanged_025_fmom_significance_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\fmom_significance_summary.csv
+unchanged_026_four_strategy_comparison.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\four_strategy_comparison.csv
+unchanged_027_historical_stress_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\historical_stress_summary.csv
+unchanged_028_liquidity_capacity_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\liquidity_capacity_summary.csv
+unchanged_029_market_cap_sector_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\market_cap_sector_summary.csv
+unchanged_030_market_regression_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\market_regression_summary.csv
+unchanged_031_regime_performance_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\regime_performance_summary.csv
+unchanged_032_universe_ew_acceptance.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\universe_ew_acceptance.csv
+unchanged_033_universe_ew_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\universe_ew_summary.csv
+unchanged_034_universe_ew_weekly_path.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\universe_ew_weekly_path.csv
+unchanged_035_us_risk_map_validation.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\us_risk_map_validation.csv
+unchanged_036_us_strategy_risk_map.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\us_strategy_risk_map.csv
+unchanged_037_us_strategy_risk_summary.csv,PASS,True,,<repo>\outputs\risk_analysis\us_hist_oos\us_strategy_risk_summary.csv
+unchanged_038_static_construction.csv,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_construction.csv
+unchanged_039_static_manifest.json,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_manifest.json
+unchanged_040_static_target_holdings.csv,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_target_holdings.csv
+unchanged_041_static_trade_ledger.csv,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_trade_ledger.csv
+unchanged_042_static_weekly_path.csv,PASS,True,,<repo>\outputs\strategy\benchmarks\hist_oos\static_weekly_path.csv
+unchanged_043_acceptance_test_report.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\acceptance_test_report.csv
+unchanged_044_factor_weights.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\factor_weights.csv
+unchanged_045_run_manifest.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\run_manifest.csv
+unchanged_046_target_holdings.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\target_holdings.csv
+unchanged_047_trade_ledger.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\trade_ledger.csv
+unchanged_048_weekly_path.csv,PASS,True,,<repo>\outputs\strategy\frozen\hist_oos\weekly_path.csv
+unchanged_049___init__.py,PASS,True,,<repo>\src\risk_analysis\__init__.py
+unchanged_050_benchmark_comparison.py,PASS,True,,<repo>\src\risk_analysis\benchmark_comparison.py
+unchanged_051_build_oos_factor_returns.py,PASS,True,,<repo>\src\risk_analysis\build_oos_factor_returns.py
+unchanged_052_concentration.py,PASS,True,,<repo>\src\risk_analysis\concentration.py
+unchanged_053_cost_analysis.py,PASS,True,,<repo>\src\risk_analysis\cost_analysis.py
+unchanged_054_drawdown_analysis.py,PASS,True,,<repo>\src\risk_analysis\drawdown_analysis.py
+unchanged_055_factor_regression.py,PASS,True,,<repo>\src\risk_analysis\factor_regression.py
+unchanged_056_factor_timing_diagnostics.py,PASS,True,,<repo>\src\risk_analysis\factor_timing_diagnostics.py
+unchanged_057_ff_factor_regression.py,PASS,True,,<repo>\src\risk_analysis\ff_factor_regression.py
+unchanged_058_liquidity_capacity.py,PASS,True,,<repo>\src\risk_analysis\liquidity_capacity.py
+unchanged_059_market_cap_analysis.py,PASS,True,,<repo>\src\risk_analysis\market_cap_analysis.py
+unchanged_060_performance_report.py,PASS,True,,<repo>\src\risk_analysis\performance_report.py
+unchanged_061_README.md,PASS,True,,<repo>\src\risk_analysis\README.md
+unchanged_062_regime_analysis.py,PASS,True,,<repo>\src\risk_analysis\regime_analysis.py
+unchanged_063_risk_map.py,PASS,True,,<repo>\src\risk_analysis\risk_map.py
+unchanged_064_run_static_benchmark.py,PASS,True,,<repo>\src\risk_analysis\run_static_benchmark.py
+unchanged_065_significance.py,PASS,True,,<repo>\src\risk_analysis\significance.py
+unchanged_066_stock_selection_diagnostics.py,PASS,True,,<repo>\src\risk_analysis\stock_selection_diagnostics.py
+unchanged_067_stress_analysis.py,PASS,True,,<repo>\src\risk_analysis\stress_analysis.py
+unchanged_068_universe_ew_benchmark.py,PASS,True,,<repo>\src\risk_analysis\universe_ew_benchmark.py
+unchanged_069_validate_static_benchmark.py,PASS,True,,<repo>\src\risk_analysis\validate_static_benchmark.py
+unchanged_070___init__.py,PASS,True,,<repo>\src\strategy\__init__.py
+unchanged_071_acceptance.py,PASS,True,,<repo>\src\strategy\acceptance.py
+unchanged_072_composite_score.py,PASS,True,,<repo>\src\strategy\composite_score.py
+unchanged_073_factor_returns.py,PASS,True,,<repo>\src\strategy\factor_returns.py
+unchanged_074_fmom_weights.py,PASS,True,,<repo>\src\strategy\fmom_weights.py
+unchanged_075_governance.py,PASS,True,,<repo>\src\strategy\governance.py
+unchanged_076_metrics.py,PASS,True,,<repo>\src\strategy\metrics.py
+unchanged_077_portfolio.py,PASS,True,,<repo>\src\strategy\portfolio.py
+unchanged_078_README.md,PASS,True,,<repo>\src\strategy\README.md
+unchanged_079_run_frozen.py,PASS,True,,<repo>\src\strategy\run_frozen.py
+unchanged_080_run_gate_b.py,PASS,True,,<repo>\src\strategy\run_gate_b.py

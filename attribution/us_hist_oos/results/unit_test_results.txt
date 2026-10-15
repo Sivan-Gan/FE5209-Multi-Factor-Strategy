@@ -1,0 +1,11 @@
+test_drawdown_uses_returns_after_peak_through_trough (test_attribution_engine.AccountingTests.test_drawdown_uses_returns_after_peak_through_trough) ... ok
+test_initial_nav_can_be_drawdown_peak (test_attribution_engine.AccountingTests.test_initial_nav_can_be_drawdown_peak) ... ok
+test_linked_contributions_close_compounded_return (test_attribution_engine.AccountingTests.test_linked_contributions_close_compounded_return) ... ok
+test_paired_wealth_gap_uses_each_strategy_wealth (test_attribution_engine.AccountingTests.test_paired_wealth_gap_uses_each_strategy_wealth) ... ok
+test_sold_security_still_has_cost_contribution (test_attribution_engine.AccountingTests.test_sold_security_still_has_cost_contribution) ... ok
+test_terminal_cost_gap_includes_foregone_growth (test_attribution_engine.AccountingTests.test_terminal_cost_gap_includes_foregone_growth) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+OK
