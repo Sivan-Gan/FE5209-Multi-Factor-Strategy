@@ -1,0 +1,81 @@
+# Singapore independent factor-research module
+
+## Scope and frozen design
+
+This module is independent from the US model.  It uses a six-sector SGX
+universe and follows the agreed split:
+
+| Stage | Dates | Purpose |
+| --- | --- | --- |
+| Factor selection | 2011--2015 | Standalone IC and long-short validation |
+| Configuration selection | 2016--2020 | Select a Member-4-style FMOM configuration |
+| Frozen evaluation | 2021--latest available | Run only; do not tune on these results |
+
+The selected factors are Quality, Momentum, LowRisk, and Investment.  The
+configuration selected from the specified 2016--2020 grid is
+`J13_lam1_ra0_buf0`, with 20 bp provisional one-way transaction cost.
+
+## What is committed versus omitted
+
+Committed files include all SG processing, backtest, validation, static
+benchmark, attribution and PIT-fundamental handoff code, together with small,
+derived research outputs.  The repository deliberately omits raw daily price
+files and the LSEG Workspace annual-export workbooks.  They are licensed data,
+large, and include user-specific extraction paths.  No raw vendor data should
+be committed without confirming the relevant redistribution rights.
+
+Expected local inputs (not versioned):
+
+```
+SGX_factor_research/output_lseg_rebuilt_for_sg_strategy/data/prices_daily_2006.csv
+SGX_factor_research/output_lseg_rebuilt_for_sg_strategy/data/fundamentals_pit.csv
+```
+
+`build_lseg_fundamentals_handoff.py` constructs the latter from locally
+exported LSEG annual workbooks.  It preserves source fields and creates an
+availability-date proxy of fiscal-period end plus 183 days.  This is not an
+actual SGX announcement timestamp and must not be represented as verified PIT.
+
+## Run order
+
+From the repository root, with the two local input files available at the
+paths expected by the script or with its path constants adjusted locally:
+
+```bash
+python -m src.strategy.run_sg_independent_research --force
+python -m src.strategy.add_sg_required_baselines
+python -m src.strategy.add_sti_price_benchmark
+python -m src.strategy.audit_sg_independent_research
+python -m src.strategy.analyze_sg_attribution
+python -m src.strategy.test_sg_fmom_improvement
+```
+
+`add_sti_price_benchmark` also requires a locally exported `.STI` price-history
+spreadsheet.  The output is a **price-index** comparison, not a total-return
+benchmark, so it must not be labelled as final alpha.
+
+## Results and interpretation
+
+The frozen 2021+ FMOM strategy has annualized net return 15.38%, zero-rate
+weekly Sharpe 1.09%, and maximum drawdown 20.92%.  The static equal-factor
+benchmark has 17.72%, 1.41, and 17.39%, respectively.  Therefore the evidence
+supports static equal-factor as the main Singapore specification.  FMOM is an
+extension/robustness experiment, not a demonstrated out-of-sample improvement.
+
+The audit output records mechanical checks and limitations.  Main limitations
+are the 183-day accounting-availability proxy, potential later restatements,
+current-universe survivorship bias, provisional 20 bp trading cost, no formal
+capacity filter, and the lack of verified historical point-in-time market cap,
+shares and dividends for Value/Size/Dividend.
+
+## Output guide
+
+- `01_*`: 2011--2015 single-factor evidence.
+- `02_*`: 2016--2020 configuration grid.
+- `03_*`: continuous strategy weights, holdings and weekly returns.
+- `04_*`: selected-period versus frozen-OOS summary.
+- `06_*`: required static multifactor and eligible-universe benchmarks.
+- `07_attribution_oos/`: calendar-year, factor-weight, sector, turnover and
+  internal pre-OOS stability diagnostics.  This folder must never be used to
+  re-select the frozen OOS configuration.
+- `audit/`: source/portfolio mechanical checks and limitations.

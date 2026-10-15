@@ -1,0 +1,23 @@
+check,status,severity,detail
+price_ticker_date_duplicates,PASS,,duplicates=0
+price_positive_adjusted_close,PASS,,nonpositive_observed=0; missing_rows=339
+price_ohlc_order_when_observed,LIMITATION,warning,"invalid_observed=44; incomplete_ohlc_rows=339. The current factor calculations use adjusted close, not intraday OHLC, but these source anomalies are retained for review."
+fundamental_ticker_period_duplicates,PASS,,duplicates=0
+unmatched_fundamental_source_filtered_from_strategy,LIMITATION,warning,source_panel_tickers_without_prices=['S35.SI']; strategy code filters these before scoring.
+holdings_no_duplicate_names,PASS,,duplicates=0
+holdings_nonnegative_weights,PASS,,nonpositive=0
+holdings_plus_cash_equal_one,PASS,,tested against stored cash weights
+sector_cap,PASS,,max_seen=0.294118
+execution_after_signal,PASS,,violations=0
+holding_period_positive,PASS,,violations=0
+factor_weights_sum_one,PASS,,each weekly factor-weight vector
+balance_sheet_identity_diagnostic,LIMITATION,warning,"rows=1749, within_5pct=76.21%, median_gap=0.0104. Common equity can exclude minority interests, so this is a review diagnostic rather than a balance-sheet failure."
+desktop_raw_workbook_count,PASS,,desktop_workbooks=102
+source_workbook_file_identity,PASS,,"desktop=102, used=102, shared=102, identical=102"
+verified_actual_announcement_dates,LIMITATION,material,Fundamental export does not provide verified SGX announcement timestamps; fiscal-period-end + 183 days is only a conservative proxy.
+as_reported_restatement_control,LIMITATION,material,Annual vendor export may contain later restated historical values; no versioned as-reported filing layer is present.
+survivorship_bias_control,LIMITATION,material,Universe is based on a current screened list; historical delisted-company coverage is not established.
+STI_total_return_benchmark,LIMITATION,material,Current benchmark is STI Price Index. It excludes dividends and is unsuitable for final total-return alpha claims.
+SG_cost_assumption_frozen,LIMITATION,material,"20 bp one-way cost is a scenario, not a documented group-approved SG cost model."
+absolute_ADV_capacity_filter,LIMITATION,material,Eligibility requires price/history/nonzero-volume conditions but does not impose an absolute SG trading-value capacity threshold.
+factor_selection_threshold_precommitted,LIMITATION,material,The factor-selection threshold must be ratified and frozen by the group before treating the four-factor result as confirmatory.

@@ -166,3 +166,13 @@ Raw WRDS/CRSP/Compustat/CCM/Historical-GICS data are licensed third-party materi
 3. Clone the PRIVATE repository, install Git LFS, and run `git lfs pull` to recover the approved derived-data interfaces.
 4. Install the documented environment and run the smoke tests.
 5. Start only the separately authorized Gate B / Strategy Engine workflow.
+
+## 22. Singapore Independent Research
+
+The separate Singapore module is on this branch under
+[`docs/SG_INDEPENDENT_RESEARCH.md`](docs/SG_INDEPENDENT_RESEARCH.md).  It is a
+market-specific research pipeline with its own 2011--2015 factor selection,
+2016--2020 configuration selection, and frozen 2021+ evaluation.  It does not
+modify, validate, or retune the protected US pipeline.  Raw SGX/LSEG price and
+fundamental exports are intentionally not committed; see the SG document for
+the local input contract, results, reproducibility order, and limitations.

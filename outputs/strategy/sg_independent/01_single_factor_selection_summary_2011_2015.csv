@@ -1,0 +1,5 @@
+family,weeks_available,mean_weekly_ls_return,annualized_ls_return,ls_sharpe,mean_spearman_ic,icir,positive_calendar_years,selection_rule,selected
+Quality,261,0.0015590107740556757,0.08129366246931546,1.0701421306457295,0.023850204511072618,1.2411289246106296,5,available_weeks>=150 AND mean_IC>0 AND annualized_LS_return>0 AND positive_years>=3,True
+Momentum,261,0.001983380618132746,0.104387316853773,1.1890796628114766,0.03770417638503727,1.6597240308493497,5,available_weeks>=150 AND mean_IC>0 AND annualized_LS_return>0 AND positive_years>=3,True
+LowRisk,261,0.00018862453208114762,0.005254493455984166,0.10260216594272598,0.026746848294496903,1.0754208781474879,4,available_weeks>=150 AND mean_IC>0 AND annualized_LS_return>0 AND positive_years>=3,True
+Investment,261,0.00043518193195900913,0.0201890023442981,0.310517584634601,0.015063133631783146,0.7837492554586973,3,available_weeks>=150 AND mean_IC>0 AND annualized_LS_return>0 AND positive_years>=3,True

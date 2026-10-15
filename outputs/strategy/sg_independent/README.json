@@ -1,0 +1,20 @@
+{
+  "methodology": "SG independent; factor selection 2011-2015, config selection 2016-2020, OOS 2021-latest",
+  "selected_factors": [
+    "Quality",
+    "Momentum",
+    "LowRisk",
+    "Investment"
+  ],
+  "frozen_config": {
+    "J": 13,
+    "lambda": 1.0,
+    "risk_adjusted": false,
+    "buffer": false
+  },
+  "selection_cost_bps_provisional": 20.0,
+  "price_end": "2026-09-24",
+  "fundamental_companies": 97,
+  "fundamental_rows": 1785,
+  "PIT_limit": "Accounting available date = fiscal period end + 183d proxy; actual announcement timestamps not verified."
+}

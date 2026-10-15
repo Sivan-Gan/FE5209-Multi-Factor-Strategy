@@ -37,6 +37,11 @@ secrets*.yml
 # Old Yahoo + SEC raw source package (kept locally, never versioned)
 /raw_package/
 
+# Singapore vendor inputs: regenerated locally from licensed/authorised sources.
+/data/sg_independent/raw/
+/data/sg_independent/*.xlsx
+/data/sg_independent/*.csv
+
 # New formal WRDS raw source package (kept locally, never versioned)
 /wrds_raw/
 
