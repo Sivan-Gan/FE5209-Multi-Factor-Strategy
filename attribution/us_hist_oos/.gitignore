@@ -1,0 +1,5 @@
+.matplotlib-cache/
+__pycache__/
+run_log.txt
+source_snapshot/
+results/*.parquet

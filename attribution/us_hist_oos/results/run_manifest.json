@@ -1,0 +1,33 @@
+{
+  "created_at": "2026-10-15T23:50:15.819259+08:00",
+  "source_branch": "member5-risk-analysis",
+  "source_commit": "7b48586e45b1c456478c8a977e96043bc3108dad",
+  "source_run_id": "US_BASE_hist_oos_20261013T141725Z",
+  "sample": "HIST_OOS_BASE",
+  "completed_weeks": 259,
+  "annualization": 52,
+  "stock_net_attribution": "post-cost holdings P&L minus security trade expenses; linked with net pre-period wealth",
+  "cumulative_unit": "wealth per unit of initial capital, not CAGR contributions",
+  "regenerable_untracked_outputs": [
+    "stock_contributions_weekly.parquet",
+    "dynamic_minus_static_stock_weekly.parquet"
+  ],
+  "strategy_parameters_modified": false,
+  "source_files_modified": false,
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "environment": {
+    "numpy": "2.5.4",
+    "pandas": "2.2.3",
+    "pyarrow": "26.0.0",
+    "matplotlib": "3.11.2",
+    "statsmodels": "0.15.0",
+    "scipy": "1.18.1"
+  },
+  "analysis_requirements_sha256": "e8cdd98a7d6e29334074c5f21620b81d198b0a391a158f5c8ddfa0b587e8417d",
+  "analysis_code_sha256": {
+    "attribution_engine.py": "bb98fe11099fe9c2978903613b4ad3c9a5b0327af9f97da91b6554c895bac91a",
+    "reporting.py": "8f344ac7c0b65aee5bbfc26f26b898c4efabf0aefa6c43a1b53844c099739c23",
+    "run_attribution.py": "aa4ecf8e10f002dd5b8d755bffee528418a0811ddac81e14eac8f0cef474de90",
+    "test_attribution_engine.py": "55915e28903b1952abde1e0fcdd9176b189e8b76eb6ccd8a0c52e5a36cae2aa8"
+  }
+}

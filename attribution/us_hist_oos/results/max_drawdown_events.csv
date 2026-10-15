@@ -1,0 +1,3 @@
+﻿strategy,peak_date,trough_date,recovery_date,peak_to_trough_weeks,peak_to_recovery_weeks,signed_drawdown_return
+Dynamic,2021-12-27,2023-10-30,2024-06-17,96,129,-0.2117101834472318
+Static,2021-12-27,2022-09-26,2024-01-22,39,108,-0.198641983880389

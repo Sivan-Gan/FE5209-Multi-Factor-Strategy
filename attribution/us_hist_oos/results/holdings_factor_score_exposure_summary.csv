@@ -1,0 +1,9 @@
+﻿strategy,family,mean_holdings_weighted_score
+Dynamic,Investment,0.42198573155749797
+Dynamic,Low Risk,0.30422800215486884
+Dynamic,Momentum,0.6859130853580101
+Dynamic,Quality,0.6005574256413105
+Static,Investment,0.3696868431439539
+Static,Low Risk,0.46448248220515875
+Static,Momentum,0.7072413208317793
+Static,Quality,0.8028205901267882

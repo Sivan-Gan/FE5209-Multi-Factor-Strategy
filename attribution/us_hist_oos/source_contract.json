@@ -1,0 +1,374 @@
+{
+  "source_branch": "member5-risk-analysis",
+  "source_commit": "7b48586e45b1c456478c8a977e96043bc3108dad",
+  "inputs": [
+    {
+      "path": "config/strategy/us_base_strategy.json",
+      "role": "frozen_source_text",
+      "sha256_lf": "dd4900a5f68feffc3ec9486037d6e92bbc63987743853249fd56ffb1db5b0453"
+    },
+    {
+      "path": "docs/GATE_B_C_US_BASE_DECISION.md",
+      "role": "frozen_source_text",
+      "sha256_lf": "01c8ac92422adda6f8af26908f60479335aca038541fec37461a43987b827279"
+    },
+    {
+      "path": "docs/MEMBER5_US_BACKTEST_RISK_HANDOFF.md",
+      "role": "frozen_source_text",
+      "sha256_lf": "40a9b780e25c84f9ff44a4602ed2a5086ede3d3f01437c61cd30b03e24c3f161"
+    },
+    {
+      "path": "handoff/final_factor/data/factor_scores_weekly.parquet",
+      "role": "frozen_lfs_payload",
+      "sha256": "1da72cf679214bbd982f87b26422588b8b30ce28ad94a067d51fed950f00fa28",
+      "bytes": 24832876
+    },
+    {
+      "path": "handoff/final_factor/data/universe_weekly.parquet",
+      "role": "frozen_lfs_payload",
+      "sha256": "a8c7a0ceb7422a6425d0163684a6abd4ee0251f15a54ba411c67afefa591c157",
+      "bytes": 5020404
+    },
+    {
+      "path": "handoff/us_downstream/data/benchmark_weekly_execution_returns.parquet",
+      "role": "frozen_lfs_payload",
+      "sha256": "6eac17bbd4d24c42f73d59fc4da0a20b9730adc4c2d6fe360a7ed7984a8a0552",
+      "bytes": 21912
+    },
+    {
+      "path": "handoff/us_downstream/data/ff_factors_daily.parquet",
+      "role": "frozen_lfs_payload",
+      "sha256": "d8e0f59e25c21b05bcc7c69f758e36433d453cc18e61f674a5308fd2b5168e5e",
+      "bytes": 69193
+    },
+    {
+      "path": "handoff/us_downstream/data/risk_free_weekly.parquet",
+      "role": "frozen_lfs_payload",
+      "sha256": "c0ccd51d4ed15b536e798316f576abf67fbc1540b6b35bb7edf51da9ea53e38f",
+      "bytes": 12024
+    },
+    {
+      "path": "handoff/us_downstream/data/security_reference_history.parquet",
+      "role": "frozen_lfs_payload",
+      "sha256": "4dea0efc2f23253434e6bdb0621a1db47dd3099932641f808b2391d41e8b4ee0",
+      "bytes": 76794
+    },
+    {
+      "path": "handoff/us_downstream/data/security_weekly_execution_returns.parquet",
+      "role": "frozen_lfs_payload",
+      "sha256": "43bdc9bd3e70f1de72f89d9d7c5dd9a55acab0dc820e50d9cfac5bd1fcc16fae",
+      "bytes": 5054884
+    },
+    {
+      "path": "handoff/us_downstream/data/weekly_execution_calendar.parquet",
+      "role": "frozen_lfs_payload",
+      "sha256": "689fb5faa018727b294634e5f54f416124c4f1b99bd7d32bf9c29201adab4eea",
+      "bytes": 17983
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/breakeven_cost.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "4fece3701fbcf8fb341c6b0714097312e94991a3ab150719efd432cfe4155f0d"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/capacity_limits.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "9678c27717b6d258d18c676f1eaae5252b9d0c6644058365ac840de5b4e8d4bf"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/concentration_summary.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "14d2cc063a600b38aeb6a8bbdb15bc17fe1be7082d02c8102701cc97825ca40e"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/cost_sensitivity_summary.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "f7f526cf1ccaa3ff87d99ba2451837d510ca3115d32df9085807c01e4dbed5d5"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/ff6_regression_summary.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "f36c7e3da8c82aeaf5293ab374e9ebad949e21529156a78ebb97f7f7d18312b6"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/fmom_significance_summary.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "3804c7560779e8427dd20fdf6b2b069590e7da59039d3a51908bf862c507541b"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/four_strategy_comparison.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "bf13b25f03be2a6c4fbf4ca89ac56980b53e0b6874a615f4b1b81ef1916d9fa1"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/historical_stress_summary.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "2b7d8909c8f9897d83ccf47ff8c07ceb1c740046f7676de1995f4588e0c7dca1"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/liquidity_capacity_summary.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "6f2ff0c242170c7c2f13258ce2af16c4519b2e20dbdb95d6161f7d2249dcc2e0"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/market_cap_sector_summary.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "9a755c7a0d2c3df37c4cb7fcda1b718f8797e8c7dde06f85cbe9e5d0cbc81520"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/market_regression_summary.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "d84f8b4a5d34f5595d1d5cba3fdbbb37f72b8dc7748d4e52d1ac9e00349bcf80"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/regime_performance_summary.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "ef9b705f0d685ea0f1ab972e4ae652085a682fe6f346b2130ebac5bc140cc440"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/universe_ew_acceptance.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "f1c7ecbeef1878843bf0e25d878989ab322810c3dded064d604fa23956444059"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/universe_ew_summary.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "953549cd0c17d9441b399f2dff191a9984af010c6d7638451876d1c369971655"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/universe_ew_weekly_path.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "2fcc2bdba70afbb58d02ca828b9f669b6aa92185ac834fad0c38cbee198478e6"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/us_risk_map_validation.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "9d090d9358d1de1561962eb3b8de95dfbef31888f9e95f6037c73e9ed6bf0abc"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/us_strategy_risk_map.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "b6c325e2a7d068240cad91db009866b15ab8a3ff1cfc9d4034c9aecbd831a3c0"
+    },
+    {
+      "path": "outputs/risk_analysis/us_hist_oos/us_strategy_risk_summary.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "45b298b22c7e5d869009be268974743229252ee237b9c18d47250719c052a2d4"
+    },
+    {
+      "path": "outputs/strategy/benchmarks/hist_oos/static_construction.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "ea34cbc82ffc9ba03b9cff50191ff67f76b35782cbf46d39aeb80b78eef6cb18"
+    },
+    {
+      "path": "outputs/strategy/benchmarks/hist_oos/static_manifest.json",
+      "role": "frozen_source_text",
+      "sha256_lf": "3c40f4aa9cad4e0bb35f82cfa69a8f42c46ff1746c99700ee617098b5036db63"
+    },
+    {
+      "path": "outputs/strategy/benchmarks/hist_oos/static_target_holdings.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "fb66caf799656037977f99971cc1863cabffbc6800d0e29c21f6e92811862b15"
+    },
+    {
+      "path": "outputs/strategy/benchmarks/hist_oos/static_trade_ledger.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "650d654c81135ee68e8ab0c07105314a6365300e5ad7a12967f7e23e15202552"
+    },
+    {
+      "path": "outputs/strategy/benchmarks/hist_oos/static_weekly_path.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "88890e48b2b0a4adabe535ca7839c16d34b00b668cb650f6429e00ab9ebe4399"
+    },
+    {
+      "path": "outputs/strategy/frozen/hist_oos/acceptance_test_report.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "0902e7a4b3a044f2891f3d84a8b73f3fce7884fc4a027a744c6cd5c0a8e83ae5"
+    },
+    {
+      "path": "outputs/strategy/frozen/hist_oos/factor_weights.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "3f8cbc3871ea13ca32205b32119a1d44b1f1982da6e0f84e7a8f90f9e6b0f8b7"
+    },
+    {
+      "path": "outputs/strategy/frozen/hist_oos/run_manifest.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "91de4adff125efdcef3f1ffb0bba6aacdd6c273731cc35f1894f383e2e96b87a"
+    },
+    {
+      "path": "outputs/strategy/frozen/hist_oos/target_holdings.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "4558e0d1f746549811163e14abee4f9366433d91ed54325ad9a7aac372b58c1f"
+    },
+    {
+      "path": "outputs/strategy/frozen/hist_oos/trade_ledger.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "b6a104e00d7b03e6057a4468d2e88530b218c17e4bbc7a8f95745cd649ce68cf"
+    },
+    {
+      "path": "outputs/strategy/frozen/hist_oos/weekly_path.csv",
+      "role": "frozen_source_text",
+      "sha256_lf": "fc92cc88c8e07ca8d24be1e6111aa6cdcf50c1aba2a7514b7a23efdbe12c78ef"
+    },
+    {
+      "path": "src/risk_analysis/__init__.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/risk_analysis/benchmark_comparison.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "826b4877b48ce87da61d8d9035533e7a991597845c3c643990b8ea598d61e9a1"
+    },
+    {
+      "path": "src/risk_analysis/build_oos_factor_returns.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "849dd0e1f087357430c8f9d515b7f19fb701b68e2b7c079d6d372d4e7eec0454"
+    },
+    {
+      "path": "src/risk_analysis/concentration.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "c25786fa4cb9174b46dc2d46f16b9d42beea4b24fd30e6fa6958a9afd8e1f0c7"
+    },
+    {
+      "path": "src/risk_analysis/cost_analysis.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "cb0d44b750051c38b0c5081373d1bb7bd8032be7631a0515f7fb02deeedd05aa"
+    },
+    {
+      "path": "src/risk_analysis/drawdown_analysis.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "7caea6daaacb1d81cad0f301455969567b0a5c936767b241584c09d9bcc433ed"
+    },
+    {
+      "path": "src/risk_analysis/factor_regression.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "f39fa25868fd30cdc811df0674613cc50a0b1b01665102b50109946513be073e"
+    },
+    {
+      "path": "src/risk_analysis/factor_timing_diagnostics.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "f612f52574dd686431c411af15a18cfb7339e6b4bd95af58a7a5ebea5af3200b"
+    },
+    {
+      "path": "src/risk_analysis/ff_factor_regression.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "5ea518d2f9671f99951aa66f9eeb0fe2d980285e74fbcce64139286d831013bc"
+    },
+    {
+      "path": "src/risk_analysis/liquidity_capacity.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "4c7eccf116e9a1cbcba63a99fda6709f403a696a17ff655f7ee2c1cc365e5152"
+    },
+    {
+      "path": "src/risk_analysis/market_cap_analysis.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "e49c3ef58e51d3902d9adca9a7db499e0871f3c0efa3fefddd0b7a59ca04cdd9"
+    },
+    {
+      "path": "src/risk_analysis/performance_report.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "d599061e693ab4ec5e9d85bf852e839f0567f6fa207652870fab69044deaebae"
+    },
+    {
+      "path": "src/risk_analysis/README.md",
+      "role": "frozen_source_text",
+      "sha256_lf": "0ddad3c0421cd9d34aac0fb3a3e37b3d78db01046fb5bcc00191c88d8a883a42"
+    },
+    {
+      "path": "src/risk_analysis/regime_analysis.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "9e181c23d71368b940724bc385cf61ad058569f5cac0770c57e94df2ab7ad1b3"
+    },
+    {
+      "path": "src/risk_analysis/risk_map.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "f00d3fc63bdae2df1b9a5dd514c8e99a8f2ab3c45f3a58fa9141a26802008829"
+    },
+    {
+      "path": "src/risk_analysis/run_static_benchmark.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "ec2817e65341e4bab8dc492cf975e0e079c1b3996ec33a09f5a13d53d3bc56d2"
+    },
+    {
+      "path": "src/risk_analysis/significance.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "ee1f7b20f2e1acaebcae964737eeca23f67971b9c92a149a53dd933da87a5315"
+    },
+    {
+      "path": "src/risk_analysis/stock_selection_diagnostics.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "b6482defc7b76daeb92332c9f1c9adf6cfb05b2b785c206f4a2371624064d0d3"
+    },
+    {
+      "path": "src/risk_analysis/stress_analysis.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "73a24dd2675eb45a732a77bb3379f3eb4fb028ef9a0334af89eed617c7f8ed66"
+    },
+    {
+      "path": "src/risk_analysis/universe_ew_benchmark.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "61a3d70890c0467e7af88736c7c2a28b94a88a19f0cc089d9bb279324dc38e8a"
+    },
+    {
+      "path": "src/risk_analysis/validate_static_benchmark.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "71b4464d26936d3dc2ef9ff747e1353ae209c8f4d4227ac4b7ba29820a302c97"
+    },
+    {
+      "path": "src/strategy/__init__.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/strategy/acceptance.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "9c2fe0c913824cd28d94c5556694001d25e631635a523fbf93ca1f576c325330"
+    },
+    {
+      "path": "src/strategy/composite_score.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "1bcd12a640cefd8c1af1245f362ff87dffbae1d8d0625559e5bc3c269eb286a3"
+    },
+    {
+      "path": "src/strategy/factor_returns.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "924b2bbad05b5c4e8fd42e527ca95b0b2b725b6db0847e6e9451e0c976fe88a1"
+    },
+    {
+      "path": "src/strategy/fmom_weights.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "0a4240bb0ca7038acf7dd99ac835d1761ba7cb6aa97e4f2e7e4279fe3c1ee724"
+    },
+    {
+      "path": "src/strategy/governance.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "a3f667d826f6e301a0064484f1bbf06d62536280a224700fae439ab7963fe6f5"
+    },
+    {
+      "path": "src/strategy/metrics.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "d7ff3f41a037935fbf685377bfb6fc695e96868c9a02f6fb3c34a2fba0de50bf"
+    },
+    {
+      "path": "src/strategy/portfolio.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "f94522692f07eab4fbb936164bcf1a61770cce6a7f1a9ffed499f0a5ce84bfcd"
+    },
+    {
+      "path": "src/strategy/README.md",
+      "role": "frozen_source_text",
+      "sha256_lf": "6d1538fbb66a5a6322e0f5c41510bc92491f6f0c49bb3333c39ad1744b052a71"
+    },
+    {
+      "path": "src/strategy/run_frozen.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "e0c89e3f3da4c713648d74c9b7f40e55f75677db50daab3bf724e00a2d6cac6a"
+    },
+    {
+      "path": "src/strategy/run_gate_b.py",
+      "role": "frozen_source_text",
+      "sha256_lf": "8dcd7077bff74c4c828c8f6311057546e9c0b7719490948c0c62fb042033c5d7"
+    }
+  ]
+}
