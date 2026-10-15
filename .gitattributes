@@ -21,3 +21,5 @@ handoff/us_downstream/data/security_daily_market_pre_gate_b.parquet filter=lfs d
 handoff/us_downstream/data/security_reference_history.parquet filter=lfs diff=lfs merge=lfs -text
 handoff/us_downstream/data/security_weekly_execution_returns.parquet filter=lfs diff=lfs merge=lfs -text
 handoff/us_downstream/data/weekly_execution_calendar.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_recent_extension_2026/data/factor_library_2026.parquet filter=lfs diff=lfs merge=lfs -text
+handoff/us_recent_extension_2026/data/market_2026.parquet filter=lfs diff=lfs merge=lfs -text
