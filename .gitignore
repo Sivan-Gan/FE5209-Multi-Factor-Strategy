@@ -80,3 +80,16 @@ secrets*.yml
 # deterministic samples, and explicitly approved Git-LFS artifacts are governed
 # separately; this rule remains the default guardrail.
 /handoff/us_downstream/data/*.parquet
+
+# Adaptive Strategy generated outputs
+/outputs/adaptive_strategy/
+
+# Local Python environments and caches
+.venv/
+.venv_old/
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# Local machine files
+.DS_Store

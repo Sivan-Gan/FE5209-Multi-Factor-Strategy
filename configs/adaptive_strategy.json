@@ -1,0 +1,32 @@
+{
+  "project_name": "FE5209 Adaptive Multi-Factor Strategy",
+  "data_root": ".",
+  "output_root": "outputs/adaptive_strategy",
+  "historical": {
+    "start": "2016-01-01",
+    "end": "2025-12-31",
+    "expected_weeks": 520,
+    "cost_oneway": 0.001,
+    "use_buffer": true
+  },
+  "model_selection": {
+    "train_start": "2016-01-01",
+    "train_end": "2020-12-31",
+    "validation_start": "2021-01-01",
+    "validation_end": "2025-12-31",
+    "selection_metric": "sharpe",
+    "expected_train_weeks": 261,
+    "expected_validation_weeks": 259
+  },
+  "controlled_benchmark": {
+    "start": "2021-01-01",
+    "end": "2025-12-31",
+    "expected_weeks": 259
+  },
+  "recent_extension": {
+    "enabled": true,
+    "start": "2026-01-02",
+    "end": "2026-10-09",
+    "expected_completed_weeks": 39
+  }
+}
