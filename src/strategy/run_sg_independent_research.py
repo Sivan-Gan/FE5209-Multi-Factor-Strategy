@@ -44,10 +44,17 @@ def clean_number(s):
 
 
 def weekly_calendar(prices: pd.DataFrame) -> pd.DataFrame:
-    # Remove provider placeholder rows where every security has a missing close.
-    # These are not exchange trading days and must not become signal/execution dates.
-    valid_dates = prices.groupby("date")["adj_close"].count()
-    all_dates = pd.DatetimeIndex(sorted(valid_dates[valid_dates > 0].index))
+    # Remove provider placeholders and partial-date outages. A date with only
+    # one or two observed securities must not become a market-wide
+    # signal/execution date. The threshold adapts to the trailing 60 observed
+    # dates so it does not reject earlier years solely because fewer current
+    # universe names had listed then.
+    valid_dates = prices.groupby("date")["adj_close"].count().sort_index()
+    observed = valid_dates[valid_dates > 0]
+    typical_coverage = observed.rolling(60, min_periods=20).median()
+    min_required = (0.80 * typical_coverage).clip(lower=20)
+    valid = observed.ge(min_required.fillna(20))
+    all_dates = pd.DatetimeIndex(sorted(observed[valid].index))
     cal = pd.DataFrame({"date": all_dates})
     cal["week"] = cal["date"].dt.to_period("W-FRI")
     signals = cal.groupby("week", as_index=False)["date"].max().sort_values("date").reset_index(drop=True)

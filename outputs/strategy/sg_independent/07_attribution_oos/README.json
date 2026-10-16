@@ -1,9 +1,9 @@
 {
   "scope": "Descriptive OOS attribution only; no parameter has been re-selected using 2021+ data.",
   "core_finding": "The dynamic model won the current 2016-2020 grid, but the static equal-factor benchmark is superior in OOS on annualized return, Sharpe, drawdown and turnover.",
-  "oos_fmom_annualized_return": 0.17199603502161565,
-  "oos_static_annualized_return": 0.16691820967863968,
-  "oos_fmom_sharpe": 1.3207311003871482,
-  "oos_static_sharpe": 1.342573555092604,
+  "oos_fmom_annualized_return": 0.14967625186621025,
+  "oos_static_annualized_return": 0.15171575578618568,
+  "oos_fmom_sharpe": 1.1713178744716597,
+  "oos_static_sharpe": 1.2250594183460561,
   "limitation": "Factor-level files support standalone signal diagnostics. They do not identify a causal return contribution of each factor to the nonlinear top-20% stock portfolio."
 }

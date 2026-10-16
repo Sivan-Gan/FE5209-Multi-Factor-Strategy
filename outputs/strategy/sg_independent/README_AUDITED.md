@@ -1,44 +1,36 @@
 # Singapore independent research: corrected run
 
-## What changed
+## Source-date correction
 
-This run uses the authorised `.TRISTI` STI Total Return export and fixes the
-transaction-cost convention. A provisional 20 bp **per-side** cost is charged
-as `20 bp × GTR`, where `GTR = sum(abs(target weight - drifted pre-trade weight))`.
-The separately reported one-way turnover is `GTR / 2`.
-
-## Research sequence
-
-| Stage | Dates | Result |
-| --- | --- | --- |
-| Single-factor screen | 2011--2015 | Quality, Momentum, LowRisk and Investment meet the pre-declared operational rule. |
-| Configuration selection | 2016--2020 | `J13_lam0.5_ra1_buf1` has the highest weekly zero-rate Sharpe in the declared grid. |
-| Frozen evaluation | 2021-01-08--2026-09-11 | No OOS parameter retuning. |
+Two partial provider-outage dates were removed from the weekly calendar:
+2026-05-01 had adjusted closes for 2 of 114 names and 2026-06-01 had one of
+114. They had previously created artificial one- or two-stock portfolios. The
+calendar now requires at least 80% of trailing typical adjusted-close coverage,
+with a floor of 20 securities. This is a source-validity correction, not an
+OOS performance filter.
 
 ## Frozen OOS result at 20 bp per side
 
+Cost is `20 bp × GTR`, where GTR sums absolute target-versus-drifted-pretrade
+weight differences. Reported one-way turnover is `GTR / 2`.
+
 | Series | Annualized return | Weekly Sharpe | Maximum drawdown |
 | --- | ---: | ---: | ---: |
-| Selected FMOM | 17.20% | 1.32 | 15.83% |
-| Static equal-factor | 16.69% | 1.34 | 17.70% |
-| Equal-weight scoreable universe | 9.20% | 0.74 | 16.71% |
-| STI Total Return (`.TRISTI`) | 17.57% | 1.39 | 10.48% |
+| Selected FMOM | 14.97% | 1.17 | 15.83% |
+| Static equal-factor | 15.17% | 1.23 | 17.70% |
+| Equal-weight scoreable universe | 11.84% | 1.00 | 16.71% |
+| STI Total Return (`.TRISTI`) | 17.15% | 1.36 | 10.48% |
 
-The selected FMOM strategy is economically close to, but slightly below, STI
-Total Return over the matched window: 145.30% cumulative net return versus
-149.69% for STI Total Return. Its information ratio versus STI is -0.027. It
-substantially exceeds the equal-weight scoreable-universe control, which is the
-appropriate benchmark for testing stock selection in the same weekly universe.
-The weekly FMOM-minus-static Newey-West t-statistic is 0.194, so the small
-FMOM/static difference is not statistically distinguishable from zero.
+FMOM and Static both exceed the same-universe equal-weight control, but Static
+is modestly higher than FMOM after the source-date correction. The FMOM-minus-
+Static Newey-West t-statistic is -0.048, so their difference is not
+statistically distinguishable from zero. FMOM remains below STI Total Return:
+121.81% cumulative net return versus 146.92%.
 
-## Audit status
+## Remaining limitations
 
-There are 13 mechanical PASS checks and zero mechanical FAIL checks. The
-material limitations remain: an accounting availability proxy rather than
-verified filing timestamps, potential restatements, survivorship bias, an
-unverified `.TRISTI` gross/net tax convention, a provisional cost assumption,
-and no absolute trading-value capacity filter.
-
-Do not present this as a final alpha claim until the `.TRISTI` gross/net
-dividend convention and the group's cost scenario are documented.
+The annual accounting availability date is fiscal-period-end plus 183 days,
+not a verified filing timestamp. The current screened universe may have
+survivorship bias; the `.TRISTI` gross/net tax convention is undocumented; the
+20 bp per-side cost is provisional; and there is no absolute ADV capacity
+filter. Do not make a final alpha claim.

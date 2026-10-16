@@ -2,6 +2,7 @@ check,status,severity,detail
 price_ticker_date_duplicates,PASS,,duplicates=0
 price_positive_adjusted_close,PASS,,nonpositive_observed=0; missing_rows=339
 price_ohlc_order_when_observed,LIMITATION,warning,"invalid_observed=44; incomplete_ohlc_rows=339. The current factor calculations use adjusted close, not intraday OHLC, but these source anomalies are retained for review."
+calendar_low_coverage_dates_excluded,PASS,,"excluded_low_coverage_dates=2026-05-01,2026-06-01; calendar requires at least 80% of trailing typical coverage and at least 20 observed securities."
 fundamental_ticker_period_duplicates,PASS,,duplicates=0
 unmatched_fundamental_source_filtered_from_strategy,LIMITATION,warning,source_panel_tickers_without_prices=['S35.SI']; strategy code filters these before scoring.
 holdings_no_duplicate_names,PASS,,duplicates=0

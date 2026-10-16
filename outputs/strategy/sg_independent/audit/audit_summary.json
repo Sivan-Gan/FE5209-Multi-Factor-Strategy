@@ -1,5 +1,5 @@
 {
-  "mechanical_passes": 13,
+  "mechanical_passes": 14,
   "mechanical_failures": 0,
   "methodology_limitations": 10,
   "prices": {
@@ -14,9 +14,9 @@
     "usable_exports": 98
   },
   "strategy": {
-    "holding_rows": 8976,
-    "weeks": 555,
-    "oos_weeks": 294
+    "holding_rows": 9033,
+    "weeks": 558,
+    "oos_weeks": 297
   },
   "conclusion": "Mechanical invariants passed if audit_checks has no FAIL rows. This does not validate PIT accounting, survivorship, capacity, or the supplied STI total-return series' gross/net tax convention."
 }

@@ -71,6 +71,11 @@ eligibility inputs, execution and next-execution dates, and realised next-week
 return. It is the appropriate input for portfolio-construction experiments;
 it does not authorise retuning the frozen OOS model.
 
+The SG weekly calendar excludes an observed date when its adjusted-close
+coverage is below 80% of the trailing 60-observed-date median, with a floor of
+20 securities. This removes partial provider outages without treating them as
+market-wide trading days. The excluded date list is recorded in the audit.
+
 ## Results and interpretation
 
 All performance tables are generated locally from the run scripts. Preliminary

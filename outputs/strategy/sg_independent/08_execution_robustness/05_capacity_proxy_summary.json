@@ -1,8 +1,8 @@
 {
   "method": "Capacity proxy only: 10% of each holding's prior 60-trading-day median SGD trading value divided by target weight; ignores netting, market impact and order scheduling.",
   "period": "2021-latest",
-  "rebalances": 294,
-  "median_limiting_capacity_sgd": 72593.99880588062,
-  "p25_limiting_capacity_sgd": 52366.37527257205,
+  "rebalances": 297,
+  "median_limiting_capacity_sgd": 72748.7981700898,
+  "p25_limiting_capacity_sgd": 52541.050273180015,
   "median_adv_match_share": 1.0
 }

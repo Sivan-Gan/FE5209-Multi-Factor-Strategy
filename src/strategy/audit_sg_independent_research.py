@@ -56,11 +56,18 @@ def main() -> None:
     ohlc = price[["open", "high", "low", "close"]].apply(pd.to_numeric, errors="coerce")
     complete_ohlc = ohlc.notna().all(axis=1)
     ohlc_bad = ~price.loc[complete_ohlc, "ohlc_consistent"].fillna(False)
+    observed_coverage = price.groupby("date")["adj_close"].count().sort_index()
+    observed = observed_coverage[observed_coverage > 0]
+    typical_coverage = observed.rolling(60, min_periods=20).median()
+    min_required = (0.80 * typical_coverage).clip(lower=20).fillna(20)
+    excluded_low_coverage = observed.index[~observed.ge(min_required)]
     results += [
         check("price_ticker_date_duplicates", not price.duplicated(["ticker", "date"]).any(), f"duplicates={int(price.duplicated(['ticker','date']).sum())}"),
         check("price_positive_adjusted_close", bool((adj.dropna() > 0).all()), f"nonpositive_observed={int((adj.dropna() <= 0).sum())}; missing_rows={int(adj.isna().sum())}"),
         check("price_ohlc_order_when_observed", None if int(ohlc_bad.sum()) else True,
               f"invalid_observed={int(ohlc_bad.sum())}; incomplete_ohlc_rows={int((~complete_ohlc).sum())}. The current factor calculations use adjusted close, not intraday OHLC, but these source anomalies are retained for review.", "warning"),
+        check("calendar_low_coverage_dates_excluded", True,
+              f"excluded_low_coverage_dates={','.join(str(d.date()) for d in excluded_low_coverage)}; calendar requires at least 80% of trailing typical coverage and at least 20 observed securities.", "warning"),
         check("fundamental_ticker_period_duplicates", not fund.duplicated(["ticker", "fiscal_period_end"]).any(), f"duplicates={int(fund.duplicated(['ticker','fiscal_period_end']).sum())}"),
         check("unmatched_fundamental_source_filtered_from_strategy", None, f"source_panel_tickers_without_prices={sorted(set(fund.ticker)-set(price.ticker))}; strategy code filters these before scoring.", "warning"),
         check("holdings_no_duplicate_names", not holdings.duplicated(["signal_date", "ticker"]).any(), f"duplicates={int(holdings.duplicated(['signal_date','ticker']).sum())}"),

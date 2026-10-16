@@ -5,27 +5,27 @@
   "period_start_signal": "2021-01-08",
   "period_end_signal": "2026-09-11",
   "strategy_net": {
-    "weeks": 294,
-    "cumulative_return": 1.4530014517887184,
-    "annualized_return": 0.17199603502161565,
-    "annualized_volatility": 0.12640004165615157,
-    "weekly_sharpe_zero_rf": 1.3207311003871482,
+    "weeks": 297,
+    "cumulative_return": 1.2180924505228625,
+    "annualized_return": 0.14967625186621025,
+    "annualized_volatility": 0.12602509395129127,
+    "weekly_sharpe_zero_rf": 1.1713178744716597,
     "max_drawdown": 0.1583261545449346
   },
   "sti_total_return": {
-    "weeks": 294,
-    "cumulative_return": 1.4968710351923828,
-    "annualized_return": 0.17567625689496458,
-    "annualized_volatility": 0.1220697343289544,
-    "weekly_sharpe_zero_rf": 1.3892304408854534,
+    "weeks": 297,
+    "cumulative_return": 1.4691550290620987,
+    "annualized_return": 0.17146415807264437,
+    "annualized_volatility": 0.12211246348951424,
+    "weekly_sharpe_zero_rf": 1.3593070947923829,
     "max_drawdown": 0.10475397718570412
   },
   "active": {
-    "cumulative_return_difference": -0.017569823505235393,
-    "annualized_tracking_error": 0.09831806470276916,
-    "information_ratio_zero_rf": -0.02687730625151954,
-    "beta_to_sti_total_return": 0.711748211437964,
-    "annualized_CAPM_alpha_approx": 0.046240075684424495
+    "cumulative_return_difference": -0.10167955255308603,
+    "annualized_tracking_error": 0.09861169343635814,
+    "information_ratio_zero_rf": -0.1863155592050783,
+    "beta_to_sti_total_return": 0.7064875206212157,
+    "annualized_CAPM_alpha_approx": 0.030346755822855266
   },
   "caveat": "Interpret alpha only after documenting the supplied index's gross/net dividend and currency conventions."
 }
