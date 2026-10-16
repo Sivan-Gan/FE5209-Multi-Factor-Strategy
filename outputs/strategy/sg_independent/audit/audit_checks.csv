@@ -17,7 +17,8 @@ source_workbook_file_identity,PASS,,"desktop=102, used=102, shared=102, identica
 verified_actual_announcement_dates,LIMITATION,material,Fundamental export does not provide verified SGX announcement timestamps; fiscal-period-end + 183 days is only a conservative proxy.
 as_reported_restatement_control,LIMITATION,material,Annual vendor export may contain later restated historical values; no versioned as-reported filing layer is present.
 survivorship_bias_control,LIMITATION,material,Universe is based on a current screened list; historical delisted-company coverage is not established.
-STI_total_return_benchmark,LIMITATION,material,Current benchmark is STI Price Index. It excludes dividends and is unsuitable for final total-return alpha claims.
-SG_cost_assumption_frozen,LIMITATION,material,"20 bp one-way cost is a scenario, not a documented group-approved SG cost model."
+STI_total_return_benchmark,PASS,,An authorised .TRISTI total-return export was matched to the strategy execution dates. The source's gross/net tax convention remains to be documented.
+STI_total_return_tax_convention,LIMITATION,material,The supplied .TRISTI export is labelled Total Return but does not state whether its dividend convention is gross or net of withholding tax. Do not make a final alpha claim until this is documented.
+SG_cost_assumption_frozen,LIMITATION,material,The model now applies the 20 bp per-side scenario as cost = 20 bp × GTR. The numerical scenario remains subject to group approval.
 absolute_ADV_capacity_filter,LIMITATION,material,Eligibility requires price/history/nonzero-volume conditions but does not impose an absolute SG trading-value capacity threshold.
 factor_selection_threshold_precommitted,LIMITATION,material,The factor-selection threshold must be ratified and frozen by the group before treating the four-factor result as confirmatory.

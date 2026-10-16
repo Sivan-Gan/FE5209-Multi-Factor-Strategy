@@ -38,7 +38,7 @@ def main() -> None:
     p.add_argument("--value-col", required=True, help="Column containing total-return index level")
     p.add_argument("--return-type", choices=["gross", "net", "unspecified"], default="unspecified")
     args = p.parse_args()
-    sheet = int(args.sheet) if args.sheet.isdigit() else args.sheet
+    sheet = int(args.sheet) if isinstance(args.sheet, str) and args.sheet.isdigit() else args.sheet
     raw = pd.read_excel(args.sti_total_return_file, sheet_name=sheet, header=args.header)
     if args.date_col not in raw or args.value_col not in raw:
         raise ValueError(f"Required columns absent. Available columns: {raw.columns.tolist()}")

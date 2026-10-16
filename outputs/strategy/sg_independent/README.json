@@ -8,9 +8,9 @@
   ],
   "frozen_config": {
     "J": 13,
-    "lambda": 1.0,
-    "risk_adjusted": false,
-    "buffer": false
+    "lambda": 0.5,
+    "risk_adjusted": true,
+    "buffer": true
   },
   "selection_cost_bps_provisional": 20.0,
   "price_end": "2026-09-24",

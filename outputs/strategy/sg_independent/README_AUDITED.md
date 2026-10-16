@@ -1,53 +1,41 @@
-# SG independent run: audit conclusion
+# Singapore independent research: corrected run
 
-## What passed mechanically
+## What changed
 
-- The restored Desktop source folder contains 102 workbooks; all 102 hashes
-  exactly match the files used to rebuild the research panel.
-- The price panel has no duplicate ticker-date records and no observed
-  non-positive adjusted closes.
-- The strategy has no duplicate holdings, no negative weights, weights plus
-  cash equal one, a maximum sector weight of 29.41%, and execution dates after
-  signal dates.
-- The trading calendar now excludes three provider placeholder dates on which
-  every security had a missing close. The prior results before this correction
-  must not be used.
+This run uses the authorised `.TRISTI` STI Total Return export and fixes the
+transaction-cost convention. A provisional 20 bp **per-side** cost is charged
+as `20 bp × GTR`, where `GTR = sum(abs(target weight - drifted pre-trade weight))`.
+The separately reported one-way turnover is `GTR / 2`.
 
-## Corrected research result
+## Research sequence
 
-The frozen SG FMOM configuration selected in 2016--2020 is
-`J13_lam1_ra0_buf0`. In 2021--latest it produces annualized net return 15.38%,
-annualized volatility 14.04%, zero-rate weekly Sharpe 1.09, and max drawdown
-20.92%, under the provisional 20 bp one-way cost scenario.
+| Stage | Dates | Result |
+| --- | --- | --- |
+| Single-factor screen | 2011--2015 | Quality, Momentum, LowRisk and Investment meet the pre-declared operational rule. |
+| Configuration selection | 2016--2020 | `J13_lam0.5_ra1_buf1` has the highest weekly zero-rate Sharpe in the declared grid. |
+| Frozen evaluation | 2021-01-08--2026-09-11 | No OOS parameter retuning. |
 
-It exceeds the supplied STI **price-index** cumulative return over the matched
-period, but that is not a final total-return comparison because STI dividends
-are absent.
+## Frozen OOS result at 20 bp per side
 
-## Critical out-of-sample finding
+| Series | Annualized return | Weekly Sharpe | Maximum drawdown |
+| --- | ---: | ---: | ---: |
+| Selected FMOM | 17.20% | 1.32 | 15.83% |
+| Static equal-factor | 16.69% | 1.34 | 17.70% |
+| STI Total Return (`.TRISTI`) | 17.57% | 1.39 | 10.48% |
 
-The selected FMOM strategy does **not** beat the static equal-weight
-multi-factor baseline out of sample:
+The selected FMOM strategy is economically close to, but slightly below, STI
+Total Return over the matched window: 145.30% cumulative net return versus
+149.69% for STI Total Return. Its information ratio versus STI is -0.027.
+The weekly FMOM-minus-static Newey-West t-statistic is 0.194, so the small
+FMOM/static difference is not statistically distinguishable from zero.
 
-| Strategy | OOS annualized net return | OOS Sharpe | OOS max drawdown |
-|---|---:|---:|---:|
-| FMOM selected | 15.38% | 1.09 | 20.92% |
-| Static equal factor | 17.72% | 1.41 | 17.39% |
-| Equal-weight eligible universe | 8.76% | 0.71 | 16.72% |
+## Audit status
 
-Therefore the defensible current conclusion is: the SG selected-factor
-composite appears stronger than the equal-weight eligible universe, but the
-Factor Momentum timing overlay did not generalize better than static equal
-factor weights in the frozen OOS period. Do not claim that FMOM is the source
-of the SG advantage.
+There are 13 mechanical PASS checks and zero mechanical FAIL checks. The
+material limitations remain: an accounting availability proxy rather than
+verified filing timestamps, potential restatements, survivorship bias, an
+unverified `.TRISTI` gross/net tax convention, a provisional cost assumption,
+and no absolute trading-value capacity filter.
 
-## Material restrictions still open
-
-1. Accounting availability is fiscal-period-end + 183-day proxy, not verified
-   SGX announcement timestamps; restated vendor history may remain.
-2. The universe is susceptible to survivorship bias.
-3. STI Total Return Index is required before a dividend-consistent alpha claim.
-4. The 20 bp SG cost and factor-selection threshold require group ratification.
-5. The liquidity screen has no absolute SGD trading-value capacity threshold.
-6. Four source exports were unresolved; one mapped source (`S35.SI`) has no
-   corresponding price series and is filtered from strategy scoring.
+Do not present this as a final alpha claim until the `.TRISTI` gross/net
+dividend convention and the group's cost scenario are documented.

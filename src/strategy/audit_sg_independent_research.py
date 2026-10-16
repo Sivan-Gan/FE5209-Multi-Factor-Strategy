@@ -50,6 +50,7 @@ def main() -> None:
     returns = pd.read_csv(strategy_dir / "03_strategy_weekly_returns_2016_latest.csv", parse_dates=["signal_date"])
     weights = pd.read_csv(strategy_dir / "03_frozen_sg_factor_weights_2016_latest.csv", parse_dates=["signal_date"])
     diagnostics = pd.read_csv(strategy_dir / "03_holding_diagnostics_2016_latest.csv", parse_dates=["signal_date"])
+    sti_total_return = strategy_dir / "05_sti_total_return_summary_2021_latest.json"
 
     adj = pd.to_numeric(price.adj_close, errors="coerce")
     ohlc = price[["open", "high", "low", "close"]].apply(pd.to_numeric, errors="coerce")
@@ -100,8 +101,9 @@ def main() -> None:
         check("verified_actual_announcement_dates", None, "Fundamental export does not provide verified SGX announcement timestamps; fiscal-period-end + 183 days is only a conservative proxy.", "material"),
         check("as_reported_restatement_control", None, "Annual vendor export may contain later restated historical values; no versioned as-reported filing layer is present.", "material"),
         check("survivorship_bias_control", None, "Universe is based on a current screened list; historical delisted-company coverage is not established.", "material"),
-        check("STI_total_return_benchmark", None, "Current benchmark is STI Price Index. It excludes dividends and is unsuitable for final total-return alpha claims.", "material"),
-        check("SG_cost_assumption_frozen", None, "20 bp one-way cost is a scenario, not a documented group-approved SG cost model.", "material"),
+        check("STI_total_return_benchmark", sti_total_return.exists(), "An authorised .TRISTI total-return export was matched to the strategy execution dates. The source's gross/net tax convention remains to be documented.", "material"),
+        check("STI_total_return_tax_convention", None, "The supplied .TRISTI export is labelled Total Return but does not state whether its dividend convention is gross or net of withholding tax. Do not make a final alpha claim until this is documented.", "material"),
+        check("SG_cost_assumption_frozen", None, "The model now applies the 20 bp per-side scenario as cost = 20 bp × GTR. The numerical scenario remains subject to group approval.", "material"),
         check("absolute_ADV_capacity_filter", None, "Eligibility requires price/history/nonzero-volume conditions but does not impose an absolute SG trading-value capacity threshold.", "material"),
         check("factor_selection_threshold_precommitted", None, "The factor-selection threshold must be ratified and frozen by the group before treating the four-factor result as confirmatory.", "material"),
     ]
@@ -114,7 +116,7 @@ def main() -> None:
         "prices": {"rows": int(len(price)), "tickers": int(price.ticker.nunique()), "min_date": str(price.date.min().date()), "max_date": str(price.date.max().date())},
         "fundamentals": {"rows": int(len(fund)), "tickers": int(fund.ticker.nunique()), "usable_exports": int((coverage.fundamentals_status == 'usable_annual_fundamentals').sum())},
         "strategy": {"holding_rows": int(len(holdings)), "weeks": int(returns.signal_date.nunique()), "oos_weeks": int((returns.signal_date >= '2021-01-01').sum())},
-        "conclusion": "Mechanical invariants passed if audit_checks has no FAIL rows. This does not validate PIT accounting, survivorship, capacity, transaction costs, or total-return benchmark comparability."
+        "conclusion": "Mechanical invariants passed if audit_checks has no FAIL rows. This does not validate PIT accounting, survivorship, capacity, or the supplied STI total-return series' gross/net tax convention."
     }
     (OUT / "audit_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps(summary, indent=2))

@@ -55,14 +55,15 @@ def main() -> None:
                           parse_dates=["signal_date"])
     returns = returns[returns.signal_date.ge(OOS_START)].copy()
 
-    # Recalculate each strategy under identical cost scenarios from its saved
-    # gross return and realized turnover.  This does not change any holdings.
+    # Recalculate each strategy under identical per-side cost scenarios from
+    # saved gross return and realized GTR. Turnover is retained as the
+    # conventional one-way reporting statistic (GTR / 2).
     cost_rows, paths = [], []
     for cost in COST_SCENARIOS_BPS:
         q = returns.copy()
         q["scenario_cost_bps"] = cost
-        q["scenario_net_return"] = (1 - q.turnover * cost / 1e4) * (1 + q.gross_return) - 1
-        paths.append(q[["signal_date", "strategy", "scenario_cost_bps", "scenario_net_return", "turnover"]])
+        q["scenario_net_return"] = (1 - q.gtr * cost / 1e4) * (1 + q.gross_return) - 1
+        paths.append(q[["signal_date", "strategy", "scenario_cost_bps", "scenario_net_return", "gtr", "turnover"]])
         for strategy, g in q.groupby("strategy"):
             cost_rows.append({"strategy": strategy, "one_way_cost_bps": cost,
                               "mean_one_way_turnover": float(g.turnover.mean()), **metrics(g.scenario_net_return)})

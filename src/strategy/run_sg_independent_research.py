@@ -281,15 +281,19 @@ def path(holdings: pd.DataFrame, cost_bps: float) -> pd.DataFrame:
     for d, h in holdings.groupby("signal_date", sort=True):
         target=h.set_index("ticker").weight
         universe=target.index.union(prior.index)
-        turnover=.5*(target.reindex(universe,fill_value=0)-prior.reindex(universe,fill_value=0)).abs().sum() if len(prior) else 1.0
+        # GTR counts each buy and sell once.  The reported one-way turnover is
+        # the conventional half-GTR statistic, but a per-side cost is charged
+        # against GTR.  The initial fully invested portfolio has GTR=1.0.
+        gtr=(target.reindex(universe,fill_value=0)-prior.reindex(universe,fill_value=0)).abs().sum() if len(prior) else 1.0
+        turnover=.5*gtr
         gross=(h.weight*h.forward_return).sum()
-        net=(1-turnover*cost_bps/1e4)*(1+gross)-1
+        net=(1-gtr*cost_bps/1e4)*(1+gross)-1
         post=target*(1+h.set_index("ticker").forward_return).reindex(target.index)
         cash = 1.0 - target.sum()
         # Drift the invested sleeve then renormalize by the whole portfolio
         # (including any constraint-created cash) before the next rebalance.
         prior=post/(cash + post.sum()) if (cash + post.sum()) > 0 else pd.Series(dtype=float)
-        result.append({"signal_date":d,"gross_return":gross,"net_return":net,"turnover":turnover,"cost_bps":cost_bps})
+        result.append({"signal_date":d,"gross_return":gross,"net_return":net,"gtr":gtr,"turnover":turnover,"cost_bps":cost_bps})
     return pd.DataFrame(result)
 
 

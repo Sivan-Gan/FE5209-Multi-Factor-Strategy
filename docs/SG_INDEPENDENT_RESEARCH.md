@@ -11,9 +11,11 @@ universe and follows the agreed split:
 | Configuration selection | 2016--2020 | Select a Member-4-style FMOM configuration |
 | Frozen evaluation | 2021--latest available | Run only; do not tune on these results |
 
-The selected factors are Quality, Momentum, LowRisk, and Investment.  The
+The selected factors are Quality, Momentum, LowRisk, and Investment. The
 configuration selected from the specified 2016--2020 grid is
-`J13_lam1_ra0_buf0`, with 20 bp provisional one-way transaction cost.
+`J13_lam1_ra0_buf0`, with a provisional 20 bp **per-side** transaction-cost
+scenario. Cost uses `GTR = sum(abs(target weight - drifted pre-trade weight))`
+and `cost = 20 bp × GTR`; reported one-way turnover is `GTR / 2`.
 
 ## What is committed versus omitted
 
@@ -58,16 +60,17 @@ benchmark, so it must not be labelled as final alpha.
 For a formal STI comparison, export an authorised STI **total-return** series
 from LSEG Workspace/FTSE, document whether it is gross or net of withholding
 tax, then run `add_sti_total_return_benchmark` with its date and index-level
-column names.  The script intentionally does not assume a specific RIC or LSEG
-field because entitlements and gross/net index variants differ.
+column names. The supplied `.TRISTI` LSEG Price History export has its header
+at Excel row 19 and uses `Exchange Date` and `Close`, e.g.
+`python -m src.strategy.add_sti_total_return_benchmark <export.xlsx> --header 18 --date-col "Exchange Date" --value-col Close --return-type unspecified`.
 
 ## Results and interpretation
 
-The frozen 2021+ FMOM strategy has annualized net return 15.38%, zero-rate
-weekly Sharpe 1.09%, and maximum drawdown 20.92%.  The static equal-factor
-benchmark has 17.72%, 1.41, and 17.39%, respectively.  Therefore the evidence
-supports static equal-factor as the main Singapore specification.  FMOM is an
-extension/robustness experiment, not a demonstrated out-of-sample improvement.
+All performance tables are generated locally from the run scripts. Preliminary
+results must be regenerated whenever the cost scenario or data inputs change.
+The static equal-factor benchmark is the key control for whether FMOM adds
+value; FMOM must not be called an out-of-sample improvement unless it
+outperforms that benchmark after identical GTR-based costs.
 
 The audit output records mechanical checks and limitations.  Main limitations
 are the 183-day accounting-availability proxy, potential later restatements,
