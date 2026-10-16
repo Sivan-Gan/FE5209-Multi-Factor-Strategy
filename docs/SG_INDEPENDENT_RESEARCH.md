@@ -91,7 +91,10 @@ shares and dividends for Value/Size/Dividend.
 - `02_*`: 2016--2020 configuration grid.
 - `03_*`: continuous strategy weights, holdings and weekly returns.
 - `04_*`: selected-period versus frozen-OOS summary.
-- `06_*`: required static multifactor and eligible-universe benchmarks.
+- `06_*`: static multifactor, price-eligible-universe equal weight, and
+  scoreable-universe equal-weight benchmarks. The last uses the exact weekly
+  universe with all selected factor scores available and is the direct
+  stock-selection control.
 - `07_attribution_oos/`: calendar-year, factor-weight, sector, turnover and
   internal pre-OOS stability diagnostics.  This folder must never be used to
   re-select the frozen OOS configuration.

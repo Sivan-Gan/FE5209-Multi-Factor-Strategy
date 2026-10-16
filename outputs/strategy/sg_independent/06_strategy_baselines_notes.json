@@ -7,5 +7,5 @@
   ],
   "cost_bps_one_way": 20.0,
   "scope": "2021-latest only; no benchmark-total-return claim",
-  "interpretation": "FMOM must beat STATIC_EQUAL_FACTOR before attributing improvement to factor timing."
+  "interpretation": "FMOM must beat STATIC_EQUAL_FACTOR before attributing improvement to factor timing. Compare factor strategies with EQUAL_WEIGHT_SCOREABLE_UNIVERSE to isolate stock-selection value from differing fundamental-score coverage."
 }

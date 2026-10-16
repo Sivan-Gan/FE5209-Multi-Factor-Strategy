@@ -21,11 +21,14 @@ The separately reported one-way turnover is `GTR / 2`.
 | --- | ---: | ---: | ---: |
 | Selected FMOM | 17.20% | 1.32 | 15.83% |
 | Static equal-factor | 16.69% | 1.34 | 17.70% |
+| Equal-weight scoreable universe | 9.20% | 0.74 | 16.71% |
 | STI Total Return (`.TRISTI`) | 17.57% | 1.39 | 10.48% |
 
 The selected FMOM strategy is economically close to, but slightly below, STI
 Total Return over the matched window: 145.30% cumulative net return versus
-149.69% for STI Total Return. Its information ratio versus STI is -0.027.
+149.69% for STI Total Return. Its information ratio versus STI is -0.027. It
+substantially exceeds the equal-weight scoreable-universe control, which is the
+appropriate benchmark for testing stock selection in the same weekly universe.
 The weekly FMOM-minus-static Newey-West t-statistic is 0.194, so the small
 FMOM/static difference is not statistically distinguishable from zero.
 
