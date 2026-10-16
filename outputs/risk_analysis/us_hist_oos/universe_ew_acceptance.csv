@@ -1,0 +1,8 @@
+check,status,detail
+259 OOS weeks,PASS,
+No duplicate holdings,PASS,
+Weights sum to one,PASS,
+Ledger GTR closure,PASS,error=6.245e-17
+Cost closure,PASS,error=8.674e-19
+Gross-to-net closure,PASS,error=0.000e+00
+Finite returns,PASS,

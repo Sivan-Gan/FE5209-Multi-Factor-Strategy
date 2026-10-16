@@ -1,0 +1,16 @@
+check_id,category,description,critical,status,detail
+FMOM_01,FMOM/Timing,factor weights sum to 1 every week,True,PASS,max |sum-1| = 1.11e-16
+FMOM_02,FMOM/Timing,FMOM only uses completed weeks (E_{u+1} <= S_t),True,PASS,violations = 0
+FMOM_03,FMOM/Timing,factor weights non-negative,True,PASS,
+FMOM_04,FMOM/Timing,dynamic-weight fallback weeks (information),False,PASS,"{'OK': 252, 'FALLBACK_ALL_NONPOSITIVE': 8}"
+PORT_01,Portfolio,"weights + cash = 1, no negatives, no duplicates, sector cap, names <= target",True,PASS,
+PORT_02,Portfolio,no NaN / inf weights,True,PASS,bad = 0
+PORT_03,Portfolio,every holding is an eligible stock with a valid composite score,True,PASS,violations = 0
+PORT_04,Portfolio,constraint-infeasible weeks (information),False,PASS,0 weeks
+WIN_01,Sample window,"holdings signal dates within [2021-01-01, 2025-12-31]",True,PASS,
+WIN_02,Sample window,no holding period ends after 2025-12-31,True,PASS,violations = 0
+ACC_01,Accounting,trade ledger rebuilds GTR every week,True,PASS,max diff = 6.66e-16
+ACC_02,Accounting,trade ledger rebuilds total cost (c x GTR),True,PASS,diff = 0.00e+00
+ACC_03,Accounting,holdings rebuild gross return,True,PASS,max diff = 6.94e-18
+ACC_04,Accounting,gross -> net NAV identity (1-TC)(1+R),True,PASS,NAV diff = 1.78e-15
+ACC_05,Accounting,average unpriced holding weight (information),False,PASS,0.000156

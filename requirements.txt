@@ -1,4 +1,26 @@
-# Direct runtime dependencies used by tracked FE5209 code.
-# Python standard-library modules (including sqlite3 and unittest) need no entry.
+
+# FE5209 Multi-Factor Strategy
+# Python 3.12+
+#
+# Core dependencies
+# Original project dependencies
+
 pyarrow>=26,<27
 wrds>=3.5,<4
+
+# Data processing and numerical computing
+# Used by src/strategy and src/risk_analysis
+
+pandas>=2.2,<3
+numpy>=1.26,<3
+
+# Statistical inference and regression
+# HAC / Newey-West, OLS, bootstrap-related calculations
+
+scipy>=1.13,<2
+statsmodels>=0.14,<1
+
+# Visualization
+# NAV, drawdown, cost, sector and risk plots
+
+matplotlib>=3.8,<4

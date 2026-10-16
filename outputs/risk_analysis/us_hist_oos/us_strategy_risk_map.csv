@@ -1,0 +1,73 @@
+strategy,risk_dimension,metric,value,source
+Dynamic FMOM,Market,volatility,0.1552859596018187,Consolidated US OOS
+Dynamic FMOM,Market,max_drawdown,0.2117101834472318,Consolidated US OOS
+Dynamic FMOM,Market,sharpe,0.2599835690417452,Consolidated US OOS
+Dynamic FMOM,Portfolio,stock_hhi,0.010039000039,Consolidated US OOS
+Dynamic FMOM,Portfolio,sector_hhi,0.140348501196986,Consolidated US OOS
+Dynamic FMOM,Portfolio,weighted_median_cap_usd,43860342645.71429,Consolidated US OOS
+Dynamic FMOM,Trading,annual_turnover,4.083562446387836,Consolidated US OOS
+Dynamic FMOM,Trading,breakeven_cost_bps,84.46545580548938,Consolidated US OOS
+Dynamic FMOM,Trading,CAGR_20bp,0.0541658739341031,Consolidated US OOS
+Dynamic FMOM,Liquidity,capacity_5pct_usd,53659837.47966843,Consolidated US OOS
+Dynamic FMOM,Liquidity,participation_p95_50M,0.0014924920623893,Consolidated US OOS
+Static MF,Market,volatility,0.1471772026399735,Consolidated US OOS
+Static MF,Market,max_drawdown,0.198641983880389,Consolidated US OOS
+Static MF,Market,sharpe,0.4696677763126449,Consolidated US OOS
+Static MF,Portfolio,stock_hhi,0.010039000039,Consolidated US OOS
+Static MF,Portfolio,sector_hhi,0.1328655044655044,Consolidated US OOS
+Static MF,Portfolio,weighted_median_cap_usd,41411318958.72587,Consolidated US OOS
+Static MF,Trading,annual_turnover,1.8738570184460772,Consolidated US OOS
+Static MF,Trading,breakeven_cost_bps,252.13413448599272,Consolidated US OOS
+Static MF,Trading,CAGR_20bp,0.0910195619207772,Consolidated US OOS
+Static MF,Liquidity,capacity_5pct_usd,68737379.06923455,Consolidated US OOS
+Static MF,Liquidity,participation_p95_50M,0.0007352624091733,Consolidated US OOS
+Universe EW,Market,volatility,0.1592186715743571,Consolidated US OOS
+Universe EW,Market,max_drawdown,0.1944477431781616,Consolidated US OOS
+Universe EW,Market,sharpe,0.5107486322768117,Consolidated US OOS
+Universe EW,Portfolio,stock_hhi,0.0019859585733967,Consolidated US OOS
+Universe EW,Portfolio,sector_hhi,0.1084549847949837,Consolidated US OOS
+Universe EW,Portfolio,weighted_median_cap_usd,32472023433.783783,Consolidated US OOS
+Universe EW,Trading,annual_turnover,0.7124025198788929,Consolidated US OOS
+Universe EW,Trading,breakeven_cost_bps,719.3151857711607,Consolidated US OOS
+Universe EW,Trading,CAGR_20bp,0.10489181930906,Consolidated US OOS
+Universe EW,Liquidity,capacity_5pct_usd,3029228229.026422,Consolidated US OOS
+Universe EW,Liquidity,participation_p95_50M,4.3037172639339566e-05,Consolidated US OOS
+Dynamic FMOM,Factor,ff6_alpha_annualized,-0.0718522877301811,FF6 HAC Regression
+Dynamic FMOM,Factor,ff6_alpha_pvalue,0.0027664346687982,FF6 HAC Regression
+Dynamic FMOM,Factor,ff6_r_squared,0.8623973078523389,FF6 HAC Regression
+Dynamic FMOM,Factor,ff6_beta_Mkt-RF,0.8866313938733819,FF6 HAC Regression
+Dynamic FMOM,Factor,ff6_beta_SMB,0.0468737683623855,FF6 HAC Regression
+Dynamic FMOM,Factor,ff6_beta_HML,0.1741046529734304,FF6 HAC Regression
+Dynamic FMOM,Factor,ff6_beta_RMW,0.0609309273790129,FF6 HAC Regression
+Dynamic FMOM,Factor,ff6_beta_CMA,0.0511454477775971,FF6 HAC Regression
+Dynamic FMOM,Factor,ff6_beta_Mom,0.1139614227015351,FF6 HAC Regression
+Static MF,Factor,ff6_alpha_annualized,-0.0374350221261788,FF6 HAC Regression
+Static MF,Factor,ff6_alpha_pvalue,0.1190103678033624,FF6 HAC Regression
+Static MF,Factor,ff6_r_squared,0.8535957128272798,FF6 HAC Regression
+Static MF,Factor,ff6_beta_Mkt-RF,0.8464248082020325,FF6 HAC Regression
+Static MF,Factor,ff6_beta_SMB,0.0334218683432301,FF6 HAC Regression
+Static MF,Factor,ff6_beta_HML,0.0973305254976808,FF6 HAC Regression
+Static MF,Factor,ff6_beta_RMW,0.1184552082105161,FF6 HAC Regression
+Static MF,Factor,ff6_beta_CMA,0.094724018085031,FF6 HAC Regression
+Static MF,Factor,ff6_beta_Mom,0.1013043757853191,FF6 HAC Regression
+Dynamic FMOM,Regime,trend_regime_Bull,0.1040894229905735,Lagged Market Regime
+Dynamic FMOM,Regime,trend_regime_Bear,-0.0419939267167535,Lagged Market Regime
+Dynamic FMOM,Regime,vol_regime_High Vol,0.0434105622863835,Lagged Market Regime
+Dynamic FMOM,Regime,vol_regime_Low Vol,0.1209988520690322,Lagged Market Regime
+Dynamic FMOM,Stress,Market Crash Weeks,-0.0368554813576765,Realized Market Stress
+Dynamic FMOM,Stress,Market Rally Weeks,0.0349804997824081,Realized Market Stress
+Dynamic FMOM,Stress,Normal Weeks,0.0019936409708675,Realized Market Stress
+Static MF,Regime,trend_regime_Bull,0.1198186644491756,Lagged Market Regime
+Static MF,Regime,trend_regime_Bear,0.0349522696444332,Lagged Market Regime
+Static MF,Regime,vol_regime_High Vol,0.065901656532067,Lagged Market Regime
+Static MF,Regime,vol_regime_Low Vol,0.1598092659893427,Lagged Market Regime
+Static MF,Stress,Market Crash Weeks,-0.0327624083918897,Realized Market Stress
+Static MF,Stress,Market Rally Weeks,0.03583522368532,Realized Market Stress
+Static MF,Stress,Normal Weeks,0.0020634463119061,Realized Market Stress
+Universe EW,Regime,trend_regime_Bull,0.1312656965254374,Lagged Market Regime
+Universe EW,Regime,trend_regime_Bear,0.0500311820958369,Lagged Market Regime
+Universe EW,Regime,vol_regime_High Vol,0.115976729252357,Lagged Market Regime
+Universe EW,Regime,vol_regime_Low Vol,0.1108448527887186,Lagged Market Regime
+Universe EW,Stress,Market Crash Weeks,-0.0380082450841961,Realized Market Stress
+Universe EW,Stress,Market Rally Weeks,0.0399523016274371,Realized Market Stress
+Universe EW,Stress,Normal Weeks,0.0024992152229652,Realized Market Stress
