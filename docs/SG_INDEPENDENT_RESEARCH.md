@@ -28,7 +28,7 @@ Expected local inputs (not versioned):
 
 ```
 SGX_factor_research/output_lseg_rebuilt_for_sg_strategy/data/prices_daily_2006.csv
-SGX_factor_research/output_lseg_rebuilt_for_sg_strategy/data/fundamentals_pit.csv
+SGX_factor_research/output_lseg_rebuilt_for_sg_strategy/data/fundamentals_lseg_panel_unverified_pit.csv
 ```
 
 `build_lseg_fundamentals_handoff.py` constructs the latter from locally
@@ -48,11 +48,18 @@ python -m src.strategy.add_sti_price_benchmark
 python -m src.strategy.audit_sg_independent_research
 python -m src.strategy.analyze_sg_attribution
 python -m src.strategy.test_sg_fmom_improvement
+python -m src.strategy.add_sg_execution_robustness
 ```
 
 `add_sti_price_benchmark` also requires a locally exported `.STI` price-history
 spreadsheet.  The output is a **price-index** comparison, not a total-return
 benchmark, so it must not be labelled as final alpha.
+
+For a formal STI comparison, export an authorised STI **total-return** series
+from LSEG Workspace/FTSE, document whether it is gross or net of withholding
+tax, then run `add_sti_total_return_benchmark` with its date and index-level
+column names.  The script intentionally does not assume a specific RIC or LSEG
+field because entitlements and gross/net index variants differ.
 
 ## Results and interpretation
 
@@ -79,3 +86,5 @@ shares and dividends for Value/Size/Dividend.
   internal pre-OOS stability diagnostics.  This folder must never be used to
   re-select the frozen OOS configuration.
 - `audit/`: source/portfolio mechanical checks and limitations.
+- `08_execution_robustness/`: 0--60 bp cost scenarios, a weekly Newey-West
+  FMOM-minus-static test, and a 10%-ADV capacity proxy.
