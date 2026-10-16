@@ -51,6 +51,7 @@ python -m src.strategy.audit_sg_independent_research
 python -m src.strategy.analyze_sg_attribution
 python -m src.strategy.test_sg_fmom_improvement
 python -m src.strategy.add_sg_execution_robustness
+python -m src.strategy.export_sg_stock_factor_panel
 ```
 
 `add_sti_price_benchmark` also requires a locally exported `.STI` price-history
@@ -63,6 +64,12 @@ tax, then run `add_sti_total_return_benchmark` with its date and index-level
 column names. The supplied `.TRISTI` LSEG Price History export has its header
 at Excel row 19 and uses `Exchange Date` and `Close`, e.g.
 `python -m src.strategy.add_sti_total_return_benchmark <export.xlsx> --header 18 --date-col "Exchange Date" --value-col Close --return-type unspecified`.
+
+`export_sg_stock_factor_panel` writes a private, Git-ignored panel of every
+covered ticker by weekly signal date. It contains the four scores, current
+eligibility inputs, execution and next-execution dates, and realised next-week
+return. It is the appropriate input for portfolio-construction experiments;
+it does not authorise retuning the frozen OOS model.
 
 ## Results and interpretation
 

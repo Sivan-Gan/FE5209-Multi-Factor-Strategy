@@ -85,3 +85,4 @@ secrets*.yml
 # deterministic samples, and explicitly approved Git-LFS artifacts are governed
 # separately; this rule remains the default guardrail.
 /handoff/us_downstream/data/*.parquet
+private_exports/
