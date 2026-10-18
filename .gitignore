@@ -93,3 +93,8 @@ __pycache__/
 
 # Local machine files
 .DS_Store
+
+# Private LSEG-derived SG data and results for src/sandbox/run_sg_all_strategies.py (never versioned)
+/private_data/
+# Sandbox research outputs (weekly returns derived from licensed data)
+/outputs/sandbox/
