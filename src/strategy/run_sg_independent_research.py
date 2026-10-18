@@ -28,6 +28,12 @@ ROOT = Path(__file__).resolve().parents[2]
 WORKSPACE = ROOT.parent
 PRICE_FILE = WORKSPACE / "SGX_factor_research/output_lseg_rebuilt_for_sg_strategy/data/prices_daily_2006.csv"
 FUND_FILE = WORKSPACE / "SGX_factor_research/output_lseg_rebuilt_for_sg_strategy/data/fundamentals_lseg_panel_unverified_pit.csv"
+# This is a documented, lagged shares-outstanding × weekly-close construction.
+# It is used only as the contemporaneous size control in cross-sectional
+# residualisation; it is not represented as a vendor point-in-time market-cap
+# field.  The path is deliberately private because the underlying export is
+# not licensed for public Git distribution.
+MCAP_FILE = ROOT / "private_exports/sg_weekly_market_cap_proxy_2006_private/sg_weekly_market_cap_history.csv"
 OUT = ROOT / "outputs/strategy/sg_independent"
 
 SELECTION_START, SELECTION_END = "2011-01-01", "2015-12-31"
@@ -80,6 +86,32 @@ def prepare_prices() -> tuple[pd.DataFrame, pd.DataFrame]:
     return p, weekly_calendar(p)
 
 
+def prepare_market_caps(valid_price_tickers: set[str]) -> pd.DataFrame:
+    """Load the weekly, lagged-market-cap proxy used for size neutralisation.
+
+    The proxy's own `PIT_status` remains in the scores so downstream outputs
+    cannot mistake it for a vendor-confirmed historical market-cap series.
+    Missing values are retained: no interpolation or current-value backfill is
+    permitted.
+    """
+    if not MCAP_FILE.exists():
+        raise FileNotFoundError(
+            "Historical market-cap proxy is required for joint size/sector "
+            f"neutralisation but is unavailable: {MCAP_FILE}"
+        )
+    m = pd.read_csv(MCAP_FILE, parse_dates=["signal_date", "source_date", "fiscal_period_end", "shares_available_proxy_date"])
+    m = m[m["ticker"].isin(valid_price_tickers)].copy()
+    m["market_cap"] = clean_number(m["market_cap"])
+    m = m.sort_values(["ticker", "signal_date", "source_date"])
+    # Source construction creates one record per weekly signal.  If a rerun
+    # produced duplicates, retain the last documented source date rather than
+    # blending values from different reporting states.
+    return m.drop_duplicates(["ticker", "signal_date"], keep="last")[[
+        "ticker", "signal_date", "market_cap", "currency", "source_date",
+        "source_field", "shares_outstanding", "PIT_status", "market_cap_status",
+    ]]
+
+
 def prepare_fundamentals(valid_price_tickers: set[str]) -> pd.DataFrame:
     f = pd.read_csv(FUND_FILE, parse_dates=["fiscal_period_end"])
     f = f[f["fundamentals_status"].eq("usable_annual_fundamentals")].copy()
@@ -116,13 +148,44 @@ def winsor_z(x: pd.Series) -> pd.Series:
 
 
 def neutralize(frame: pd.DataFrame, raw_col: str) -> pd.Series:
-    """Winsorize/z-score then remove six-sector mean when bucket has >=10 names."""
+    """Jointly remove log market-cap and six-sector exposure from a signal.
+
+    For every weekly cross section, this uses the pre-declared regression
+
+        z(raw factor) = a + b log(market cap) + sector dummies + residual.
+
+    Sectors with fewer than ten eligible issuers are pooled into one ``other``
+    bucket.  Scores with missing/non-positive market cap remain missing rather
+    than being imputed or silently receiving a sector-only treatment.
+    """
     z = winsor_z(frame[raw_col])
-    sec = frame["six_sector"].fillna("other").astype(str)
+    log_cap = np.log(clean_number(frame["market_cap"]).where(lambda s: s > 0))
+    valid = z.notna() & log_cap.notna()
+    result = pd.Series(np.nan, index=frame.index, dtype=float)
+    if valid.sum() < MIN_CROSS_SECTION or log_cap.loc[valid].std(ddof=0) == 0:
+        return result
+
+    sec = frame.loc[valid, "six_sector"].fillna("other").astype(str)
     counts = sec.groupby(sec).transform("size")
     bucket = sec.where(counts >= 10, "other_neutralization_bucket")
-    residual = z - z.groupby(bucket).transform("mean")
-    return winsor_z(residual)
+    dummies = pd.get_dummies(bucket, prefix="sector", dtype=float)
+    # One dummy is omitted because the intercept already represents the base
+    # group.  This avoids the dummy-variable trap while preserving pooled
+    # small-sector handling.
+    if dummies.shape[1] > 1:
+        dummies = dummies.iloc[:, 1:]
+    else:
+        dummies = dummies.iloc[:, :0]
+    design = pd.concat([
+        pd.Series(1.0, index=z.loc[valid].index, name="intercept"),
+        log_cap.loc[valid].rename("log_market_cap"),
+        dummies,
+    ], axis=1).astype(float)
+    if len(design) <= design.shape[1]:
+        return result
+    beta, *_ = np.linalg.lstsq(design.to_numpy(), z.loc[valid].to_numpy(), rcond=None)
+    result.loc[valid] = z.loc[valid].to_numpy() - design.to_numpy() @ beta
+    return winsor_z(result)
 
 
 def asof_fundamentals(signals: pd.DataFrame, funds: pd.DataFrame) -> pd.DataFrame:
@@ -138,7 +201,8 @@ def asof_fundamentals(signals: pd.DataFrame, funds: pd.DataFrame) -> pd.DataFram
     return pd.concat(parts, ignore_index=True)
 
 
-def make_scores(prices: pd.DataFrame, calendar: pd.DataFrame, funds: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+def make_scores(prices: pd.DataFrame, calendar: pd.DataFrame, funds: pd.DataFrame,
+                market_caps: pd.DataFrame | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
     required_dates = pd.concat([calendar["signal_date"], calendar["execution_date"], calendar["next_execution_date"]]).unique()
     q = prices[prices["date"].isin(required_dates)].copy()
     signal = calendar[["signal_date", "execution_date", "next_execution_date"]]
@@ -152,6 +216,10 @@ def make_scores(prices: pd.DataFrame, calendar: pd.DataFrame, funds: pd.DataFram
     base["return_available"] = np.isfinite(base["forward_return"])
     base["price_eligible"] = ((base["adj_close"] >= .20) & (base["obs_252d"] >= 180) &
                               (base["nonzero_60d"] >= .80) & base["return_available"])
+    if market_caps is None:
+        market_caps = prepare_market_caps(set(prices["ticker"].unique()))
+    base = base.merge(market_caps, on=["ticker", "signal_date"], how="left", validate="many_to_one")
+    base["market_cap_eligible"] = base["market_cap"].gt(0)
     f = asof_fundamentals(calendar, funds)
     base = base.merge(f, on=["signal_date", "ticker"], how="left", suffixes=("", "_fund"))
     sector_col = "six_sector_fund" if "six_sector_fund" in base else "six_sector"
@@ -171,7 +239,7 @@ def make_scores(prices: pd.DataFrame, calendar: pd.DataFrame, funds: pd.DataFram
         for family, col in [("Quality", "quality_raw"), ("Momentum", "momentum_raw"),
                             ("LowRisk", "lowrisk_raw"), ("Investment", "investment_raw")]:
             w[f"{family}_score"] = neutralize(w, col)
-            w[f"{family}_available"] = (w["price_eligible"] & w[f"{family}_score"].notna()).astype(int)
+            w[f"{family}_available"] = (w["price_eligible"] & w["market_cap_eligible"] & w[f"{family}_score"].notna()).astype(int)
         rows.append(w)
     s = pd.concat(rows, ignore_index=True)
     return s, calendar
@@ -322,7 +390,7 @@ def main():
     parser=argparse.ArgumentParser(); parser.add_argument("--force",action="store_true"); args=parser.parse_args()
     if OUT.exists() and args.force: shutil.rmtree(OUT)
     OUT.mkdir(parents=True,exist_ok=True)
-    prices, calendar=prepare_prices(); funds=prepare_fundamentals(set(prices.ticker)); scores,calendar=make_scores(prices,calendar,funds)
+    prices, calendar=prepare_prices(); funds=prepare_fundamentals(set(prices.ticker)); market_caps=prepare_market_caps(set(prices.ticker)); scores,calendar=make_scores(prices,calendar,funds,market_caps)
     fret,ic=factor_returns(scores); summary,selected=selection_summary(fret,ic)
     if not selected:
         raise RuntimeError("No factor passes the pre-declared 2011-2015 selection rule; do not tune the rule after seeing this result.")
@@ -348,7 +416,7 @@ def main():
     for label,start,end in [("configuration_selection",CONFIG_START,CONFIG_END),("out_of_sample",OOS_START,"2099-12-31")]:
         q=p[(p.signal_date>=pd.Timestamp(start))&(p.signal_date<=pd.Timestamp(end))]; periods.append({"period":label,**metrics(q)})
     pd.DataFrame(periods).to_csv(OUT/"04_final_period_summary.csv",index=False)
-    manifest={"methodology":"SG independent; factor selection 2011-2015, config selection 2016-2020, OOS 2021-latest","selected_factors":selected,"frozen_config":c,"selection_cost_bps_provisional":ONE_WAY_COST_BPS,"price_end":str(prices.date.max().date()),"fundamental_companies":int(funds.ticker.nunique()),"fundamental_rows":int(len(funds)),"PIT_limit":"Accounting available date = fiscal period end + 183d proxy; actual announcement timestamps not verified."}
+    manifest={"methodology":"SG independent; factor selection 2011-2015, config selection 2016-2020, OOS 2021-latest; all four scores jointly neutralized against log weekly market-cap proxy and six-sector dummies","selected_factors":selected,"frozen_config":c,"selection_cost_bps_provisional":ONE_WAY_COST_BPS,"price_end":str(prices.date.max().date()),"fundamental_companies":int(funds.ticker.nunique()),"fundamental_rows":int(len(funds)),"market_cap_source":"lagged annual shares outstanding x weekly close proxy; not a vendor-confirmed PIT market-cap field","PIT_limit":"Accounting available date = fiscal period end + 183d proxy; actual announcement timestamps not verified."}
     (OUT/"README.json").write_text(json.dumps(manifest,indent=2,default=str),encoding="utf-8")
     print(json.dumps({"selected_factors":selected,"winner":winner,"periods":periods,"out":str(OUT)},indent=2,default=str))
 

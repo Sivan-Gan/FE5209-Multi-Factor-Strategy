@@ -1,36 +1,70 @@
-# Singapore independent research: corrected run
+# Singapore independent factor research — market-cap and sector neutralized rerun
 
-## Source-date correction
+## Purpose and time split
 
-Two partial provider-outage dates were removed from the weekly calendar:
-2026-05-01 had adjusted closes for 2 of 114 names and 2026-06-01 had one of
-114. They had previously created artificial one- or two-stock portfolios. The
-calendar now requires at least 80% of trailing typical adjusted-close coverage,
-with a floor of 20 securities. This is a source-validity correction, not an
-OOS performance filter.
+This rerun keeps the Singapore workflow independent from the United States:
 
-## Frozen OOS result at 20 bp per side
+| Stage | Period | Use |
+| --- | --- | --- |
+| Factor selection | 2011–2015 | Test the four pre-defined factor families only. |
+| Configuration selection | 2016–2020 | Select the factor-momentum configuration from the pre-declared grid. |
+| OOS reporting | 2021–latest | Report only; do not retune. |
 
-Cost is `20 bp × GTR`, where GTR sums absolute target-versus-drifted-pretrade
-weight differences. Reported one-way turnover is `GTR / 2`.
+## Factor processing
 
-| Series | Annualized return | Weekly Sharpe | Maximum drawdown |
-| --- | ---: | ---: | ---: |
-| Selected FMOM | 14.97% | 1.17 | 15.83% |
-| Static equal-factor | 15.17% | 1.23 | 17.70% |
-| Equal-weight scoreable universe | 11.84% | 1.00 | 16.71% |
-| STI Total Return (`.TRISTI`) | 17.15% | 1.36 | 10.48% |
+At each weekly signal date, each raw Quality, Momentum, LowRisk and Investment
+signal is winsorized at the cross-sectional 1st/99th percentile and z-scored.
+It is then residualized by the joint regression
 
-FMOM and Static both exceed the same-universe equal-weight control, but Static
-is modestly higher than FMOM after the source-date correction. The FMOM-minus-
-Static Newey-West t-statistic is -0.048, so their difference is not
-statistically distinguishable from zero. FMOM remains below STI Total Return:
-121.81% cumulative net return versus 146.92%.
+`z(raw signal) = intercept + beta × log(weekly market-cap proxy) + six-sector dummies + residual`.
 
-## Remaining limitations
+Six-sector buckets with fewer than ten eligible securities are pooled before
+dummy creation. Residuals are winsorized and z-scored again. A missing or
+non-positive market-cap proxy makes the score unavailable; no current value,
+zero, or interpolation is substituted.
 
-The annual accounting availability date is fiscal-period-end plus 183 days,
-not a verified filing timestamp. The current screened universe may have
-survivorship bias; the `.TRISTI` gross/net tax convention is undocumented; the
-20 bp per-side cost is provisional; and there is no absolute ADV capacity
-filter. Do not make a final alpha claim.
+The weekly market-cap input is a **proxy**: lagged annual shares outstanding
+times weekly adjusted close. Its source metadata and `PIT_status` are retained
+in the private factor panel. It is not a vendor-confirmed point-in-time market
+capitalization series.
+
+## Current rerun summary
+
+- 2011–2015: all four pre-defined families satisfy the project’s operational
+  selection rule.
+- 2016–2020 selected configuration: `J52_lam1_ra0_buf1`.
+- 2021–latest OOS FMOM: 20.12% annualized net return; 1.28 weekly zero-rate
+  Sharpe; 15.96% maximum drawdown.
+- OOS static equal-factor control: 15.29% annualized net return; 1.28 Sharpe.
+- OOS same-scoreable-universe equal-weight control: 11.84% annualized net
+  return; 1.00 Sharpe.
+- OOS STI Total Return comparison: 17.15% annualized return; 1.36 Sharpe.
+
+The strategy’s return is higher than these controls in this run, but the STI
+benchmark has a higher Sharpe and lower drawdown. The strategy must therefore
+not be described as conclusively superior or as confirmed alpha.
+
+## Material limitations
+
+1. Fundamental information uses fiscal period end + 183 days as a conservative
+   availability proxy; actual SGX filing timestamp and as-reported restatement
+   version are not verified.
+2. The stock universe is a current screened universe and does not establish
+   historical delisted-company coverage.
+3. The 20 bp per-side trading-cost scenario is charged as `20 bp × GTR`; it is
+   a scenario rather than a transaction-cost estimate for every stock.
+4. The supplied `.TRISTI` file is Total Return but its gross/net dividend-tax
+   convention must be documented before a formal alpha claim.
+5. The LSEG/private source data are intentionally excluded from public Git.
+
+## Reproduction
+
+With authorised private sources present:
+
+```bash
+python -m src.strategy.run_sg_independent_research --force
+python -m src.strategy.add_sg_required_baselines
+python -m src.strategy.add_sti_total_return_benchmark /path/to/TRISTI.xlsx --header 18 --date-col "Exchange Date" --value-col Close
+python -m src.strategy.analyze_sg_attribution
+python -m src.strategy.add_sg_execution_robustness
+```

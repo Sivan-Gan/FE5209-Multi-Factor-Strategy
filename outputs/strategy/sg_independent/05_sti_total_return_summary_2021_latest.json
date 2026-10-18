@@ -6,11 +6,11 @@
   "period_end_signal": "2026-09-11",
   "strategy_net": {
     "weeks": 297,
-    "cumulative_return": 1.2180924505228625,
-    "annualized_return": 0.14967625186621025,
-    "annualized_volatility": 0.12602509395129127,
-    "weekly_sharpe_zero_rf": 1.1713178744716597,
-    "max_drawdown": 0.1583261545449346
+    "cumulative_return": 1.8491625767731787,
+    "annualized_return": 0.2011957621967635,
+    "annualized_volatility": 0.1527034914901038,
+    "weekly_sharpe_zero_rf": 1.2789921286087529,
+    "max_drawdown": 0.1596009454360109
   },
   "sti_total_return": {
     "weeks": 297,
@@ -21,11 +21,11 @@
     "max_drawdown": 0.10475397718570412
   },
   "active": {
-    "cumulative_return_difference": -0.10167955255308603,
-    "annualized_tracking_error": 0.09861169343635814,
-    "information_ratio_zero_rf": -0.1863155592050783,
-    "beta_to_sti_total_return": 0.7064875206212157,
-    "annualized_CAPM_alpha_approx": 0.030346755822855266
+    "cumulative_return_difference": 0.15390185842459014,
+    "annualized_tracking_error": 0.12098908605780898,
+    "information_ratio_zero_rf": 0.24232124233945848,
+    "beta_to_sti_total_return": 0.7910513461603036,
+    "annualized_CAPM_alpha_approx": 0.06400126541786265
   },
   "caveat": "Interpret alpha only after documenting the supplied index's gross/net dividend and currency conventions."
 }

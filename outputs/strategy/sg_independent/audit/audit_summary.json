@@ -1,6 +1,6 @@
 {
-  "mechanical_passes": 14,
-  "mechanical_failures": 0,
+  "mechanical_passes": 12,
+  "mechanical_failures": 2,
   "methodology_limitations": 10,
   "prices": {
     "rows": 497872,

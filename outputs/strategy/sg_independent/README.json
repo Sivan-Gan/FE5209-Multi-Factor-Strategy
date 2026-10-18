@@ -1,5 +1,5 @@
 {
-  "methodology": "SG independent; factor selection 2011-2015, config selection 2016-2020, OOS 2021-latest",
+  "methodology": "SG independent; factor selection 2011-2015, config selection 2016-2020, OOS 2021-latest; all four scores jointly neutralized against log weekly market-cap proxy and six-sector dummies",
   "selected_factors": [
     "Quality",
     "Momentum",
@@ -7,14 +7,15 @@
     "Investment"
   ],
   "frozen_config": {
-    "J": 13,
-    "lambda": 0.5,
-    "risk_adjusted": true,
+    "J": 52,
+    "lambda": 1.0,
+    "risk_adjusted": false,
     "buffer": true
   },
   "selection_cost_bps_provisional": 20.0,
   "price_end": "2026-09-24",
   "fundamental_companies": 97,
   "fundamental_rows": 1785,
+  "market_cap_source": "lagged annual shares outstanding x weekly close proxy; not a vendor-confirmed PIT market-cap field",
   "PIT_limit": "Accounting available date = fiscal period end + 183d proxy; actual announcement timestamps not verified."
 }

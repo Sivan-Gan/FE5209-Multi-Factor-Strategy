@@ -13,8 +13,8 @@ execution_after_signal,PASS,,violations=0
 holding_period_positive,PASS,,violations=0
 factor_weights_sum_one,PASS,,each weekly factor-weight vector
 balance_sheet_identity_diagnostic,LIMITATION,warning,"rows=1749, within_5pct=76.21%, median_gap=0.0104. Common equity can exclude minority interests, so this is a review diagnostic rather than a balance-sheet failure."
-desktop_raw_workbook_count,PASS,,desktop_workbooks=102
-source_workbook_file_identity,PASS,,"desktop=102, used=102, shared=102, identical=102"
+desktop_raw_workbook_count,FAIL,warning,desktop_workbooks=0
+source_workbook_file_identity,FAIL,warning,"desktop=0, used=102, shared=0, identical=0"
 verified_actual_announcement_dates,LIMITATION,material,Fundamental export does not provide verified SGX announcement timestamps; fiscal-period-end + 183 days is only a conservative proxy.
 as_reported_restatement_control,LIMITATION,material,Annual vendor export may contain later restated historical values; no versioned as-reported filing layer is present.
 survivorship_bias_control,LIMITATION,material,Universe is based on a current screened list; historical delisted-company coverage is not established.
