@@ -70,7 +70,11 @@ def simulate(bars, sessions, plans, config=ExecutionConfig(), *, selector=None,
     """selector(signal_date, actual_held_names) may provide closed-loop targets.
 
     Optional actions: event_id,ticker,ex_date,kind,value,pay_date. Supported kinds
-    are split, dividend (net cash/share), delist_cash (cash/share). Explicit cash
+    are split, dividend (net cash/share), delist_cash (cash/share). Split events
+    may supply share_trade_date for bonus shares credited after the ex-date;
+    incremental shares are valued at ex-date but blocked from sale until then.
+    A delayed reverse consolidation or overlapping delayed bonus needs explicit
+    resolution. Explicit cash
     delisting recovery may be zero; unsupported reorganizations fail closed.
     Rules: ticker,effective_date,lot_size,tick_size,tradable. Historical coverage
     of these fields is supplied by caller, not inferred by the engine.
@@ -127,6 +131,9 @@ def simulate(bars, sessions, plans, config=ExecutionConfig(), *, selector=None,
             raise ValueError('Duplicate corporate event')
         a.ex_date = pd.to_datetime(a.ex_date)
         a.pay_date = pd.to_datetime(a.pay_date)
+        if 'share_trade_date' not in a:
+            a['share_trade_date'] = pd.NaT
+        a['share_trade_date'] = pd.to_datetime(a.share_trade_date)
         for row in a.itertuples():
             if row.kind not in ['split', 'dividend', 'delist_cash']:
                 raise ValueError('Unsupported action: resolve rights/mergers manually')
@@ -134,6 +141,11 @@ def simulate(bars, sessions, plans, config=ExecutionConfig(), *, selector=None,
                 raise ValueError('Invalid action')
             if row.kind == 'split' and row.value <= 0:
                 raise ValueError('Invalid split ratio')
+            if row.kind == 'split' and pd.notna(row.share_trade_date):
+                if row.share_trade_date < row.ex_date or row.share_trade_date not in cal:
+                    raise ValueError('Invalid bonus share tradability date')
+                if row.value < 1 and row.share_trade_date > row.ex_date:
+                    raise ValueError('Delayed reverse consolidation requires explicit handling')
             if row.kind != 'split' and (pd.isna(row.pay_date) or row.pay_date < row.ex_date):
                 raise ValueError('Invalid cash event payment date')
     r = pd.DataFrame() if rules is None else rules.copy()
@@ -192,6 +204,10 @@ def simulate(bars, sessions, plans, config=ExecutionConfig(), *, selector=None,
                     for source in prepared.values():
                         source.pop(t, None)
                 if row.kind == 'split':
+                    delayed_bonus = pd.notna(row.share_trade_date) and row.share_trade_date > d
+                    if delayed_bonus and any(x.get('reason') == 'bonus' and x['ticker'] == t
+                                             for x in unsettled_shares):
+                        raise ValueError('Overlapping delayed bonus requires explicit handling')
                     for source in [positions] + list(prepared.values()):
                         if t in source:
                             nq = source[t]*row.value
@@ -206,11 +222,18 @@ def simulate(bars, sessions, plans, config=ExecutionConfig(), *, selector=None,
                             raise ValueError('Fractional pending split order')
                         pending[t]['remaining'] = int(round(nq))
                         pending[t]['requested'] = int(round(pending[t]['requested']*row.value))
-                    for delivery in unsettled_shares:
-                        if delivery['ticker'] == t:
-                            delivery['shares'] *= row.value
+                    if delayed_bonus:
+                        extra = positions.get(t, 0)-q
+                        if extra:
+                            unsettled_shares.append(dict(ticker=t, shares=extra,
+                                settlement_date=row.share_trade_date, reason='bonus'))
+                    else:
+                        for delivery in unsettled_shares:
+                            if delivery['ticker'] == t:
+                                delivery['shares'] *= row.value
                     events.append(dict(date=d, ticker=t, kind='split', quantity_before=q,
-                                       ratio=row.value, quantity_after=positions.get(t, 0)))
+                                       ratio=row.value, quantity_after=positions.get(t, 0),
+                                       share_trade_date=row.share_trade_date if delayed_bonus else d))
                 elif q:
                     amount = q*row.value
                     receipt = dict(pay_date=row.pay_date, amount=amount, ticker=t, reason=row.kind)

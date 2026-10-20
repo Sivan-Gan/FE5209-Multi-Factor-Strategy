@@ -1,6 +1,14 @@
+test_blank_holiday_row_does_not_hide_previous_observed_price (test_evidence_checks.EvidenceChecks.test_blank_holiday_row_does_not_hide_previous_observed_price) ... ok
+test_capacity_end_windows_are_censored_not_completed (test_evidence_checks.EvidenceChecks.test_capacity_end_windows_are_censored_not_completed) ... ok
+test_cash_distribution_and_unexplained_adjustment (test_evidence_checks.EvidenceChecks.test_cash_distribution_and_unexplained_adjustment) ... ok
+test_duplicate_event_rejected (test_evidence_checks.EvidenceChecks.test_duplicate_event_rejected) ... ok
+test_fixed_nav_capacity_scaling_stress_and_no_future_adv (test_evidence_checks.EvidenceChecks.test_fixed_nav_capacity_scaling_stress_and_no_future_adv) ... ok
+test_split_adjusted_close_is_flagged_not_applied_again (test_evidence_checks.EvidenceChecks.test_split_adjusted_close_is_flagged_not_applied_again) ... ok
 test_actual_holdings_selector_receives_real_holdings (test_execution_engine.LedgerTests.test_actual_holdings_selector_receives_real_holdings) ... ok
+test_bonus_value_is_recognized_before_new_shares_can_be_sold (test_execution_engine.LedgerTests.test_bonus_value_is_recognized_before_new_shares_can_be_sold) ... ok
 test_cash_allocation_scales_buys_and_is_deterministic (test_execution_engine.LedgerTests.test_cash_allocation_scales_buys_and_is_deterministic) ... ok
 test_complete_delisting_loss_terminates_with_negative_one_return (test_execution_engine.LedgerTests.test_complete_delisting_loss_terminates_with_negative_one_return) ... ok
+test_delayed_reverse_consolidation_rejected (test_execution_engine.LedgerTests.test_delayed_reverse_consolidation_rejected) ... ok
 test_delisted_security_cannot_be_selected_again (test_execution_engine.LedgerTests.test_delisted_security_cannot_be_selected_again) ... ok
 test_dividend_entitlement_survives_sale_before_payment (test_execution_engine.LedgerTests.test_dividend_entitlement_survives_sale_before_payment) ... ok
 test_duplicate_and_invalid_calendar_rejected (test_execution_engine.LedgerTests.test_duplicate_and_invalid_calendar_rejected) ... ok
@@ -30,6 +38,6 @@ test_new_team_archive_is_rejected (test_legacy_route.LegacyRouteTests.test_new_t
 test_source_lock_and_six_factor_direction (test_legacy_route.LegacyRouteTests.test_source_lock_and_six_factor_direction) ... ok
 
 ----------------------------------------------------------------------
-Ran 30 tests in 1.204s
+Ran 38 tests in 1.444s
 
 OK

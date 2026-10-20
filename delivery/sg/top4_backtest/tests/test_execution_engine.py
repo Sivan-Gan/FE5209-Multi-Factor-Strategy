@@ -86,6 +86,25 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(r['daily'].cash.iloc[-1], 1000)
         np.testing.assert_allclose(r['daily'].nav, 1000)
 
+    def test_bonus_value_is_recognized_before_new_shares_can_be_sold(self):
+        b = self.bars.copy()
+        b.loc[(b.date >= self.cal[6]) & b.ticker.eq('A'), 'close'] = 10/1.1
+        a = pd.DataFrame([dict(event_id='bonus', ticker='A', ex_date=self.cal[6],
+            kind='split', value=1.1, pay_date=pd.NaT, share_trade_date=self.cal[9])])
+        plans = self.plan+[Rebalance(self.cal[6], self.cal[7], {})]
+        r = self.run_case(bars=b, plans=plans, actions=a)
+        sells = r['fills'][r['fills'].shares.lt(0)]
+        self.assertEqual(sells.shares.tolist(), [-100, -10])
+        self.assertEqual(sells.date.tolist(), [self.cal[7], self.cal[9]])
+        np.testing.assert_allclose(r['daily'].nav, 1000)
+        self.assertAlmostEqual(r['daily'].cash.iloc[-1], 1000)
+
+    def test_delayed_reverse_consolidation_rejected(self):
+        a = pd.DataFrame([dict(event_id='reverse', ticker='A', ex_date=self.cal[6],
+            kind='split', value=.5, pay_date=pd.NaT, share_trade_date=self.cal[9])])
+        with self.assertRaisesRegex(ValueError, 'Delayed reverse'):
+            self.run_case(actions=a)
+
     def test_zero_recovery_delist_is_not_free_price_fill(self):
         plans = [Rebalance(self.cal[3], self.cal[4], {'A': .5})]
         a = pd.DataFrame([dict(event_id='delist', ticker='A', ex_date=self.cal[6],

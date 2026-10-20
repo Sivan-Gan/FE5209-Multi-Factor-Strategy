@@ -34,7 +34,7 @@ py -3.12 -m venv .venv
 
 原 `SGX_comprehensive_2006_2026_handoff.zip`，也可为相同内容的 `(1).zip`。建议放在本机 `local_inputs/`。
 
-程序只读取四个锁定数据成员：
+策略重建只读取四个锁定数据成员：
 
 1. `factor_panels/sg_seven_factor_candidate_panel_2006_latest.csv.gz`
 2. `data/prices_daily_2006.csv`
@@ -42,6 +42,8 @@ py -3.12 -m venv .venv
 4. `benchmark/STI_Total_Return_LSEG_export.xlsx`
 
 不会运行ZIP里的Python脚本，不会整包解压，也不需要 `SGX_TEAM_HANDOFF.zip` 或PIT替换包。每次运行把实际归档和四个成员的哈希写入本地 `INPUT_DATA_HASHES.json`，不将数据指纹发到公开仓库。若组内已有经确认的私有数据锁，可以加 `--data-lock local_inputs/DATA_LOCK.json`；只有提供预期锁时，数据内容不匹配才会停止。不要将“记录实际哈希”误认为已核实数据供应商或PIT。
+
+0.3版另外从同一ZIP按唯一文件名读取 `data/corporate_actions_2006.csv` 做事件清单与价格一致性审查，结果为 `corporate_action_readiness.json`、`corporate_action_events_AUDIT.csv` 和 `price_adjustment_steps_AUDIT.csv`。事件成员的实际哈希单独记在本地审查JSON中。缺少该成员会明确记录，重复成员会拒绝读取。源事件不自动转换成可入账现金或增加持股。
 
 ## 4. 一次运行原Top 3对照与正式老数据Top 4
 
@@ -102,3 +104,23 @@ py -3.12 -m venv .venv
 至少附策略代码、原数据包版本、成本、样本区间、是否重置2021现金、是否冻结目标以及异常说明。不要将旧仓库老数据Top4、新数据sg_pipeline和另一仓库示例K=4混为同一个结果。
 
 原始数据、真实绩效、数据指纹、完整持仓、订单及环境只保留本地（runs/local_inputs/.venv均忽略）；组内结果通过已有授权渠道交接。公开分支只提供代码、接入说明、合成例子和程序测试，不包含真实数据派生结果。
+
+## 9. 公司行动与固定规模容量的补充检查
+
+已经运行出目标文件与交易日历后：
+
+```powershell
+.\.venv\Scripts\python.exe run_evidence_checks.py --archive local_inputs/SGX_comprehensive_2006_2026_handoff.zip --targets runs/top4_first_run/top4/targets.csv --sessions runs/top4_first_run/sessions_PROXY.csv --output runs/evidence_first
+```
+
+该入口不重新选因子、不调整原策略。每个信号日分别把理想化旧目标组合按价格漂移后归一到10万/50万/100万，检查新目标调仓、从零建仓和全目标组合出售；另减半成交量，报告1/5/10/20日预算。它是独立截面的容量上限筛查，不是持仓连续递推的固定NAV收益回测。现金、交收、价差、排队和市场冲击未进入上限计算；建仓与清仓的成交预算对称，不代表真实买卖影响相同。样本末端没有足够观察窗口时单独列为截尾，不当成已完成。
+
+实际交易只能知道当时信息。这里使用后续日成交量作事后诊断，不将其用于决定过去的信号。未来成交量未知，所以通过上限筛查也不能保证成交。源价格及成交股数的历史单位未核实时，上限也只能作为暂定诊断。
+
+### 公司行动怎样才能正式接入
+
+- 股数账户要求当时不复权成交价格和实际成交股数单位。复权收益可以用于研究收益，不能据其价格直接认定当时100股整手金额。
+- 分红需核对除权日、支付日、币种、税前/税后金额和每股单位；除权确认应收，支付后才成为可用现金。已含分红的复权收益不能再加一次现金分红。
+- `kind=split` 的 `value` 是新旧股数比例。若是送股，且新增股份晚于除权日可出售，填写经核实的 `share_trade_date`；新增部分在该日期前受出售限制。空值沿用即时可交易的普通拆股假设，只能用于已核实适用的事件。
+- 零碎股、配股、分拆、合并换股、延迟合股及退市回收仍需明确事件处理，不能将“缺少记录”设为零。引擎对未支持事件拒绝执行。
+- 不能因为源事件与复权因子吻合，就把完整覆盖、历史股数单位或PIT核验标志改成true。

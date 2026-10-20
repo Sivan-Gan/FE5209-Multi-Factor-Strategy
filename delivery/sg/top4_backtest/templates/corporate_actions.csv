@@ -1,1 +1,1 @@
-event_id,ticker,ex_date,kind,value,pay_date
+event_id,ticker,ex_date,kind,value,pay_date,share_trade_date

@@ -7,6 +7,9 @@ from dataclasses import asdict
 import json
 from pathlib import Path
 import time
+import zipfile
+import io
+import hashlib
 import numpy as np
 import pandas as pd
 import scipy
@@ -16,6 +19,7 @@ from legacy_adapter import (LEGACY_TAG, extract_inputs, load_old_data, source_st
 from sgbt.engine import ExecutionConfig, plans_from_targets, simulate
 from sgbt.metrics import execution_metrics
 from sgbt.risk import risk_diagnostics
+from sgbt.data_quality import corporate_action_audit
 
 
 def validate_config(c):
@@ -84,6 +88,24 @@ def main():
     from legacy_adapter import MEMBERS
     save_json(out/'INPUT_DATA_HASHES.json', {'archive_sha256': archive_hash,
               'member_sha256': {name: digest(data_dir/name) for name in MEMBERS}})
+    # The reviewed package also has an event inventory. Audit it explicitly;
+    # missing payment dates and split-adjusted closes prohibit blind ingestion.
+    prices_all = pd.read_csv(data_dir/'data/prices_daily_2006.csv')
+    action_member = 'SGX_comprehensive_2006_2026_handoff/data/corporate_actions_2006.csv'
+    with zipfile.ZipFile(args.archive) as z:
+        count = z.namelist().count(action_member)
+        if count > 1:
+            raise ValueError('Duplicate source corporate-action member')
+        action_bytes = z.read(action_member) if count == 1 else None
+    if action_bytes is not None:
+        qa = corporate_action_audit(prices_all, pd.read_csv(io.BytesIO(action_bytes)))
+        qa['summary']['source_member_sha256'] = hashlib.sha256(action_bytes).hexdigest()
+        qa['events'].to_csv(out/'corporate_action_events_AUDIT.csv', index=False)
+        qa['adjustment_steps'].to_csv(out/'price_adjustment_steps_AUDIT.csv', index=False)
+        save_json(out/'corporate_action_readiness.json', qa['summary'])
+    else:
+        save_json(out/'corporate_action_readiness.json', {
+            'complete_actions_verified': False, 'blockers': ['Source corporate-action member missing']})
     data = load_old_data(data_dir, cfg['eval_end'])
     data['factor_returns'].to_csv(out/'factor_returns.csv', index=False)
     results, targets, summary, checks = {}, {}, [], {}
@@ -117,7 +139,7 @@ def main():
     save_json(out/'benchmark_summary.json', data['mt'].performance(bench))
     execution_rows = []
     if not args.skip_execution:
-        prices = pd.read_csv(data_dir/'data/prices_daily_2006.csv', usecols=['date', 'ticker', 'close', 'volume'])
+        prices = prices_all[['date', 'ticker', 'close', 'volume']].copy()
         prices.date = pd.to_datetime(prices.date)
         prices = prices[prices.date.ge('2020-09-01')].copy()
         master = pd.read_csv(data_dir/'data/stock_universe_six_sectors.csv')
