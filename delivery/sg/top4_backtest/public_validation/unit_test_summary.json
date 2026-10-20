@@ -1,8 +1,9 @@
 {
-  "tests": 38,
+  "tests": 43,
   "passed": true,
   "failures": 0,
   "errors": 0,
   "scope": "Synthetic and public-code tests only; no vendor data or performance published",
-  "version": "0.3.0"
+  "version": "1.0.0",
+  "release": "FINAL_100K_DIV14_V1"
 }

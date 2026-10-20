@@ -30,6 +30,11 @@ test_unfinished_order_expires_and_new_plan_cancels_old (test_execution_engine.Le
 test_unsettled_bought_shares_are_not_sold_early (test_execution_engine.LedgerTests.test_unsettled_bought_shares_are_not_sold_early) ... ok
 test_zero_recovery_delist_is_not_free_price_fill (test_execution_engine.LedgerTests.test_zero_recovery_delist_is_not_free_price_fill) ... ok
 test_zero_volume_delays_fill_and_preserves_cash (test_execution_engine.LedgerTests.test_zero_volume_delays_fill_and_preserves_cash) ... ok
+test_final_configuration_is_exact_and_rejects_parameter_changes (test_final_preset.FinalPresetTests.test_final_configuration_is_exact_and_rejects_parameter_changes) ... ok
+test_fourteen_calendar_days_and_no_cash_before_payment_session (test_final_preset.FinalPresetTests.test_fourteen_calendar_days_and_no_cash_before_payment_session) ... ok
+test_missing_duplicate_negative_or_off_calendar_events_rejected (test_final_preset.FinalPresetTests.test_missing_duplicate_negative_or_off_calendar_events_rejected) ... ok
+test_source_split_and_unselected_events_are_not_added_again (test_final_preset.FinalPresetTests.test_source_split_and_unselected_events_are_not_added_again) ... ok
+test_unpaid_end_of_sample_dividend_remains_receivable (test_final_preset.FinalPresetTests.test_unpaid_end_of_sample_dividend_remains_receivable) ... ok
 test_extracts_only_whitelisted_data_no_scripts_or_path_traversal (test_legacy_route.LegacyRouteTests.test_extracts_only_whitelisted_data_no_scripts_or_path_traversal) ... ok
 test_frozen_route_is_recommended_old_data_top4 (test_legacy_route.LegacyRouteTests.test_frozen_route_is_recommended_old_data_top4) ... ok
 test_future_factor_returns_cannot_change_old_top4_choice (test_legacy_route.LegacyRouteTests.test_future_factor_returns_cannot_change_old_top4_choice) ... ok
@@ -38,6 +43,6 @@ test_new_team_archive_is_rejected (test_legacy_route.LegacyRouteTests.test_new_t
 test_source_lock_and_six_factor_direction (test_legacy_route.LegacyRouteTests.test_source_lock_and_six_factor_direction) ... ok
 
 ----------------------------------------------------------------------
-Ran 38 tests in 1.444s
+Ran 43 tests in 2.606s
 
 OK

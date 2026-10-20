@@ -16,9 +16,19 @@
   "evaluation_start": "2021-01-01",
   "eval_end": "2026-09-30",
   "execution_initialization": "2021_cash_reset_with_frozen_source_targets",
+  "framework_release": "FINAL_100K_DIV14_V1",
+  "main_execution_scenario": "legacy_top4_frozen_100k_div14_final",
+  "dividend_policy": {
+    "enabled": true,
+    "source_member": "data/corporate_actions_2006.csv",
+    "payment_delay_calendar_days": 14,
+    "payment_roll": "first_proxy_session_on_or_after_assumed_payment_date",
+    "amount_basis": "source_vendor_per_share_as_given",
+    "currency_assumption": "SGD",
+    "tax_assumption": "source_amount_used_without_additional_tax_deduction",
+    "apply_source_split_events": false
+  },
   "execution_scenarios": [
-    {"name": "legacy_top3_frozen_100k", "top_k": 3, "target_mode": "frozen", "initial_cash": 100000},
-    {"name": "legacy_top4_frozen_100k", "top_k": 4, "target_mode": "frozen", "initial_cash": 100000},
-    {"name": "legacy_top4_frozen_500k", "top_k": 4, "target_mode": "frozen", "initial_cash": 500000}
+    {"name": "legacy_top4_frozen_100k_div14_final", "top_k": 4, "target_mode": "frozen", "initial_cash": 100000}
   ]
 }

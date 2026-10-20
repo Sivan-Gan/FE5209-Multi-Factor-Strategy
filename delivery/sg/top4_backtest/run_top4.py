@@ -20,6 +20,8 @@ from sgbt.engine import ExecutionConfig, plans_from_targets, simulate
 from sgbt.metrics import execution_metrics
 from sgbt.risk import risk_diagnostics
 from sgbt.data_quality import corporate_action_audit
+from final_preset import (RELEASE, SCENARIO, PERFORMANCE_SCOPE, DIVIDEND_POLICY,
+                          validate_final_preset, prepare_source_dividends)
 
 
 def validate_config(c):
@@ -35,6 +37,7 @@ def validate_config(c):
         raise ValueError('Not the reviewed legacy six-factor pool')
     if c['one_way_cost_bps'] != [10, 20, 30]:
         raise ValueError('Frozen reporting costs are 10/20/30 bp')
+    validate_final_preset(c)
 
 
 def period_metrics(data, result, k):
@@ -72,11 +75,15 @@ def main():
         parser.error('Output cannot contain input files')
     cfg = json.loads(args.config.read_text(encoding='utf-8'))
     validate_config(cfg)
+    settings = json.loads(args.execution_settings.read_text(encoding='utf-8'))
+    validate_final_preset(cfg, settings)
     check_source_lock()
     out.mkdir(parents=True, exist_ok=True)
     started = time.perf_counter()
     archive_hash = digest(args.archive)
     manifest = dict(status='STARTED', source_commit=SOURCE_COMMIT, strategy=LEGACY_TAG,
+                    framework_release=RELEASE, main_execution_scenario=SCENARIO,
+                    dividend_policy=DIVIDEND_POLICY, execution_settings=settings,
                     original_archive_sha256=archive_hash, configuration=cfg,
                     new_team_data_used=False, pit_replacement_used=False,
                     grid_search_run=False, live_period_opened=False,
@@ -98,14 +105,14 @@ def main():
             raise ValueError('Duplicate source corporate-action member')
         action_bytes = z.read(action_member) if count == 1 else None
     if action_bytes is not None:
-        qa = corporate_action_audit(prices_all, pd.read_csv(io.BytesIO(action_bytes)))
+        source_actions = pd.read_csv(io.BytesIO(action_bytes))
+        qa = corporate_action_audit(prices_all, source_actions)
         qa['summary']['source_member_sha256'] = hashlib.sha256(action_bytes).hexdigest()
         qa['events'].to_csv(out/'corporate_action_events_AUDIT.csv', index=False)
         qa['adjustment_steps'].to_csv(out/'price_adjustment_steps_AUDIT.csv', index=False)
         save_json(out/'corporate_action_readiness.json', qa['summary'])
     else:
-        save_json(out/'corporate_action_readiness.json', {
-            'complete_actions_verified': False, 'blockers': ['Source corporate-action member missing']})
+        raise ValueError('Final preset requires data/corporate_actions_2006.csv; no price-only fallback')
     data = load_old_data(data_dir, cfg['eval_end'])
     data['factor_returns'].to_csv(out/'factor_returns.csv', index=False)
     results, targets, summary, checks = {}, {}, [], {}
@@ -150,7 +157,6 @@ def main():
         sessions = coverage[coverage.ge(50)].index
         coverage[~coverage.index.isin(sessions)].to_csv(out/'calendar_proxy_exclusions.csv')
         pd.DataFrame({'date': sessions}).to_csv(out/'sessions_PROXY.csv', index=False)
-        settings = json.loads(args.execution_settings.read_text(encoding='utf-8'))
         for scenario in cfg['execution_scenarios']:
             k, name = scenario['top_k'], scenario['name']
             if scenario['target_mode'] != 'frozen':
@@ -160,10 +166,13 @@ def main():
                 raise ValueError('Non-SGD or unknown traded currency; FX accounting required')
             ec = ExecutionConfig(**(settings | {'initial_cash': scenario['initial_cash'],
                                                'action_policy': 'price_only_diagnostic'}))
+            end = pd.Timestamp(t.next_execution_date.max())
+            dividends = prepare_source_dividends(source_actions, t, sessions, end)
             result = simulate(prices, sessions, plans_from_targets(t), ec,
-                              end=pd.Timestamp(t.next_execution_date.max()))
+                              actions=dividends, actions_verified=False, end=end)
             d = out/'execution'/name
             d.mkdir(parents=True)
+            dividends.to_csv(d/'dividends_ASSUMED_INPUT.csv', index=False)
             for key, value in result.items():
                 if isinstance(value, pd.DataFrame):
                     value.to_csv(d/f'{key}.csv', index=False)
@@ -171,7 +180,11 @@ def main():
             result['audit'].update(strategy=f'TUNE_T{k}L3_IV_N20_EQ_NONE',
                                     initialization=cfg['execution_initialization'],
                                     calendar_source='>=50 names reporting positive volume; proxy',
-                                    corporate_action_and_price_basis_verified=False)
+                                    corporate_action_and_price_basis_verified=False,
+                                    framework_release=RELEASE, dividend_policy=DIVIDEND_POLICY,
+                                    source_cash_events=len(dividends),
+                                    actual_dividend_payment_dates_verified=False,
+                                    performance_scope=PERFORMANCE_SCOPE)
             save_json(d/'audit.json', result['audit'])
             f = result['fills']
             if not f.empty:
@@ -180,8 +193,24 @@ def main():
                 assert ((f.shares.abs() % f.lot_size) == 0).all()
                 assert (f.date > f.order_id.map(result['orders'].set_index('order_id').signal_date)).all()
             assert result['daily'].cash.ge(-1e-7).all()
+            metrics = execution_metrics(result)
+            price_marks = prices.pivot(index='date', columns='ticker', values='close').reindex(sessions).ffill()
+            orders = result['orders']
+            marks = np.array([price_marks.at[date, ticker] for date, ticker in zip(orders.signal_date, orders.ticker)])
+            requested = float((orders.requested.abs()*marks).sum())
+            remaining = float((orders.remaining.abs()*marks).sum())
+            final_summary = dict(framework_release=RELEASE, scenario=name, strategy=LEGACY_TAG,
+                evaluation_first_signal=str(t.signal_date.min().date()),
+                evaluation_last_mark=str(end.date()), initial_cash=ec.initial_cash,
+                dividend_policy=DIVIDEND_POLICY, source_cash_events=len(dividends),
+                source_dividend_income_accrued=float(result['daily'].action_income.sum()),
+                requested_value_completion=1-remaining/requested if requested else None,
+                completion_definition='cumulative requested order value at signal marks; repeated requests possible',
+                interpretation='Final course research estimate under frozen assumptions; not verified live total return',
+                **metrics)
+            save_json(out/'FINAL_RUN_SUMMARY.json', final_summary)
             execution_rows.append(dict(scenario=name, top_k=k, initial_cash=ec.initial_cash,
-                                       **execution_metrics(result)))
+                                       **metrics))
             print(f'{name}: daily-account checks passed', flush=True)
         pd.DataFrame(execution_rows).to_csv(out/'execution_diagnostic_summary.csv', index=False)
     assert digest(args.archive) == archive_hash
@@ -189,6 +218,7 @@ def main():
     manifest.update(status='COMPLETED', weeks=checks['top4']['weeks'],
                     last_holding_period_end=data['end'], input_archive_unchanged=True,
                     source_reconciliation=checks, execution_scenarios=len(execution_rows),
+                    final_execution_completed=not args.skip_execution,
                     elapsed_seconds=time.perf_counter()-started)
     save_json(out/'run_manifest.json', manifest)
     print(out, flush=True)

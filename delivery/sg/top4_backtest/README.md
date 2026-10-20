@@ -1,5 +1,9 @@
 # 老数据版新加坡 Adaptive Top 4 回测框架
 
+## 最终定稿：10万新币＋源分红假定14天到账
+
+版本 **1.0.0 / FINAL_100K_DIV14_V1**。2026-10-20按小组决定冻结：初始资金SGD100,000，计入原包分红，假设除权后14个自然日支付；到首个不早于支付日的代理交易日才可交易。其余成本和执行规则保持原设定。完整口径见 [最终设定](FINAL_SPEC_ZH.md)。
+
 ## 先确认：这次采用哪条策略路线
 
 **采用：** `src/sandbox/sg_tune_lab.py` 的 `TUNE_T4L3_IV_N20_EQ_NONE`。它在 `run_sg_all_strategies.py` 中标记为推荐Top 4，使用原有 `SGX_comprehensive_2006_2026_handoff.zip`。
@@ -8,6 +12,7 @@
 
 | 内容 | 入口 |
 |---|---|
+| 最终资金、分红和执行设定 | [最终冻结说明](FINAL_SPEC_ZH.md) |
 | 老数据Top 4定位与规则差异 | [策略路线核查](STRATEGY_ROUTE_ZH.md) |
 | 安装、输入、运行、结果解读 | [组员接入指南](TEAM_ONBOARDING_ZH.md) |
 | 程序验证及公开范围 | [验证说明](VALIDATION_ZH.md) |
@@ -27,13 +32,13 @@ py -3.12 -m venv .venv
 将原数据包放到本机 `local_inputs/` 后：
 
 ```powershell
-.\.venv\Scripts\python.exe run_top4.py --archive local_inputs/SGX_comprehensive_2006_2026_handoff.zip --output runs/top4_first_run
+.\.venv\Scripts\python.exe run_top4.py --archive local_inputs/SGX_comprehensive_2006_2026_handoff.zip --output runs/final_100k_div14_v1
 ```
 
-这会单独重建原Top 3和推荐Top 4、核对收益及换手，并运行三个逐日股数现金诊断场景。不会执行144组寻优，也不会运行压缩包里的脚本。结果只写入新的本地输出目录。
+这会重建原Top3/Top4周频对照、核对收益及换手，并运行唯一最终股数现金主场景：Top4、10万新币、分红假定14日到账。先看 `FINAL_RUN_SUMMARY.json`；明细位于 `execution/legacy_top4_frozen_100k_div14_final/`。不执行144组寻优，不执行ZIP脚本。
 
-回测完成不等于能够真实成交。原周频回测沿用复权收益与10/20/30bp成本；日频股数账户目前是价格执行诊断，尚未核实完整分红、拆股、价格口径与PIT。
+最终主场景标为 `SOURCE_DIVIDEND_14D_ESTIMATE_UNVERIFIED_PRICE_SHARE_BASIS`，是冻结假设下的含分红估算。实际支付日、历史价格/股数单位及PIT等限制仍保留。原周频对照沿用复权收益，不再加分红，不与最终现金账户混用。
 
-0.3版补充公司行动与价格口径自动核查，以及 `run_evidence_checks.py` 的固定净资产容量上限筛查。事件表存在不等于完整可入账；原包的 `close` 不能直接认定为不复权成交价。未核实到账日、分红币种/股数单位前，不自动将源事件计入净值。新增送股可卖出日期字段，支持除权后先计值、到账前限制出售新增股份。
+公司行动审查与 `run_evidence_checks.py` 容量筛查继续作为辅助工具。最终主场景按已确认工作假设使用源现金分红；不再次应用源拆股表。通用引擎仍支持有核实资料时提供送股可卖出日期。
 
 本目录新增于老仓库 `Backtest-Framework-Top4` 分支，基于 `EricLu/sg-adaptive-top4` 的 `def5d53`。原策略代码未修改。公开内容仅为代码、说明、合成演示与程序测试；真实数据的绩效汇总、数据指纹、持仓和订单保留在本地。
