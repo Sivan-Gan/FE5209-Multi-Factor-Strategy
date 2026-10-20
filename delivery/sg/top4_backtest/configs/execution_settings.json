@@ -1,0 +1,18 @@
+{
+  "initial_cash": 100000,
+  "default_lot": 100,
+  "reserve_fraction": 0.01,
+  "participation": 0.1,
+  "adv_window": 20,
+  "max_order_sessions": 5,
+  "broker_bps": 5,
+  "minimum_commission": 5,
+  "market_bps": 4,
+  "fee_tax_rate": 0,
+  "slippage_bps": 10,
+  "impact_y": 0,
+  "impact_domain": 0.2,
+  "settlement_sessions": 2,
+  "max_stale_sessions": 5,
+  "action_policy": "price_only_diagnostic"
+}

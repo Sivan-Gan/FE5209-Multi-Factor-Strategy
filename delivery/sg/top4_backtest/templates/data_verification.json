@@ -1,0 +1,13 @@
+{
+  "source": "REPLACE_WITH_DATA_SOURCE_AND_CHECK_EVIDENCE",
+  "start_date": null,
+  "end_date": null,
+  "price_basis": "unverified",
+  "volume_unit": "unverified",
+  "corporate_actions_verified": false,
+  "historical_currency_verified": false,
+  "session_calendar_verified": false,
+  "instrument_rules_verified": false,
+  "signals_pit_verified": false,
+  "historical_universe_verified": false
+}

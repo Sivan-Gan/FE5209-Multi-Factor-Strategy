@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+runs/
+local_inputs/
+*.zip
+DATA_LOCK.json
+RESULTS_ZH.md
+build_report.py
+validation/

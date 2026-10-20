@@ -1,0 +1,24 @@
+{
+  "strategy": "TUNE_T4L3_IV_N20_EQ_NONE",
+  "data_route": "original_114_ticker_LSEG_proxy_package",
+  "source_branch": "EricLu/sg-adaptive-top4",
+  "source_commit": "def5d53f0f545b99a528b9af72abfe5f1b8f1562",
+  "factor_pool": ["Quality", "Momentum", "Low Risk", "Investment", "Size", "Value"],
+  "top_k": 4,
+  "lookback_years": 3,
+  "size_direction": "small_cap_high_panel_Size_score_as_given",
+  "method": "IV",
+  "stock_selection_fraction": 0.2,
+  "exit_fraction": 0.3,
+  "sector_cap": 0.3,
+  "one_way_cost_bps": [10, 20, 30],
+  "start": "2016-01-01",
+  "evaluation_start": "2021-01-01",
+  "eval_end": "2026-09-30",
+  "execution_initialization": "2021_cash_reset_with_frozen_source_targets",
+  "execution_scenarios": [
+    {"name": "legacy_top3_frozen_100k", "top_k": 3, "target_mode": "frozen", "initial_cash": 100000},
+    {"name": "legacy_top4_frozen_100k", "top_k": 4, "target_mode": "frozen", "initial_cash": 100000},
+    {"name": "legacy_top4_frozen_500k", "top_k": 4, "target_mode": "frozen", "initial_cash": 500000}
+  ]
+}

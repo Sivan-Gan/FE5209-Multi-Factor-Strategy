@@ -1,0 +1,14 @@
+{
+  "source_commit": "def5d53f0f545b99a528b9af72abfe5f1b8f1562",
+  "canonical_lf_sha256": {
+    "src/sandbox/sg_tune_lab.py": "4b81149793fe1bce6a51fccb2c75129bde795c404acdc7d26b3619e78a4b2b50",
+    "src/sandbox/sg_adaptive_lab.py": "5610fcf3b26e617e6133cb08d12ce476c277ad851e33f57ab8c9baf850690570",
+    "src/sandbox/run_sg_all_strategies.py": "e72be9bed6380ea4f7ddfe832335176fa93f44e8c778d14153ccd9a1e6e58376",
+    "src/adaptive_strategy/factor_selection.py": "1742132dd01c476924b4b9c986f7d33fbc550f9f3589b2a8e829ec49012c4ef7",
+    "src/adaptive_strategy/factor_weighting.py": "a0412878c079c4bb19394011f4bf9c8ad1332fc0b70f725139c272e3e8bd1f3b",
+    "src/adaptive_strategy/composite_score.py": "d45184649bbf25cf297e70288c3b12c240dc5a84e42c20236c38867545a561b4",
+    "src/strategy/portfolio.py": "f94522692f07eab4fbb936164bcf1a61770cce6a7f1a9ffed499f0a5ce84bfcd",
+    "src/strategy/metrics.py": "d7ff3f41a037935fbf685377bfb6fc695e96868c9a02f6fb3c34a2fba0de50bf",
+    "src/strategy/factor_returns.py": "924b2bbad05b5c4e8fd42e527ca95b0b2b725b6db0847e6e9451e0c976fe88a1"
+  }
+}

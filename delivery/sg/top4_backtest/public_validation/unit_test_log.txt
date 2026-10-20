@@ -1,0 +1,35 @@
+test_actual_holdings_selector_receives_real_holdings (test_execution_engine.LedgerTests.test_actual_holdings_selector_receives_real_holdings) ... ok
+test_cash_allocation_scales_buys_and_is_deterministic (test_execution_engine.LedgerTests.test_cash_allocation_scales_buys_and_is_deterministic) ... ok
+test_complete_delisting_loss_terminates_with_negative_one_return (test_execution_engine.LedgerTests.test_complete_delisting_loss_terminates_with_negative_one_return) ... ok
+test_delisted_security_cannot_be_selected_again (test_execution_engine.LedgerTests.test_delisted_security_cannot_be_selected_again) ... ok
+test_dividend_entitlement_survives_sale_before_payment (test_execution_engine.LedgerTests.test_dividend_entitlement_survives_sale_before_payment) ... ok
+test_duplicate_and_invalid_calendar_rejected (test_execution_engine.LedgerTests.test_duplicate_and_invalid_calendar_rejected) ... ok
+test_explicit_halt_and_missing_volume_block_fills (test_execution_engine.LedgerTests.test_explicit_halt_and_missing_volume_block_fills) ... ok
+test_flat_price_conserves_initial_cash (test_execution_engine.LedgerTests.test_flat_price_conserves_initial_cash) ... ok
+test_fractional_split_and_unsupported_rights_fail_closed (test_execution_engine.LedgerTests.test_fractional_split_and_unsupported_rights_fail_closed) ... ok
+test_future_bars_do_not_change_past_signals_or_fills (test_execution_engine.LedgerTests.test_future_bars_do_not_change_past_signals_or_fills) ... ok
+test_gap_uses_signal_mark_not_future_fill_close (test_execution_engine.LedgerTests.test_gap_uses_signal_mark_not_future_fill_close) ... ok
+test_minimum_fee_and_lot_do_not_overdraw (test_execution_engine.LedgerTests.test_minimum_fee_and_lot_do_not_overdraw) ... ok
+test_missing_mark_stops_instead_of_dropping_position (test_execution_engine.LedgerTests.test_missing_mark_stops_instead_of_dropping_position) ... ok
+test_realized_volume_and_lagged_adv_both_limit_fills (test_execution_engine.LedgerTests.test_realized_volume_and_lagged_adv_both_limit_fills) ... ok
+test_sale_settlement_blocks_same_day_reuse (test_execution_engine.LedgerTests.test_sale_settlement_blocks_same_day_reuse) ... ok
+test_sell_slippage_and_fees_reconcile (test_execution_engine.LedgerTests.test_sell_slippage_and_fees_reconcile) ... ok
+test_split_between_signal_and_activation_adjusts_prepared_shares (test_execution_engine.LedgerTests.test_split_between_signal_and_activation_adjusts_prepared_shares) ... ok
+test_split_keeps_nav_constant (test_execution_engine.LedgerTests.test_split_keeps_nav_constant) ... ok
+test_strict_mode_blocks_unverified_actions (test_execution_engine.LedgerTests.test_strict_mode_blocks_unverified_actions) ... ok
+test_tick_and_effective_lot_rules (test_execution_engine.LedgerTests.test_tick_and_effective_lot_rules) ... ok
+test_unfinished_order_expires_and_new_plan_cancels_old (test_execution_engine.LedgerTests.test_unfinished_order_expires_and_new_plan_cancels_old) ... ok
+test_unsettled_bought_shares_are_not_sold_early (test_execution_engine.LedgerTests.test_unsettled_bought_shares_are_not_sold_early) ... ok
+test_zero_recovery_delist_is_not_free_price_fill (test_execution_engine.LedgerTests.test_zero_recovery_delist_is_not_free_price_fill) ... ok
+test_zero_volume_delays_fill_and_preserves_cash (test_execution_engine.LedgerTests.test_zero_volume_delays_fill_and_preserves_cash) ... ok
+test_extracts_only_whitelisted_data_no_scripts_or_path_traversal (test_legacy_route.LegacyRouteTests.test_extracts_only_whitelisted_data_no_scripts_or_path_traversal) ... ok
+test_frozen_route_is_recommended_old_data_top4 (test_legacy_route.LegacyRouteTests.test_frozen_route_is_recommended_old_data_top4) ... ok
+test_future_factor_returns_cannot_change_old_top4_choice (test_legacy_route.LegacyRouteTests.test_future_factor_returns_cannot_change_old_top4_choice) ... ok
+test_independent_weekly_matches_source_missing_price_rule_and_fee (test_legacy_route.LegacyRouteTests.test_independent_weekly_matches_source_missing_price_rule_and_fee) ... ok
+test_new_team_archive_is_rejected (test_legacy_route.LegacyRouteTests.test_new_team_archive_is_rejected) ... ok
+test_source_lock_and_six_factor_direction (test_legacy_route.LegacyRouteTests.test_source_lock_and_six_factor_direction) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 1.204s
+
+OK
