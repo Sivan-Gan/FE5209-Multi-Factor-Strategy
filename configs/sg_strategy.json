@@ -1,0 +1,41 @@
+{
+  "name": "SG adaptive multi-factor strategy (Top-4, small-cap Size)",
+  "data": {
+    "team_zip": "private_data/SGX_TEAM_HANDOFF.zip",
+    "team_dir": "private_data/SG_data_private/SGX_TEAM_HANDOFF",
+    "sti_zip": "private_data/SGX_comprehensive_2006_2026_handoff(1).zip",
+    "sti_xlsx": "private_data/SG_data_private/STI_Total_Return_LSEG_export.xlsx",
+    "fallback_dirs": ["..", "../.."]
+  },
+  "output_dir": "private_data/sg_pipeline_output",
+  "universe": {
+    "security_classes": ["ORDINARY_CURRENT_HINT", "REIT_CURRENT_HINT"],
+    "require_fresh_quote": true,
+    "min_price_sgd": 0.20,
+    "min_avg_traded_value_sgd": 100000,
+    "trading_day_min_observations": 100
+  },
+  "factors": {
+    "Quality": {"scores": ["roe__score", "roa__score", "gross_profitability__score"], "min_available": 2},
+    "Momentum": {"scores": ["momentum_12_1__score"]},
+    "Low Risk": {"scores": ["volatility_60d__score"]},
+    "Investment": {"scores": ["asset_growth__score"]},
+    "Value": {"scores": ["book_to_price__score"]},
+    "Size": {"log_market_cap_sign": -1}
+  },
+  "selection": {"top_k": 4, "lookback_years": 3, "min_coverage": 0.65, "factor_leg_fraction": 0.30},
+  "weighting": {"method": "IV", "window_weeks": 52, "min_weight": 0.05, "max_weight": 0.80, "shrinkage": 0.10},
+  "portfolio": {"select_fraction": 0.20, "exit_fraction": 0.30, "sector_cap": 0.30, "use_buffer": true},
+  "costs": {"one_way": 0.001, "stress_one_way": 0.003},
+  "periods": {
+    "start": "2016-01-01",
+    "eval_end": "2026-09-30",
+    "PRE_2016_18": ["2016-01-01", "2018-12-31"],
+    "OBS_2019_20": ["2019-01-01", "2020-12-31"],
+    "EVAL_2021_26": ["2021-01-01", "2026-09-30"],
+    "EVAL_2021_25": ["2021-01-01", "2025-12-31"],
+    "FULL_2016_26": ["2016-01-01", "2026-09-30"]
+  },
+  "live_period_sealed": {"start": "2026-10-01", "end": "2026-10-20"},
+  "attribution_period": "EVAL_2021_26"
+}
