@@ -1,0 +1,7 @@
+factor,total_rows,score_nonnull,return_nonnull,paired_rows,paired_weeks,unique_tickers
+Quality,18719,16561,18719,16561,261,76
+Momentum,18719,18551,18719,18551,261,85
+LowRisk,18719,18716,18719,18716,261,87
+Investment,18719,16453,18719,16453,261,76
+Size,18719,16562,18719,16562,261,76
+Value,18719,16299,18719,16299,261,76

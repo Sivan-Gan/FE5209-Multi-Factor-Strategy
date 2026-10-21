@@ -1,0 +1,7 @@
+Original six factors only; no changes to scores or forward_return.
+All six factors retained regardless of results; no sign flipping, no cherry-picked years.
+Positive IC is a ranking signal, NOT proof of positive tradable alpha.
+Top20 excess compares each factor's eligible universe weekly EW mean, not STI.
+HAC t-values: descriptive Newey-West/Bartlett approximation with 4 weekly lags.
+Raw return currency and costs not necessarily consistent; use as research diagnostics only.
+price_eligible is original flag, NOT certified to equal P020.

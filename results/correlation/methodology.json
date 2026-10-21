@@ -1,0 +1,27 @@
+{
+  "source": "/Users/ganjunhui/Desktop/课堂/FE5209/单因子/data/sg_six_factor_panel_2006_2026_final.csv.gz",
+  "period": "2011-01-01 to 2015-12-31",
+  "factors": [
+    "Quality",
+    "Momentum",
+    "LowRisk",
+    "Investment",
+    "Size",
+    "Value"
+  ],
+  "rank_direction": "higher original score preferred",
+  "factor_blend": "equal weighted within-week percentile ranks",
+  "top_n": 20,
+  "sample_rule": "six factor scores and forward_return present; same stocks per week per filter",
+  "income": "gross unhedged returns from source forward_return; no costs; benchmark cross-sectional EW",
+  "warnings": [
+    "Price eligible uses existing flag, not independently verified as P020.",
+    "Fixed complete-case comparison ignores missing-score names: coverage reported separately.",
+    "Incremental contributions are diagnostic associations not causal effects.",
+    "Annualized quantities are descriptive, not strategy-level verified live metrics."
+  ],
+  "portfolio_week_counts": {
+    "ALL_PAIRED": 261,
+    "PRICE_ELIGIBLE_TRUE": 261
+  }
+}
